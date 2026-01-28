@@ -1,60 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Resources. The Cryptomath</title>
-  <meta name="description" content="My go-to web3 tools. What I actually use. Opinionated and updated regularly.">
-  <meta name="color-scheme" content="light dark">
-  <meta property="og:title" content="Resources. The Cryptomath">
-  <meta property="og:description" content="My go-to web3 tools. What I actually use.">
-  <meta property="og:image" content="https://thecryptomath.com/assets/og.png">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://thecryptomath.com/resources.html">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The Cryptomath">
-  <meta name="twitter:description" content="Tracking trends, sharing insights, shipping projects. Long-term focus.">
-  <meta name="twitter:image" content="https://thecryptomath.com/assets/og.png">
-  <link rel="canonical" href="https://thecryptomath.com/resources.html">
-  <link rel="icon" href="assets/favicon.svg">
+  <meta name="description" content="My favorite tools. Simple picks. Battle tested." />
+  <meta name="color-scheme" content="light dark" />
+
+  <link rel="canonical" href="https://thecryptomath.com/resources.html" />
+
+  <meta property="og:site_name" content="The Cryptomath" />
+  <meta property="og:title" content="Resources. The Cryptomath" />
+  <meta property="og:description" content="My favorite tools. Simple picks. Battle tested." />
+  <meta property="og:image" content="https://thecryptomath.com/assets/og.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thecryptomath.com/resources.html" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@thecryptomath" />
+  <meta name="twitter:title" content="Resources. The Cryptomath" />
+  <meta name="twitter:description" content="My favorite tools. Simple picks. Battle tested." />
+  <meta name="twitter:image" content="https://thecryptomath.com/assets/og.png" />
+
+  <!-- Icons -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+  <!-- Theme anti flash -->
   <script>
-(function(){
-  try{
-    var t = localStorage.getItem('theme');
-    if(t === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); return; }
-    if(t === 'light'){ document.documentElement.removeAttribute('data-theme'); return; }
-    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
-      document.documentElement.setAttribute('data-theme','dark');
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "dark") { document.documentElement.setAttribute("data-theme", "dark"); return; }
+        if (t === "light") { document.documentElement.removeAttribute("data-theme"); return; }
+        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="stylesheet" href="/css/styles.css" />
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "The Cryptomath",
+      "url": "https://thecryptomath.com",
+      "email": "mailto:admin@thecryptomath.com",
+      "description": "In crypto since 2017. Tracking trends, sharing insights, shipping projects.",
+      "sameAs": [
+        "https://x.com/thecryptomath",
+        "https://t.me/thecryptomath",
+        "https://www.instagram.com/thecryptomath",
+        "https://warpcast.com/thecryptomath",
+        "https://www.reddit.com/user/TheCryptomath",
+        "https://substack.com/@thecryptomath"
+      ]
     }
-  }catch(e){}
-})();
-</script>
-  <link rel="stylesheet" href="css/styles.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"The Cryptomath","email":"mailto:thecryptomath@gmail.com","sameAs":["https://x.com/thecryptomath","https://t.me/thecryptomath"],"description":"In crypto since 2017. Tracking trends, sharing insights, shipping projects."}</script>
+  </script>
 </head>
+
 <body>
   <header class="topbar">
     <div class="container">
       <nav class="nav">
-        <a class="brand" href="index.html">
-          <span class="brand-mark">C</span>
+        <a class="brand" href="/" aria-label="The Cryptomath home">
+          <img class="brand-mark" src="/assets/logo.png" alt="The Cryptomath" />
           <span>The Cryptomath</span>
         </a>
-        
+
         <div class="navlinks" data-navlinks>
-          <a href="index.html">Home</a>
-          <a href="build.html">Build</a>
-          <a href="resources.html" aria-current="page">Resources</a>
-          <a href="connect.html">Connect</a>
+          <a href="/">Home</a>
+          <a href="/build.html">Build</a>
+          <a href="/resources.html" aria-current="page">Resources</a>
+          <a href="/connect.html">Connect</a>
         </div>
-        
+
         <div class="nav-cta">
-          <a class="btn ghost" href="connect.html">Connect</a>
-          <a class="btn primary" href="newsletter.html">Newsletter</a>
-          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-</svg><span>Theme</span></button>
-          
+          <a class="btn primary" href="/newsletter.html">Newsletter</a>
+
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span>Theme</span>
+          </button>
+
           <button class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
         </div>
       </nav>
@@ -66,7 +102,7 @@
       <div class="container">
         <div class="section-header">
           <h1>Resources</h1>
-          <p class="section-sub">My go-to web3. What I actually use.<br>Opinionated. Updated regularly.</p>
+          <p class="section-sub">My favorite tools. Simple picks. Battle tested.</p>
         </div>
       </div>
     </section>
@@ -74,49 +110,44 @@
     <section class="section" style="padding-top: 0;">
       <div class="container">
         <div class="section-header">
-          <h2>5 essentials</h2>
-          <p class="section-sub">Short list. Direct links. No fillers.</p>
+          <h2>My stack</h2>
+          <p class="section-sub">If I had to keep only one per category.</p>
         </div>
-        
+
         <div class="grid-2">
-          <a href="#" target="_blank" rel="noopener" class="card resource-item">
-            <div class="resource-icon">🔐</div>
-            <div class="resource-info">
-              <h3>Wallets</h3>
-              <p>Top pick. One line why.</p>
-            </div>
+          <a href="https://rabby.io/" target="_blank" rel="noopener" class="card project-card featured">
+            <div class="card-label live">Wallet</div>
+            <h3>Rabby</h3>
+            <p class="card-desc">Rabby is the #1 crypto wallet because it automatically flags malicious approvals, phishing contracts and dangerous txs before you sign.</p>
+            <span class="card-link">Open</span>
           </a>
-          
-          <a href="#" target="_blank" rel="noopener" class="card resource-item">
-            <div class="resource-icon">📊</div>
-            <div class="resource-info">
-              <h3>DeFi</h3>
-              <p>Top pick. One line why.</p>
-            </div>
+
+          <a href="https://www.coingecko.com/" target="_blank" rel="noopener" class="card project-card featured">
+            <div class="card-label live">Crypto data</div>
+            <h3>CoinGecko</h3>
+            <p class="card-desc">CoinGecko is the best crypto data aggregator because it delivers the most accurate, transparent, and unbiased prices and market data.</p>
+            <span class="card-link">Open</span>
           </a>
-          
-          <a href="#" target="_blank" rel="noopener" class="card resource-item">
-            <div class="resource-icon">📈</div>
-            <div class="resource-info">
-              <h3>Market data</h3>
-              <p>Top pick. One line why.</p>
-            </div>
+
+          <a href="https://app.hyperliquid.xyz/join/THECRYPTOMATH" target="_blank" rel="noopener" class="card project-card featured">
+            <div class="card-label live">Perps DEX</div>
+            <h3>Hyperliquid</h3>
+            <p class="card-desc">Hyperliquid is the best perps DEX because it dominates with massive liquidity, CEX-like speed on its custom chain, ultra-low fees, and the highest open interest and volume.</p>
+            <span class="card-link">Open</span>
           </a>
-          
-          <a href="#" target="_blank" rel="noopener" class="card resource-item">
-            <div class="resource-icon">🛡️</div>
-            <div class="resource-info">
-              <h3>Security</h3>
-              <p>Top pick. One line why.</p>
-            </div>
+
+          <a href="https://defillama.com" target="_blank" rel="noopener" class="card project-card featured">
+            <div class="card-label live">DeFi data</div>
+            <h3>DeFiLlama</h3>
+            <p class="card-desc">DeFiLlama is the best DeFi data platform because it offers the most accurate, real-time, unbiased TVL, yields, protocol revenues, and chain metrics.</p>
+            <span class="card-link">Open</span>
           </a>
-          
-          <a href="#" target="_blank" rel="noopener" class="card resource-item">
-            <div class="resource-icon">🏦</div>
-            <div class="resource-info">
-              <h3>CEX</h3>
-              <p>Top pick. One line why.</p>
-            </div>
+
+          <a href="https://www.ether.fi/refer/dba017d4" target="_blank" rel="noopener" class="card project-card featured">
+            <div class="card-label live">Crypto card</div>
+            <h3>EtherFi Cash</h3>
+            <p class="card-desc">EtherFi is the best crypto card because it's the only non-custodial Visa that lets you spend while keeping earning yield on your assets, with high ETH cashback.</p>
+            <span class="card-link">Open</span>
           </a>
         </div>
       </div>
@@ -126,15 +157,30 @@
       <div class="container">
         <div class="section-header">
           <h2>Honorable mentions</h2>
-          <p class="section-sub">Payments · Bridges · Tracking</p>
+          <p class="section-sub">Useful tools that I keep nearby.</p>
         </div>
-        
-        <div class="card">
-          <p style="color: var(--text-secondary);">
-            <a href="#" style="color: var(--accent-bright);">Tool 1</a> · 
-            <a href="#" style="color: var(--accent-bright);">Tool 2</a> · 
-            <a href="#" style="color: var(--accent-bright);">Tool 3</a>
-          </p>
+
+        <div class="grid-2">
+          <a href="https://glider.fi/r/64d0f547" target="_blank" rel="noopener" class="card project-card">
+            <div class="card-label">Automated portfolios</div>
+            <h3>Glider</h3>
+            <p class="card-desc">Automate strategies and manage portfolio rules with a clean workflow.</p>
+            <span class="card-link">Open</span>
+          </a>
+
+          <a href="https://relay.link/bridge" target="_blank" rel="noopener" class="card project-card">
+            <div class="card-label">Bridge</div>
+            <h3>Relay</h3>
+            <p class="card-desc">A simple bridge experience with fast routing across chains.</p>
+            <span class="card-link">Open</span>
+          </a>
+
+          <a href="https://debank.com" target="_blank" rel="noopener" class="card project-card">
+            <div class="card-label">Portfolio tracker</div>
+            <h3>DeBank</h3>
+            <p class="card-desc">Track wallets, positions, and DeFi activity in one place.</p>
+            <span class="card-link">Open</span>
+          </a>
         </div>
       </div>
     </section>
@@ -142,11 +188,11 @@
     <section class="section">
       <div class="container">
         <div class="cta-block">
-          <h2>Want my updated picks?</h2>
-          <p>The newsletter is where I keep it current.</p>
+          <h2>Want more curated picks?</h2>
+          <p>I share what I use, what I avoid, and what I test next.</p>
           <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-            <a href="newsletter.html" class="btn primary">Get the newsletter</a>
-            <a href="connect.html" class="btn">All official links</a>
+            <a href="/newsletter.html" class="btn primary">Get the newsletter</a>
+            <a href="/connect.html" class="btn">Connect</a>
           </div>
         </div>
       </div>
@@ -157,30 +203,31 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <a class="brand" href="index.html">
-            <span class="brand-mark">C</span>
+          <a class="brand" href="/" aria-label="The Cryptomath home">
+            <img class="brand-mark" src="/assets/logo.png" alt="The Cryptomath" />
             <span>The Cryptomath</span>
           </a>
           <p>Educational content only. Not financial advice.</p>
         </div>
-        
+
         <div class="footer-links">
           <div class="footer-col">
             <h4>Navigate</h4>
-            <a href="index.html">Home</a>
-            <a href="build.html">Build</a>
-            <a href="resources.html">Resources</a>
-            <a href="connect.html">Connect</a>
+            <a href="/">Home</a>
+            <a href="/build.html">Build</a>
+            <a href="/resources.html">Resources</a>
+            <a href="/connect.html">Connect</a>
           </div>
+
           <div class="footer-col">
-            <h4>Projects</h4>
-            <a href="https://www.thecryptomasks.xyz" target="_blank" rel="noopener">The Cryptomasks</a>
-            <a href="https://t.me/CryptoSkillsTestBot" target="_blank" rel="noopener">Crypto Skills Test</a>
-            <a href="newsletter.html">Newsletter</a>
+            <h4>Links</h4>
+            <a href="https://x.com/thecryptomath" target="_blank" rel="noopener">X</a>
+            <a href="https://t.me/thecryptomath" target="_blank" rel="noopener">Telegram</a>
+            <a href="/newsletter.html">Newsletter</a>
           </div>
         </div>
       </div>
-      
+
       <div class="footer-bottom">
         <p>© <span data-year></span> The Cryptomath. All rights reserved.</p>
         <p>If it's not here, it's not me.</p>
@@ -188,6 +235,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="/js/main.js"></script>
 </body>
 </html>
