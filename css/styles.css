@@ -1016,3 +1016,43 @@ p { margin: 0; }
   font-size: 0.9375rem;
 }
 
+/* Brand logo inside the existing brand mark */
+.brand-mark {
+  overflow: hidden;
+}
+.brand-mark-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Credibility bubble should hug the text */
+.credibility {
+  display: inline-block;
+  width: fit-content;
+  max-width: 760px;
+}
+
+/* Project card thumbnail 1:1 */
+.project-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 10px 0 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+}
+
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transform: scale(1.01);
+}
+
+.project-card:hover .project-thumb img {
+  transform: scale(1.04);
+}
