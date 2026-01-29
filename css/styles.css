@@ -1,4 +1,3 @@
-
 :root {
   --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -103,31 +102,31 @@ body::before {
   z-index: 9999;
 }
 
-a { 
-  color: inherit; 
+a {
+  color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 a:hover { color: var(--accent-bright); }
 
-h1, h2, h3, h4 { 
-  margin: 0; 
+h1, h2, h3, h4 {
+  margin: 0;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
 
-h1 { 
+h1 {
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.03em;
 }
 
-h2 { 
+h2 {
   font-size: clamp(1.5rem, 3vw, 2rem);
 }
 
-h3 { 
+h3 {
   font-size: 1.125rem;
   font-weight: 600;
 }
@@ -191,6 +190,14 @@ p { margin: 0; }
   font-size: 14px;
   color: white;
   box-shadow: var(--shadow-glow);
+  overflow: hidden;
+}
+
+.brand-mark-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .navlinks {
@@ -226,12 +233,13 @@ p { margin: 0; }
 
 .mobile-toggle {
   display: none;
-  padding: 10px;
+  padding: 10px 12px;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   color: var(--text-primary);
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .theme-toggle{
@@ -260,7 +268,6 @@ p { margin: 0; }
   height: 16px;
   opacity: 0.85;
 }
-
 
 /* ============================================
    BUTTONS
@@ -452,14 +459,8 @@ p { margin: 0; }
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================
@@ -518,9 +519,7 @@ p { margin: 0; }
   margin-bottom: 12px;
 }
 
-.card-label.live {
-  color: var(--success);
-}
+.card-label.live { color: var(--success); }
 
 .card-label.live::before {
   content: '';
@@ -531,9 +530,7 @@ p { margin: 0; }
   animation: pulse 2s ease-in-out infinite;
 }
 
-.card h3 {
-  margin-bottom: 8px;
-}
+.card h3 { margin-bottom: 8px; }
 
 .card-desc {
   color: var(--text-secondary);
@@ -552,13 +549,9 @@ p { margin: 0; }
   transition: gap 0.2s ease;
 }
 
-.card-link:hover {
-  gap: 10px;
-}
+.card-link:hover { gap: 10px; }
 
-.card-link::after {
-  content: '→';
-}
+.card-link::after { content: '→'; }
 
 /* Grid layouts */
 .grid-2 {
@@ -593,9 +586,28 @@ p { margin: 0; }
   transition: opacity 0.3s ease;
 }
 
-.project-card:hover::before {
-  opacity: 1;
+.project-card:hover::before { opacity: 1; }
+
+/* Project card thumbnail 1:1 */
+.project-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 10px 0 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
 }
+
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transform: scale(1.01);
+}
+
+.project-card:hover .project-thumb img { transform: scale(1.04); }
 
 /* ============================================
    EXPERIMENTS (Build page)
@@ -609,13 +621,9 @@ p { margin: 0; }
   border-bottom: 1px solid var(--border);
 }
 
-.experiment:last-child {
-  border-bottom: none;
-}
+.experiment:last-child { border-bottom: none; }
 
-.experiment-info h3 {
-  margin-bottom: 4px;
-}
+.experiment-info h3 { margin-bottom: 4px; }
 
 .experiment-desc {
   color: var(--text-secondary);
@@ -664,13 +672,9 @@ p { margin: 0; }
   flex-shrink: 0;
 }
 
-.resource-info {
-  flex: 1;
-}
+.resource-info { flex: 1; }
 
-.resource-info h3 {
-  margin-bottom: 4px;
-}
+.resource-info h3 { margin-bottom: 4px; }
 
 .resource-info p {
   color: var(--text-secondary);
@@ -687,9 +691,7 @@ p { margin: 0; }
   padding: 20px;
 }
 
-.link-card:hover {
-  background: var(--bg-elevated);
-}
+.link-card:hover { background: var(--bg-elevated); }
 
 .link-icon {
   width: 44px;
@@ -708,13 +710,9 @@ p { margin: 0; }
   color: white;
 }
 
-.link-info {
-  flex: 1;
-}
+.link-info { flex: 1; }
 
-.link-info h3 {
-  margin-bottom: 2px;
-}
+.link-info h3 { margin-bottom: 2px; }
 
 .link-info p {
   color: var(--text-secondary);
@@ -775,13 +773,9 @@ p { margin: 0; }
   padding: 120px 24px 60px;
 }
 
-.newsletter-hero h1 {
-  margin-bottom: 16px;
-}
+.newsletter-hero h1 { margin-bottom: 16px; }
 
-.newsletter-hero .hero-sub {
-  margin: 0 auto 32px;
-}
+.newsletter-hero .hero-sub { margin: 0 auto 32px; }
 
 .benefits-grid {
   display: grid;
@@ -853,13 +847,9 @@ p { margin: 0; }
   gap: 32px;
 }
 
-.footer-brand {
-  max-width: 280px;
-}
+.footer-brand { max-width: 280px; }
 
-.footer-brand .brand {
-  margin-bottom: 12px;
-}
+.footer-brand .brand { margin-bottom: 12px; }
 
 .footer-brand p {
   color: var(--text-muted);
@@ -887,9 +877,7 @@ p { margin: 0; }
   transition: color 0.2s ease;
 }
 
-.footer-col a:hover {
-  color: var(--text-primary);
-}
+.footer-col a:hover { color: var(--text-primary); }
 
 .footer-bottom {
   margin-top: 48px;
@@ -943,8 +931,35 @@ p { margin: 0; }
   position: relative;
 }
 
-.cta-block .btn {
-  position: relative;
+.cta-block .btn { position: relative; }
+
+/* ============================================
+   Home hero extras
+   ============================================ */
+.microcopy{
+  margin-top: 8px;
+  margin-bottom: 28px;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.credibility{
+  margin-top: 8px;
+  padding: 14px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  max-width: 640px;
+  display: inline-block;
+  width: fit-content;
+  max-width: 760px;
+}
+
+.social-proof{
+  margin-top: 14px;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
 }
 
 /* ============================================
@@ -957,29 +972,16 @@ p { margin: 0; }
 
 @media (max-width: 768px) {
   .navlinks { display: none; }
-  .mobile-toggle { display: flex; }
-  
-  .navlinks.open {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--bg-surface);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 24px;
-  }
-  
+  .mobile-toggle { display: inline-flex; }
   .nav { position: relative; }
-  
+
   .hero { padding: 100px 0 60px; min-height: auto; }
   .hero-proof { gap: 24px; }
-  
+
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
-  
+
   .section { padding: 60px 0; }
-  
+
   .footer-content { flex-direction: column; }
   .footer-links { flex-direction: column; gap: 24px; }
   .footer-bottom { flex-direction: column; text-align: center; }
@@ -994,75 +996,23 @@ p { margin: 0; }
   .theme-toggle span { display: none; }
   .theme-toggle { padding: 10px; }
 }
-/* Home hero extras */
-.microcopy{
-  margin-top: 8px;
-  margin-bottom: 28px;
-  color: var(--text-muted);
-  font-size: 0.9375rem;
-}
-.credibility{
-  margin-top: 8px;
-  padding: 14px 16px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  color: var(--text-secondary);
-  max-width: 640px;
-}
-.social-proof{
-  margin-top: 14px;
-  color: var(--text-muted);
-  font-size: 0.9375rem;
+
+/* Hide topbar primary button on very small phones to fit Menu */
+@media (max-width: 420px) {
+  .topbar .nav-cta .btn.primary {
+    display: none !important;
+  }
 }
 
-/* Brand logo inside the existing brand mark */
-.brand-mark {
-  overflow: hidden;
-}
-.brand-mark-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-/* Credibility bubble should hug the text */
-.credibility {
-  display: inline-block;
-  width: fit-content;
-  max-width: 760px;
-}
-
-/* Project card thumbnail 1:1 */
-.project-thumb {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 16px;
-  overflow: hidden;
-  margin: 10px 0 14px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.03);
-}
-
-.project-thumb img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  transform: scale(1.01);
-}
-
-.project-card:hover .project-thumb img {
-  transform: scale(1.04);
-}
-
-/* Mobile header fix. Make the Menu button fully visible */
+/* Mobile header fit + dropdown menu */
 @media (max-width: 640px) {
   .topbar,
   .topbar .container,
-  .topbar .nav {
-    overflow: visible;
+  .topbar .nav { overflow: visible; }
+
+  .topbar .container {
+    padding-left: calc(16px + env(safe-area-inset-left));
+    padding-right: calc(16px + env(safe-area-inset-right));
   }
 
   .topbar .nav {
@@ -1070,52 +1020,6 @@ p { margin: 0; }
     flex-wrap: nowrap;
   }
 
-  /* If nav links are still taking space on mobile, hide them in the top row */
-  .topbar .navlinks {
-    display: none;
-  }
-
-  .topbar .nav-cta {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 0 0 auto;
-  }
-
-  /* Slightly smaller buttons on mobile so everything fits */
-  .topbar .nav-cta .btn {
-    padding: 10px 14px;
-  }
-
-  /* Theme toggle: icon only on mobile to save width */
-  .topbar .theme-toggle {
-    padding: 10px;
-    width: 44px;
-    justify-content: center;
-  }
-
-  .topbar .theme-toggle span {
-    display: none;
-  }
-
-  /* Menu button should never wrap or get clipped */
-  .topbar .mobile-toggle {
-    padding: 10px 12px;
-    white-space: nowrap;
-    flex: 0 0 auto;
-  }
-}
-
-/* Mobile header. Final tightening */
-@media (max-width: 640px) {
-  /* Give the header a bit more real estate on iOS */
-  .topbar .container {
-    padding-left: calc(16px + env(safe-area-inset-left));
-    padding-right: calc(16px + env(safe-area-inset-right));
-  }
-
-  /* Prevent the brand from shrinking the logo */
   .topbar .brand {
     flex: 0 0 auto;
     min-width: 0;
@@ -1125,104 +1029,37 @@ p { margin: 0; }
     flex: 0 0 auto;
     width: 34px;
     height: 34px;
-    object-fit: contain;
   }
 
-  /* Make the primary button slightly more compact on mobile */
-  .topbar .nav-cta .btn.primary {
-    padding: 10px 12px;
-    font-size: 14px;
+  .topbar .nav-cta {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    flex-shrink: 0;
   }
 
-  /* Guarantee the full "Menu" label fits */
+  .topbar .nav-cta .btn { padding: 10px 14px; }
+
+  .topbar .theme-toggle {
+    padding: 10px;
+    width: 44px;
+    justify-content: center;
+  }
+
+  .topbar .theme-toggle span { display: none; }
+
   .topbar .mobile-toggle {
     min-width: 62px;
     font-size: 14px;
     padding: 10px 10px;
-  }
-}
-
-/* Extra small phones */
-@media (max-width: 390px) {
-  /* If space is still tight, shorten the primary button by hiding its text */
-  .topbar .nav-cta .btn.primary {
-    padding: 10px;
-  }
-
-  /* Keep Menu readable */
-  .topbar .mobile-toggle {
-    min-width: 62px;
-  }
-}
-
-@media (max-width: 520px) {
-  .topbar .mobile-toggle {
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
     white-space: nowrap;
     flex: 0 0 auto;
     flex-shrink: 0;
-    min-width: 64px;
-    padding: 10px 12px;
-  }
-}
-
-@media (max-width: 420px) {
-  .topbar .nav-cta .btn.primary {
-    display: none !important;
-  }
-}
-
-/* Mobile menu. Show nav links when Menu is open */
-@media (max-width: 640px) {
-  .topbar .nav { position: relative; }
-
-  /* hidden by default */
-  .topbar .navlinks {
-    display: none;
-  }
-
-  /* visible when JS adds .open */
-  .topbar .navlinks.open {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 16px;
-    right: 16px;
-
-    padding: 14px;
-    border-radius: 16px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    box-shadow: 0 12px 30px rgba(0,0,0,.18);
-    z-index: 999;
-  }
-
-  .topbar .navlinks.open a {
-    padding: 10px 12px;
-    border-radius: 12px;
-  }
-}
-
-/* Mobile dropdown menu. Clean, readable, aligned under topbar */
-@media (max-width: 640px) {
-  .topbar .nav { position: relative; }
-
-  /* Ensure the right side buttons do not wrap weirdly */
-  .topbar .nav-cta {
-    display: flex;
+    display: inline-flex !important;
     align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-  }
-
-  /* Hidden by default */
-  .topbar .navlinks {
-    display: none;
+    justify-content: center;
   }
 
   /* Dropdown when open */
@@ -1248,7 +1085,6 @@ p { margin: 0; }
     z-index: 9999;
   }
 
-  /* Links inside dropdown */
   .topbar .navlinks.open a {
     display: flex;
     align-items: center;
@@ -1265,11 +1101,5 @@ p { margin: 0; }
   .topbar .navlinks.open a[aria-current="page"] {
     background: rgba(255,255,255,0.08);
     border-color: rgba(255,255,255,0.12);
-  }
-
-  /* Optional. Reduce topbar height a bit on mobile */
-  .topbar .nav {
-    padding-top: 12px;
-    padding-bottom: 12px;
   }
 }
