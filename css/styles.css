@@ -1106,3 +1106,51 @@ p { margin: 0; }
     flex: 0 0 auto;
   }
 }
+
+/* Mobile header. Final tightening */
+@media (max-width: 640px) {
+  /* Give the header a bit more real estate on iOS */
+  .topbar .container {
+    padding-left: calc(16px + env(safe-area-inset-left));
+    padding-right: calc(16px + env(safe-area-inset-right));
+  }
+
+  /* Prevent the brand from shrinking the logo */
+  .topbar .brand {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  .topbar .brand-mark {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+  }
+
+  /* Make the primary button slightly more compact on mobile */
+  .topbar .nav-cta .btn.primary {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  /* Guarantee the full "Menu" label fits */
+  .topbar .mobile-toggle {
+    min-width: 62px;
+    font-size: 14px;
+    padding: 10px 10px;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 390px) {
+  /* If space is still tight, shorten the primary button by hiding its text */
+  .topbar .nav-cta .btn.primary {
+    padding: 10px;
+  }
+
+  /* Keep Menu readable */
+  .topbar .mobile-toggle {
+    min-width: 62px;
+  }
+}
