@@ -984,13 +984,19 @@ p { margin: 0; }
 }
 
 /* ============================================
-   Mobile menu. Final clean dropdown
-   Paste at the very end and remove older dropdown blocks
+   Mobile menu. Premium compact dropdown
+   Paste at the very end of styles.css
+   Remove older mobile dropdown blocks to avoid conflicts
    ============================================ */
 
 @media (max-width: 640px) {
   .topbar { z-index: 10000; }
   .topbar, .topbar .container, .topbar .nav { overflow: visible; }
+
+  .topbar .container {
+    padding-left: calc(16px + env(safe-area-inset-left));
+    padding-right: calc(16px + env(safe-area-inset-right));
+  }
 
   .topbar .nav { position: relative; z-index: 10001; }
   .topbar .nav-cta { position: relative; z-index: 10002; }
@@ -1008,7 +1014,7 @@ p { margin: 0; }
   .topbar .navlinks {
     display: none;
     opacity: 0;
-    transform: translateY(-10px) scale(0.98);
+    transform: translateY(-8px) scale(0.985);
     transform-origin: top right;
   }
 
@@ -1016,86 +1022,105 @@ p { margin: 0; }
   .topbar .navlinks.open {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
 
     position: absolute;
     top: calc(100% + 12px);
-    right: 12px;
+    right: calc(12px + env(safe-area-inset-right));
     left: auto;
 
-    width: min(240px, calc(100vw - 24px));
+    width: min(228px, calc(100vw - 24px));
     padding: 10px;
 
     border-radius: 16px;
 
-    background: rgba(15, 17, 20, 0.78);
+    background: rgba(15, 17, 20, 0.80);
     border: 1px solid rgba(255, 255, 255, 0.10);
-    box-shadow:
-      0 10px 28px rgba(0,0,0,0.28),
-      0 30px 90px rgba(0,0,0,0.50);
 
-    backdrop-filter: blur(18px) saturate(115%);
-    -webkit-backdrop-filter: blur(18px) saturate(115%);
+    box-shadow:
+      0 12px 30px rgba(0,0,0,0.28),
+      0 40px 120px rgba(0,0,0,0.55);
+
+    backdrop-filter: blur(18px) saturate(120%);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
 
     z-index: 9999;
 
     opacity: 1;
     transform: translateY(0) scale(1);
-    animation: navDropIn 0.20s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: navDropIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   @keyframes navDropIn {
-    from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+    from { opacity: 0; transform: translateY(-8px) scale(0.985); }
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
-  /* Links as clean rows */
+  /* Small caret pointing to the menu button */
+  .topbar .navlinks.open::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 22px;
+    width: 12px;
+    height: 12px;
+    transform: rotate(45deg);
+    background: rgba(15, 17, 20, 0.80);
+    border-left: 1px solid rgba(255, 255, 255, 0.10);
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+  }
+
+  /* Clean rows */
   .topbar .navlinks.open a {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 11px 12px;
+    padding: 12px 12px;
+    min-height: 44px;
+
     border-radius: 12px;
 
-    font-weight: 600;
+    font-weight: 650;
     font-size: 15px;
     line-height: 1.1;
 
-    color: rgba(244,244,245,0.74);
+    color: rgba(244,244,245,0.76);
 
-    background: transparent;
-    border: 1px solid transparent;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
 
     transition: background .15s ease, border-color .15s ease, color .15s ease, transform .12s ease;
   }
 
-  /* Subtle arrow, not too “CTA” */
+  /* Arrow only as a subtle affordance */
   .topbar .navlinks.open a::after {
     content: '›';
     opacity: 0.55;
+    transition: opacity .15s ease, transform .15s ease, color .15s ease;
     transform: translateX(0);
-    transition: opacity .15s ease, transform .15s ease;
-    color: rgba(244,244,245,0.40);
+    color: rgba(244,244,245,0.38);
   }
 
   .topbar .navlinks.open a:hover {
     background: rgba(255,255,255,0.06);
-    border-color: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.10);
     color: rgba(244,244,245,0.92);
     transform: translateY(-1px);
   }
 
   .topbar .navlinks.open a:hover::after {
-    opacity: 0.85;
+    opacity: 0.9;
     transform: translateX(2px);
     color: rgba(96,165,250,0.95);
   }
 
+  /* Active state, cleaner than a big pill */
   .topbar .navlinks.open a[aria-current="page"] {
-    background: rgba(59,130,246,0.16);
+    background: rgba(59,130,246,0.14);
     border-color: rgba(59,130,246,0.28);
     color: rgba(244,244,245,0.95);
+    box-shadow: inset 3px 0 0 rgba(96,165,250,0.95);
   }
 
   .topbar .navlinks.open a[aria-current="page"]::after {
@@ -1111,15 +1136,23 @@ p { margin: 0; }
 /* Light theme dropdown */
 @media (max-width: 640px) {
   [data-theme="light"] .topbar .navlinks.open {
-    background: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.94);
     border: 1px solid rgba(14,15,18,0.10);
     box-shadow:
-      0 10px 28px rgba(14,15,18,0.10),
-      0 30px 90px rgba(14,15,18,0.14);
+      0 12px 30px rgba(14,15,18,0.10),
+      0 40px 120px rgba(14,15,18,0.14);
+  }
+
+  [data-theme="light"] .topbar .navlinks.open::before {
+    background: rgba(255,255,255,0.94);
+    border-left: 1px solid rgba(14,15,18,0.10);
+    border-top: 1px solid rgba(14,15,18,0.10);
   }
 
   [data-theme="light"] .topbar .navlinks.open a {
-    color: rgba(14,15,18,0.72);
+    color: rgba(14,15,18,0.78);
+    background: rgba(14,15,18,0.03);
+    border: 1px solid rgba(14,15,18,0.08);
   }
 
   [data-theme="light"] .topbar .navlinks.open a::after {
@@ -1128,7 +1161,7 @@ p { margin: 0; }
 
   [data-theme="light"] .topbar .navlinks.open a:hover {
     background: rgba(14,15,18,0.06);
-    border-color: rgba(14,15,18,0.10);
+    border-color: rgba(14,15,18,0.12);
     color: rgba(14,15,18,0.92);
   }
 
@@ -1137,8 +1170,9 @@ p { margin: 0; }
   }
 
   [data-theme="light"] .topbar .navlinks.open a[aria-current="page"] {
-    background: rgba(45,91,255,0.12);
+    background: rgba(45,91,255,0.10);
     border-color: rgba(45,91,255,0.22);
     color: rgba(14,15,18,0.95);
+    box-shadow: inset 3px 0 0 rgba(31,76,255,0.95);
   }
 }
