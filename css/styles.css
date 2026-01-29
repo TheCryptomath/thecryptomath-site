@@ -71,7 +71,6 @@
   --grain-opacity: 0.03;
 }
 
-
 /* Reset & Base */
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -122,9 +121,7 @@ h1 {
   letter-spacing: -0.03em;
 }
 
-h2 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-}
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
 
 h3 {
   font-size: 1.125rem;
@@ -240,6 +237,8 @@ p { margin: 0; }
   color: var(--text-primary);
   cursor: pointer;
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .theme-toggle{
@@ -257,6 +256,8 @@ p { margin: 0; }
   font-size: 0.9375rem;
   transition: all 0.2s ease;
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 .theme-toggle:hover{
   background: var(--bg-hover);
@@ -314,9 +315,7 @@ p { margin: 0; }
   border-color: transparent;
 }
 
-.btn.ghost:hover {
-  background: var(--bg-hover);
-}
+.btn.ghost:hover { background: var(--bg-hover); }
 
 .btn-icon {
   width: 18px;
@@ -336,7 +335,6 @@ p { margin: 0; }
   overflow: hidden;
 }
 
-/* Gradient orb background */
 .hero::before {
   content: '';
   position: absolute;
@@ -471,13 +469,9 @@ p { margin: 0; }
   position: relative;
 }
 
-.section-header {
-  margin-bottom: 48px;
-}
+.section-header { margin-bottom: 48px; }
 
-.section-header h2 {
-  margin-bottom: 12px;
-}
+.section-header h2 { margin-bottom: 12px; }
 
 .section-sub {
   color: var(--text-secondary);
@@ -520,7 +514,6 @@ p { margin: 0; }
 }
 
 .card-label.live { color: var(--success); }
-
 .card-label.live::before {
   content: '';
   width: 6px;
@@ -550,7 +543,6 @@ p { margin: 0; }
 }
 
 .card-link:hover { gap: 10px; }
-
 .card-link::after { content: '→'; }
 
 /* Grid layouts */
@@ -559,7 +551,6 @@ p { margin: 0; }
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
-
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -585,7 +576,6 @@ p { margin: 0; }
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .project-card:hover::before { opacity: 1; }
 
 /* Project card thumbnail 1:1 */
@@ -606,7 +596,6 @@ p { margin: 0; }
   object-fit: cover;
   transform: scale(1.01);
 }
-
 .project-card:hover .project-thumb img { transform: scale(1.04); }
 
 /* ============================================
@@ -620,7 +609,6 @@ p { margin: 0; }
   padding: 20px 0;
   border-bottom: 1px solid var(--border);
 }
-
 .experiment:last-child { border-bottom: none; }
 
 .experiment-info h3 { margin-bottom: 4px; }
@@ -673,7 +661,6 @@ p { margin: 0; }
 }
 
 .resource-info { flex: 1; }
-
 .resource-info h3 { margin-bottom: 4px; }
 
 .resource-info p {
@@ -690,7 +677,6 @@ p { margin: 0; }
   gap: 16px;
   padding: 20px;
 }
-
 .link-card:hover { background: var(--bg-elevated); }
 
 .link-icon {
@@ -704,14 +690,12 @@ p { margin: 0; }
   flex-shrink: 0;
   transition: all 0.2s ease;
 }
-
 .link-card:hover .link-icon {
   background: var(--accent);
   color: white;
 }
 
 .link-info { flex: 1; }
-
 .link-info h3 { margin-bottom: 2px; }
 
 .link-info p {
@@ -723,7 +707,6 @@ p { margin: 0; }
   color: var(--text-muted);
   transition: all 0.2s ease;
 }
-
 .link-card:hover .link-arrow {
   color: var(--accent-bright);
   transform: translateX(4px);
@@ -774,7 +757,6 @@ p { margin: 0; }
 }
 
 .newsletter-hero h1 { margin-bottom: 16px; }
-
 .newsletter-hero .hero-sub { margin: 0 auto 32px; }
 
 .benefits-grid {
@@ -848,7 +830,6 @@ p { margin: 0; }
 }
 
 .footer-brand { max-width: 280px; }
-
 .footer-brand .brand { margin-bottom: 12px; }
 
 .footer-brand p {
@@ -876,7 +857,6 @@ p { margin: 0; }
   font-size: 0.9375rem;
   transition: color 0.2s ease;
 }
-
 .footer-col a:hover { color: var(--text-primary); }
 
 .footer-bottom {
@@ -950,7 +930,6 @@ p { margin: 0; }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   color: var(--text-secondary);
-  max-width: 640px;
   display: inline-block;
   width: fit-content;
   max-width: 760px;
@@ -1004,8 +983,13 @@ p { margin: 0; }
   }
 }
 
-/* Mobile header fit + dropdown menu */
+/* ============================================
+   Mobile header + clean dropdown + iOS tap fix
+   ============================================ */
 @media (max-width: 640px) {
+  /* Make sure topbar stays above all */
+  .topbar { z-index: 10000; }
+
   .topbar,
   .topbar .container,
   .topbar .nav { overflow: visible; }
@@ -1018,6 +1002,8 @@ p { margin: 0; }
   .topbar .nav {
     gap: 10px;
     flex-wrap: nowrap;
+    position: relative;
+    z-index: 10001;
   }
 
   .topbar .brand {
@@ -1038,6 +1024,8 @@ p { margin: 0; }
     gap: 10px;
     flex: 0 0 auto;
     flex-shrink: 0;
+    position: relative;
+    z-index: 10002;
   }
 
   .topbar .nav-cta .btn { padding: 10px 14px; }
@@ -1046,6 +1034,9 @@ p { margin: 0; }
     padding: 10px;
     width: 44px;
     justify-content: center;
+    position: relative;
+    z-index: 10003;
+    pointer-events: auto;
   }
 
   .topbar .theme-toggle span { display: none; }
@@ -1054,68 +1045,72 @@ p { margin: 0; }
     min-width: 62px;
     font-size: 14px;
     padding: 10px 10px;
-    white-space: nowrap;
-    flex: 0 0 auto;
-    flex-shrink: 0;
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 10004;
+    pointer-events: auto;
   }
-}
 
-/* ============================
-   Mobile menu. Cleaner dropdown
-   Paste at the very end of styles.css
-   ============================ */
+  /* Default hidden on mobile, shown only when open */
+  .topbar .navlinks { display: none; }
 
-@media (max-width: 640px) {
   /* Dropdown panel */
   .topbar .navlinks.open {
-    left: auto !important;
-    right: 12px !important;
-    width: min(260px, calc(100vw - 24px)) !important;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 
-    padding: 10px !important;
-    gap: 6px !important;
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 12px;
+    left: auto;
 
-    border-radius: 18px !important;
-    background: rgba(15, 17, 20, 0.72) !important;
-    border: 1px solid rgba(255, 255, 255, 0.10) !important;
-    box-shadow: 0 20px 60px rgba(0,0,0,.55) !important;
+    width: min(260px, calc(100vw - 24px));
 
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
+    padding: 10px;
+    border-radius: 18px;
+
+    background: rgba(15, 17, 20, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 20px 60px rgba(0,0,0,.55);
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    z-index: 9999;
   }
 
-  /* Links look like clean rows, not big pills */
+  /* Links look like clean rows */
   .topbar .navlinks.open a {
-    justify-content: flex-start !important;
-    text-align: left !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
-    padding: 12px 12px !important;
-    border-radius: 14px !important;
+    padding: 12px 12px;
+    border-radius: 14px;
 
-    background: transparent !important;
-    border: 1px solid transparent !important;
+    background: transparent;
+    border: 1px solid transparent;
 
-    font-weight: 600 !important;
-    color: var(--text-secondary) !important;
+    font-weight: 600;
+    color: var(--text-secondary);
   }
 
   .topbar .navlinks.open a:hover {
-    background: rgba(255,255,255,0.06) !important;
-    border-color: rgba(255,255,255,0.08) !important;
-    color: var(--text-primary) !important;
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.08);
+    color: var(--text-primary);
   }
 
   .topbar .navlinks.open a[aria-current="page"] {
-    background: rgba(59,130,246,0.16) !important;
-    border-color: rgba(59,130,246,0.28) !important;
-    color: var(--text-primary) !important;
+    background: rgba(59,130,246,0.16);
+    border-color: rgba(59,130,246,0.28);
+    color: var(--text-primary);
   }
 
-  /* Optional. Subtle separator feel */
   .topbar .navlinks.open a + a {
-    margin-top: 2px !important;
+    margin-top: 2px;
   }
 }
