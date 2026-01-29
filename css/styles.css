@@ -1173,3 +1173,37 @@ p { margin: 0; }
     display: none !important;
   }
 }
+
+/* Mobile menu. Show nav links when Menu is open */
+@media (max-width: 640px) {
+  .topbar .nav { position: relative; }
+
+  /* hidden by default */
+  .topbar .navlinks {
+    display: none;
+  }
+
+  /* visible when JS adds .open */
+  .topbar .navlinks.open {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 16px;
+    right: 16px;
+
+    padding: 14px;
+    border-radius: 16px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    z-index: 999;
+  }
+
+  .topbar .navlinks.open a {
+    padding: 10px 12px;
+    border-radius: 12px;
+  }
+}
