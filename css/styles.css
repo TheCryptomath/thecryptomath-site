@@ -1207,3 +1207,69 @@ p { margin: 0; }
     border-radius: 12px;
   }
 }
+
+/* Mobile dropdown menu. Clean, readable, aligned under topbar */
+@media (max-width: 640px) {
+  .topbar .nav { position: relative; }
+
+  /* Ensure the right side buttons do not wrap weirdly */
+  .topbar .nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  /* Hidden by default */
+  .topbar .navlinks {
+    display: none;
+  }
+
+  /* Dropdown when open */
+  .topbar .navlinks.open {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 12px;
+    right: 12px;
+
+    padding: 12px;
+    border-radius: 16px;
+
+    background: rgba(20, 24, 32, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 18px 50px rgba(0,0,0,.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    z-index: 9999;
+  }
+
+  /* Links inside dropdown */
+  .topbar .navlinks.open a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 12px;
+    border-radius: 12px;
+    text-align: center;
+
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .topbar .navlinks.open a[aria-current="page"] {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.12);
+  }
+
+  /* Optional. Reduce topbar height a bit on mobile */
+  .topbar .nav {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
