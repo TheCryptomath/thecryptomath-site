@@ -281,13 +281,16 @@
         <section class="panel">
           <div class="panel-hd">
             <div class="panel-title">Inputs</div>
-            <div class="muted small" id="methodVersion">Method v1.3.2</div>
+            <div class="muted small" id="methodVersion">Method v1.4.0</div>
           </div>
-          <div class="panel-bd">
 
+          <div class="panel-bd">
             <div class="field">
-              <label class="label" for="asset">Asset (optional)</label>
-              <input class="input" id="asset" type="text" placeholder="BTC, SOL, ETH..." autocomplete="off" />
+              <label class="label" for="asset">Asset</label>
+              <input class="input" id="asset" type="text" placeholder="BTC, SOL, ETH, DOGE..." autocomplete="off" />
+              <div class="right-note">
+                Tip. Auto-fill uses USDT pairs. Example BTC uses BTCUSDT.
+              </div>
             </div>
 
             <div class="row">
@@ -384,28 +387,28 @@
                       <input type="checkbox" id="tMom" />
                       <div>
                         <strong>Momentum</strong>
-                        <span>RSI bullish divergence or deep Stoch RSI.</span>
+                        <span>RSI divergence or Stoch RSI extreme.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="tStr" />
                       <div>
                         <strong>Structure</strong>
-                        <span>Higher lows confirmed plus above EMA50.</span>
+                        <span>Higher lows plus above EMA50.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="tVol" />
                       <div>
                         <strong>Volatility</strong>
-                        <span>Bollinger squeeze or breakout plus retest validated.</span>
+                        <span>Bollinger squeeze or breakout setup.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="tVolu" />
                       <div>
                         <strong>Volume</strong>
-                        <span>Impulse volume at least 1.5x average.</span>
+                        <span>Impulse volume vs average.</span>
                       </div>
                     </label>
                   </div>
@@ -420,21 +423,21 @@
                       <input type="checkbox" id="pSent" />
                       <div>
                         <strong>Sentiment</strong>
-                        <span>Fear index low or organic social buzz increasing.</span>
+                        <span>Fear and Greed extreme.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="pDer" />
                       <div>
                         <strong>Derivatives</strong>
-                        <span>Neutral or negative funding plus rising open interest.</span>
+                        <span>Funding is favorable.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="pCat" />
                       <div>
                         <strong>Catalyst</strong>
-                        <span>Narrative within 7 days and not already priced in.</span>
+                        <span>Narrative within 7 days and not priced in.</span>
                       </div>
                     </label>
                   </div>
@@ -464,6 +467,7 @@
                 </div>
 
                 <div class="btnrow">
+                  <button class="btn" id="autofillBtn" type="button">Auto-fill</button>
                   <button class="btn primary" id="calcBtn" type="button">Calculate</button>
                   <button class="btn" id="exportBtn" type="button">Export JSON</button>
                 </div>
@@ -576,13 +580,14 @@
     })();
 
     const API_PATH = "/api/score";
-    const METHOD_VERSION = "1.3.2";
+    const METHOD_VERSION = "1.4.0";
 
     const $ = (id) => document.getElementById(id);
 
     const state = {
       lastResponse: null,
-      debounceTimer: null
+      debounceTimer: null,
+      currentController: null
     };
 
     function setStatus(text, kind){
@@ -691,36 +696,22 @@
       );
     }
 
-    let currentController = null;
-    let requestCounter = 0;
-
     async function callApi(payload){
-      if(currentController) currentController.abort();
-      currentController = new AbortController();
-
-      const requestId = ++requestCounter;
+      if(state.currentController) state.currentController.abort();
+      state.currentController = new AbortController();
 
       const res = await fetch(API_PATH, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-        signal: currentController.signal
+        signal: state.currentController.signal
       });
 
       const data = await res.json().catch(() => null);
-
-      // Ignore any response that is not the latest request
-      if(requestId !== requestCounter){
-        const err = new Error("stale_response");
-        err.name = "StaleResponseError";
-        throw err;
-      }
-
       if(!data || !data.ok){
         const code = data && data.error ? data.error : "api_error";
         throw new Error(code);
       }
-
       return data;
     }
 
@@ -735,33 +726,26 @@
       el.style.width = Math.max(0, Math.min(100, pct)) + "%";
     }
 
-    function resetUI(payload){
-      // Reset numeric outputs
-      $("scoreTotal").textContent = "–";
-      $("rrVal").textContent = "–";
-      $("rrMin").textContent = "–";
+    function applyAutoDetectedToUI(autoDetected){
+      if(!autoDetected) return;
 
-      // Reset bars
-      setFill("macroFill", 0);
-      setFill("techFill", 0);
-      setFill("psyFill", 0);
-      $("macroTxt").textContent = "–";
-      $("techTxt").textContent = "–";
-      $("psyTxt").textContent = "–";
-
-      // Bars visibility based on mode
-      const bars = $("bars");
-      bars.style.display = (payload && payload.mode === "Simple") ? "none" : "block";
-
-      // Reset verdict
-      const vb = $("verdictBox");
-      vb.classList.remove("a", "s", "n");
-      vb.classList.add("n");
-      $("verdictTitle").textContent = "No trade";
-      $("verdictText").textContent = "Fill inputs and click Calculate.";
-
-      // Clear export state
-      state.lastResponse = null;
+      // Pro keys
+      if(autoDetected.macro){
+        $("mLiq").checked = !!autoDetected.macro.liquidite;
+        $("mFlux").checked = !!autoDetected.macro.flux;
+        $("mVal").checked = !!autoDetected.macro.valorisation;
+      }
+      if(autoDetected.technique){
+        $("tMom").checked = !!autoDetected.technique.momentum;
+        $("tStr").checked = !!autoDetected.technique.structure;
+        $("tVol").checked = !!autoDetected.technique.volatilite;
+        $("tVolu").checked = !!autoDetected.technique.volume;
+      }
+      if(autoDetected.psycho){
+        $("pSent").checked = !!autoDetected.psycho.sentiment;
+        $("pDer").checked = !!autoDetected.psycho.derives;
+        $("pCat").checked = !!autoDetected.psycho.catalyst;
+      }
     }
 
     function renderScores(data, payload){
@@ -794,17 +778,9 @@
         $("techTxt").textContent = tech.toFixed(1) + " / " + mx.tech.toFixed(1);
         $("psyTxt").textContent = psy.toFixed(1) + " / " + mx.psy.toFixed(1);
 
-        setFill("macroFill", mx.macro ? (macro / mx.macro) * 100 : 0);
-        setFill("techFill", mx.tech ? (tech / mx.tech) * 100 : 0);
-        setFill("psyFill", mx.psy ? (psy / mx.psy) * 100 : 0);
-      } else {
-        // Ensure bars are actually reset when hidden
-        setFill("macroFill", 0);
-        setFill("techFill", 0);
-        setFill("psyFill", 0);
-        $("macroTxt").textContent = "–";
-        $("techTxt").textContent = "–";
-        $("psyTxt").textContent = "–";
+        setFill("macroFill", (mx.macro ? (macro / mx.macro) : 0) * 100);
+        setFill("techFill", (mx.tech ? (tech / mx.tech) : 0) * 100);
+        setFill("psyFill", (mx.psy ? (psy / mx.psy) : 0) * 100);
       }
 
       const vb = $("verdictBox");
@@ -842,10 +818,6 @@
       $("modeHint").textContent = (mode === "Simple")
         ? "Simple is a fast 3-block check. Progress bars are hidden."
         : "Pro uses full scoring and progress bars.";
-
-      // When switching mode, avoid leaving stale bars around
-      resetUI({ mode });
-      setStatus("Ready.", "");
     }
 
     function scheduleAutoCalc(){
@@ -859,9 +831,6 @@
       const payload = buildPayloadFromState();
 
       if(isAuto && !hasMeaningfulInputs(payload)){
-        // This is the key fix for your issue
-        // When last checkbox is unchecked, we reset the UI so bars go back to zero
-        resetUI(payload);
         setStatus("Ready.", "");
         return;
       }
@@ -885,6 +854,7 @@
       if(!isAuto){
         $("calcBtn").textContent = "Calculating...";
         $("calcBtn").disabled = true;
+        $("autofillBtn").disabled = true;
       }
 
       try {
@@ -892,15 +862,18 @@
         renderScores(data, payload);
         setStatus(isAuto ? "Updated." : "OK", "ok");
       } catch (e) {
-        if(e && (e.name === "AbortError" || e.name === "StaleResponseError")) return;
+        if(e && e.name === "AbortError") return;
 
         const code = String(e && e.message ? e.message : "api_error");
-
         const map = {
           forbidden_origin: "Access denied. Open this page from thecryptomath.com.",
           invalid_json: "Request error. Try again.",
           method_not_allowed: "Method not allowed.",
           unauthorized: "Unauthorized.",
+          missing_asset: "Type an asset first, like BTC or SOL.",
+          insufficient_market_data: "Not enough market data for this asset.",
+          upstream_error: "Upstream API error. Try again.",
+          bad_upstream_json: "Upstream API error. Try again.",
           trade_entry_equals_stop: "Entry and Stop cannot be equal.",
           long_invalid_stop: "For a long, Stop must be below Entry.",
           long_invalid_tp: "For a long, TP must be above Entry.",
@@ -914,7 +887,83 @@
         if(!isAuto){
           $("calcBtn").textContent = "Calculate";
           $("calcBtn").disabled = false;
+          $("autofillBtn").disabled = false;
         }
+      }
+    }
+
+    async function runAutoFill(){
+      const asset = String($("asset").value || "").trim();
+      if(!asset){
+        setStatus("Type an asset first, like BTC or SOL.", "err");
+        return;
+      }
+
+      // Force Pro because we auto-fill Pro checkboxes
+      $("mode").value = "Pro";
+      applyModeUI();
+
+      const regime = $("regime").value;
+      const direction = $("direction").value;
+
+      const payload = {
+        mode: "Pro",
+        regime,
+        direction,
+        asset,
+        autoFill: true,
+        trade: {
+          entry: asNum($("entry").value),
+          stop: asNum($("stop").value),
+          tp: asNum($("tp").value)
+        }
+      };
+
+      // Validate trade on client before calling
+      const tradeErr = validateTradeClient(direction, payload.trade.entry, payload.trade.stop, payload.trade.tp);
+      if(tradeErr){
+        const map = {
+          trade_entry_equals_stop: "Entry and Stop cannot be equal.",
+          long_invalid_stop: "For a long, Stop must be below Entry.",
+          long_invalid_tp: "For a long, TP must be above Entry.",
+          short_invalid_stop: "For a short, Stop must be above Entry.",
+          short_invalid_tp: "For a short, TP must be below Entry."
+        };
+        setStatus(map[tradeErr] || "Invalid trade inputs.", "err");
+        return;
+      }
+
+      $("autofillBtn").textContent = "Auto-filling...";
+      $("autofillBtn").disabled = true;
+      $("calcBtn").disabled = true;
+
+      try {
+        setStatus("Auto-filling...", "");
+        const data = await callApi(payload);
+
+        if(data.autoDetected){
+          applyAutoDetectedToUI(data.autoDetected);
+        }
+
+        // Render scores as Pro
+        renderScores(data, { mode: "Pro", regime, direction });
+        setStatus("Auto-filled.", "ok");
+      } catch (e) {
+        if(e && e.name === "AbortError") return;
+
+        const code = String(e && e.message ? e.message : "api_error");
+        const map = {
+          missing_asset: "Type an asset first, like BTC or SOL.",
+          insufficient_market_data: "Not enough market data for this asset.",
+          upstream_error: "Upstream API error. Try again.",
+          bad_upstream_json: "Upstream API error. Try again.",
+          forbidden_origin: "Access denied. Open this page from thecryptomath.com."
+        };
+        setStatus(map[code] || ("Auto-fill error. Code " + code), "err");
+      } finally {
+        $("autofillBtn").textContent = "Auto-fill";
+        $("autofillBtn").disabled = false;
+        $("calcBtn").disabled = false;
       }
     }
 
@@ -926,7 +975,8 @@
       const blob = new Blob([JSON.stringify(state.lastResponse, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
-      const asset = (state.lastResponse.payload.asset || "asset").replace(/[^a-z0-9_-]/gi, "_");
+      const asset = (state.lastResponse.payload && state.lastResponse.payload.asset ? state.lastResponse.payload.asset : "asset")
+        .replace(/[^a-z0-9_-]/gi, "_");
       a.href = url;
       a.download = "cryptomath-score_" + asset + ".json";
       document.body.appendChild(a);
@@ -954,6 +1004,7 @@
       });
 
       $("calcBtn").addEventListener("click", () => runCalculation(false));
+      $("autofillBtn").addEventListener("click", runAutoFill);
       $("exportBtn").addEventListener("click", exportJSON);
     }
 
