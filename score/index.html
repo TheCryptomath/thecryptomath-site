@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The Cryptomath Score | Ultimate Market Filter</title>
+  <meta name="description" content="Professional-grade scoring system to identify high-probability crypto setups." />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="canonical" href="https://thecryptomath.com/score/" />
+
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+  <meta property="og:title" content="The Cryptomath Score | Ultimate Market Filter" />
+  <meta property="og:description" content="Professional-grade scoring system to identify high-probability crypto setups." />
+  <meta property="og:image" content="https://thecryptomath.com/assets/og.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thecryptomath.com/score/" />
+  <meta property="og:site_name" content="The Cryptomath" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Cryptomath Score | Ultimate Market Filter" />
+  <meta name="twitter:description" content="Professional-grade scoring system to identify high-probability crypto setups." />
+  <meta name="twitter:image" content="https://thecryptomath.com/assets/og.png" />
+  <meta name="twitter:site" content="@thecryptomath" />
+
+  <script>
+  (function(){
+    try{
+      var t = localStorage.getItem('theme');
+      if(t === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); return; }
+      if(t === 'light'){ document.documentElement.removeAttribute('data-theme'); return; }
+      if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+        document.documentElement.setAttribute('data-theme','dark');
+      }
+    }catch(e){}
+  })();
+  </script>
+
+  <link rel="stylesheet" href="/css/styles.css" />
+
+  <style>
+    .score-wrap { padding-top: 96px; padding-bottom: 56px; }
+    .score-hero {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      box-shadow: var(--shadow-md);
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+    .score-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+    .score-title { margin-bottom: 8px; }
+    .score-sub {
+      color: var(--text-secondary);
+      font-size: 1.0rem;
+      line-height: 1.6;
+      max-width: 70ch;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+      align-items: start;
+      margin-top: 16px;
+    }
+    @media (max-width: 980px){
+      .score-grid { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.03);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .panel-hd {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+    .panel-title { font-weight: 700; letter-spacing: -0.02em; }
+    .panel-bd { padding: 14px 16px 16px; }
+
+    .field { margin-bottom: 12px; }
+    .label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .input, select.input {
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      color: var(--text-primary);
+      outline: none;
+    }
+    .input::placeholder { color: rgba(140,141,152,0.75); }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 560px){
+      .row { grid-template-columns: 1fr; }
+    }
+
+    .seg {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .seg label {
+      margin: 0;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--text-secondary);
+      cursor: pointer;
+      user-select: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .seg input { accent-color: var(--accent); }
+    .seg label.active {
+      background: rgba(59,130,246,0.14);
+      border-color: rgba(59,130,246,0.45);
+      color: var(--text-primary);
+    }
+
+    .checks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    @media (max-width: 720px){
+      .checks { grid-template-columns: 1fr; }
+    }
+    .check {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 10px 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+    }
+    .check input { margin-top: 2px; accent-color: var(--accent); }
+    .check strong { display: block; font-size: 0.95rem; }
+    .check span { display: block; margin-top: 4px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.35; }
+
+    .muted { color: var(--text-secondary); }
+
+    .btnrow {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .status {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      color: var(--text-secondary);
+      font-weight: 600;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .status.ok { border-color: rgba(34,197,94,0.35); color: rgba(34,197,94,0.95); background: rgba(34,197,94,0.08); }
+    .status.err { border-color: rgba(239,68,68,0.35); color: rgba(239,68,68,0.95); background: rgba(239,68,68,0.08); }
+
+    .metric {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      align-items: center;
+    }
+    .metric:last-child { border-bottom: none; }
+    .metric .k { color: var(--text-secondary); font-weight: 650; }
+    .metric .v { font-family: var(--mono); font-weight: 700; }
+
+    .verdict {
+      margin-top: 12px;
+      padding: 14px 14px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    .verdict.a { border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
+    .verdict.s { border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.10); }
+    .verdict.n { border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.10); }
+    .verdict h3 { margin-bottom: 6px; }
+    .verdict p { color: var(--text-secondary); line-height: 1.5; }
+
+    .bars { margin-top: 12px; }
+    .bar { margin-top: 10px; }
+    .bar .top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      color: var(--text-secondary);
+      font-weight: 650;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+    .track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), #1d4ed8);
+      border-radius: 999px;
+      transition: width 240ms ease;
+    }
+
+    .small { font-size: 0.9rem; }
+    .right-note { color: var(--text-secondary); font-size: 0.9rem; margin-top: 10px; line-height: 1.45; }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="topbar">
+    <div class="container">
+      <nav class="nav">
+        <a class="brand" href="/">
+          <span class="brand-mark" aria-hidden="true">
+            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="512" height="512" />
+          </span>
+          <span>The Cryptomath</span>
+        </a>
+
+        <div class="navlinks" data-navlinks>
+          <a href="/">Home</a>
+          <a href="/build.html">Build</a>
+          <a href="/resources.html">Resources</a>
+          <a href="/connect.html">Connect</a>
+        </div>
+
+        <div class="nav-cta">
+          <a class="btn primary" href="/newsletter.html">Newsletter</a>
+
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span>Theme</span>
+          </button>
+
+          <button class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content" class="score-wrap">
+    <div class="container">
+      <section class="score-hero">
+        <div class="score-kicker">The Cryptomath Score</div>
+        <h1 class="score-title">Ultimate Market Filter</h1>
+        <p class="score-sub">Professional-grade scoring system to identify high-probability crypto setups.</p>
+      </section>
+
+      <div class="score-grid">
+        <section class="panel">
+          <div class="panel-hd">
+            <div class="panel-title">Inputs</div>
+            <div class="muted small" id="methodVersion">Method v1.3.2</div>
+          </div>
+          <div class="panel-bd">
+
+            <div class="field">
+              <label class="label" for="asset">Asset (optional)</label>
+              <input class="input" id="asset" type="text" placeholder="BTC, SOL, ETH..." autocomplete="off" />
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label class="label" for="regime">Market regime</label>
+                <select class="input" id="regime">
+                  <option value="Bull">Bull</option>
+                  <option value="Range">Range</option>
+                  <option value="Bear">Bear</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label class="label" for="direction">Direction</label>
+                <select class="input" id="direction">
+                  <option value="Long">Long</option>
+                  <option value="Short">Short</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="mode">Mode</label>
+              <select class="input" id="mode">
+                <option value="Pro">Pro</option>
+                <option value="Simple">Simple</option>
+              </select>
+              <div class="right-note" id="modeHint">
+                Pro uses full scoring. Simple is a quick 3-block check and hides progress bars.
+              </div>
+            </div>
+
+            <div id="simpleBlock" style="display:none;">
+              <div class="checks">
+                <label class="check">
+                  <input type="checkbox" id="simpleMacro" />
+                  <div>
+                    <strong>Macro OK</strong>
+                    <span>Liquidity, flows, valuation are aligned.</span>
+                  </div>
+                </label>
+                <label class="check">
+                  <input type="checkbox" id="simpleTech" />
+                  <div>
+                    <strong>Technical OK</strong>
+                    <span>Structure, momentum, breakout signals are aligned.</span>
+                  </div>
+                </label>
+                <label class="check">
+                  <input type="checkbox" id="simplePsy" />
+                  <div>
+                    <strong>Psy OK</strong>
+                    <span>Sentiment, derivatives, catalyst are aligned.</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div id="proBlock">
+              <div class="panel" style="margin-top:12px;">
+                <div class="panel-hd"><div class="panel-title">Macro and On-chain</div></div>
+                <div class="panel-bd">
+                  <div class="checks">
+                    <label class="check">
+                      <input type="checkbox" id="mLiq" />
+                      <div>
+                        <strong>Liquidity</strong>
+                        <span>DXY down or BTC dominance down for alts.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="mFlux" />
+                      <div>
+                        <strong>Flows</strong>
+                        <span>Stablecoin inflow plus asset outflows from exchanges.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="mVal" />
+                      <div>
+                        <strong>Valuation</strong>
+                        <span>MVRV Z-Score near 0 or negative.</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel" style="margin-top:12px;">
+                <div class="panel-hd"><div class="panel-title">Technical</div></div>
+                <div class="panel-bd">
+                  <div class="checks">
+                    <label class="check">
+                      <input type="checkbox" id="tMom" />
+                      <div>
+                        <strong>Momentum</strong>
+                        <span>RSI bullish divergence or deep Stoch RSI.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="tStr" />
+                      <div>
+                        <strong>Structure</strong>
+                        <span>Higher lows confirmed plus above EMA50.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="tVol" />
+                      <div>
+                        <strong>Volatility</strong>
+                        <span>Bollinger squeeze or breakout plus retest validated.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="tVolu" />
+                      <div>
+                        <strong>Volume</strong>
+                        <span>Impulse volume at least 1.5x average.</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel" style="margin-top:12px;">
+                <div class="panel-hd"><div class="panel-title">Psychology</div></div>
+                <div class="panel-bd">
+                  <div class="checks">
+                    <label class="check">
+                      <input type="checkbox" id="pSent" />
+                      <div>
+                        <strong>Sentiment</strong>
+                        <span>Fear index low or organic social buzz increasing.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="pDer" />
+                      <div>
+                        <strong>Derivatives</strong>
+                        <span>Neutral or negative funding plus rising open interest.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="pCat" />
+                      <div>
+                        <strong>Catalyst</strong>
+                        <span>Narrative within 7 days and not already priced in.</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top:12px;">
+              <div class="panel-hd">
+                <div class="panel-title">Trade (optional)</div>
+                <div class="muted small">Used for RR downgrade</div>
+              </div>
+              <div class="panel-bd">
+                <div class="row">
+                  <div class="field">
+                    <label class="label" for="entry">Entry</label>
+                    <input class="input" id="entry" inputmode="decimal" placeholder="e.g. 100" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="stop">Stop</label>
+                    <input class="input" id="stop" inputmode="decimal" placeholder="e.g. 95" />
+                  </div>
+                </div>
+                <div class="field" style="margin-top:12px;">
+                  <label class="label" for="tp">Take profit</label>
+                  <input class="input" id="tp" inputmode="decimal" placeholder="e.g. 120" />
+                </div>
+
+                <div class="btnrow">
+                  <button class="btn primary" id="calcBtn" type="button">Calculate</button>
+                  <button class="btn" id="exportBtn" type="button">Export JSON</button>
+                </div>
+
+                <div class="status" id="status" role="status" aria-live="polite">Ready.</div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <aside class="panel">
+          <div class="panel-hd">
+            <div class="panel-title">Results</div>
+            <div class="muted small" id="serverHint">Computed server-side</div>
+          </div>
+          <div class="panel-bd">
+            <div class="metric">
+              <div class="k">Score</div>
+              <div class="v" id="scoreTotal">–</div>
+            </div>
+            <div class="metric">
+              <div class="k">RR</div>
+              <div class="v" id="rrVal">–</div>
+            </div>
+            <div class="metric">
+              <div class="k">RR min</div>
+              <div class="v" id="rrMin">–</div>
+            </div>
+
+            <div class="bars" id="bars">
+              <div class="bar">
+                <div class="top"><span>Macro</span><span id="macroTxt">–</span></div>
+                <div class="track"><div class="fill" id="macroFill"></div></div>
+              </div>
+              <div class="bar">
+                <div class="top"><span>Technical</span><span id="techTxt">–</span></div>
+                <div class="track"><div class="fill" id="techFill"></div></div>
+              </div>
+              <div class="bar">
+                <div class="top"><span>Psychology</span><span id="psyTxt">–</span></div>
+                <div class="track"><div class="fill" id="psyFill"></div></div>
+              </div>
+            </div>
+
+            <div class="verdict n" id="verdictBox" style="margin-top:14px;">
+              <h3 id="verdictTitle">No trade</h3>
+              <p id="verdictText">Fill inputs and click Calculate.</p>
+            </div>
+
+            <p class="right-note">
+              Notes. This tool is educational. It does not guarantee outcomes. Always manage risk.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a class="brand" href="/">
+            <span class="brand-mark" aria-hidden="true">
+              <img class="brand-mark-img" src="/assets/logo.png" alt="" width="512" height="512" />
+            </span>
+            <span>The Cryptomath</span>
+          </a>
+          <p>If it's not here, it's not me.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      const topbar = document.querySelector('.topbar');
+      const themeBtn = document.querySelector('[data-theme-toggle]');
+      const mobileBtn = document.querySelector('[data-mobile-toggle]');
+      const navlinks = document.querySelector('[data-navlinks]');
+
+      function onScroll(){
+        if(!topbar) return;
+        if(window.scrollY > 10) topbar.classList.add('scrolled');
+        else topbar.classList.remove('scrolled');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      function setTheme(next){
+        if(next === 'dark') document.documentElement.setAttribute('data-theme','dark');
+        else document.documentElement.removeAttribute('data-theme');
+        try { localStorage.setItem('theme', next); } catch(e) {}
+      }
+      if(themeBtn){
+        themeBtn.addEventListener('click', () => {
+          const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+          setTheme(isDark ? 'light' : 'dark');
+        });
+      }
+
+      if(mobileBtn && navlinks){
+        mobileBtn.addEventListener('click', () => {
+          const isOpen = mobileBtn.getAttribute('aria-expanded') === 'true';
+          mobileBtn.setAttribute('aria-expanded', String(!isOpen));
+          navlinks.classList.toggle('open');
+        });
+      }
+    })();
+
+    const API_PATH = "/api/score";
+    const METHOD_VERSION = "1.3.2";
+
+    const $ = (id) => document.getElementById(id);
+
+    const state = {
+      lastResponse: null,
+      debounceTimer: null
+    };
+
+    function setStatus(text, kind){
+      const el = $("status");
+      el.className = "status" + (kind ? " " + kind : "");
+      el.textContent = text;
+    }
+
+    function asNum(v){
+      if(v === null || v === undefined) return null;
+      const s = String(v).trim().replace(",", ".");
+      if(!s) return null;
+      const n = Number(s);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    function isTradeComplete(entry, stop, tp){
+      return entry !== null && stop !== null && tp !== null;
+    }
+
+    function validateTradeClient(direction, entry, stop, tp){
+      if(!isTradeComplete(entry, stop, tp)) return null;
+
+      if(entry === stop) return "trade_entry_equals_stop";
+
+      if(direction === "Long"){
+        if(!(stop < entry)) return "long_invalid_stop";
+        if(!(tp > entry)) return "long_invalid_tp";
+      } else {
+        if(!(stop > entry)) return "short_invalid_stop";
+        if(!(tp < entry)) return "short_invalid_tp";
+      }
+      return null;
+    }
+
+    function proPayload(){
+      return {
+        macro: {
+          liquidite: $("mLiq").checked,
+          flux: $("mFlux").checked,
+          valorisation: $("mVal").checked
+        },
+        technique: {
+          momentum: $("tMom").checked,
+          structure: $("tStr").checked,
+          volatilite: $("tVol").checked,
+          volume: $("tVolu").checked
+        },
+        psycho: {
+          sentiment: $("pSent").checked,
+          derives: $("pDer").checked,
+          catalyst: $("pCat").checked
+        }
+      };
+    }
+
+    function simplePayload(){
+      return {
+        macroOK: $("simpleMacro").checked,
+        techOK: $("simpleTech").checked,
+        psychoOK: $("simplePsy").checked
+      };
+    }
+
+    function buildPayloadFromState(){
+      const mode = $("mode").value;
+      const regime = $("regime").value;
+      const direction = $("direction").value;
+
+      const entry = asNum($("entry").value);
+      const stop = asNum($("stop").value);
+      const tp = asNum($("tp").value);
+
+      const asset = String($("asset").value || "").trim();
+
+      const payload = {
+        mode,
+        regime,
+        direction,
+        trade: { entry, stop, tp }
+      };
+
+      if(asset) payload.asset = asset;
+
+      if(mode === "Simple") payload.simple = simplePayload();
+      else payload.pro = proPayload();
+
+      return payload;
+    }
+
+    function hasMeaningfulInputs(payload){
+      if(payload.mode === "Simple"){
+        const s = payload.simple || {};
+        return !!(s.macroOK || s.techOK || s.psychoOK);
+      }
+
+      const p = payload.pro || {};
+      const m = p.macro || {};
+      const t = p.technique || {};
+      const y = p.psycho || {};
+
+      return !!(
+        m.liquidite || m.flux || m.valorisation ||
+        t.momentum || t.structure || t.volatilite || t.volume ||
+        y.sentiment || y.derives || y.catalyst
+      );
+    }
+
+    let currentController = null;
+
+    async function callApi(payload){
+      if(currentController) currentController.abort();
+      currentController = new AbortController();
+
+      const res = await fetch(API_PATH, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: currentController.signal
+      });
+
+      const data = await res.json().catch(() => null);
+      if(!data || !data.ok){
+        const code = data && data.error ? data.error : "api_error";
+        throw new Error(code);
+      }
+      return data;
+    }
+
+    function maxByRegime(regime){
+      if(regime === "Bull") return { macro: 2, tech: 5, psy: 3 };
+      if(regime === "Range") return { macro: 3, tech: 4, psy: 3 };
+      return { macro: 4, tech: 3, psy: 3 };
+    }
+
+    function setFill(id, pct){
+      const el = $(id);
+      el.style.width = Math.max(0, Math.min(100, pct)) + "%";
+    }
+
+    function renderScores(data, payload){
+      $("methodVersion").textContent = "Method v" + (data.methodVersion || METHOD_VERSION);
+
+      const s = data.scores || {};
+      const total = s.total;
+      const rr = s.rr;
+      const rrMin = s.rrMin;
+      const baseVerdict = s.baseVerdict;
+      const finalVerdict = s.finalVerdict;
+
+      $("scoreTotal").textContent = (typeof total === "number") ? total.toFixed(1) + " / 10" : "–";
+      $("rrVal").textContent = (typeof rr === "number") ? rr.toFixed(2) : "–";
+      $("rrMin").textContent = (typeof rrMin === "number") ? rrMin.toFixed(1) : "–";
+
+      const mode = payload.mode;
+      const regime = payload.regime;
+
+      const bars = $("bars");
+      bars.style.display = (mode === "Simple") ? "none" : "block";
+
+      if(mode !== "Simple"){
+        const mx = maxByRegime(regime);
+        const macro = Number(s.scoreMacro || 0);
+        const tech = Number(s.scoreTech || 0);
+        const psy = Number(s.scorePsy || 0);
+
+        $("macroTxt").textContent = macro.toFixed(1) + " / " + mx.macro.toFixed(1);
+        $("techTxt").textContent = tech.toFixed(1) + " / " + mx.tech.toFixed(1);
+        $("psyTxt").textContent = psy.toFixed(1) + " / " + mx.psy.toFixed(1);
+
+        setFill("macroFill", (macro / mx.macro) * 100);
+        setFill("techFill", (tech / mx.tech) * 100);
+        setFill("psyFill", (psy / mx.psy) * 100);
+      }
+
+      const vb = $("verdictBox");
+      vb.classList.remove("a", "s", "n");
+
+      const title = $("verdictTitle");
+      const text = $("verdictText");
+
+      const v = finalVerdict || baseVerdict || "No trade";
+      if(v === "A+"){
+        vb.classList.add("a");
+        title.textContent = "A+ setup";
+        text.textContent = "Strong confluence. Risk-managed execution still required.";
+      } else if(v === "Speculative"){
+        vb.classList.add("s");
+        title.textContent = "Speculative";
+        text.textContent = "Edge exists but risk is higher. Reduce size and keep stops tight.";
+      } else {
+        vb.classList.add("n");
+        title.textContent = "No trade";
+        text.textContent = "Too much noise. Wait for better alignment.";
+      }
+
+      if(baseVerdict && finalVerdict && baseVerdict !== finalVerdict){
+        text.textContent = "Setup downgraded due to insufficient RR for this regime.";
+      }
+
+      state.lastResponse = { payload, data };
+    }
+
+    function applyModeUI(){
+      const mode = $("mode").value;
+      $("simpleBlock").style.display = (mode === "Simple") ? "block" : "none";
+      $("proBlock").style.display = (mode === "Simple") ? "none" : "block";
+      $("modeHint").textContent = (mode === "Simple")
+        ? "Simple is a fast 3-block check. Progress bars are hidden."
+        : "Pro uses full scoring and progress bars.";
+    }
+
+    function scheduleAutoCalc(){
+      clearTimeout(state.debounceTimer);
+      state.debounceTimer = setTimeout(() => {
+        runCalculation(true).catch(() => {});
+      }, 300);
+    }
+
+    async function runCalculation(isAuto){
+      const payload = buildPayloadFromState();
+
+      if(isAuto && !hasMeaningfulInputs(payload)){
+        setStatus("Ready.", "");
+        return;
+      }
+
+      const entry = payload.trade.entry;
+      const stop = payload.trade.stop;
+      const tp = payload.trade.tp;
+      const tradeErr = validateTradeClient(payload.direction, entry, stop, tp);
+      if(tradeErr){
+        const map = {
+          trade_entry_equals_stop: "Entry and Stop cannot be equal.",
+          long_invalid_stop: "For a long, Stop must be below Entry.",
+          long_invalid_tp: "For a long, TP must be above Entry.",
+          short_invalid_stop: "For a short, Stop must be above Entry.",
+          short_invalid_tp: "For a short, TP must be below Entry."
+        };
+        setStatus(map[tradeErr] || "Invalid trade inputs.", "err");
+        return;
+      }
+
+      if(!isAuto){
+        $("calcBtn").textContent = "Calculating...";
+        $("calcBtn").disabled = true;
+      }
+
+      try {
+        const data = await callApi(payload);
+        renderScores(data, payload);
+        setStatus(isAuto ? "Updated." : "OK", "ok");
+      } catch (e) {
+        if(e && e.name === "AbortError") return;
+
+        const code = String(e && e.message ? e.message : "api_error");
+
+        const map = {
+          forbidden_origin: "Access denied. Open this page from thecryptomath.com.",
+          invalid_json: "Request error. Try again.",
+          method_not_allowed: "Method not allowed.",
+          unauthorized: "Unauthorized.",
+          trade_entry_equals_stop: "Entry and Stop cannot be equal.",
+          long_invalid_stop: "For a long, Stop must be below Entry.",
+          long_invalid_tp: "For a long, TP must be above Entry.",
+          short_invalid_stop: "For a short, Stop must be above Entry.",
+          short_invalid_tp: "For a short, TP must be below Entry."
+        };
+
+        const userMsg = map[code] || ("API error. Code " + code);
+        setStatus(userMsg, "err");
+      } finally {
+        if(!isAuto){
+          $("calcBtn").textContent = "Calculate";
+          $("calcBtn").disabled = false;
+        }
+      }
+    }
+
+    function exportJSON(){
+      if(!state.lastResponse){
+        setStatus("Nothing to export yet. Click Calculate first.", "err");
+        return;
+      }
+      const blob = new Blob([JSON.stringify(state.lastResponse, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const asset = (state.lastResponse.payload.asset || "asset").replace(/[^a-z0-9_-]/gi, "_");
+      a.href = url;
+      a.download = "cryptomath-score_" + asset + ".json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      setStatus("Exported.", "ok");
+    }
+
+    function bind(){
+      $("mode").addEventListener("change", () => { applyModeUI(); scheduleAutoCalc(); });
+      $("regime").addEventListener("change", scheduleAutoCalc);
+      $("direction").addEventListener("change", scheduleAutoCalc);
+
+      ["asset","entry","stop","tp"].forEach(id => {
+        $(id).addEventListener("input", scheduleAutoCalc);
+      });
+
+      ["simpleMacro","simpleTech","simplePsy"].forEach(id => {
+        $(id).addEventListener("change", scheduleAutoCalc);
+      });
+
+      ["mLiq","mFlux","mVal","tMom","tStr","tVol","tVolu","pSent","pDer","pCat"].forEach(id => {
+        $(id).addEventListener("change", scheduleAutoCalc);
+      });
+
+      $("calcBtn").addEventListener("click", () => runCalculation(false));
+      $("exportBtn").addEventListener("click", exportJSON);
+    }
+
+    $("methodVersion").textContent = "Method v" + METHOD_VERSION;
+    applyModeUI();
+    bind();
+  </script>
+</body>
+</html>
