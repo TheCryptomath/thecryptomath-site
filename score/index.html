@@ -281,12 +281,12 @@
         <section class="panel">
           <div class="panel-hd">
             <div class="panel-title">Inputs</div>
-            <div class="muted small" id="methodVersion">Method v1.3.2</div>
+            <div class="muted small" id="methodVersion">Method v1.4.0</div>
           </div>
           <div class="panel-bd">
 
             <div class="field">
-              <label class="label" for="asset">Asset (optional)</label>
+              <label class="label" for="asset">Asset</label>
               <input class="input" id="asset" type="text" placeholder="BTC, SOL, ETH..." autocomplete="off" />
             </div>
 
@@ -464,7 +464,7 @@
                 </div>
 
                 <div class="btnrow">
-                  <button class="btn" id="autoFillBtn" type="button">Auto-fill</button>
+                  <button class="btn" id="autoFillBtn" type="button">Auto fill</button>
                   <button class="btn primary" id="calcBtn" type="button">Calculate</button>
                   <button class="btn" id="exportBtn" type="button">Export JSON</button>
                 </div>
@@ -572,19 +572,23 @@
           const isOpen = mobileBtn.getAttribute('aria-expanded') === 'true';
           mobileBtn.setAttribute('aria-expanded', String(!isOpen));
           navlinks.classList.toggle('open');
+
+          if(!isOpen){
+            const firstLink = navlinks.querySelector('a');
+            if(firstLink) firstLink.focus();
+          }
         });
       }
     })();
 
     const API_PATH = "/api/score";
-    const METHOD_VERSION = "1.3.2";
+    const METHOD_VERSION = "1.4.0";
 
     const $ = (id) => document.getElementById(id);
 
     const state = {
       lastResponse: null,
-      debounceTimer: null,
-      currentController: null
+      debounceTimer: null
     };
 
     function setStatus(text, kind){
@@ -686,19 +690,20 @@
       const t = p.technique || {};
       const y = p.psycho || {};
 
-      const hasChecks = !!(
+      return !!(
         m.liquidite || m.flux || m.valorisation ||
         t.momentum || t.structure || t.volatilite || t.volume ||
         y.sentiment || y.derives || y.catalyst
       );
-
-      const tr = payload.trade || {};
-      const hasTradeAny = (tr.entry !== null || tr.stop !== null || tr.tp !== null);
-
-      return hasChecks || hasTradeAny;
     }
 
-    function resetUIToEmpty(){
+    function setFill(id, pct){
+      const el = $(id);
+      if(!el) return;
+      el.style.width = Math.max(0, Math.min(100, pct)) + "%";
+    }
+
+    function resetResultsUI(){
       $("scoreTotal").textContent = "–";
       $("rrVal").textContent = "–";
       $("rrMin").textContent = "–";
@@ -714,17 +719,19 @@
       const vb = $("verdictBox");
       vb.classList.remove("a", "s");
       vb.classList.add("n");
+
       $("verdictTitle").textContent = "No trade";
       $("verdictText").textContent = "Fill inputs and click Calculate.";
 
       state.lastResponse = null;
     }
 
+    let currentController = null;
     let requestCounter = 0;
 
     async function callApi(payload){
-      if(state.currentController) state.currentController.abort();
-      state.currentController = new AbortController();
+      if(currentController) currentController.abort();
+      currentController = new AbortController();
 
       const requestId = ++requestCounter;
 
@@ -732,15 +739,12 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-        signal: state.currentController.signal
+        signal: currentController.signal
       });
 
-      if(requestId !== requestCounter) return null;
+      if(requestId !== requestCounter) throw new Error("stale_response");
 
       const data = await res.json().catch(() => null);
-
-      if(requestId !== requestCounter) return null;
-
       if(!data || !data.ok){
         const code = data && data.error ? data.error : "api_error";
         throw new Error(code);
@@ -752,11 +756,6 @@
       if(regime === "Bull") return { macro: 2, tech: 5, psy: 3 };
       if(regime === "Range") return { macro: 3, tech: 4, psy: 3 };
       return { macro: 4, tech: 3, psy: 3 };
-    }
-
-    function setFill(id, pct){
-      const el = $(id);
-      el.style.width = Math.max(0, Math.min(100, pct)) + "%";
     }
 
     function renderScores(data, payload){
@@ -789,9 +788,9 @@
         $("techTxt").textContent = tech.toFixed(1) + " / " + mx.tech.toFixed(1);
         $("psyTxt").textContent = psy.toFixed(1) + " / " + mx.psy.toFixed(1);
 
-        setFill("macroFill", mx.macro ? (macro / mx.macro) * 100 : 0);
-        setFill("techFill", mx.tech ? (tech / mx.tech) * 100 : 0);
-        setFill("psyFill", mx.psy ? (psy / mx.psy) * 100 : 0);
+        setFill("macroFill", (macro / mx.macro) * 100);
+        setFill("techFill", (tech / mx.tech) * 100);
+        setFill("psyFill", (psy / mx.psy) * 100);
       }
 
       const vb = $("verdictBox");
@@ -829,10 +828,15 @@
       $("modeHint").textContent = (mode === "Simple")
         ? "Simple is a fast 3-block check. Progress bars are hidden."
         : "Pro uses full scoring and progress bars.";
+
+      if(mode === "Simple"){
+        resetResultsUI();
+      }
     }
 
     function scheduleAutoCalc(){
       clearTimeout(state.debounceTimer);
+      setStatus("Updated.", "");
       state.debounceTimer = setTimeout(() => {
         runCalculation(true).catch(() => {});
       }, 300);
@@ -842,7 +846,7 @@
       const payload = buildPayloadFromState();
 
       if(isAuto && !hasMeaningfulInputs(payload)){
-        resetUIToEmpty();
+        resetResultsUI();
         setStatus("Ready.", "");
         return;
       }
@@ -875,6 +879,7 @@
         setStatus(isAuto ? "Updated." : "OK", "ok");
       } catch (e) {
         if(e && e.name === "AbortError") return;
+        if(e && String(e.message) === "stale_response") return;
 
         const code = String(e && e.message ? e.message : "api_error");
 
@@ -883,23 +888,16 @@
           invalid_json: "Request error. Try again.",
           method_not_allowed: "Method not allowed.",
           unauthorized: "Unauthorized.",
+          missing_asset: "Type an asset first. Example BTC.",
+          upstream_error: "Upstream API error. Try again.",
+          bad_upstream_json: "Upstream returned invalid JSON. Try again.",
+          insufficient_market_data: "Not enough market data for this asset.",
           trade_entry_equals_stop: "Entry and Stop cannot be equal.",
           long_invalid_stop: "For a long, Stop must be below Entry.",
           long_invalid_tp: "For a long, TP must be above Entry.",
           short_invalid_stop: "For a short, Stop must be above Entry.",
-          short_invalid_tp: "For a short, TP must be below Entry.",
-
-          upstream_binance_klines_429: "Binance rate limited. Try again.",
-          upstream_binance_funding_429: "Binance futures rate limited. Try again.",
-          upstream_feargreed_429: "Fear and Greed API rate limited. Try again.",
-          upstream_coingecko_429: "CoinGecko rate limited. Try again in 30 seconds.",
-          upstream_llama_stables_429: "Stablecoins API rate limited. Try again."
+          short_invalid_tp: "For a short, TP must be below Entry."
         };
-
-        if(!map[code] && code.startsWith("upstream_")){
-          setStatus("Upstream API issue. " + code.replaceAll("_", " "), "err");
-          return;
-        }
 
         const userMsg = map[code] || ("API error. Code " + code);
         setStatus(userMsg, "err");
@@ -911,47 +909,49 @@
       }
     }
 
-    function applyAutoDetectedToUI(auto){
-      if(!auto) return;
+    function setCheckbox(id, value){
+      const el = $(id);
+      if(!el) return;
+      el.checked = !!value;
+    }
 
-      const m = auto.macro || {};
-      const t = auto.technique || {};
-      const y = auto.psycho || {};
+    function applyAutoDetectedToUI(autoDetected){
+      if(!autoDetected) return;
 
-      $("mLiq").checked = !!m.liquidite;
-      $("mFlux").checked = !!m.flux;
-      $("mVal").checked = !!m.valorisation;
+      const m = autoDetected.macro || {};
+      const t = autoDetected.technique || {};
+      const p = autoDetected.psycho || {};
 
-      $("tMom").checked = !!t.momentum;
-      $("tStr").checked = !!t.structure;
-      $("tVol").checked = !!t.volatilite;
-      $("tVolu").checked = !!t.volume;
+      setCheckbox("mLiq", m.liquidite);
+      setCheckbox("mFlux", m.flux);
+      setCheckbox("mVal", m.valorisation);
 
-      $("pSent").checked = !!y.sentiment;
-      $("pDer").checked = !!y.derives;
-      $("pCat").checked = !!y.catalyst;
+      setCheckbox("tMom", t.momentum);
+      setCheckbox("tStr", t.structure);
+      setCheckbox("tVol", t.volatilite);
+      setCheckbox("tVolu", t.volume);
+
+      setCheckbox("pSent", p.sentiment);
+      setCheckbox("pDer", p.derives);
+      setCheckbox("pCat", p.catalyst);
     }
 
     async function runAutoFill(){
       const asset = String($("asset").value || "").trim();
       if(!asset){
-        setStatus("Enter an asset first. Example BTC.", "err");
+        setStatus("Type an asset first. Example BTC.", "err");
         return;
       }
 
-      const payload = {
-        mode: "Auto",
-        asset,
-        regime: $("regime").value,
-        direction: $("direction").value,
-        trade: {
-          entry: asNum($("entry").value),
-          stop: asNum($("stop").value),
-          tp: asNum($("tp").value)
-        }
-      };
+      $("mode").value = "Pro";
+      applyModeUI();
 
-      $("autoFillBtn").textContent = "Auto-filling...";
+      const payload = buildPayloadFromState();
+      payload.mode = "Pro";
+      payload.autoFill = true;
+      payload.asset = asset;
+
+      $("autoFillBtn").textContent = "Auto filling...";
       $("autoFillBtn").disabled = true;
 
       try {
@@ -962,37 +962,26 @@
           applyAutoDetectedToUI(data.autoDetected);
         }
 
-        // On reste en Pro ou Simple selon ton choix.
-        // Si tu es en Simple, Auto-fill ne coche pas les cases Simple.
-        // Donc on force Pro pour que tu voies l’état.
-        $("mode").value = "Pro";
-        applyModeUI();
+        const payloadAfter = buildPayloadFromState();
+        payloadAfter.mode = "Pro";
 
-        renderScores(data, { ...payload, mode: "Pro" });
-        setStatus("Auto-fill OK.", "ok");
+        renderScores(data, payloadAfter);
+        setStatus("OK", "ok");
       } catch (e) {
         if(e && e.name === "AbortError") return;
+        if(e && String(e.message) === "stale_response") return;
 
         const code = String(e && e.message ? e.message : "api_error");
-
-        if(code.startsWith("upstream_")){
-          setStatus("Upstream API issue. " + code.replaceAll("_", " "), "err");
-          return;
-        }
-
         const map = {
-          forbidden_origin: "Access denied. Open this page from thecryptomath.com.",
-          invalid_asset: "Unknown asset for Auto-fill. Try BTC, ETH, SOL, DOGE.",
-          upstream_binance_klines_429: "Binance rate limited. Try again.",
-          upstream_binance_funding_429: "Binance futures rate limited. Try again.",
-          upstream_feargreed_429: "Fear and Greed API rate limited. Try again.",
-          upstream_coingecko_429: "CoinGecko rate limited. Try again in 30 seconds.",
-          upstream_llama_stables_429: "Stablecoins API rate limited. Try again."
+          missing_asset: "Missing asset.",
+          upstream_error: "Upstream API error. Try again.",
+          bad_upstream_json: "Upstream returned invalid JSON. Try again.",
+          insufficient_market_data: "Not enough market data for this asset.",
+          forbidden_origin: "Access denied. Open this page from thecryptomath.com."
         };
-
-        setStatus(map[code] || ("Upstream API error. " + code), "err");
+        setStatus(map[code] || ("Auto fill failed. Code " + code), "err");
       } finally {
-        $("autoFillBtn").textContent = "Auto-fill";
+        $("autoFillBtn").textContent = "Auto fill";
         $("autoFillBtn").disabled = false;
       }
     }
@@ -1033,13 +1022,12 @@
       });
 
       $("calcBtn").addEventListener("click", () => runCalculation(false));
-      $("autoFillBtn").addEventListener("click", runAutoFill);
       $("exportBtn").addEventListener("click", exportJSON);
+      $("autoFillBtn").addEventListener("click", runAutoFill);
     }
 
     $("methodVersion").textContent = "Method v" + METHOD_VERSION;
     applyModeUI();
-    resetUIToEmpty();
     bind();
   </script>
 </body>
