@@ -139,6 +139,7 @@
       .checks { grid-template-columns: 1fr; }
     }
     .check {
+      position: relative;
       display: flex;
       gap: 10px;
       align-items: flex-start;
@@ -146,10 +147,31 @@
       border-radius: var(--radius-md);
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.02);
+      transition: border-color 160ms ease, background 160ms ease;
     }
     .check input { margin-top: 2px; accent-color: var(--accent); }
     .check strong { display: block; font-size: 0.95rem; }
     .check span { display: block; margin-top: 4px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.35; }
+
+    /* Auto fill UX */
+    .check.auto {
+      border-color: rgba(45,91,255,0.45);
+      background: rgba(45,91,255,0.08);
+    }
+    .check.auto::after {
+      content: "AUTO";
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(45,91,255,0.55);
+      background: rgba(45,91,255,0.12);
+      color: rgba(210,225,255,0.98);
+    }
 
     .muted { color: var(--text-secondary); }
 
@@ -174,6 +196,17 @@
     }
     .status.ok { border-color: rgba(34,197,94,0.35); color: rgba(34,197,94,0.95); background: rgba(34,197,94,0.08); }
     .status.err { border-color: rgba(239,68,68,0.35); color: rgba(239,68,68,0.95); background: rgba(239,68,68,0.08); }
+
+    .auto-summary {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(45,91,255,0.35);
+      background: rgba(45,91,255,0.08);
+      color: rgba(210,225,255,0.98);
+      font-weight: 700;
+      display: none;
+    }
 
     .metric {
       display: grid;
@@ -281,7 +314,7 @@
         <section class="panel">
           <div class="panel-hd">
             <div class="panel-title">Inputs</div>
-            <div class="muted small" id="methodVersion">Method v1.4.0</div>
+            <div class="muted small" id="methodVersion">Method v1.4.5</div>
           </div>
           <div class="panel-bd">
 
@@ -322,21 +355,21 @@
 
             <div id="simpleBlock" style="display:none;">
               <div class="checks">
-                <label class="check">
+                <label class="check" data-check="simpleMacro">
                   <input type="checkbox" id="simpleMacro" />
                   <div>
                     <strong>Macro OK</strong>
                     <span>Liquidity, flows, valuation are aligned.</span>
                   </div>
                 </label>
-                <label class="check">
+                <label class="check" data-check="simpleTech">
                   <input type="checkbox" id="simpleTech" />
                   <div>
                     <strong>Technical OK</strong>
                     <span>Structure, momentum, breakout signals are aligned.</span>
                   </div>
                 </label>
-                <label class="check">
+                <label class="check" data-check="simplePsy">
                   <input type="checkbox" id="simplePsy" />
                   <div>
                     <strong>Psy OK</strong>
@@ -351,21 +384,21 @@
                 <div class="panel-hd"><div class="panel-title">Macro and On-chain</div></div>
                 <div class="panel-bd">
                   <div class="checks">
-                    <label class="check">
+                    <label class="check" data-check="mLiq">
                       <input type="checkbox" id="mLiq" />
                       <div>
                         <strong>Liquidity</strong>
                         <span>DXY down or BTC dominance down for alts.</span>
                       </div>
                     </label>
-                    <label class="check">
+                    <label class="check" data-check="mFlux">
                       <input type="checkbox" id="mFlux" />
                       <div>
                         <strong>Flows</strong>
                         <span>Stablecoin inflow plus asset outflows from exchanges.</span>
                       </div>
                     </label>
-                    <label class="check">
+                    <label class="check" data-check="mVal">
                       <input type="checkbox" id="mVal" />
                       <div>
                         <strong>Valuation</strong>
@@ -380,28 +413,28 @@
                 <div class="panel-hd"><div class="panel-title">Technical</div></div>
                 <div class="panel-bd">
                   <div class="checks">
-                    <label class="check">
+                    <label class="check" data-check="tMom">
                       <input type="checkbox" id="tMom" />
                       <div>
                         <strong>Momentum</strong>
                         <span>RSI bullish divergence or deep Stoch RSI.</span>
                       </div>
                     </label>
-                    <label class="check">
+                    <label class="check" data-check="tStr">
                       <input type="checkbox" id="tStr" />
                       <div>
                         <strong>Structure</strong>
                         <span>Higher lows confirmed plus above EMA50.</span>
                       </div>
                     </label>
-                    <label class="check">
+                    <label class="check" data-check="tVol">
                       <input type="checkbox" id="tVol" />
                       <div>
                         <strong>Volatility</strong>
                         <span>Bollinger squeeze or breakout plus retest validated.</span>
                       </div>
                     </label>
-                    <label class="check">
+                    <label class="check" data-check="tVolu">
                       <input type="checkbox" id="tVolu" />
                       <div>
                         <strong>Volume</strong>
@@ -416,21 +449,21 @@
                 <div class="panel-hd"><div class="panel-title">Psychology</div></div>
                 <div class="panel-bd">
                   <div class="checks">
-                    <label class="check">
+                    <label class="check" data-check="pSent">
                       <input type="checkbox" id="pSent" />
                       <div>
                         <strong>Sentiment</strong>
                         <span>Fear index low or organic social buzz increasing.</span>
                       </div>
                     </label>
-                    <label class="check">
+                    <label class="check" data-check="pDer">
                       <input type="checkbox" id="pDer" />
                       <div>
                         <strong>Derivatives</strong>
                         <span>Neutral or negative funding plus rising open interest.</span>
                       </div>
                     </label>
-                    <label class="check">
+                    <label class="check" data-check="pCat">
                       <input type="checkbox" id="pCat" />
                       <div>
                         <strong>Catalyst</strong>
@@ -470,6 +503,7 @@
                 </div>
 
                 <div class="status" id="status" role="status" aria-live="polite">Ready.</div>
+                <div class="auto-summary" id="autoSummary">Auto detected –</div>
               </div>
             </div>
 
@@ -582,19 +616,32 @@
     })();
 
     const API_PATH = "/api/score";
-    const METHOD_VERSION = "1.4.0";
+    const METHOD_VERSION = "1.4.5";
 
     const $ = (id) => document.getElementById(id);
 
     const state = {
       lastResponse: null,
-      debounceTimer: null
+      debounceTimer: null,
+      lastAutoDetected: null
     };
 
     function setStatus(text, kind){
       const el = $("status");
       el.className = "status" + (kind ? " " + kind : "");
       el.textContent = text;
+    }
+
+    function showAutoSummary(text){
+      const el = $("autoSummary");
+      if(!el) return;
+      if(!text){
+        el.style.display = "none";
+        el.textContent = "";
+        return;
+      }
+      el.textContent = text;
+      el.style.display = "block";
     }
 
     function asNum(v){
@@ -701,6 +748,18 @@
       const el = $(id);
       if(!el) return;
       el.style.width = Math.max(0, Math.min(100, pct)) + "%";
+    }
+
+    function resetAutoUI(){
+      const ids = ["mLiq","mFlux","mVal","tMom","tStr","tVol","tVolu","pSent","pDer","pCat"];
+      for(const id of ids){
+        const box = $(id);
+        if(box) box.title = "";
+        const label = document.querySelector('[data-check="' + id + '"]');
+        if(label) label.classList.remove("auto");
+      }
+      state.lastAutoDetected = null;
+      showAutoSummary("");
     }
 
     function resetResultsUI(){
@@ -831,6 +890,7 @@
 
       if(mode === "Simple"){
         resetResultsUI();
+        resetAutoUI();
       }
     }
 
@@ -915,6 +975,13 @@
       el.checked = !!value;
     }
 
+    function markAuto(id, enabled){
+      const label = document.querySelector('[data-check="' + id + '"]');
+      if(!label) return;
+      if(enabled) label.classList.add("auto");
+      else label.classList.remove("auto");
+    }
+
     function applyAutoDetectedToUI(autoDetected){
       if(!autoDetected) return;
 
@@ -922,64 +989,104 @@
       const t = autoDetected.technique || {};
       const p = autoDetected.psycho || {};
 
-      setCheckbox("mLiq", m.liquidite);
-      setCheckbox("mFlux", m.flux);
-      setCheckbox("mVal", m.valorisation);
+      setCheckbox("mLiq", m.liquidite); markAuto("mLiq", true);
+      setCheckbox("mFlux", m.flux); markAuto("mFlux", true);
+      setCheckbox("mVal", m.valorisation); markAuto("mVal", true);
 
-      setCheckbox("tMom", t.momentum);
-      setCheckbox("tStr", t.structure);
-      setCheckbox("tVol", t.volatilite);
-      setCheckbox("tVolu", t.volume);
+      setCheckbox("tMom", t.momentum); markAuto("tMom", true);
+      setCheckbox("tStr", t.structure); markAuto("tStr", true);
+      setCheckbox("tVol", t.volatilite); markAuto("tVol", true);
+      setCheckbox("tVolu", t.volume); markAuto("tVolu", true);
 
-      setCheckbox("pSent", p.sentiment);
-      setCheckbox("pDer", p.derives);
-      setCheckbox("pCat", p.catalyst);
+      setCheckbox("pSent", p.sentiment); markAuto("pSent", true);
+      setCheckbox("pDer", p.derives); markAuto("pDer", true);
+      setCheckbox("pCat", p.catalyst); markAuto("pCat", true);
+
+      state.lastAutoDetected = autoDetected;
     }
 
     function applyAutoTooltips(debug){
-      if(!debug) return;
+      if(!debug || typeof debug !== "object") return;
 
-      if(debug.technical){
-        if(debug.technical.rsi !== null && debug.technical.rsi !== undefined){
-          $("tMom").title = "RSI: " + Number(debug.technical.rsi).toFixed(1);
+      try{
+        if(debug.technical){
+          const rsi = debug.technical.rsi;
+          const st = debug.technical.stochRsi;
+          const bbp = debug.technical.bbWidthPct;
+          const vr = debug.technical.volumeRatio;
+
+          if(rsi !== null && rsi !== undefined) $("tMom").title = "RSI: " + Number(rsi).toFixed(2);
+          if(st !== null && st !== undefined) $("tMom").title += ($("tMom").title ? " | " : "") + "Stoch RSI: " + Number(st).toFixed(0);
+
+          if(bbp !== null && bbp !== undefined) $("tVol").title = "BB width percentile: " + Number(bbp).toFixed(2);
+
+          if(vr !== null && vr !== undefined) $("tVolu").title = "Volume ratio: " + Number(vr).toFixed(2);
+
+          if(debug.technical.structure && debug.technical.structure.reason){
+            $("tStr").title = "Structure: " + String(debug.technical.structure.reason);
+          }
         }
-        if(debug.technical.volumeRatio !== null && debug.technical.volumeRatio !== undefined){
-          $("tVolu").title = "Volume ratio: " + Number(debug.technical.volumeRatio).toFixed(2) + "x";
+
+        if(debug.psychology){
+          const fg = debug.psychology.fearGreed;
+          const fr = debug.psychology.fundingRate;
+          if(fg !== null && fg !== undefined) $("pSent").title = "Fear and greed: " + Number(fg).toFixed(0);
+          if(fr !== null && fr !== undefined) $("pDer").title = "Funding rate: " + Number(fr).toFixed(8);
         }
-        if(debug.technical.bbWidthPct !== null && debug.technical.bbWidthPct !== undefined){
-          $("tVol").title = "BB width percentile: " + Number(debug.technical.bbWidthPct).toFixed(0);
+
+        if(debug.macro){
+          const parts = [];
+          if(debug.macro.stablecoinChange7dPct !== null && debug.macro.stablecoinChange7dPct !== undefined){
+            parts.push("Change 7d: " + Number(debug.macro.stablecoinChange7dPct).toFixed(2) + "%");
+          }
+          if(debug.macro.stablecoinMcapUsd !== null && debug.macro.stablecoinMcapUsd !== undefined){
+            parts.push("Total: $" + (Number(debug.macro.stablecoinMcapUsd) / 1e9).toFixed(1) + "B");
+          }
+          if(parts.length) $("mFlux").title = parts.join(" | ");
+
+          if(debug.macro.btcDominance !== null && debug.macro.btcDominance !== undefined){
+            $("mLiq").title = "BTC dominance: " + Number(debug.macro.btcDominance).toFixed(2) + "%";
+          }
         }
-        if(debug.technical.structure && debug.technical.structure.reason){
-          $("tStr").title = "Structure: " + String(debug.technical.structure.reason);
+
+        if(debug.market){
+          const symbol = debug.market.symbol;
+          const price = debug.market.price;
+          const ema50 = debug.market.ema50;
+          const bits = [];
+          if(symbol) bits.push(String(symbol));
+          if(price !== null && price !== undefined) bits.push("Price: " + Number(price).toFixed(2));
+          if(ema50 !== null && ema50 !== undefined) bits.push("EMA50: " + Number(ema50).toFixed(2));
+          const tt = bits.join(" | ");
+          if(tt) $("asset").title = tt;
         }
+      }catch(e){
+        // no-op
       }
+    }
 
-      if(debug.psychology){
-        if(debug.psychology.fearGreed !== null && debug.psychology.fearGreed !== undefined){
-          $("pSent").title = "Fear & Greed: " + String(debug.psychology.fearGreed);
-        }
-        if(debug.psychology.fundingRate !== null && debug.psychology.fundingRate !== undefined){
-          $("pDer").title = "Funding: " + String(debug.psychology.fundingRate);
-        }
-      }
+    function countAutoTrue(autoDetected){
+      if(!autoDetected) return 0;
+      let n = 0;
 
-      if(debug.macro){
-        const parts = [];
+      const m = autoDetected.macro || {};
+      const t = autoDetected.technique || {};
+      const p = autoDetected.psycho || {};
 
-        if(debug.macro.stablecoinChange7dPct !== null && debug.macro.stablecoinChange7dPct !== undefined){
-          parts.push("Change 7d: " + Number(debug.macro.stablecoinChange7dPct).toFixed(2) + "%");
-        }
-        if(debug.macro.stablecoinMcapUsd !== null && debug.macro.stablecoinMcapUsd !== undefined){
-          parts.push("Total: $" + (Number(debug.macro.stablecoinMcapUsd) / 1e9).toFixed(1) + "B");
-        }
-        if(parts.length){
-          $("mFlux").title = parts.join(" | ");
-        }
+      if(!!m.liquidite) n++;
+      if(!!m.flux) n++;
+      if(!!m.valorisation) n++;
 
-        if(debug.macro.btcDominance !== null && debug.macro.btcDominance !== undefined){
-          $("mLiq").title = "BTC dominance: " + Number(debug.macro.btcDominance).toFixed(2) + "%";
-        }
-      }
+      if(!!t.momentum) n++;
+      if(!!t.structure) n++;
+      if(!!t.volatilite) n++;
+      if(!!t.volume) n++;
+
+      if(!!p.sentiment) n++;
+      if(!!p.derives) n++;
+      if(!!p.catalyst) n++;
+
+      return n;
     }
 
     async function runAutoFill(){
@@ -991,6 +1098,8 @@
 
       $("mode").value = "Pro";
       applyModeUI();
+
+      resetAutoUI();
 
       const payload = buildPayloadFromState();
       payload.mode = "Pro";
@@ -1006,6 +1115,8 @@
 
         if(data.autoDetected){
           applyAutoDetectedToUI(data.autoDetected);
+          const c = countAutoTrue(data.autoDetected);
+          showAutoSummary("Auto detected " + c + " / 10");
         }
 
         if(data.debug){
@@ -1030,6 +1141,7 @@
           forbidden_origin: "Access denied. Open this page from thecryptomath.com."
         };
         setStatus(map[code] || ("Auto fill failed. Code " + code), "err");
+        showAutoSummary("");
       } finally {
         $("autoFillBtn").textContent = "Auto fill";
         $("autoFillBtn").disabled = false;
