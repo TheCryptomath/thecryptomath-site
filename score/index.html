@@ -936,6 +936,52 @@
       setCheckbox("pCat", p.catalyst);
     }
 
+    function applyAutoTooltips(debug){
+      if(!debug) return;
+
+      if(debug.technical){
+        if(debug.technical.rsi !== null && debug.technical.rsi !== undefined){
+          $("tMom").title = "RSI: " + Number(debug.technical.rsi).toFixed(1);
+        }
+        if(debug.technical.volumeRatio !== null && debug.technical.volumeRatio !== undefined){
+          $("tVolu").title = "Volume ratio: " + Number(debug.technical.volumeRatio).toFixed(2) + "x";
+        }
+        if(debug.technical.bbWidthPct !== null && debug.technical.bbWidthPct !== undefined){
+          $("tVol").title = "BB width percentile: " + Number(debug.technical.bbWidthPct).toFixed(0);
+        }
+        if(debug.technical.structure && debug.technical.structure.reason){
+          $("tStr").title = "Structure: " + String(debug.technical.structure.reason);
+        }
+      }
+
+      if(debug.psychology){
+        if(debug.psychology.fearGreed !== null && debug.psychology.fearGreed !== undefined){
+          $("pSent").title = "Fear & Greed: " + String(debug.psychology.fearGreed);
+        }
+        if(debug.psychology.fundingRate !== null && debug.psychology.fundingRate !== undefined){
+          $("pDer").title = "Funding: " + String(debug.psychology.fundingRate);
+        }
+      }
+
+      if(debug.macro){
+        const parts = [];
+
+        if(debug.macro.stablecoinChange7dPct !== null && debug.macro.stablecoinChange7dPct !== undefined){
+          parts.push("Change 7d: " + Number(debug.macro.stablecoinChange7dPct).toFixed(2) + "%");
+        }
+        if(debug.macro.stablecoinMcapUsd !== null && debug.macro.stablecoinMcapUsd !== undefined){
+          parts.push("Total: $" + (Number(debug.macro.stablecoinMcapUsd) / 1e9).toFixed(1) + "B");
+        }
+        if(parts.length){
+          $("mFlux").title = parts.join(" | ");
+        }
+
+        if(debug.macro.btcDominance !== null && debug.macro.btcDominance !== undefined){
+          $("mLiq").title = "BTC dominance: " + Number(debug.macro.btcDominance).toFixed(2) + "%";
+        }
+      }
+    }
+
     async function runAutoFill(){
       const asset = String($("asset").value || "").trim();
       if(!asset){
@@ -960,6 +1006,10 @@
 
         if(data.autoDetected){
           applyAutoDetectedToUI(data.autoDetected);
+        }
+
+        if(data.debug){
+          applyAutoTooltips(data.debug);
         }
 
         const payloadAfter = buildPayloadFromState();
