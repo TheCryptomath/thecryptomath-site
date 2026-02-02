@@ -30,7 +30,6 @@
     }
   </script>
 
-
   <meta property="og:title" content="The Cryptomath Score | Ultimate Market Filter" />
   <meta property="og:description" content="Professional-grade scoring system to identify high-probability crypto setups." />
   <meta property="og:image" content="https://thecryptomath.com/assets/og.png" />
@@ -601,6 +600,7 @@
             <div class="panel-title">Results</div>
             <div class="muted small" id="serverHint">Computed server-side</div>
           </div>
+
           <div class="panel-bd">
             <div class="metric">
               <div class="k">Score</div>
@@ -633,6 +633,48 @@
             <div class="verdict n" id="verdictBox" style="margin-top:14px;">
               <h3 id="verdictTitle">No trade</h3>
               <p id="verdictText">Fill inputs and click Calculate.</p>
+            </div>
+
+            <!-- How to use block -->
+            <div class="panel" style="margin-top:12px;">
+              <div class="panel-hd">
+                <div class="panel-title">How to use</div>
+              </div>
+              <div class="panel-bd">
+                <p class="muted" style="margin:0; line-height:1.55;">
+                  This tool is a filter. Use it to avoid weak setups and focus on clean confluence.
+                </p>
+
+                <div style="height:10px;"></div>
+
+                <div class="muted" style="font-weight:700; margin-bottom:6px;">Fast workflow</div>
+                <ol class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
+                  <li>Type an asset. Example BTC, ETH, SOL.</li>
+                  <li>Keep Regime on Auto unless you have a strong reason to override.</li>
+                  <li>Click Auto fill to pull market context and pre-check signals.</li>
+                  <li>Adjust what you disagree with. Then click Calculate.</li>
+                  <li>If RR is below RR min, the verdict is downgraded on purpose.</li>
+                </ol>
+
+                <div style="height:10px;"></div>
+
+                <div class="muted" style="font-weight:700; margin-bottom:6px;">What each verdict means</div>
+                <ul class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
+                  <li><strong>A+</strong> strong confluence. Good for intraday, swing, and position entries with risk control.</li>
+                  <li><strong>Speculative</strong> some edge, higher noise. Reduce size, be stricter on execution.</li>
+                  <li><strong>No trade</strong> skip. Wait for alignment or a better regime.</li>
+                </ul>
+
+                <div style="height:10px;"></div>
+
+                <div class="muted" style="font-weight:700; margin-bottom:6px;">Timeframes and use cases</div>
+                <ul class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
+                  <li><strong>Scalp</strong> use this as a direction filter only. Confirm with your execution chart.</li>
+                  <li><strong>Intraday</strong> best fit. Auto fill + RR check gives disciplined selection.</li>
+                  <li><strong>Swing</strong> very good. Structure is intentionally strict to avoid chop.</li>
+                  <li><strong>Mid or long term</strong> use it for entries and adds. Re-run on regime shifts, not every day.</li>
+                </ul>
+              </div>
             </div>
 
             <p class="right-note">
