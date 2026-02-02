@@ -28,11 +28,11 @@
   <script>
   (function(){
     try{
-      var t = localStorage.getItem('theme');
-      if(t === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); return; }
-      if(t === 'light'){ document.documentElement.removeAttribute('data-theme'); return; }
-      if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
-        document.documentElement.setAttribute('data-theme','dark');
+      var t = localStorage.getItem("theme");
+      if(t === "dark"){ document.documentElement.setAttribute("data-theme","dark"); return; }
+      if(t === "light"){ document.documentElement.removeAttribute("data-theme"); return; }
+      if(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches){
+        document.documentElement.setAttribute("data-theme","dark");
       }
     }catch(e){}
   })();
@@ -110,6 +110,7 @@
       margin-bottom: 6px;
       font-weight: 600;
     }
+
     .input, select.input {
       width: 100%;
       padding: 12px 12px;
@@ -118,8 +119,18 @@
       background: rgba(255,255,255,0.02);
       color: var(--text-primary);
       outline: none;
+      transition: border-color 150ms ease;
+    }
+    .input:focus, select.input:focus {
+      border-color: var(--accent);
     }
     .input::placeholder { color: rgba(140,141,152,0.75); }
+
+    /* Fix selects readability in light and dark mode dropdowns */
+    select.input { color: var(--text-primary); }
+    select.input option { background: #ffffff; color: #0e0f12; }
+    html[data-theme="dark"] select.input option { background: #0e0f12; color: #ffffff; }
+
     .row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -139,7 +150,6 @@
       .checks { grid-template-columns: 1fr; }
     }
     .check {
-      position: relative;
       display: flex;
       gap: 10px;
       align-items: flex-start;
@@ -147,31 +157,44 @@
       border-radius: var(--radius-md);
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.02);
+      position: relative;
+      transition: border-color 150ms ease, background 150ms ease;
     }
-    .check input { margin-top: 2px; accent-color: var(--accent); }
+    .check:hover {
+      border-color: rgba(255,255,255,0.15);
+    }
+    .check input { margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
     .check strong { display: block; font-size: 0.95rem; }
     .check span { display: block; margin-top: 4px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.35; }
 
-    /* Option A
-       AUTO badge only on boxes set true by auto fill */
-    .check.auto{
-      border-color: rgba(59,130,246,0.45);
-      background: rgba(59,130,246,0.08);
-      box-shadow: 0 0 0 1px rgba(59,130,246,0.14) inset;
+    /* AUTO badge, Option A only on TRUE values */
+    .check.auto {
+      border-color: rgba(59, 130, 246, 0.5);
+      background: rgba(59, 130, 246, 0.08);
     }
-    .check.auto::after{
+    .check.auto::after {
       content: "AUTO";
       position: absolute;
       top: 8px;
       right: 8px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 800;
-      letter-spacing: 0.08em;
-      padding: 4px 8px;
+      letter-spacing: 0.06em;
+      padding: 3px 7px;
       border-radius: 999px;
-      border: 1px solid rgba(59,130,246,0.45);
-      background: rgba(59,130,246,0.12);
-      color: rgba(191,219,254,0.98);
+      border: 1px solid rgba(59, 130, 246, 0.5);
+      background: rgba(59, 130, 246, 0.15);
+      color: rgba(147, 197, 253, 0.98);
+    }
+    /* Better contrast in light mode */
+    html:not([data-theme="dark"]) .check.auto {
+      border-color: rgba(37, 99, 235, 0.4);
+      background: rgba(37, 99, 235, 0.08);
+    }
+    html:not([data-theme="dark"]) .check.auto::after {
+      border-color: rgba(29, 78, 216, 0.5);
+      background: rgba(29, 78, 216, 0.12);
+      color: rgba(29, 78, 216, 1);
     }
 
     .muted { color: var(--text-secondary); }
@@ -181,6 +204,12 @@
       gap: 12px;
       flex-wrap: wrap;
       margin-top: 12px;
+    }
+
+    /* Loading state for buttons */
+    .btn.loading {
+      pointer-events: none;
+      opacity: 0.7;
     }
 
     .status {
@@ -198,15 +227,22 @@
     .status.ok { border-color: rgba(34,197,94,0.35); color: rgba(34,197,94,0.95); background: rgba(34,197,94,0.08); }
     .status.err { border-color: rgba(239,68,68,0.35); color: rgba(239,68,68,0.95); background: rgba(239,68,68,0.08); }
 
-    .auto-summary{
+    .auto-summary {
       margin-top: 10px;
       padding: 10px 12px;
       border-radius: var(--radius-md);
-      border: 1px solid rgba(59,130,246,0.35);
-      background: rgba(59,130,246,0.08);
-      color: rgba(191,219,254,0.98);
-      font-weight: 700;
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      background: rgba(59, 130, 246, 0.08);
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
       display: none;
+    }
+    .auto-summary strong { color: var(--text-primary); font-weight: 800; }
+    /* Light mode adjustments */
+    html:not([data-theme="dark"]) .auto-summary {
+      border-color: rgba(37, 99, 235, 0.35);
+      background: rgba(37, 99, 235, 0.06);
     }
 
     .metric {
@@ -315,7 +351,7 @@
         <section class="panel">
           <div class="panel-hd">
             <div class="panel-title">Inputs</div>
-            <div class="muted small" id="methodVersion">Method v1.4.5</div>
+            <div class="muted small" id="methodVersion">Method v1.4.6</div>
           </div>
           <div class="panel-bd">
 
@@ -500,11 +536,12 @@
                 <div class="btnrow">
                   <button class="btn" id="autoFillBtn" type="button">Auto fill</button>
                   <button class="btn primary" id="calcBtn" type="button">Calculate</button>
+                  <button class="btn" id="resetBtn" type="button">Reset</button>
                   <button class="btn" id="exportBtn" type="button">Export JSON</button>
                 </div>
 
                 <div class="status" id="status" role="status" aria-live="polite">Ready.</div>
-                <div class="auto-summary" id="autoSummary">Auto detected 0 / 10</div>
+                <div class="auto-summary" id="autoSummary"></div>
               </div>
             </div>
 
@@ -577,279 +614,129 @@
 
   <script>
     (function(){
-      const topbar = document.querySelector('.topbar');
-      const themeBtn = document.querySelector('[data-theme-toggle]');
-      const mobileBtn = document.querySelector('[data-mobile-toggle]');
-      const navlinks = document.querySelector('[data-navlinks]');
+      const topbar = document.querySelector(".topbar");
+      const themeBtn = document.querySelector("[data-theme-toggle]");
+      const mobileBtn = document.querySelector("[data-mobile-toggle]");
+      const navlinks = document.querySelector("[data-navlinks]");
 
       function onScroll(){
         if(!topbar) return;
-        if(window.scrollY > 10) topbar.classList.add('scrolled');
-        else topbar.classList.remove('scrolled');
+        if(window.scrollY > 10) topbar.classList.add("scrolled");
+        else topbar.classList.remove("scrolled");
       }
-      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener("scroll", onScroll, { passive: true });
       onScroll();
 
       function setTheme(next){
-        if(next === 'dark') document.documentElement.setAttribute('data-theme','dark');
-        else document.documentElement.removeAttribute('data-theme');
-        try { localStorage.setItem('theme', next); } catch(e) {}
+        if(next === "dark") document.documentElement.setAttribute("data-theme","dark");
+        else document.documentElement.removeAttribute("data-theme");
+        try { localStorage.setItem("theme", next); } catch(e) {}
       }
       if(themeBtn){
-        themeBtn.addEventListener('click', () => {
-          const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-          setTheme(isDark ? 'light' : 'dark');
+        themeBtn.addEventListener("click", () => {
+          const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+          setTheme(isDark ? "light" : "dark");
         });
       }
 
       if(mobileBtn && navlinks){
-        mobileBtn.addEventListener('click', () => {
-          const isOpen = mobileBtn.getAttribute('aria-expanded') === 'true';
-          mobileBtn.setAttribute('aria-expanded', String(!isOpen));
-          navlinks.classList.toggle('open');
+        mobileBtn.addEventListener("click", () => {
+          const isOpen = mobileBtn.getAttribute("aria-expanded") === "true";
+          mobileBtn.setAttribute("aria-expanded", String(!isOpen));
+          navlinks.classList.toggle("open");
 
           if(!isOpen){
-            const firstLink = navlinks.querySelector('a');
+            const firstLink = navlinks.querySelector("a");
             if(firstLink) firstLink.focus();
           }
         });
       }
     })();
 
+    /* ========================================
+       Cryptomath Score v1.4.6
+       ======================================== */
+
     const API_PATH = "/api/score";
-    const METHOD_VERSION = "1.4.5";
+    const METHOD_VERSION = "1.4.6";
 
     const $ = (id) => document.getElementById(id);
 
-    const PRO_IDS = ["mLiq","mFlux","mVal","tMom","tStr","tVol","tVolu","pSent","pDer","pCat"];
+    const PRO_IDS = ["mLiq", "mFlux", "mVal", "tMom", "tStr", "tVol", "tVolu", "pSent", "pDer", "pCat"];
 
     const state = {
       lastResponse: null,
       debounceTimer: null,
-      autoSet: new Set()
+      autoSet: new Set(),
+      lastDebug: null
     };
 
-    function setStatus(text, kind){
+    function setStatus(text, kind) {
       const el = $("status");
       el.className = "status" + (kind ? " " + kind : "");
       el.textContent = text;
     }
 
-    function showAutoSummary(count, total){
+    function setAutoSummary(html) {
       const el = $("autoSummary");
-      if(!el) return;
-      el.textContent = "Auto detected " + String(count) + " / " + String(total);
+      if (!el) return;
+      if (!html) {
+        el.style.display = "none";
+        el.innerHTML = "";
+        return;
+      }
       el.style.display = "block";
+      el.innerHTML = html;
     }
 
-    function hideAutoSummary(){
-      const el = $("autoSummary");
-      if(!el) return;
-      el.style.display = "none";
-      el.textContent = "Auto detected 0 / 10";
-    }
-
-    function getCheckLabel(inputId){
-      const input = $(inputId);
-      if(!input) return null;
-      const label = input.closest(".check");
-      return label || null;
-    }
-
-    function clearAutoClasses(){
-      for(const id of PRO_IDS){
-        const label = getCheckLabel(id);
-        if(label) label.classList.remove("auto");
-      }
-      state.autoSet.clear();
-    }
-
-    function resetAutoUI(){
-      clearAutoClasses();
-      hideAutoSummary();
-    }
-
-    function applyAutoHighlights(){
-      for(const id of PRO_IDS){
-        const input = $(id);
-        const label = getCheckLabel(id);
-        if(!input || !label) continue;
-
-        if(state.autoSet.has(id) && input.checked){
-          label.classList.add("auto");
-        } else {
-          label.classList.remove("auto");
-        }
-      }
-    }
-
-    function fmtNum(n, digits){
-      if(n === null || n === undefined) return null;
-      const x = Number(n);
-      if(!Number.isFinite(x)) return null;
-      return x.toFixed(digits);
-    }
-
-    function applyAutoTooltips(debug){
-      if(!debug) return;
-
-      const price = debug.market ? debug.market.price : null;
-      const ema50 = debug.market ? debug.market.ema50 : null;
-
-      const rsi = debug.technical ? debug.technical.rsi : null;
-      const stoch = debug.technical ? debug.technical.stochRsi : null;
-      const bbWidthPct = debug.technical ? debug.technical.bbWidthPct : null;
-      const volRatio = debug.technical ? debug.technical.volumeRatio : null;
-
-      const structure = debug.technical ? debug.technical.structure : null;
-      const structureReason = structure && structure.reason ? String(structure.reason) : null;
-
-      const fng = debug.psychology ? debug.psychology.fearGreed : null;
-      const funding = debug.psychology ? debug.psychology.fundingRate : null;
-
-      const btcDom = debug.macro ? debug.macro.btcDominance : null;
-      const stableTotal = debug.macro ? debug.macro.stablecoinMcapUsd : null;
-      const stableChange = debug.macro ? debug.macro.stablecoinChange7dPct : null;
-
-      // Liquidity tooltip
-      {
-        const label = getCheckLabel("mLiq");
-        if(label){
-          const parts = [];
-          if(btcDom !== null && btcDom !== undefined){
-            parts.push("BTC dominance " + fmtNum(btcDom, 2) + "%");
-          }
-          if(stableChange !== null && stableChange !== undefined){
-            parts.push("Stable change 7d " + fmtNum(stableChange, 2) + "%");
-          }
-          if(parts.length) label.title = parts.join(" | ");
-        }
-      }
-
-      // Flows tooltip, null safe
-      {
-        const label = getCheckLabel("mFlux");
-        if(label){
-          const parts = [];
-          if(stableChange !== null && stableChange !== undefined){
-            parts.push("Change 7d " + fmtNum(stableChange, 2) + "%");
-          }
-          if(stableTotal !== null && stableTotal !== undefined){
-            const b = Number(stableTotal) / 1e9;
-            if(Number.isFinite(b)) parts.push("Total $" + b.toFixed(1) + "B");
-          }
-          if(parts.length) label.title = parts.join(" | ");
-        }
-      }
-
-      // Valuation
-      {
-        const label = getCheckLabel("mVal");
-        if(label){
-          label.title = "Valuation auto detect is disabled";
-        }
-      }
-
-      // Momentum
-      {
-        const label = getCheckLabel("tMom");
-        if(label){
-          const parts = [];
-          if(rsi !== null && rsi !== undefined) parts.push("RSI " + fmtNum(rsi, 1));
-          if(stoch !== null && stoch !== undefined) parts.push("Stoch RSI " + fmtNum(stoch, 1));
-          if(parts.length) label.title = parts.join(" | ");
-        }
-      }
-
-      // Structure
-      {
-        const label = getCheckLabel("tStr");
-        if(label){
-          const parts = [];
-          if(price !== null && price !== undefined) parts.push("Price " + fmtNum(price, 2));
-          if(ema50 !== null && ema50 !== undefined) parts.push("EMA50 " + fmtNum(ema50, 2));
-          if(structureReason) parts.push("Rule " + structureReason);
-          if(parts.length) label.title = parts.join(" | ");
-        }
-      }
-
-      // Volatility
-      {
-        const label = getCheckLabel("tVol");
-        if(label){
-          const parts = [];
-          if(bbWidthPct !== null && bbWidthPct !== undefined) parts.push("BB width pct " + fmtNum(bbWidthPct, 1));
-          if(parts.length) label.title = parts.join(" | ");
-        }
-      }
-
-      // Volume
-      {
-        const label = getCheckLabel("tVolu");
-        if(label){
-          const parts = [];
-          if(volRatio !== null && volRatio !== undefined) parts.push("Volume ratio " + fmtNum(volRatio, 2));
-          if(parts.length) label.title = parts.join(" | ");
-        }
-      }
-
-      // Sentiment
-      {
-        const label = getCheckLabel("pSent");
-        if(label){
-          const parts = [];
-          if(fng !== null && fng !== undefined) parts.push("Fear and Greed " + String(fng));
-          if(parts.length) label.title = parts.join(" | ");
-        }
-      }
-
-      // Derivatives
-      {
-        const label = getCheckLabel("pDer");
-        if(label){
-          const parts = [];
-          if(funding !== null && funding !== undefined) parts.push("Funding " + fmtNum(funding, 6));
-          if(parts.length) label.title = parts.join(" | ");
-        }
-      }
-
-      // Catalyst
-      {
-        const label = getCheckLabel("pCat");
-        if(label){
-          label.title = "Catalyst auto detect is disabled";
-        }
-      }
-    }
-
-    function asNum(v){
-      if(v === null || v === undefined) return null;
+    function asNum(v) {
+      if (v === null || v === undefined) return null;
       const s = String(v).trim().replace(",", ".");
-      if(!s) return null;
+      if (!s) return null;
       const n = Number(s);
       return Number.isFinite(n) ? n : null;
     }
 
-    function isTradeComplete(entry, stop, tp){
+    function fmtNum(n, digits) {
+      if (n === null || n === undefined) return null;
+      const x = Number(n);
+      return Number.isFinite(x) ? x.toFixed(digits) : null;
+    }
+
+    function closestCheckWrap(id) {
+      const el = $(id);
+      return el ? el.closest(".check") : null;
+    }
+
+    function setCheckbox(id, value) {
+      const el = $(id);
+      if (el) el.checked = !!value;
+    }
+
+    function setFill(id, pct) {
+      const el = $(id);
+      if (el) el.style.width = Math.max(0, Math.min(100, pct)) + "%";
+    }
+
+    function isTradeComplete(entry, stop, tp) {
       return entry !== null && stop !== null && tp !== null;
     }
 
-    function validateTradeClient(direction, entry, stop, tp){
-      if(!isTradeComplete(entry, stop, tp)) return null;
+    function validateTradeClient(direction, entry, stop, tp) {
+      if (!isTradeComplete(entry, stop, tp)) return null;
+      if (entry === stop) return "trade_entry_equals_stop";
 
-      if(entry === stop) return "trade_entry_equals_stop";
-
-      if(direction === "Long"){
-        if(!(stop < entry)) return "long_invalid_stop";
-        if(!(tp > entry)) return "long_invalid_tp";
+      if (direction === "Long") {
+        if (!(stop < entry)) return "long_invalid_stop";
+        if (!(tp > entry)) return "long_invalid_tp";
       } else {
-        if(!(stop > entry)) return "short_invalid_stop";
-        if(!(tp < entry)) return "short_invalid_tp";
+        if (!(stop > entry)) return "short_invalid_stop";
+        if (!(tp < entry)) return "short_invalid_tp";
       }
       return null;
     }
 
-    function proPayload(){
+    function proPayload() {
       return {
         macro: {
           liquidite: $("mLiq").checked,
@@ -870,7 +757,7 @@
       };
     }
 
-    function simplePayload(){
+    function simplePayload() {
       return {
         macroOK: $("simpleMacro").checked,
         techOK: $("simpleTech").checked,
@@ -878,43 +765,32 @@
       };
     }
 
-    function buildPayloadFromState(){
+    function buildPayloadFromState() {
       const mode = $("mode").value;
       const regime = $("regime").value;
       const direction = $("direction").value;
-
       const entry = asNum($("entry").value);
       const stop = asNum($("stop").value);
       const tp = asNum($("tp").value);
-
       const asset = String($("asset").value || "").trim();
 
-      const payload = {
-        mode,
-        regime,
-        direction,
-        trade: { entry, stop, tp }
-      };
-
-      if(asset) payload.asset = asset;
-
-      if(mode === "Simple") payload.simple = simplePayload();
+      const payload = { mode, regime, direction, trade: { entry, stop, tp } };
+      if (asset) payload.asset = asset;
+      if (mode === "Simple") payload.simple = simplePayload();
       else payload.pro = proPayload();
 
       return payload;
     }
 
-    function hasMeaningfulInputs(payload){
-      if(payload.mode === "Simple"){
+    function hasMeaningfulInputs(payload) {
+      if (payload.mode === "Simple") {
         const s = payload.simple || {};
         return !!(s.macroOK || s.techOK || s.psychoOK);
       }
-
       const p = payload.pro || {};
       const m = p.macro || {};
       const t = p.technique || {};
       const y = p.psycho || {};
-
       return !!(
         m.liquidite || m.flux || m.valorisation ||
         t.momentum || t.structure || t.volatilite || t.volume ||
@@ -922,21 +798,25 @@
       );
     }
 
-    function setFill(id, pct){
-      const el = $(id);
-      if(!el) return;
-      el.style.width = Math.max(0, Math.min(100, pct)) + "%";
+    function resetAutoUI() {
+      for (const id of PRO_IDS) {
+        const wrap = closestCheckWrap(id);
+        if (wrap) wrap.classList.remove("auto");
+        const cb = $(id);
+        if (cb) cb.title = "";
+      }
+      state.autoSet.clear();
+      state.lastDebug = null;
+      setAutoSummary("");
     }
 
-    function resetResultsUI(){
+    function resetResultsUI() {
       $("scoreTotal").textContent = "–";
       $("rrVal").textContent = "–";
       $("rrMin").textContent = "–";
-
       $("macroTxt").textContent = "–";
       $("techTxt").textContent = "–";
       $("psyTxt").textContent = "–";
-
       setFill("macroFill", 0);
       setFill("techFill", 0);
       setFill("psyFill", 0);
@@ -944,18 +824,134 @@
       const vb = $("verdictBox");
       vb.classList.remove("a", "s");
       vb.classList.add("n");
-
       $("verdictTitle").textContent = "No trade";
       $("verdictText").textContent = "Fill inputs and click Calculate.";
 
       state.lastResponse = null;
     }
 
+    function resetAll() {
+      $("asset").value = "";
+      $("entry").value = "";
+      $("stop").value = "";
+      $("tp").value = "";
+      $("regime").value = "Bull";
+      $("direction").value = "Long";
+      $("mode").value = "Pro";
+
+      for (const id of PRO_IDS) setCheckbox(id, false);
+      setCheckbox("simpleMacro", false);
+      setCheckbox("simpleTech", false);
+      setCheckbox("simplePsy", false);
+
+      resetAutoUI();
+      resetResultsUI();
+      applyModeUI();
+      setStatus("Ready.", "");
+    }
+
+    function applyAutoHighlights() {
+      for (const id of PRO_IDS) {
+        const wrap = closestCheckWrap(id);
+        if (!wrap) continue;
+        if (state.autoSet.has(id) && $(id).checked) wrap.classList.add("auto");
+        else wrap.classList.remove("auto");
+      }
+    }
+
+    function applyAutoTooltips(debug) {
+      if (!debug) return;
+
+      const macro = debug.macro || {};
+      const tech = debug.technical || {};
+      const psy = debug.psychology || {};
+      const market = debug.market || {};
+
+      const setTitle = (id, title) => {
+        const el = $(id);
+        if (el) el.title = title || "";
+      };
+
+      const liqParts = [];
+      if (macro.btcDominance != null) liqParts.push("BTC dom " + fmtNum(macro.btcDominance, 2) + "%");
+      setTitle("mLiq", liqParts.length ? liqParts.join(" | ") : "No data");
+
+      const flowParts = [];
+      if (macro.stablecoinChange7dPct != null) flowParts.push("7d " + fmtNum(macro.stablecoinChange7dPct, 2) + "%");
+      if (macro.stablecoinMcapUsd != null) flowParts.push("$" + (Number(macro.stablecoinMcapUsd) / 1e9).toFixed(1) + "B");
+      setTitle("mFlux", flowParts.length ? flowParts.join(" | ") : "No data");
+
+      setTitle("mVal", "Manual check required");
+
+      const momParts = [];
+      if (tech.rsi != null) momParts.push("RSI " + fmtNum(tech.rsi, 1));
+      if (tech.stochRsi != null) momParts.push("StochRSI " + fmtNum(tech.stochRsi, 1));
+      setTitle("tMom", momParts.length ? momParts.join(" | ") : "No data");
+
+      const strParts = [];
+      if (market.price != null) strParts.push("Price " + fmtNum(market.price, 2));
+      if (market.ema50 != null) strParts.push("EMA50 " + fmtNum(market.ema50, 2));
+      if (tech.structure && tech.structure.reason) strParts.push(tech.structure.reason);
+      setTitle("tStr", strParts.length ? strParts.join(" | ") : "No data");
+
+      setTitle("tVol", tech.bbWidthPct != null ? ("BB " + fmtNum(tech.bbWidthPct, 0) + "%") : "No data");
+      setTitle("tVolu", tech.volumeRatio != null ? ("Vol ratio " + fmtNum(tech.volumeRatio, 2) + "x") : "No data");
+      setTitle("pSent", psy.fearGreed != null ? ("F&G " + fmtNum(psy.fearGreed, 0)) : "No data");
+      setTitle("pDer", psy.fundingRate != null ? ("Funding " + fmtNum(psy.fundingRate, 6)) : "No data");
+
+      setTitle("pCat", "Manual check required");
+    }
+
+    function applyAutoDetectedToUI(autoDetected, debug) {
+      if (!autoDetected) return;
+
+      const m = autoDetected.macro || {};
+      const t = autoDetected.technique || {};
+      const p = autoDetected.psycho || {};
+
+      setCheckbox("mLiq", m.liquidite);
+      setCheckbox("mFlux", m.flux);
+      setCheckbox("mVal", m.valorisation);
+      setCheckbox("tMom", t.momentum);
+      setCheckbox("tStr", t.structure);
+      setCheckbox("tVol", t.volatilite);
+      setCheckbox("tVolu", t.volume);
+      setCheckbox("pSent", p.sentiment);
+      setCheckbox("pDer", p.derives);
+      setCheckbox("pCat", p.catalyst);
+
+      state.autoSet.clear();
+      const mapping = {
+        mLiq: !!m.liquidite,
+        mFlux: !!m.flux,
+        mVal: !!m.valorisation,
+        tMom: !!t.momentum,
+        tStr: !!t.structure,
+        tVol: !!t.volatilite,
+        tVolu: !!t.volume,
+        pSent: !!p.sentiment,
+        pDer: !!p.derives,
+        pCat: !!p.catalyst
+      };
+
+      for (const id of PRO_IDS) {
+        if (mapping[id]) state.autoSet.add(id);
+      }
+
+      applyAutoHighlights();
+      applyAutoTooltips(debug);
+
+      const count = state.autoSet.size;
+      setAutoSummary("Auto detected <strong>" + count + " / 10</strong> signals");
+
+      state.lastDebug = debug;
+    }
+
     let currentController = null;
     let requestCounter = 0;
 
-    async function callApi(payload){
-      if(currentController) currentController.abort();
+    async function callApi(payload) {
+      if (currentController) currentController.abort();
       currentController = new AbortController();
 
       const requestId = ++requestCounter;
@@ -967,43 +963,36 @@
         signal: currentController.signal
       });
 
-      if(requestId !== requestCounter) throw new Error("stale_response");
+      if (requestId !== requestCounter) throw new Error("stale_response");
 
       const data = await res.json().catch(() => null);
-      if(!data || !data.ok){
+      if (!data || !data.ok) {
         const code = data && data.error ? data.error : "api_error";
         throw new Error(code);
       }
       return data;
     }
 
-    function maxByRegime(regime){
-      if(regime === "Bull") return { macro: 2, tech: 5, psy: 3 };
-      if(regime === "Range") return { macro: 3, tech: 4, psy: 3 };
+    function maxByRegime(regime) {
+      if (regime === "Bull") return { macro: 2, tech: 5, psy: 3 };
+      if (regime === "Range") return { macro: 3, tech: 4, psy: 3 };
       return { macro: 4, tech: 3, psy: 3 };
     }
 
-    function renderScores(data, payload){
+    function renderScores(data, payload) {
       $("methodVersion").textContent = "Method v" + (data.methodVersion || METHOD_VERSION);
 
       const s = data.scores || {};
-      const total = s.total;
-      const rr = s.rr;
-      const rrMin = s.rrMin;
-      const baseVerdict = s.baseVerdict;
-      const finalVerdict = s.finalVerdict;
-
-      $("scoreTotal").textContent = (typeof total === "number") ? total.toFixed(1) + " / 10" : "–";
-      $("rrVal").textContent = (typeof rr === "number") ? rr.toFixed(2) : "–";
-      $("rrMin").textContent = (typeof rrMin === "number") ? rrMin.toFixed(1) : "–";
+      $("scoreTotal").textContent = (typeof s.total === "number") ? s.total.toFixed(1) + " / 10" : "–";
+      $("rrVal").textContent = (typeof s.rr === "number") ? s.rr.toFixed(2) : "–";
+      $("rrMin").textContent = (typeof s.rrMin === "number") ? s.rrMin.toFixed(1) : "–";
 
       const mode = payload.mode;
       const regime = payload.regime;
-
       const bars = $("bars");
       bars.style.display = (mode === "Simple") ? "none" : "block";
 
-      if(mode !== "Simple"){
+      if (mode !== "Simple") {
         const mx = maxByRegime(regime);
         const macro = Number(s.scoreMacro || 0);
         const tech = Number(s.scoreTech || 0);
@@ -1021,32 +1010,29 @@
       const vb = $("verdictBox");
       vb.classList.remove("a", "s", "n");
 
-      const title = $("verdictTitle");
-      const text = $("verdictText");
-
-      const v = finalVerdict || baseVerdict || "No trade";
-      if(v === "A+"){
+      const v = s.finalVerdict || s.baseVerdict || "No trade";
+      if (v === "A+") {
         vb.classList.add("a");
-        title.textContent = "A+ setup";
-        text.textContent = "Strong confluence. Risk-managed execution still required.";
-      } else if(v === "Speculative"){
+        $("verdictTitle").textContent = "A+ setup";
+        $("verdictText").textContent = "Strong confluence. Risk-managed execution still required.";
+      } else if (v === "Speculative") {
         vb.classList.add("s");
-        title.textContent = "Speculative";
-        text.textContent = "Edge exists but risk is higher. Reduce size and keep stops tight.";
+        $("verdictTitle").textContent = "Speculative";
+        $("verdictText").textContent = "Edge exists but risk is higher. Reduce size and keep stops tight.";
       } else {
         vb.classList.add("n");
-        title.textContent = "No trade";
-        text.textContent = "Too much noise. Wait for better alignment.";
+        $("verdictTitle").textContent = "No trade";
+        $("verdictText").textContent = "Too much noise. Wait for better alignment.";
       }
 
-      if(baseVerdict && finalVerdict && baseVerdict !== finalVerdict){
-        text.textContent = "Setup downgraded due to insufficient RR for this regime.";
+      if (s.baseVerdict && s.finalVerdict && s.baseVerdict !== s.finalVerdict) {
+        $("verdictText").textContent = "Setup downgraded due to insufficient RR for this regime.";
       }
 
       state.lastResponse = { payload, data };
     }
 
-    function applyModeUI(){
+    function applyModeUI() {
       const mode = $("mode").value;
       $("simpleBlock").style.display = (mode === "Simple") ? "block" : "none";
       $("proBlock").style.display = (mode === "Simple") ? "none" : "block";
@@ -1054,12 +1040,13 @@
         ? "Simple is a fast 3-block check. Progress bars are hidden."
         : "Pro uses full scoring and progress bars.";
 
-      if(mode === "Simple"){
+      if (mode === "Simple") {
         resetResultsUI();
+        resetAutoUI();
       }
     }
 
-    function scheduleAutoCalc(){
+    function scheduleAutoCalc() {
       clearTimeout(state.debounceTimer);
       setStatus("Updated.", "");
       state.debounceTimer = setTimeout(() => {
@@ -1067,20 +1054,27 @@
       }, 300);
     }
 
-    async function runCalculation(isAuto){
+    async function runCalculation(isAuto) {
       const payload = buildPayloadFromState();
 
-      if(isAuto && !hasMeaningfulInputs(payload)){
+      if (isAuto) {
+        const asset = String(payload.asset || "").trim();
+        if (!asset) {
+          resetResultsUI();
+          setStatus("Ready.", "");
+          return;
+        }
+      }
+
+      if (isAuto && !hasMeaningfulInputs(payload)) {
         resetResultsUI();
         setStatus("Ready.", "");
         return;
       }
 
-      const entry = payload.trade.entry;
-      const stop = payload.trade.stop;
-      const tp = payload.trade.tp;
+      const { entry, stop, tp } = payload.trade;
       const tradeErr = validateTradeClient(payload.direction, entry, stop, tp);
-      if(tradeErr){
+      if (tradeErr) {
         const map = {
           trade_entry_equals_stop: "Entry and Stop cannot be equal.",
           long_invalid_stop: "For a long, Stop must be below Entry.",
@@ -1092,22 +1086,21 @@
         return;
       }
 
-      if(!isAuto){
+      if (!isAuto) {
         $("calcBtn").textContent = "Calculating...";
         $("calcBtn").disabled = true;
       }
 
       try {
         const data = await callApi(payload);
-        if(!data) return;
+        if (!data) return;
         renderScores(data, payload);
         setStatus(isAuto ? "Updated." : "OK", "ok");
       } catch (e) {
-        if(e && e.name === "AbortError") return;
-        if(e && String(e.message) === "stale_response") return;
+        if (e && e.name === "AbortError") return;
+        if (e && String(e.message) === "stale_response") return;
 
         const code = String(e && e.message ? e.message : "api_error");
-
         const map = {
           forbidden_origin: "Access denied. Open this page from thecryptomath.com.",
           invalid_json: "Request error. Try again.",
@@ -1123,74 +1116,18 @@
           short_invalid_stop: "For a short, Stop must be above Entry.",
           short_invalid_tp: "For a short, TP must be below Entry."
         };
-
-        const userMsg = map[code] || ("API error. Code " + code);
-        setStatus(userMsg, "err");
+        setStatus(map[code] || ("API error. Code " + code), "err");
       } finally {
-        if(!isAuto){
+        if (!isAuto) {
           $("calcBtn").textContent = "Calculate";
           $("calcBtn").disabled = false;
         }
       }
     }
 
-    function setCheckbox(id, value){
-      const el = $(id);
-      if(!el) return;
-      el.checked = !!value;
-    }
-
-    function applyAutoDetectedToUI(autoDetected){
-      if(!autoDetected) return;
-
-      const m = autoDetected.macro || {};
-      const t = autoDetected.technique || {};
-      const p = autoDetected.psycho || {};
-
-      setCheckbox("mLiq", m.liquidite);
-      setCheckbox("mFlux", m.flux);
-      setCheckbox("mVal", m.valorisation);
-
-      setCheckbox("tMom", t.momentum);
-      setCheckbox("tStr", t.structure);
-      setCheckbox("tVol", t.volatilite);
-      setCheckbox("tVolu", t.volume);
-
-      setCheckbox("pSent", p.sentiment);
-      setCheckbox("pDer", p.derives);
-      setCheckbox("pCat", p.catalyst);
-
-      // Only mark true checks as AUTO
-      state.autoSet.clear();
-
-      const mapping = {
-        mLiq: !!m.liquidite,
-        mFlux: !!m.flux,
-        mVal: !!m.valorisation,
-        tMom: !!t.momentum,
-        tStr: !!t.structure,
-        tVol: !!t.volatilite,
-        tVolu: !!t.volume,
-        pSent: !!p.sentiment,
-        pDer: !!p.derives,
-        pCat: !!p.catalyst
-      };
-
-      let count = 0;
-      for(const id of PRO_IDS){
-        if(mapping[id]){
-          state.autoSet.add(id);
-          count += 1;
-        }
-      }
-
-      applyAutoHighlights();
-      showAutoSummary(count, 10);
-    }
-
-    async function runAutoFill(){
+    async function runAutoFill() {
       const asset = String($("asset").value || "").trim();
-      if(!asset){
+      if (!asset) {
         setStatus("Type an asset first. Example BTC.", "err");
         return;
       }
@@ -1207,27 +1144,23 @@
 
       $("autoFillBtn").textContent = "Auto filling...";
       $("autoFillBtn").disabled = true;
+      $("autoFillBtn").classList.add("loading");
 
       try {
         const data = await callApi(payload);
-        if(!data) return;
+        if (!data) return;
 
-        if(data.autoDetected){
-          applyAutoDetectedToUI(data.autoDetected);
-        }
-
-        if(data.debug){
-          applyAutoTooltips(data.debug);
+        if (data.autoDetected) {
+          applyAutoDetectedToUI(data.autoDetected, data.debug || null);
         }
 
         const payloadAfter = buildPayloadFromState();
         payloadAfter.mode = "Pro";
-
         renderScores(data, payloadAfter);
         setStatus("OK", "ok");
       } catch (e) {
-        if(e && e.name === "AbortError") return;
-        if(e && String(e.message) === "stale_response") return;
+        if (e && e.name === "AbortError") return;
+        if (e && String(e.message) === "stale_response") return;
 
         const code = String(e && e.message ? e.message : "api_error");
         const map = {
@@ -1241,11 +1174,12 @@
       } finally {
         $("autoFillBtn").textContent = "Auto fill";
         $("autoFillBtn").disabled = false;
+        $("autoFillBtn").classList.remove("loading");
       }
     }
 
-    function exportJSON(){
-      if(!state.lastResponse){
+    function exportJSON() {
+      if (!state.lastResponse) {
         setStatus("Nothing to export yet. Click Calculate first.", "err");
         return;
       }
@@ -1262,37 +1196,37 @@
       setStatus("Exported.", "ok");
     }
 
-    function bind(){
+    function bind() {
       $("mode").addEventListener("change", () => { applyModeUI(); scheduleAutoCalc(); });
       $("regime").addEventListener("change", scheduleAutoCalc);
       $("direction").addEventListener("change", scheduleAutoCalc);
 
-      ["asset","entry","stop","tp"].forEach(id => {
+      ["asset", "entry", "stop", "tp"].forEach(id => {
         $(id).addEventListener("input", scheduleAutoCalc);
       });
 
-      ["simpleMacro","simpleTech","simplePsy"].forEach(id => {
+      ["simpleMacro", "simpleTech", "simplePsy"].forEach(id => {
         $(id).addEventListener("change", scheduleAutoCalc);
       });
 
-      // If user changes a checkbox that was AUTO, remove AUTO badge for that checkbox
       PRO_IDS.forEach(id => {
         $(id).addEventListener("change", () => {
-          if(state.autoSet.has(id)){
+          if (state.autoSet.has(id)) {
             state.autoSet.delete(id);
-            const label = getCheckLabel(id);
-            if(label) label.classList.remove("auto");
+            applyAutoHighlights();
+
             const count = state.autoSet.size;
-            if(count > 0) showAutoSummary(count, 10);
-            else hideAutoSummary();
+            if (count > 0) setAutoSummary("Auto detected <strong>" + count + " / 10</strong> signals");
+            else setAutoSummary("");
           }
           scheduleAutoCalc();
         });
       });
 
       $("calcBtn").addEventListener("click", () => runCalculation(false));
-      $("exportBtn").addEventListener("click", exportJSON);
       $("autoFillBtn").addEventListener("click", runAutoFill);
+      $("resetBtn").addEventListener("click", resetAll);
+      $("exportBtn").addEventListener("click", exportJSON);
     }
 
     $("methodVersion").textContent = "Method v" + METHOD_VERSION;
