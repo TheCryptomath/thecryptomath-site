@@ -121,12 +121,9 @@
       outline: none;
       transition: border-color 150ms ease;
     }
-    .input:focus, select.input:focus {
-      border-color: var(--accent);
-    }
+    .input:focus, select.input:focus { border-color: var(--accent); }
     .input::placeholder { color: rgba(140,141,152,0.75); }
 
-    /* Fix selects readability in light and dark mode dropdowns */
     select.input { color: var(--text-primary); }
     select.input option { background: #ffffff; color: #0e0f12; }
     html[data-theme="dark"] select.input option { background: #0e0f12; color: #ffffff; }
@@ -160,14 +157,11 @@
       position: relative;
       transition: border-color 150ms ease, background 150ms ease;
     }
-    .check:hover {
-      border-color: rgba(255,255,255,0.15);
-    }
+    .check:hover { border-color: rgba(255,255,255,0.15); }
     .check input { margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
     .check strong { display: block; font-size: 0.95rem; }
     .check span { display: block; margin-top: 4px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.35; }
 
-    /* Simple mode shadow scan hints */
     .simple-hint {
       display: block;
       margin-top: 8px;
@@ -193,7 +187,6 @@
       background: rgba(14,15,18,0.03);
     }
 
-    /* AUTO badge, Option A only on TRUE values */
     .check.auto {
       border-color: rgba(59, 130, 246, 0.5);
       background: rgba(59, 130, 246, 0.08);
@@ -212,7 +205,6 @@
       background: rgba(59, 130, 246, 0.15);
       color: rgba(147, 197, 253, 0.98);
     }
-    /* Better contrast in light mode */
     html:not([data-theme="dark"]) .check.auto {
       border-color: rgba(37, 99, 235, 0.4);
       background: rgba(37, 99, 235, 0.08);
@@ -232,11 +224,7 @@
       margin-top: 12px;
     }
 
-    /* Loading state for buttons */
-    .btn.loading {
-      pointer-events: none;
-      opacity: 0.7;
-    }
+    .btn.loading { pointer-events: none; opacity: 0.7; }
 
     .status {
       margin-top: 10px;
@@ -265,7 +253,6 @@
       display: none;
     }
     .auto-summary strong { color: var(--text-primary); font-weight: 800; }
-    /* Light mode adjustments */
     html:not([data-theme="dark"]) .auto-summary {
       border-color: rgba(37, 99, 235, 0.35);
       background: rgba(37, 99, 235, 0.06);
@@ -326,6 +313,17 @@
 
     .small { font-size: 0.9rem; }
     .right-note { color: var(--text-secondary); font-size: 0.9rem; margin-top: 10px; line-height: 1.45; }
+
+    .mode-teaser {
+      color: var(--accent);
+      font-size: 0.85rem;
+      margin-top: 4px;
+      display: block;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
   </style>
 </head>
 
@@ -415,9 +413,7 @@
                 <option value="Pro">Pro</option>
                 <option value="Simple">Simple</option>
               </select>
-              <div class="right-note" id="modeHint">
-                Pro uses full scoring. Simple is a quick 3-block check and hides progress bars.
-              </div>
+              <div class="right-note" id="modeHint"></div>
             </div>
 
             <div id="simpleBlock" style="display:none;">
@@ -729,11 +725,7 @@
     function setSimpleHint(id, html) {
       const el = $(id);
       if (!el) return;
-      if (!html) {
-        el.innerHTML = "";
-        return;
-      }
-      el.innerHTML = html;
+      el.innerHTML = html || "";
     }
 
     function clearSimpleHints() {
@@ -771,12 +763,9 @@
       if (el) el.style.width = Math.max(0, Math.min(100, pct)) + "%";
     }
 
-    function isTradeComplete(entry, stop, tp) {
-      return entry !== null && stop !== null && tp !== null;
-    }
-
     function validateTradeClient(direction, entry, stop, tp) {
-      if (!isTradeComplete(entry, stop, tp)) return null;
+      const complete = entry !== null && stop !== null && tp !== null;
+      if (!complete) return null;
       if (entry === stop) return "trade_entry_equals_stop";
 
       if (direction === "Long") {
@@ -1046,6 +1035,32 @@
       setSimpleHint("simpleHintPsy", line(c.psy));
     }
 
+    function applyQuickScanToSimple(autoDetected) {
+      if (!autoDetected) return { macro: 0, tech: 0, psy: 0, total: 0 };
+
+      const m = autoDetected.macro || {};
+      const t = autoDetected.technique || {};
+      const p = autoDetected.psycho || {};
+
+      const macroCount = Object.values(m).filter(Boolean).length;
+      const techCount = Object.values(t).filter(Boolean).length;
+      const psyCount = Object.values(p).filter(Boolean).length;
+
+      setCheckbox("simpleMacro", macroCount >= 1);
+      setCheckbox("simpleTech", techCount >= 2);
+      setCheckbox("simplePsy", psyCount >= 1);
+
+      return { macro: macroCount, tech: techCount, psy: psyCount, total: macroCount + techCount + psyCount };
+    }
+
+    function switchToPro() {
+      const modeSelect = $("mode");
+      if (!modeSelect) return;
+      modeSelect.value = "Pro";
+      applyModeUI();
+      scheduleAutoCalc();
+    }
+
     let currentController = null;
     let requestCounter = 0;
 
@@ -1139,14 +1154,27 @@
 
     function applyModeUI() {
       const mode = $("mode").value;
-      $("simpleBlock").style.display = (mode === "Simple") ? "block" : "none";
-      $("proBlock").style.display = (mode === "Simple") ? "none" : "block";
-      $("modeHint").textContent = (mode === "Simple")
-        ? "Simple is a fast 3-block check. Progress bars are hidden."
-        : "Pro uses full scoring and progress bars.";
+      const isSimple = (mode === "Simple");
 
-      if (mode === "Simple") {
-        resetResultsUI();
+      $("simpleBlock").style.display = isSimple ? "block" : "none";
+      $("proBlock").style.display = isSimple ? "none" : "block";
+      $("bars").style.display = isSimple ? "none" : "block";
+
+      const autoBtn = $("autoFillBtn");
+      autoBtn.textContent = isSimple ? "Quick Scan" : "Auto fill";
+
+      const hintEl = $("modeHint");
+      if (isSimple) {
+        hintEl.innerHTML =
+          "Simple mode. Quick 3-pillar manual check.<br>" +
+          "<span class=\"mode-teaser\" data-action=\"switch-pro\" role=\"button\" tabindex=\"0\">" +
+          "Quick scan only checks Pillar 1. Switch to Pro to see which signals fired." +
+          "</span>";
+      } else {
+        hintEl.textContent = "Pro mode. Full 10-signal scoring with detailed breakdown.";
+      }
+
+      if (isSimple) {
         resetAutoUI();
         scheduleShadowScan();
       } else {
@@ -1202,9 +1230,8 @@
 
       try {
         const data = await callApi(payload);
-        if (!data) return;
-
         const autoDetected = data.autoDetected || null;
+
         state.shadowLastKey = key;
         state.shadowLastAt = Date.now();
         state.shadowLastResult = autoDetected;
@@ -1213,7 +1240,6 @@
       } catch (e) {
         if (e && e.name === "AbortError") return;
         if (e && String(e.message) === "stale_response") return;
-
         clearSimpleHints();
       }
     }
@@ -1257,7 +1283,6 @@
 
       try {
         const data = await callApi(payload);
-        if (!data) return;
         renderScores(data, payload);
         setStatus(isAuto ? "Updated." : "OK", "ok");
       } catch (e) {
@@ -1270,7 +1295,9 @@
           invalid_json: "Request error. Try again.",
           method_not_allowed: "Method not allowed.",
           unauthorized: "Unauthorized.",
+          rate_limited: "Rate limited. Slow down and retry.",
           missing_asset: "Type an asset first. Example BTC.",
+          upstream_unavailable: "Upstream temporarily unavailable. Try again.",
           upstream_error: "Upstream API error. Try again.",
           bad_upstream_json: "Upstream returned invalid JSON. Try again.",
           insufficient_market_data: "Not enough market data for this asset.",
@@ -1297,23 +1324,48 @@
         return;
       }
 
-      resetAutoUI();
+      const isSimple = ($("mode").value === "Simple");
 
-      $("mode").value = "Pro";
-      applyModeUI();
-
-      const payload = buildPayloadFromState();
-      payload.mode = "Pro";
-      payload.autoFill = true;
-      payload.asset = asset;
-
-      $("autoFillBtn").textContent = "Auto filling...";
+      $("autoFillBtn").textContent = isSimple ? "Scanning..." : "Auto filling...";
       $("autoFillBtn").disabled = true;
       $("autoFillBtn").classList.add("loading");
 
       try {
+        if (isSimple) {
+          resetAutoUI();
+
+          const scanPayload = buildPayloadFromState();
+          scanPayload.mode = "Pro";
+          scanPayload.autoFill = true;
+          scanPayload.asset = asset;
+
+          const data = await callApi(scanPayload);
+          const autoDetected = data.autoDetected || null;
+
+          if (autoDetected) {
+            const counts = applyQuickScanToSimple(autoDetected);
+            renderSimpleShadowHints(autoDetected);
+
+            setAutoSummary("Quick scan found <strong>" + counts.total + "</strong> signals");
+            setStatus("Quick scan complete.", "ok");
+          } else {
+            clearSimpleHints();
+            setAutoSummary("");
+            setStatus("Quick scan returned no signal.", "ok");
+          }
+
+          await runCalculation(false);
+          return;
+        }
+
+        resetAutoUI();
+
+        const payload = buildPayloadFromState();
+        payload.mode = "Pro";
+        payload.autoFill = true;
+        payload.asset = asset;
+
         const data = await callApi(payload);
-        if (!data) return;
 
         if (data.autoDetected) {
           applyAutoDetectedToUI(data.autoDetected, data.debug || null);
@@ -1330,14 +1382,17 @@
         const code = String(e && e.message ? e.message : "api_error");
         const map = {
           missing_asset: "Missing asset.",
+          upstream_unavailable: "Upstream temporarily unavailable. Try again.",
           upstream_error: "Upstream API error. Try again.",
           bad_upstream_json: "Upstream returned invalid JSON. Try again.",
           insufficient_market_data: "Not enough market data for this asset.",
-          forbidden_origin: "Access denied. Open this page from thecryptomath.com."
+          forbidden_origin: "Access denied. Open this page from thecryptomath.com.",
+          rate_limited: "Rate limited. Slow down and retry."
         };
-        setStatus(map[code] || ("Auto fill failed. Code " + code), "err");
+        setStatus(map[code] || ("Scan failed. Code " + code), "err");
       } finally {
-        $("autoFillBtn").textContent = "Auto fill";
+        const isSimpleNow = ($("mode").value === "Simple");
+        $("autoFillBtn").textContent = isSimpleNow ? "Quick Scan" : "Auto fill";
         $("autoFillBtn").disabled = false;
         $("autoFillBtn").classList.remove("loading");
       }
@@ -1392,6 +1447,21 @@
       $("autoFillBtn").addEventListener("click", runAutoFill);
       $("resetBtn").addEventListener("click", resetAll);
       $("exportBtn").addEventListener("click", exportJSON);
+
+      $("modeHint").addEventListener("click", (e) => {
+        const target = e.target && e.target.closest ? e.target.closest("[data-action]") : null;
+        if (!target) return;
+        if (target.dataset.action === "switch-pro") switchToPro();
+      });
+
+      $("modeHint").addEventListener("keydown", (e) => {
+        const t = e.target;
+        if (!t || t.dataset.action !== "switch-pro") return;
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          switchToPro();
+        }
+      });
     }
 
     $("methodVersion").textContent = "Method v" + METHOD_VERSION;
