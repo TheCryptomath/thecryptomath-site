@@ -167,6 +167,32 @@
     .check strong { display: block; font-size: 0.95rem; }
     .check span { display: block; margin-top: 4px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.35; }
 
+    /* Simple mode shadow scan hints */
+    .simple-hint {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.35;
+      opacity: 0.95;
+    }
+    .simple-hint em { font-style: normal; color: var(--text-primary); font-weight: 750; }
+    .simple-hint .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      font-weight: 700;
+      font-size: 0.78rem;
+      margin-right: 6px;
+    }
+    html:not([data-theme="dark"]) .simple-hint .pill {
+      border-color: rgba(14,15,18,0.10);
+      background: rgba(14,15,18,0.03);
+    }
+
     /* AUTO badge, Option A only on TRUE values */
     .check.auto {
       border-color: rgba(59, 130, 246, 0.5);
@@ -351,7 +377,7 @@
         <section class="panel">
           <div class="panel-hd">
             <div class="panel-title">Inputs</div>
-            <div class="muted small" id="methodVersion">Method v1.4.6</div>
+            <div class="muted small" id="methodVersion">Method v1.4.7</div>
           </div>
           <div class="panel-bd">
 
@@ -364,10 +390,14 @@
               <div class="field">
                 <label class="label" for="regime">Market regime</label>
                 <select class="input" id="regime">
+                  <option value="Auto">Auto</option>
                   <option value="Bull">Bull</option>
                   <option value="Range">Range</option>
                   <option value="Bear">Bear</option>
                 </select>
+                <div class="right-note" id="regimeHint">
+                  Auto detects the regime using market context. You can override anytime.
+                </div>
               </div>
 
               <div class="field">
@@ -397,6 +427,7 @@
                   <div>
                     <strong>Macro OK</strong>
                     <span>Liquidity, flows, valuation are aligned.</span>
+                    <span class="simple-hint" id="simpleHintMacro"></span>
                   </div>
                 </label>
                 <label class="check">
@@ -404,6 +435,7 @@
                   <div>
                     <strong>Technical OK</strong>
                     <span>Structure, momentum, breakout signals are aligned.</span>
+                    <span class="simple-hint" id="simpleHintTech"></span>
                   </div>
                 </label>
                 <label class="check">
@@ -411,6 +443,7 @@
                   <div>
                     <strong>Psy OK</strong>
                     <span>Sentiment, derivatives, catalyst are aligned.</span>
+                    <span class="simple-hint" id="simpleHintPsy"></span>
                   </div>
                 </label>
               </div>
@@ -654,11 +687,11 @@
     })();
 
     /* ========================================
-       Cryptomath Score v1.4.6
+       Cryptomath Score v1.4.7
        ======================================== */
 
     const API_PATH = "/api/score";
-    const METHOD_VERSION = "1.4.6";
+    const METHOD_VERSION = "1.4.7";
 
     const $ = (id) => document.getElementById(id);
 
@@ -668,7 +701,11 @@
       lastResponse: null,
       debounceTimer: null,
       autoSet: new Set(),
-      lastDebug: null
+      lastDebug: null,
+      shadowTimer: null,
+      shadowLastKey: "",
+      shadowLastAt: 0,
+      shadowLastResult: null
     };
 
     function setStatus(text, kind) {
@@ -687,6 +724,22 @@
       }
       el.style.display = "block";
       el.innerHTML = html;
+    }
+
+    function setSimpleHint(id, html) {
+      const el = $(id);
+      if (!el) return;
+      if (!html) {
+        el.innerHTML = "";
+        return;
+      }
+      el.innerHTML = html;
+    }
+
+    function clearSimpleHints() {
+      setSimpleHint("simpleHintMacro", "");
+      setSimpleHint("simpleHintTech", "");
+      setSimpleHint("simpleHintPsy", "");
     }
 
     function asNum(v) {
@@ -835,7 +888,7 @@
       $("entry").value = "";
       $("stop").value = "";
       $("tp").value = "";
-      $("regime").value = "Bull";
+      $("regime").value = "Auto";
       $("direction").value = "Long";
       $("mode").value = "Pro";
 
@@ -845,6 +898,7 @@
       setCheckbox("simplePsy", false);
 
       resetAutoUI();
+      clearSimpleHints();
       resetResultsUI();
       applyModeUI();
       setStatus("Ready.", "");
@@ -947,6 +1001,51 @@
       state.lastDebug = debug;
     }
 
+    function computeBlockCounts(autoDetected) {
+      const m = autoDetected && autoDetected.macro ? autoDetected.macro : {};
+      const t = autoDetected && autoDetected.technique ? autoDetected.technique : {};
+      const p = autoDetected && autoDetected.psycho ? autoDetected.psycho : {};
+
+      const macroVals = [!!m.liquidite, !!m.flux, !!m.valorisation];
+      const techVals = [!!t.momentum, !!t.structure, !!t.volatilite, !!t.volume];
+      const psyVals = [!!p.sentiment, !!p.derives, !!p.catalyst];
+
+      const countTrue = (arr) => arr.reduce((a, b) => a + (b ? 1 : 0), 0);
+
+      const macroTrue = countTrue(macroVals);
+      const techTrue = countTrue(techVals);
+      const psyTrue = countTrue(psyVals);
+
+      const suggestsOK = (trueCount, total) => {
+        if (!total) return false;
+        return trueCount >= Math.ceil(total * 0.6);
+      };
+
+      return {
+        macro: { t: macroTrue, n: macroVals.length, ok: suggestsOK(macroTrue, macroVals.length) },
+        tech: { t: techTrue, n: techVals.length, ok: suggestsOK(techTrue, techVals.length) },
+        psy: { t: psyTrue, n: psyVals.length, ok: suggestsOK(psyTrue, psyVals.length) }
+      };
+    }
+
+    function renderSimpleShadowHints(autoDetected) {
+      if (!autoDetected) {
+        clearSimpleHints();
+        return;
+      }
+      const c = computeBlockCounts(autoDetected);
+
+      const line = (block) => {
+        const pill = "<span class=\"pill\">" + block.t + " / " + block.n + "</span>";
+        const suggest = block.ok ? "<em>Scan suggests OK</em>" : "Scan suggests caution";
+        return pill + suggest;
+      };
+
+      setSimpleHint("simpleHintMacro", line(c.macro));
+      setSimpleHint("simpleHintTech", line(c.tech));
+      setSimpleHint("simpleHintPsy", line(c.psy));
+    }
+
     let currentController = null;
     let requestCounter = 0;
 
@@ -988,12 +1087,18 @@
       $("rrMin").textContent = (typeof s.rrMin === "number") ? s.rrMin.toFixed(1) : "–";
 
       const mode = payload.mode;
-      const regime = payload.regime;
       const bars = $("bars");
       bars.style.display = (mode === "Simple") ? "none" : "block";
 
+      const usedRegime = data.usedRegime || payload.regime;
+      if (payload.regime === "Auto" && data.usedRegime) {
+        $("regimeHint").textContent = "Auto detected " + data.usedRegime + ". You can override anytime.";
+      } else {
+        $("regimeHint").textContent = "Auto detects the regime using market context. You can override anytime.";
+      }
+
       if (mode !== "Simple") {
-        const mx = maxByRegime(regime);
+        const mx = maxByRegime(usedRegime === "Auto" ? "Bull" : usedRegime);
         const macro = Number(s.scoreMacro || 0);
         const tech = Number(s.scoreTech || 0);
         const psy = Number(s.scorePsy || 0);
@@ -1002,9 +1107,9 @@
         $("techTxt").textContent = tech.toFixed(1) + " / " + mx.tech.toFixed(1);
         $("psyTxt").textContent = psy.toFixed(1) + " / " + mx.psy.toFixed(1);
 
-        setFill("macroFill", (macro / mx.macro) * 100);
-        setFill("techFill", (tech / mx.tech) * 100);
-        setFill("psyFill", (psy / mx.psy) * 100);
+        setFill("macroFill", mx.macro ? (macro / mx.macro) * 100 : 0);
+        setFill("techFill", mx.tech ? (tech / mx.tech) * 100 : 0);
+        setFill("psyFill", mx.psy ? (psy / mx.psy) * 100 : 0);
       }
 
       const vb = $("verdictBox");
@@ -1043,6 +1148,9 @@
       if (mode === "Simple") {
         resetResultsUI();
         resetAutoUI();
+        scheduleShadowScan();
+      } else {
+        clearSimpleHints();
       }
     }
 
@@ -1052,6 +1160,62 @@
       state.debounceTimer = setTimeout(() => {
         runCalculation(true).catch(() => {});
       }, 300);
+
+      scheduleShadowScan();
+    }
+
+    function scheduleShadowScan() {
+      clearTimeout(state.shadowTimer);
+
+      const mode = $("mode").value;
+      if (mode !== "Simple") return;
+
+      const asset = String($("asset").value || "").trim();
+      if (!asset) {
+        clearSimpleHints();
+        return;
+      }
+
+      const regime = $("regime").value;
+      const direction = $("direction").value;
+      const key = asset.toUpperCase() + "|" + regime + "|" + direction;
+
+      const now = Date.now();
+      if (key === state.shadowLastKey && (now - state.shadowLastAt) < 1200 && state.shadowLastResult) {
+        renderSimpleShadowHints(state.shadowLastResult);
+        return;
+      }
+
+      state.shadowTimer = setTimeout(() => {
+        runShadowScan(key).catch(() => {});
+      }, 450);
+    }
+
+    async function runShadowScan(key) {
+      const asset = String($("asset").value || "").trim();
+      if (!asset) return;
+
+      const payload = buildPayloadFromState();
+      payload.mode = "Pro";
+      payload.autoFill = true;
+      payload.asset = asset;
+
+      try {
+        const data = await callApi(payload);
+        if (!data) return;
+
+        const autoDetected = data.autoDetected || null;
+        state.shadowLastKey = key;
+        state.shadowLastAt = Date.now();
+        state.shadowLastResult = autoDetected;
+
+        renderSimpleShadowHints(autoDetected);
+      } catch (e) {
+        if (e && e.name === "AbortError") return;
+        if (e && String(e.message) === "stale_response") return;
+
+        clearSimpleHints();
+      }
     }
 
     async function runCalculation(isAuto) {
@@ -1110,6 +1274,7 @@
           upstream_error: "Upstream API error. Try again.",
           bad_upstream_json: "Upstream returned invalid JSON. Try again.",
           insufficient_market_data: "Not enough market data for this asset.",
+          unknown_regime: "Regime auto requires the latest API update.",
           trade_entry_equals_stop: "Entry and Stop cannot be equal.",
           long_invalid_stop: "For a long, Stop must be below Entry.",
           long_invalid_tp: "For a long, TP must be above Entry.",
@@ -1230,6 +1395,7 @@
     }
 
     $("methodVersion").textContent = "Method v" + METHOD_VERSION;
+    $("regime").value = "Auto";
     applyModeUI();
     bind();
   </script>
