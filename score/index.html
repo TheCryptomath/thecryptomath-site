@@ -669,7 +669,7 @@
                 <div class="muted" style="font-weight:700; margin-bottom:6px;">Timeframes and use cases</div>
                 <ul class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
                   <li><strong>Scalp</strong> use this as a direction filter only. Confirm with your execution chart.</li>
-                  <li><strong>Intraday</strong> best fit. Auto fill + RR check gives disciplined selection.</li>
+                  <li><strong>Intraday</strong> best fit. Auto fill plus RR check gives disciplined selection.</li>
                   <li><strong>Swing</strong> very good. Structure is intentionally strict to avoid chop.</li>
                   <li><strong>Mid or long term</strong> use it for entries and adds. Re-run on regime shifts, not every day.</li>
                 </ul>
@@ -685,12 +685,11 @@
     </div>
   </main>
 
-  <!-- Footer updated to match Build / Resources layout -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <a class="brand" href="/">
+          <a class="brand" href="/" aria-label="The Cryptomath home">
             <span class="brand-mark" aria-hidden="true">
               <img class="brand-mark-img" src="/assets/logo.png" alt="" width="512" height="512" />
             </span>
@@ -699,70 +698,32 @@
           <p>If it's not here, it's not me.</p>
         </div>
 
-        <div class="footer-col">
-          <div class="footer-title">Navigate</div>
-          <a href="/">Home</a>
-          <a href="/build.html">Build</a>
-          <a href="/resources.html">Resources</a>
-          <a href="/connect.html">Connect</a>
-        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Navigate</h4>
+            <a href="/">Home</a>
+            <a href="/build.html">Build</a>
+            <a href="/resources.html">Resources</a>
+            <a href="/connect.html">Connect</a>
+          </div>
 
-        <div class="footer-col">
-          <div class="footer-title">Links</div>
-          <a href="https://x.com/thecryptomath" target="_blank" rel="noopener">Twitter</a>
-          <a href="https://t.me/thecryptomath" target="_blank" rel="noopener">Telegram</a>
-          <a href="/newsletter.html">Newsletter</a>
+          <div class="footer-col">
+            <h4>Links</h4>
+            <a href="https://x.com/thecryptomath" target="_blank" rel="noreferrer noopener">Twitter</a>
+            <a href="https://t.me/thecryptomath" target="_blank" rel="noreferrer noopener">Telegram</a>
+            <a href="/newsletter.html">Newsletter</a>
+          </div>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <div>© 2026 The Cryptomath. All rights reserved.</div>
-        <div>Educational content only. Not financial advice.</div>
+        <p>© <span data-year></span> The Cryptomath. All rights reserved.</p>
+        <p>Educational content only. Not financial advice.</p>
       </div>
     </div>
   </footer>
 
   <script>
-    (function(){
-      const topbar = document.querySelector(".topbar");
-      const themeBtn = document.querySelector("[data-theme-toggle]");
-      const mobileBtn = document.querySelector("[data-mobile-toggle]");
-      const navlinks = document.querySelector("[data-navlinks]");
-
-      function onScroll(){
-        if(!topbar) return;
-        if(window.scrollY > 10) topbar.classList.add("scrolled");
-        else topbar.classList.remove("scrolled");
-      }
-      window.addEventListener("scroll", onScroll, { passive: true });
-      onScroll();
-
-      function setTheme(next){
-        if(next === "dark") document.documentElement.setAttribute("data-theme","dark");
-        else document.documentElement.removeAttribute("data-theme");
-        try { localStorage.setItem("theme", next); } catch(e) {}
-      }
-      if(themeBtn){
-        themeBtn.addEventListener("click", () => {
-          const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-          setTheme(isDark ? "light" : "dark");
-        });
-      }
-
-      if(mobileBtn && navlinks){
-        mobileBtn.addEventListener("click", () => {
-          const isOpen = mobileBtn.getAttribute("aria-expanded") === "true";
-          mobileBtn.setAttribute("aria-expanded", String(!isOpen));
-          navlinks.classList.toggle("open");
-
-          if(!isOpen){
-            const firstLink = navlinks.querySelector("a");
-            if(firstLink) firstLink.focus();
-          }
-        });
-      }
-    })();
-
     /* ========================================
        Cryptomath Score v1.4.7
        ======================================== */
@@ -1566,5 +1527,7 @@
     applyModeUI();
     bind();
   </script>
+
+  <script src="/js/main.js"></script>
 </body>
 </html>
