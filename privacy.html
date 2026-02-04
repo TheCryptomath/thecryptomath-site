@@ -11,134 +11,181 @@
   <meta name="theme-color" content="#08090c" media="(prefers-color-scheme: dark)">
 
   <link rel="canonical" href="https://thecryptomath.com/privacy.html" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 
+  <!-- Open Graph -->
   <meta property="og:title" content="Privacy Policy | The Cryptomath" />
   <meta property="og:description" content="Privacy policy for thecryptomath.com." />
+  <meta property="og:image" content="https://thecryptomath.com/assets/og.png" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://thecryptomath.com/privacy.html" />
-  <meta property="og:image" content="https://thecryptomath.com/assets/og.png" />
   <meta property="og:site_name" content="The Cryptomath" />
 
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Privacy Policy | The Cryptomath" />
   <meta name="twitter:description" content="Privacy policy for thecryptomath.com." />
   <meta name="twitter:image" content="https://thecryptomath.com/assets/og.png" />
   <meta name="twitter:site" content="@thecryptomath" />
 
+  <script>
+(function(){
+  try{
+    var t = localStorage.getItem('theme');
+    if(t === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); return; }
+    if(t === 'light'){ document.documentElement.removeAttribute('data-theme'); return; }
+    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+      document.documentElement.setAttribute('data-theme','dark');
+    }
+  }catch(e){}
+})();
+</script>
+
   <link rel="stylesheet" href="/css/styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"Privacy Policy",
+    "url":"https://thecryptomath.com/privacy.html",
+    "isPartOf":{
+      "@type":"WebSite",
+      "name":"The Cryptomath",
+      "url":"https://thecryptomath.com/"
+    }
+  }
+  </script>
 </head>
 
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
 
+  <!-- Header copied from index.html -->
   <header class="topbar">
-    <div class="container topbar-inner">
-      <a class="brand" href="/" aria-label="The Cryptomath home">
-        <span class="brand-mark" aria-hidden="true">
-          <img class="brand-mark-img" src="/assets/logo.png" alt="" width="512" height="512" />
-        </span>
-        <span>The Cryptomath</span>
-      </a>
+    <div class="container">
+      <nav class="nav">
+        <a class="brand" href="/">
+          <span class="brand-mark" aria-hidden="true">
+            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="512" height="512" />
+          </span>
+          <span>The Cryptomath</span>
+        </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/build.html">Build</a>
-        <a class="nav-link" href="/resources.html">Resources</a>
-        <a class="nav-link" href="/connect.html">Connect</a>
+        <div class="navlinks" data-navlinks>
+          <a href="/">Home</a>
+          <a href="/build.html">Build</a>
+          <a href="/resources.html">Resources</a>
+          <a href="/connect.html">Connect</a>
+        </div>
+
+        <div class="nav-cta">
+          <a class="btn primary" href="/newsletter.html">Newsletter</a>
+
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span>Theme</span>
+          </button>
+
+          <button class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
+        </div>
       </nav>
-
-      <div class="topbar-actions">
-        <a class="btn btn-primary" href="/newsletter.html">Newsletter</a>
-
-        <button class="btn btn-ghost theme-toggle" type="button" aria-label="Toggle theme">
-          <span class="icon" aria-hidden="true">🌙</span>
-          <span>Theme</span>
-        </button>
-
-        <button class="btn btn-ghost nav-toggle" type="button" aria-label="Toggle navigation">
-          <span class="icon" aria-hidden="true">☰</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="nav-mobile" hidden>
-      <a href="/">Home</a>
-      <a href="/build.html">Build</a>
-      <a href="/resources.html">Resources</a>
-      <a href="/connect.html">Connect</a>
-      <a href="/newsletter.html">Newsletter</a>
     </div>
   </header>
 
   <main id="content">
-    <section class="section" style="padding-top: 140px;">
+    <section class="section" style="padding-top:140px;">
       <div class="container">
         <div class="section-header">
           <h1>Privacy Policy</h1>
           <p class="section-sub">Last updated February 4, 2026</p>
         </div>
-      </div>
-    </section>
 
-    <section class="section" style="padding-top: 0;">
-      <div class="container">
-        <div class="card">
-          <h2>What this site does</h2>
-          <p>
-            thecryptomath.com is a static website. It does not require an account. It does not ask you for personal information
-            to browse pages.
-          </p>
+        <div class="card" style="display:grid; gap:18px;">
+          <div>
+            <h3>What this site does</h3>
+            <p>
+              thecryptomath.com is a mostly static website. It does not require an account and does not ask you to provide
+              personal information to browse pages.
+            </p>
+          </div>
 
-          <h2>The Cryptomath Score</h2>
-          <p>
-            The Cryptomath Score is a tool that analyzes market setups based on the parameters you provide, for example an asset and a direction.
-            Inputs are processed to compute results and display them back to you.
-          </p>
-          <p>
-            The tool does not require your name. It does not require an account.
-          </p>
+          <div>
+            <h3>The Cryptomath Score</h3>
+            <p>
+              Some pages provide tools and forms, such as the Cryptomath Score at <a href="/score/">/score/</a>.
+              When you use these tools, the service may process the inputs you submit to generate results.
+            </p>
+            <p>
+              We do not ask for your name. You do not need an account to use the tool.
+            </p>
+            <p>
+              :contentReference[oaicite:0]{index=0} may process basic technical data (such as IP address and user agent)
+              to deliver and protect the service.
+            </p>
+          </div>
 
-          <h2>Data retention</h2>
-          <p>
-            The tool is designed not to store the content of your Score inputs in a database.
-            Standard request logs may exist at the infrastructure level for security and reliability purposes.
-          </p>
+          <div>
+            <h3>Data retention</h3>
+            <p>
+              The tool is designed not to store the content of your Score inputs on the website.
+              Standard server logs may exist for security and reliability purposes.
+            </p>
+          </div>
 
-          <h2>Newsletter</h2>
-          <p>
-            If you subscribe to the newsletter, your email address is collected and processed by Substack.
-            Your subscription is managed by Substack and subject to their privacy policy and terms.
-          </p>
+          <div>
+            <h3>Newsletter</h3>
+            <p>
+              If you subscribe to the newsletter, your email address is collected and processed by :contentReference[oaicite:1]{index=1}.
+              Your subscription is managed by Substack and subject to their privacy policy and terms.
+            </p>
+          </div>
 
-          <h2>Analytics</h2>
-          <p>
-            This site does not run third party analytics scripts by default.
-            Cloudflare may process basic request data such as IP address and user agent to deliver and protect the site.
-          </p>
+          <div>
+            <h3>Analytics</h3>
+            <p>
+              This site does not run third party analytics scripts by default.
+              Cloudflare may process basic request data to deliver and protect the site.
+            </p>
+          </div>
 
-          <h2>Cookies</h2>
-          <p>
-            This site does not set advertising or tracking cookies.
-            Third party services you use from links on this site may set their own cookies.
-          </p>
+          <div>
+            <h3>Cookies</h3>
+            <p>
+              This site does not set advertising or tracking cookies.
+              Third party services you use from links on this site may set their own cookies.
+            </p>
+          </div>
 
-          <h2>External links</h2>
-          <p>
-            This site contains links to external websites.
-            When you click an external link, you are subject to the privacy policy of that third party.
-          </p>
+          <div>
+            <h3>External links</h3>
+            <p>
+              This site contains links to external websites.
+              When you click an external link, you are subject to the privacy policy of that third party.
+            </p>
+          </div>
 
-          <h2>Contact</h2>
-          <p>
-            If you have any questions about this policy, you can reach out via the Connect page.
-          </p>
+          <div>
+            <h3>Contact</h3>
+            <p>
+              If you have any questions about this policy, you can reach out via the Connect page.
+            </p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
+              <a class="btn" href="/connect.html">Go to Connect</a>
+              <a class="btn" href="/score/">Open the Score</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- Footer copied from index.html -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
@@ -159,7 +206,6 @@
             <a href="/build.html">Build</a>
             <a href="/resources.html">Resources</a>
             <a href="/connect.html">Connect</a>
-            <a href="/privacy.html">Privacy</a>
           </div>
           <div class="footer-col">
             <h4>Projects</h4>
