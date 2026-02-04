@@ -34,24 +34,35 @@
   <a class="skip-link" href="#content">Skip to content</a>
 
   <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="/" aria-label="The Cryptomath home">
-        <img src="/assets/logo.png" alt="The Cryptomath" width="36" height="36" />
-        <span>The Cryptomath</span>
-      </a>
-
+    <div class="container">
       <nav class="nav" aria-label="Primary">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/build.html" class="nav-link">Build</a>
-        <a href="/resources.html" class="nav-link">Resources</a>
-        <a href="/connect.html" class="nav-link">Connect</a>
-        <a href="/newsletter.html" class="nav-link">Newsletter</a>
-      </nav>
+        <a class="brand" href="/" aria-label="The Cryptomath home">
+          <span class="brand-mark" aria-hidden="true">
+            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="512" height="512" />
+          </span>
+          <span>The Cryptomath</span>
+        </a>
 
-      <button class="theme-toggle" type="button" aria-label="Toggle theme">
-        <span aria-hidden="true">🌙</span>
-        <span>Theme</span>
-      </button>
+        <div class="navlinks" data-navlinks>
+          <a href="/">Home</a>
+          <a href="/build.html">Build</a>
+          <a href="/resources.html">Resources</a>
+          <a href="/connect.html">Connect</a>
+        </div>
+
+        <div class="nav-cta">
+          <a class="btn primary" href="/newsletter.html">Newsletter</a>
+
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span>Theme</span>
+          </button>
+
+          <button class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
+        </div>
+      </nav>
     </div>
   </header>
 
@@ -66,28 +77,23 @@
           thecryptomath.com is a static website. It does not require an account and does not ask you to provide personal
           information to browse pages.
         </p>
-        <p>
-          Some pages offer tools and forms, such as The Cryptomath Score. When you use these tools, the site may process
-          the inputs you submit to generate results.
-        </p>
 
         <h2>The Cryptomath Score</h2>
         <p>
-          The Cryptomath Score is a tool that helps analyze market setups based on the parameters you provide
-          (for example an asset and a direction). Inputs are processed to compute results and display them back to you.
+          The Cryptomath Score is a tool that helps analyze market setups based on the parameters you provide, for example
+          an asset and a direction. Inputs are processed to compute results and display them back to you.
         </p>
         <p>
           We do not ask for your name. We do not require an account to use the tool.
         </p>
         <p>
-          Cloudflare may process basic technical data (such as IP address and user agent) to deliver and protect the service.
+          Cloudflare may process basic technical data, such as IP address and user agent, to deliver and protect the service.
         </p>
 
         <h2>Data retention</h2>
         <p>
-          The tool is designed not to store the content of your Score inputs on the website. Standard server logs may exist for
-          security and reliability purposes.
-
+          The tool is designed not to store the content of your Score inputs. Standard server logs may exist for security
+          and reliability purposes.
         </p>
 
         <h2>Newsletter</h2>
@@ -99,7 +105,7 @@
         <h2>Analytics</h2>
         <p>
           This site does not run third party analytics scripts by default. Cloudflare may process basic request data
-          (such as IP address and user agent) to deliver and protect the site.
+          to deliver and protect the site.
         </p>
 
         <h2>Cookies</h2>
@@ -125,12 +131,14 @@
   <footer class="footer">
     <div class="container footer-inner">
       <a class="brand" href="/" aria-label="The Cryptomath home">
-        <img src="/assets/logo.png" alt="" width="28" height="28" />
+        <span class="brand-mark" aria-hidden="true">
+          <img class="brand-mark-img" src="/assets/logo.png" alt="" width="512" height="512" />
+        </span>
         <span>The Cryptomath</span>
       </a>
 
       <div class="footer-links" aria-label="Footer links">
-        <a href="/privacy.html">Privacy</a>
+        <a href="/privacy.html" aria-current="page">Privacy</a>
       </div>
     </div>
   </footer>
