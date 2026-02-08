@@ -430,9 +430,15 @@ p { margin: 0; }
 }
 
 @media (min-width: 769px) {
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 520px;
+  }
+
   .hero-actions .btn {
-    flex: 1;
-    min-width: 220px;
+    width: 100%;
     justify-content: center;
   }
 }
