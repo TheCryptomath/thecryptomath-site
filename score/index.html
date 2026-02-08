@@ -1220,6 +1220,11 @@
         $("verdictText").textContent = "Setup downgraded due to insufficient RR for this regime.";
       }
 
+      state.lastScore = (typeof s.total === "number") ? Number(s.total).toFixed(1) : null;
+
+      const cta = $("postScoreCta");
+      if (cta) cta.style.display = state.lastScore ? "block" : "none";
+
       state.lastResponse = { payload, data };
     }
 
@@ -1520,13 +1525,12 @@
       return;
     }
 
-});
-    }
-
     function getScoreForShare() {
       const raw = $("scoreTotal") ? $("scoreTotal").textContent : "";
-      const score = String(raw || "").trim();
-      return score && score !== "–" ? score : (state.lastScore != null ? String(state.lastScore) : "X");
+      const m = String(raw || "").match(/([0-9]+(?:\.[0-9]+)?)/);
+      if (m) return m[1];
+      if (state.lastScore != null) return String(state.lastScore);
+      return "X";
     }
 
     function shareOnX() {
