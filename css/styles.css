@@ -477,7 +477,10 @@ p { margin: 0; }
 
 .section-header { margin-bottom: 48px; }
 
-.section-header h2 { margin-bottom: 12px; }
+.section-header h2 {
+  margin-bottom: 12px;
+  letter-spacing: -0.015em;
+}
 
 .section-sub {
   color: var(--text-secondary);
