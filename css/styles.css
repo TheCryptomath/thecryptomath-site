@@ -474,6 +474,8 @@ p { margin: 0; }
 
   .hero-actions {
     justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 12px;
   }
 }
 
