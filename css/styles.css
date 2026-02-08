@@ -471,7 +471,7 @@ p { margin: 0; }
 
 @media (min-width: 769px) {
   .hero + .section {
-    padding-top: 48px;
+    padding-top: 44px;
   }
 }
 
@@ -1343,7 +1343,6 @@ button:focus-visible {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .ledger-stats {
@@ -1351,7 +1350,10 @@ button:focus-visible {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   width: 100%;
-  align-content: start;
+
+  flex: 1;
+  align-content: stretch;
+  grid-auto-rows: 1fr;
 }
 
 .ledger-stat {
