@@ -432,22 +432,7 @@ p { margin: 0; }
   animation: fadeInUp 0.6s ease 0.3s both;
 }
 
-/* HERO row alignment + smaller buttons (no HTML changes) */
-@media (min-width: 769px) {
-  .hero-actions .btn {
-    flex: 0 0 auto;
-  }
-  .hero-actions .btn.primary,
-  .hero-actions a.btn:nth-child(2) {
-    min-width: 0;
-    width: max-content;
-  }
-  .hero-actions {
-    align-items: stretch;
-  }
-}
-
-/* Reduce button size only in the hero, keep default sizing elsewhere */
+/* Hero buttons only. Slightly smaller, consistent */
 .hero .hero-actions .btn {
   padding: 10px 16px;
   font-size: 0.9rem;
@@ -461,17 +446,20 @@ p { margin: 0; }
   height: 16px;
 }
 
-/* Make Explore Build match visually (2nd CTA) */
+/* Desktop. Two CTAs with the same width */
 @media (min-width: 769px) {
-  .hero .hero-actions a.btn:nth-child(2) {
-    min-width: 210px;
+  .hero .hero-actions .btn {
+    width: clamp(200px, 22vw, 240px);
   }
 }
 
-/* On small screens, let them flow naturally */
+/* Mobile. Full width like before */
 @media (max-width: 480px) {
-  .hero .hero-actions a.btn:nth-child(2) {
-    min-width: 0;
+  .hero-actions {
+    flex-direction: column;
+  }
+  .hero-actions .btn {
+    width: 100%;
   }
 }
 
