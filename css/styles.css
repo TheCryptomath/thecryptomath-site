@@ -1125,11 +1125,7 @@ p { margin: 0; }
   }
 }
 
-/* Light theme dropdown
-   Important fix
-   Your light theme has no data-theme attribute
-   So we target "not dark" instead of [data-theme="light"]
-*/
+/* Light theme dropdown */
 @media (max-width: 640px) {
   html:not([data-theme="dark"]) .topbar .navlinks.open {
     background: rgba(255,255,255,0.94);
@@ -1213,7 +1209,7 @@ button:focus-visible {
 
 /* ============================================
    THE LEDGER (Home)
-   Cleaner, more “designed” feel
+   Cleaner, more designed feel
    ============================================ */
 
 .ledger {
@@ -1236,7 +1232,6 @@ button:focus-visible {
   align-items: start;
 }
 
-/* Timeline area as a subtle panel to avoid “floating pills” */
 .ledger-timeline {
   position: relative;
   padding: 18px 18px 18px 54px;
@@ -1245,7 +1240,6 @@ button:focus-visible {
   background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
 }
 
-/* Rail */
 .ledger-timeline::before {
   content: "";
   position: absolute;
@@ -1278,7 +1272,6 @@ button:focus-visible {
   margin-top: 6px;
 }
 
-/* Dot */
 .ledger-item::before {
   content: "";
   position: absolute;
@@ -1302,7 +1295,6 @@ button:focus-visible {
     0 0 16px var(--accent-glow);
 }
 
-/* Year */
 .ledger-year {
   font-family: var(--mono);
   font-weight: 800;
@@ -1312,7 +1304,6 @@ button:focus-visible {
   padding-top: 2px;
 }
 
-/* Sentence card, less “boxy”, more premium */
 .ledger-details {
   border-radius: 16px;
   padding: 14px 16px;
@@ -1334,7 +1325,6 @@ button:focus-visible {
   font-size: 1rem;
 }
 
-/* Highlights side, calmer, consistent with timeline panel */
 .ledger-highlights {
   padding: 18px;
   border-radius: var(--radius-xl);
@@ -1393,7 +1383,6 @@ button:focus-visible {
   max-width: 74ch;
 }
 
-/* Keyboard focus */
 .ledger-details:focus-within,
 .ledger-stat:focus-within {
   outline: 2px solid var(--accent);
@@ -1402,7 +1391,6 @@ button:focus-visible {
   box-shadow: var(--shadow-sm);
 }
 
-/* Responsive */
 @media (max-width: 980px) {
   .ledger-body {
     grid-template-columns: 1fr;
@@ -1437,7 +1425,6 @@ button:focus-visible {
   }
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .ledger-item::before,
   .ledger-details,
