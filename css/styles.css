@@ -1271,6 +1271,9 @@ button:focus-visible {
   border-radius: var(--radius-xl);
   border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
   background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
+
+  /* helps matching height in some layouts */
+  min-height: 0;
 }
 
 .ledger-timeline::before {
@@ -1365,26 +1368,21 @@ button:focus-visible {
 .ledger-highlights {
   padding: 18px;
   border-radius: var(--radius-xl);
+  height: 100%;
   display: flex;
   flex-direction: column;
   min-height: 0;
 }
 
-/* Align the inner cards top and bottom with the timeline cards */
+/* Make the 4 stats fill the panel height so bottoms align */
 .ledger-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: 12px;
   width: 100%;
-
-  /* matches the timeline item padding so boxes align visually */
-  padding: 14px 0;
-
-  /* fills the remaining height of the right panel */
-  flex: 1;
+  height: 100%;
   min-height: 0;
-  align-content: stretch;
 }
 
 .ledger-stat {
@@ -1455,9 +1453,10 @@ button:focus-visible {
 
   .ledger-timeline { padding: 16px; }
 
-  /* keep mobile exactly like before */
+  /* Back to natural flow on smaller screens */
   .ledger-stats {
-    padding: 0;
+    height: auto;
+    min-height: 0;
     grid-template-rows: none;
   }
 
