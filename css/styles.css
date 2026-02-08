@@ -446,10 +446,16 @@ p { margin: 0; }
   height: 16px;
 }
 
-/* Desktop. Two CTAs with the same width */
+/* Desktop. Two CTAs same width, constrained so they don't exceed the block below */
 @media (min-width: 769px) {
-  .hero .hero-actions .btn {
-    width: clamp(180px, 20vw, 220px);
+  .hero-actions {
+    width: 100%;
+    max-width: 560px; /* ajuste 520-600 */
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 0;
+    min-width: 0;
   }
 }
 
@@ -457,7 +463,9 @@ p { margin: 0; }
 @media (max-width: 480px) {
   .hero-actions {
     flex-direction: column;
+    max-width: 100%;
   }
+
   .hero-actions .btn {
     width: 100%;
   }
