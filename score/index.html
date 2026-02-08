@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>The Cryptomath Score | Ultimate Market Filter</title>
-  <meta name="description" content="Professional-grade scoring system to identify high-probability crypto setups." />
+  <title>Free Crypto Score Tool. Evaluate any coin in 2 minutes | The Cryptomath</title>
+  <meta name="description" content="Professional crypto scoring tool. Analyze trend, momentum, volatility, liquidity and market structure. Free. No signup." />
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#fbfbfc" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#08090c" media="(prefers-color-scheme: dark)">
@@ -33,17 +33,18 @@
     }
   </script>
 
-  <meta property="og:title" content="The Cryptomath Score | Ultimate Market Filter" />
-  <meta property="og:description" content="Professional-grade scoring system to identify high-probability crypto setups." />
-  <meta property="og:image" content="https://thecryptomath.com/assets/og.png" />
+  <meta property="og:title" content="Free Crypto Score Tool | The Cryptomath" />
+  <meta property="og:description" content="Evaluate any coin fast. Trend, momentum, volatility, liquidity, market structure. Free. No signup." />
+  <meta property="og:image" content="https://thecryptomath.com/assets/og.jpg" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://thecryptomath.com/score/" />
   <meta property="og:site_name" content="The Cryptomath" />
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="The Cryptomath Score | Ultimate Market Filter" />
-  <meta name="twitter:description" content="Professional-grade scoring system to identify high-probability crypto setups." />
-  <meta name="twitter:image" content="https://thecryptomath.com/assets/og.png" />
+    <meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Crypto Score Tool | The Cryptomath" />
+  <meta name="twitter:description" content="Evaluate any coin fast. Trend, momentum, volatility, liquidity, market structure. Free. No signup." />
+  <meta name="twitter:image" content="https://thecryptomath.com/assets/og.jpg" />
   <meta name="twitter:site" content="@thecryptomath" />
 
   <script>
@@ -346,6 +347,7 @@
       text-underline-offset: 2px;
     }
   </style>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 
 <body>
@@ -363,13 +365,14 @@
 
         <div class="navlinks" data-navlinks>
           <a href="/">Home</a>
-          <a href="/build.html">Build</a>
-          <a href="/resources.html">Resources</a>
-          <a href="/connect.html">Connect</a>
+          <a href="/build">Build</a>
+          <a href="/score/">Score</a>
+          <a href="/resources">Resources</a>
+          <a href="/connect">Connect</a>
         </div>
 
         <div class="nav-cta">
-          <a class="btn primary" href="/newsletter.html">Newsletter</a>
+          <a class="btn primary" href="/newsletter">Newsletter</a>
 
           <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -638,6 +641,23 @@
               <p id="verdictText">Fill inputs and click Calculate.</p>
             </div>
 
+            <div class="panel" id="postScoreCta" style="margin-top:12px; display:none;">
+              <div class="panel-hd">
+                <div class="panel-title">Next step</div>
+              </div>
+              <div class="panel-bd">
+                <p class="muted" style="margin:0 0 12px 0; line-height:1.55;">
+                  Get weekly market reads and methodology updates.
+                </p>
+
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                  <a href="/newsletter" class="btn primary" id="ctaNewsletterBtn">Subscribe for free</a>
+                  <button type="button" class="btn" id="shareXBtn">Share on X</button>
+                  <button type="button" class="btn" id="shareTgBtn">Share on Telegram</button>
+                </div>
+              </div>
+            </div>
+
             <div class="panel" style="margin-top:12px;">
               <div class="panel-hd">
                 <div class="panel-title">How to use</div>
@@ -705,16 +725,16 @@
           <div class="footer-col">
             <h4>Navigate</h4>
             <a href="/">Home</a>
-            <a href="/build.html">Build</a>
-            <a href="/resources.html">Resources</a>
-            <a href="/connect.html">Connect</a>
+            <a href="/build">Build</a>
+            <a href="/resources">Resources</a>
+            <a href="/connect">Connect</a>
           </div>
 
           <div class="footer-col">
             <h4>Links</h4>
             <a href="https://x.com/thecryptomath" target="_blank" rel="noopener">Twitter</a>
             <a href="https://t.me/thecryptomath" target="_blank" rel="noopener">Telegram</a>
-            <a href="/newsletter.html">Newsletter</a>
+            <a href="/newsletter">Newsletter</a>
           </div>
         </div>
       </div>
@@ -740,6 +760,8 @@
 
     const state = {
       lastResponse: null,
+      lastScore: null,
+      lastVerdict: null,
       debounceTimer: null,
       autoSet: new Set(),
       lastDebug: null,
@@ -914,6 +936,9 @@
       vb.classList.add("n");
       $("verdictTitle").textContent = "No trade";
       $("verdictText").textContent = "Fill inputs and click Calculate.";
+
+      const cta = $("postScoreCta");
+      if (cta) cta.style.display = "none";
 
       state.lastResponse = null;
     }
@@ -1343,6 +1368,11 @@
       try {
         const data = await callApi(payload);
         renderScores(data, payload);
+
+        if (!isAuto) {
+          trackScoreCalculated(state.lastScore, payload.regime, payload.direction, payload.mode);
+        }
+
         setStatus(isAuto ? "Updated." : "OK", "ok");
       } catch (e) {
         if (e && e.name === "AbortError") return;
@@ -1475,6 +1505,57 @@
       setStatus("Exported.", "ok");
     }
 
+        function trackScoreCalculated(score, regime, direction, mode) {
+      // Cloudflare Web Analytics does not support custom events yet.
+      return;
+    }
+
+    function trackNewsletterClick(source) {
+      // Cloudflare Web Analytics does not support custom events yet.
+      return;
+    }
+
+    function trackScoreShared(platform, score) {
+      // Cloudflare Web Analytics does not support custom events yet.
+      return;
+    }
+
+});
+    }
+
+    function getScoreForShare() {
+      const raw = $("scoreTotal") ? $("scoreTotal").textContent : "";
+      const score = String(raw || "").trim();
+      return score && score !== "–" ? score : (state.lastScore != null ? String(state.lastScore) : "X");
+    }
+
+    function shareOnX() {
+      const score = getScoreForShare();
+      const text = `I just ran a crypto scan with the @thecryptomath Score
+
+Result ${score}/10
+
+Try it for free`;
+      const url = "https://thecryptomath.com/score/";
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, "_blank");
+
+      trackScoreShared("x", score);
+    }
+
+    function shareOnTelegram() {
+      const score = getScoreForShare();
+      const text = `I just ran a crypto scan with the @thecryptomath Score
+
+Result ${score}/10
+
+Try it for free`;
+      const url = "https://thecryptomath.com/score/";
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, "_blank");
+
+      trackScoreShared("telegram", score);
+    }
+
+
     function bind() {
       $("mode").addEventListener("change", () => { applyModeUI(); scheduleAutoCalc(); });
       $("regime").addEventListener("change", scheduleAutoCalc);
@@ -1506,6 +1587,10 @@
       $("autoFillBtn").addEventListener("click", runAutoFill);
       $("resetBtn").addEventListener("click", resetAll);
       $("exportBtn").addEventListener("click", exportJSON);
+
+      $("ctaNewsletterBtn").addEventListener("click", () => trackNewsletterClick("score_post"));
+      $("shareXBtn").addEventListener("click", shareOnX);
+      $("shareTgBtn").addEventListener("click", shareOnTelegram);
 
       $("modeHint").addEventListener("click", (e) => {
         const target = e.target && e.target.closest ? e.target.closest("[data-action]") : null;
