@@ -1241,13 +1241,6 @@ button:focus-visible {
   align-items: stretch;
 }
 
-/* Ensure both columns truly match height */
-.ledger-timeline,
-.ledger-highlights {
-  height: 100%;
-  min-height: 0;
-}
-
 /* Timeline panel */
 .ledger-timeline {
   position: relative;
@@ -1255,6 +1248,7 @@ button:focus-visible {
   border-radius: var(--radius-xl);
   border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
   background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
+  height: 100%;
 }
 
 .ledger-timeline::before {
@@ -1355,20 +1349,13 @@ button:focus-visible {
   min-height: 0;
 }
 
-/* Fill the full height so bottom aligns with the left panel */
 .ledger-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: 12px;
   width: 100%;
-
-  /* match the timeline items vertical padding */
-  padding: 14px 0;
-
-  /* make the 2 rows fill the panel height */
-  flex: 1;
-  align-content: stretch;
-  grid-auto-rows: 1fr;
+  height: 100%;
 }
 
 .ledger-stat {
@@ -1378,6 +1365,7 @@ button:focus-visible {
   background: color-mix(in srgb, var(--bg-surface) 88%, transparent);
   transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
   min-height: 0;
+  height: 100%;
 }
 
 .ledger-stat:hover {
@@ -1409,7 +1397,6 @@ button:focus-visible {
   opacity: 0.88;
 }
 
-/* Optional line under the section, keep if you still use it somewhere */
 .ledger-today {
   margin: 18px 0 0;
   color: var(--text-secondary);
@@ -1455,7 +1442,15 @@ button:focus-visible {
     font-weight: 800;
   }
 
-  .ledger-stats { grid-template-columns: 1fr; }
+  .ledger-stats {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    height: auto;
+  }
+
+  .ledger-stat {
+    height: auto;
+  }
 }
 
 /* Reduced motion */
