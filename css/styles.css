@@ -1217,6 +1217,7 @@ button:focus-visible {
 
 /* ============================================
    THE LEDGER (Home)
+   Premium layout override
    ============================================ */
 
 .ledger {
@@ -1225,153 +1226,173 @@ button:focus-visible {
 }
 
 .ledger-intro {
-  font-size: 1.125rem;
-  line-height: 1.7;
+  font-size: 1.08rem;
+  line-height: 1.75;
   color: var(--text-secondary);
-  margin: 0 auto 44px;
-  text-align: center;
-  max-width: 70ch;
+  margin: 8px 0 34px;
+  max-width: 72ch;
 }
 
 .ledger-body {
   display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 24px;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 22px;
   align-items: start;
 }
 
+/* Timeline rail */
 .ledger-timeline {
   position: relative;
+  padding-left: 18px;
 }
 
 .ledger-timeline::before {
   content: "";
   position: absolute;
-  left: 84px;
-  top: 10px;
-  bottom: 10px;
+  left: 4px;
+  top: 6px;
+  bottom: 6px;
   width: 2px;
-  background: linear-gradient(to bottom, var(--border) 0%, var(--accent) 50%, var(--border) 100%);
-  opacity: 0.2;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--border) 85%, transparent) 12%,
+    color-mix(in srgb, var(--accent) 35%, transparent) 50%,
+    color-mix(in srgb, var(--border) 85%, transparent) 88%,
+    transparent 100%
+  );
+  opacity: 0.55;
 }
 
+/* Each item becomes a clean row */
 .ledger-item {
-  display: flex;
-  gap: 28px;
-  margin-bottom: 18px;
   position: relative;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: 14px;
+  align-items: start;
+  margin: 0 0 14px;
 }
 
 .ledger-item:last-child {
   margin-bottom: 0;
 }
 
-.ledger-year {
-  flex-shrink: 0;
-  width: 84px;
-  font-family: var(--mono);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-align: right;
-  position: relative;
-  padding-top: 2px;
-}
-
-/* Premium discret pulse on hover */
-.ledger-year::after {
+/* Timeline dot */
+.ledger-item::before {
   content: "";
   position: absolute;
-  right: -19px;
-  top: 10px;
+  left: -18px;
+  top: 18px;
   width: 10px;
   height: 10px;
-  background: color-mix(in srgb, var(--accent) 75%, transparent);
-  border-radius: 50%;
-  box-shadow: 0 0 0 4px var(--bg-deep), 0 0 0 6px var(--border);
-  z-index: 1;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.ledger-item:hover .ledger-year::after {
-  transform: scale(1.18);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 70%, var(--bg-surface));
   box-shadow:
     0 0 0 4px var(--bg-deep),
-    0 0 0 6px var(--border),
-    0 0 12px var(--accent-glow);
+    0 0 0 6px color-mix(in srgb, var(--border) 80%, transparent);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
+.ledger-item:hover::before {
+  transform: scale(1.14);
+  box-shadow:
+    0 0 0 4px var(--bg-deep),
+    0 0 0 6px color-mix(in srgb, var(--border-hover) 85%, transparent),
+    0 0 14px var(--accent-glow);
+}
+
+/* Year */
+.ledger-year {
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  text-align: right;
+  padding-top: 14px;
+}
+
+/* The card holding the sentence */
 .ledger-details {
-  flex: 1;
-  padding: 18px 20px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
   border-radius: var(--radius-lg);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  padding: 14px 16px;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
 }
 
-/* Premium discret hover: no translate */
 .ledger-details:hover {
   border-color: var(--border-hover);
   box-shadow: var(--shadow-sm);
+  background: color-mix(in srgb, var(--bg-surface) 96%, transparent);
 }
 
 .ledger-details p {
   margin: 0;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
   font-size: 0.98rem;
 }
 
+/* Highlights card */
+.ledger-highlights {
+  padding: 18px;
+}
+
 .ledger-highlights .card-label {
-  margin-bottom: 14px;
+  margin: 0 0 12px;
 }
 
 .ledger-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
 }
 
 .ledger-stat {
-  padding: 16px 14px;
-  background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
-  border: 1px solid var(--border);
+  padding: 14px 14px;
   border-radius: var(--radius-md);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
+  background: color-mix(in srgb, var(--bg-surface) 88%, transparent);
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
 }
 
-/* Premium discret hover: no translate */
 .ledger-stat:hover {
   border-color: var(--border-hover);
   box-shadow: var(--shadow-sm);
+  background: color-mix(in srgb, var(--bg-surface) 94%, transparent);
 }
 
 .ledger-stat-number {
-  font-size: 1.6rem;
+  font-size: 1.55rem;
   line-height: 1.05;
-  font-weight: 800;
+  font-weight: 850;
   letter-spacing: -0.02em;
+  margin: 0 0 6px;
   background: linear-gradient(
     135deg,
     var(--accent) 0%,
-    color-mix(in srgb, var(--accent) 40%, var(--gold)) 100%
+    color-mix(in srgb, var(--accent) 45%, #1d4ed8) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 6px;
 }
 
 .ledger-stat-label {
   color: var(--text-secondary);
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.86rem;
+  line-height: 1.45;
   opacity: 0.88;
 }
 
-/* Accessibility */
+.ledger-today {
+  margin: 18px 0 0;
+  color: var(--text-secondary);
+  max-width: 72ch;
+}
+
+/* Keyboard focus */
 .ledger-details:focus-within,
 .ledger-stat:focus-within {
   outline: 2px solid var(--accent);
@@ -1380,55 +1401,45 @@ button:focus-visible {
   box-shadow: var(--shadow-sm);
 }
 
-.ledger-today {
-  margin: 22px 0 0;
-  color: var(--text-secondary);
-  text-align: center;
-}
-
+/* Responsive */
 @media (max-width: 980px) {
   .ledger-body {
     grid-template-columns: 1fr;
   }
-
-  .ledger-timeline::before {
-    left: 76px;
-  }
-
-  .ledger-year {
-    width: 76px;
-  }
-
-  .ledger-year::after {
-    right: -18px;
+  .ledger-today {
+    margin-top: 16px;
   }
 }
 
-/* Mobile cleanup: remove the visual timeline for maximum readability */
 @media (max-width: 560px) {
-  .ledger-intro {
-    text-align: left;
+  .ledger-timeline {
+    padding-left: 0;
   }
-
   .ledger-timeline::before {
     display: none;
   }
-
-  .ledger-year::after {
+  .ledger-item::before {
     display: none;
   }
-
   .ledger-item {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 8px;
   }
-
   .ledger-year {
-    width: 100%;
     text-align: left;
+    padding-top: 0;
+    font-weight: 800;
   }
-
   .ledger-stats {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ledger-item::before,
+  .ledger-details,
+  .ledger-stat {
+    transition: none;
   }
 }
