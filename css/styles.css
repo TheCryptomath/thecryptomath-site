@@ -462,6 +462,22 @@ p { margin: 0; }
 }
 
 /* ============================================
+   HERO alignment
+   ============================================ */
+
+@media (min-width: 769px) {
+  .hero-actions,
+  .credibility {
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .hero-actions {
+    justify-content: space-between;
+  }
+}
+
+/* ============================================
    SECTIONS
    ============================================ */
 .section {
