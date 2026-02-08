@@ -1415,7 +1415,6 @@ button:focus-visible {
   }
 
   .ledger-timeline { order: 1; }
-  .ledger-today { order: 2; margin-top: 0; }
   .ledger-highlights { order: 3; }
 
   .ledger-timeline { padding: 16px; }
