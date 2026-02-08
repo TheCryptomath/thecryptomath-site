@@ -1362,10 +1362,10 @@ button:focus-visible {
   gap: 12px;
   width: 100%;
 
-  /* aligns the inner cards with the timeline cards */
-  margin: 14px 0;
+  /* match the timeline items vertical padding */
+  padding: 14px 0;
 
-  /* keeps both rows equal height */
+  /* make the 2 rows fill the panel height */
   flex: 1;
   align-content: stretch;
   grid-auto-rows: 1fr;
