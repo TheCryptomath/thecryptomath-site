@@ -327,7 +327,7 @@ p { margin: 0; }
    HERO SECTION
    ============================================ */
 .hero {
-  min-height: 100vh;
+  min-height: min(92svh, 820px);
   display: flex;
   align-items: center;
   padding: 120px 0 80px;
