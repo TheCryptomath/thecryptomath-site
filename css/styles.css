@@ -985,8 +985,6 @@ p { margin: 0; }
 
 /* ============================================
    Mobile menu. Premium compact dropdown
-   Paste at the very end of styles.css
-   Remove older mobile dropdown blocks to avoid conflicts
    ============================================ */
 
 @media (max-width: 640px) {
@@ -1010,7 +1008,6 @@ p { margin: 0; }
     touch-action: manipulation;
   }
 
-  /* Hidden by default */
   .topbar .navlinks {
     display: none;
     opacity: 0;
@@ -1018,7 +1015,6 @@ p { margin: 0; }
     transform-origin: top right;
   }
 
-  /* Dropdown panel */
   .topbar .navlinks.open {
     display: flex;
     flex-direction: column;
@@ -1056,7 +1052,6 @@ p { margin: 0; }
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
-  /* Small caret pointing to the menu button */
   .topbar .navlinks.open::before {
     content: '';
     position: absolute;
@@ -1070,7 +1065,6 @@ p { margin: 0; }
     border-top: 1px solid rgba(255, 255, 255, 0.10);
   }
 
-  /* Clean rows */
   .topbar .navlinks.open a {
     display: flex;
     align-items: center;
@@ -1093,7 +1087,6 @@ p { margin: 0; }
     transition: background .15s ease, border-color .15s ease, color .15s ease, transform .12s ease;
   }
 
-  /* Arrow only as a subtle affordance */
   .topbar .navlinks.open a::after {
     content: '›';
     opacity: 0.55;
@@ -1115,7 +1108,6 @@ p { margin: 0; }
     color: rgba(96,165,250,0.95);
   }
 
-  /* Active state, cleaner than a big pill */
   .topbar .navlinks.open a[aria-current="page"] {
     background: rgba(59,130,246,0.14);
     border-color: rgba(59,130,246,0.28);
@@ -1133,9 +1125,13 @@ p { margin: 0; }
   }
 }
 
-/* Light theme dropdown */
+/* Light theme dropdown
+   Important fix
+   Your light theme has no data-theme attribute
+   So we target "not dark" instead of [data-theme="light"]
+*/
 @media (max-width: 640px) {
-  [data-theme="light"] .topbar .navlinks.open {
+  html:not([data-theme="dark"]) .topbar .navlinks.open {
     background: rgba(255,255,255,0.94);
     border: 1px solid rgba(14,15,18,0.10);
     box-shadow:
@@ -1143,33 +1139,33 @@ p { margin: 0; }
       0 40px 120px rgba(14,15,18,0.14);
   }
 
-  [data-theme="light"] .topbar .navlinks.open::before {
+  html:not([data-theme="dark"]) .topbar .navlinks.open::before {
     background: rgba(255,255,255,0.94);
     border-left: 1px solid rgba(14,15,18,0.10);
     border-top: 1px solid rgba(14,15,18,0.10);
   }
 
-  [data-theme="light"] .topbar .navlinks.open a {
+  html:not([data-theme="dark"]) .topbar .navlinks.open a {
     color: rgba(14,15,18,0.78);
     background: rgba(14,15,18,0.03);
     border: 1px solid rgba(14,15,18,0.08);
   }
 
-  [data-theme="light"] .topbar .navlinks.open a::after {
+  html:not([data-theme="dark"]) .topbar .navlinks.open a::after {
     color: rgba(14,15,18,0.32);
   }
 
-  [data-theme="light"] .topbar .navlinks.open a:hover {
+  html:not([data-theme="dark"]) .topbar .navlinks.open a:hover {
     background: rgba(14,15,18,0.06);
     border-color: rgba(14,15,18,0.12);
     color: rgba(14,15,18,0.92);
   }
 
-  [data-theme="light"] .topbar .navlinks.open a:hover::after {
+  html:not([data-theme="dark"]) .topbar .navlinks.open a:hover::after {
     color: rgba(31,76,255,0.95);
   }
 
-  [data-theme="light"] .topbar .navlinks.open a[aria-current="page"] {
+  html:not([data-theme="dark"]) .topbar .navlinks.open a[aria-current="page"] {
     background: rgba(45,91,255,0.10);
     border-color: rgba(45,91,255,0.22);
     color: rgba(14,15,18,0.95);
@@ -1217,89 +1213,93 @@ button:focus-visible {
 
 /* ============================================
    THE LEDGER (Home)
-   Premium layout override
+   Cleaner, more “designed” feel
    ============================================ */
 
 .ledger {
-  max-width: 980px;
+  max-width: 1040px;
   margin: 0 auto;
 }
 
 .ledger-intro {
-  font-size: 1.08rem;
+  font-size: 1.1rem;
   line-height: 1.75;
   color: var(--text-secondary);
-  margin: 8px 0 34px;
-  max-width: 72ch;
+  margin: 10px 0 38px;
+  max-width: 74ch;
 }
 
 .ledger-body {
   display: grid;
-  grid-template-columns: 1.7fr 1fr;
-  gap: 22px;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 24px;
   align-items: start;
 }
 
-/* Timeline rail */
+/* Timeline area as a subtle panel to avoid “floating pills” */
 .ledger-timeline {
   position: relative;
-  padding-left: 18px;
+  padding: 18px 18px 18px 54px;
+  border-radius: var(--radius-xl);
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
 }
 
+/* Rail */
 .ledger-timeline::before {
   content: "";
   position: absolute;
-  left: 4px;
-  top: 6px;
-  bottom: 6px;
+  left: 26px;
+  top: 22px;
+  bottom: 22px;
   width: 2px;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    color-mix(in srgb, var(--border) 85%, transparent) 12%,
-    color-mix(in srgb, var(--accent) 35%, transparent) 50%,
-    color-mix(in srgb, var(--border) 85%, transparent) 88%,
+    color-mix(in srgb, var(--border) 92%, transparent) 10%,
+    color-mix(in srgb, var(--accent) 42%, transparent) 50%,
+    color-mix(in srgb, var(--border) 92%, transparent) 90%,
     transparent 100%
   );
-  opacity: 0.55;
+  opacity: 0.65;
 }
 
-/* Each item becomes a clean row */
 .ledger-item {
   position: relative;
   display: grid;
-  grid-template-columns: 68px 1fr;
+  grid-template-columns: 72px 1fr;
   gap: 14px;
   align-items: start;
-  margin: 0 0 14px;
+  padding: 14px 10px;
+  border-radius: 16px;
 }
 
-.ledger-item:last-child {
-  margin-bottom: 0;
+.ledger-item + .ledger-item {
+  margin-top: 6px;
 }
 
-/* Timeline dot */
+/* Dot */
 .ledger-item::before {
   content: "";
   position: absolute;
-  left: -18px;
-  top: 18px;
+  left: -36px;
+  top: 22px;
   width: 10px;
   height: 10px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 70%, var(--bg-surface));
+  background: var(--accent);
   box-shadow:
-    0 0 0 4px var(--bg-deep),
-    0 0 0 6px color-mix(in srgb, var(--border) 80%, transparent);
+    0 0 0 5px color-mix(in srgb, var(--bg-deep) 88%, transparent),
+    0 0 0 7px color-mix(in srgb, var(--border) 90%, transparent);
   transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .ledger-item:hover::before {
-  transform: scale(1.14);
+  transform: scale(1.12);
   box-shadow:
-    0 0 0 4px var(--bg-deep),
-    0 0 0 6px color-mix(in srgb, var(--border-hover) 85%, transparent),
-    0 0 14px var(--accent-glow);
+    0 0 0 5px color-mix(in srgb, var(--bg-deep) 88%, transparent),
+    0 0 0 7px color-mix(in srgb, var(--border-hover) 90%, transparent),
+    0 0 16px var(--accent-glow);
 }
 
 /* Year */
@@ -1309,34 +1309,35 @@ button:focus-visible {
   font-size: 0.95rem;
   color: var(--text-muted);
   text-align: right;
-  padding-top: 14px;
+  padding-top: 2px;
 }
 
-/* The card holding the sentence */
+/* Sentence card, less “boxy”, more premium */
 .ledger-details {
-  background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
-  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
-  border-radius: var(--radius-lg);
+  border-radius: 16px;
   padding: 14px 16px;
-  transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+  border: 1px solid color-mix(in srgb, var(--border) 86%, transparent);
+  background: color-mix(in srgb, var(--bg-elevated) 55%, transparent);
+  transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
 }
 
 .ledger-details:hover {
   border-color: var(--border-hover);
+  background: color-mix(in srgb, var(--bg-elevated) 68%, transparent);
   box-shadow: var(--shadow-sm);
-  background: color-mix(in srgb, var(--bg-surface) 96%, transparent);
 }
 
 .ledger-details p {
   margin: 0;
   color: var(--text-secondary);
   line-height: 1.65;
-  font-size: 0.98rem;
+  font-size: 1rem;
 }
 
-/* Highlights card */
+/* Highlights side, calmer, consistent with timeline panel */
 .ledger-highlights {
   padding: 18px;
+  border-radius: var(--radius-xl);
 }
 
 .ledger-highlights .card-label {
@@ -1351,8 +1352,8 @@ button:focus-visible {
 
 .ledger-stat {
   padding: 14px 14px;
-  border-radius: var(--radius-md);
-  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
   background: color-mix(in srgb, var(--bg-surface) 88%, transparent);
   transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
 }
@@ -1389,7 +1390,7 @@ button:focus-visible {
 .ledger-today {
   margin: 18px 0 0;
   color: var(--text-secondary);
-  max-width: 72ch;
+  max-width: 74ch;
 }
 
 /* Keyboard focus */
@@ -1413,7 +1414,7 @@ button:focus-visible {
 
 @media (max-width: 560px) {
   .ledger-timeline {
-    padding-left: 0;
+    padding: 16px;
   }
   .ledger-timeline::before {
     display: none;
@@ -1424,6 +1425,7 @@ button:focus-visible {
   .ledger-item {
     grid-template-columns: 1fr;
     gap: 8px;
+    padding: 12px 10px;
   }
   .ledger-year {
     text-align: left;
