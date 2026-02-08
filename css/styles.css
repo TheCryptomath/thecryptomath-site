@@ -449,7 +449,7 @@ p { margin: 0; }
 /* Desktop. Two CTAs with the same width */
 @media (min-width: 769px) {
   .hero .hero-actions .btn {
-    width: clamp(200px, 22vw, 240px);
+    width: clamp(180px, 20vw, 220px);
   }
 }
 
