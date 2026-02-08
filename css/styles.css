@@ -98,7 +98,7 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   opacity: var(--grain-opacity);
   pointer-events: none;
-  z-index: 9999;
+  z-index: 1;
 }
 
 a {
@@ -368,6 +368,9 @@ p { margin: 0; }
   position: relative;
   z-index: 1;
   max-width: 720px;
+
+  /* One shared width for hero rows */
+  --hero-row-width: 640px;
 }
 
 .hero-badge {
@@ -429,19 +432,45 @@ p { margin: 0; }
   animation: fadeInUp 0.6s ease 0.3s both;
 }
 
-/* Center content inside buttons */
-.hero-actions .btn {
+/* HERO row alignment + smaller buttons (no HTML changes) */
+@media (min-width: 769px) {
+  .hero-actions .btn {
+    flex: 0 0 auto;
+  }
+  .hero-actions .btn.primary,
+  .hero-actions a.btn:nth-child(2) {
+    min-width: 0;
+    width: max-content;
+  }
+  .hero-actions {
+    align-items: stretch;
+  }
+}
+
+/* Reduce button size only in the hero, keep default sizing elsewhere */
+.hero .hero-actions .btn {
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  border-radius: 12px;
   justify-content: center;
 }
 
-/* Explore Build only. Use nth-child because both buttons are anchors */
-.hero-actions a.btn:nth-child(2) {
-  min-width: 210px;
+/* Keep the icon proportional */
+.hero .hero-actions .btn .btn-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Make Explore Build match visually (2nd CTA) */
+@media (min-width: 769px) {
+  .hero .hero-actions a.btn:nth-child(2) {
+    min-width: 210px;
+  }
 }
 
 /* On small screens, let them flow naturally */
 @media (max-width: 480px) {
-  .hero-actions a.btn:nth-child(2) {
+  .hero .hero-actions a.btn:nth-child(2) {
     min-width: 0;
   }
 }
