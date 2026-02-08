@@ -1414,37 +1414,35 @@ button:focus-visible {
 /* Responsive */
 @media (max-width: 980px) {
   .ledger-body {
-    grid-template-columns: 1fr;
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
-  .ledger-today {
-    margin-top: 16px;
-  }
+
+  .ledger-timeline { order: 1; }
+  .ledger-today { order: 2; margin-top: 0; }
+  .ledger-highlights { order: 3; }
+
+  .ledger-timeline { padding: 16px; }
 }
 
 @media (max-width: 560px) {
-  .ledger-timeline {
-    padding: 16px;
-  }
-  .ledger-timeline::before {
-    display: none;
-  }
-  .ledger-item::before {
-    display: none;
-  }
+  .ledger-timeline::before { display: none; }
+  .ledger-item::before { display: none; }
+
   .ledger-item {
     grid-template-columns: 1fr;
     gap: 8px;
     padding: 12px 10px;
   }
+
   .ledger-year {
     text-align: left;
     padding-top: 0;
     font-weight: 800;
   }
-  .ledger-stats {
-    grid-template-columns: 1fr;
-  }
+
+  .ledger-stats { grid-template-columns: 1fr; }
 }
 
 /* Reduced motion */
