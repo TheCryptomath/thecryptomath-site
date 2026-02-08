@@ -429,18 +429,19 @@ p { margin: 0; }
   animation: fadeInUp 0.6s ease 0.3s both;
 }
 
-/* Center text inside buttons */
+/* Center content inside buttons */
 .hero-actions .btn {
   justify-content: center;
 }
 
-/* 2nd button only, safer than nth-child */
-.hero-actions .btn:nth-of-type(2) {
-  min-width: 18.5ch;
+/* Explore Build only. Use nth-child because both buttons are anchors */
+.hero-actions a.btn:nth-child(2) {
+  min-width: 210px;
 }
 
+/* On small screens, let them flow naturally */
 @media (max-width: 480px) {
-  .hero-actions .btn:nth-of-type(2) {
+  .hero-actions a.btn:nth-child(2) {
     min-width: 0;
   }
 }
