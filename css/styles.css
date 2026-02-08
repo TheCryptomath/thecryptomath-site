@@ -1238,18 +1238,14 @@ button:focus-visible {
   align-items: stretch;
 }
 
-/* Make both columns equal height */
-.ledger-timeline,
-.ledger-highlights {
-  height: 100%;
-}
-
+/* Timeline panel */
 .ledger-timeline {
   position: relative;
   padding: 18px 18px 18px 54px;
   border-radius: var(--radius-xl);
   border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
   background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
+  height: 100%;
 }
 
 .ledger-timeline::before {
@@ -1340,23 +1336,20 @@ button:focus-visible {
   font-size: 1rem;
 }
 
-/* Highlights side stretches and keeps layout tidy */
+/* Highlights panel */
 .ledger-highlights {
   padding: 18px;
   border-radius: var(--radius-xl);
+  height: 100%;
   display: flex;
-  flex-direction: column;
-}
-
-.ledger-highlights .card-label {
-  margin: 0 0 12px;
 }
 
 .ledger-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  margin-top: 12px;
+  width: 100%;
+  align-content: start;
 }
 
 .ledger-stat {
