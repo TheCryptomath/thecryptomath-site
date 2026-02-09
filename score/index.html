@@ -40,8 +40,8 @@
   <meta property="og:url" content="https://thecryptomath.com/score/" />
   <meta property="og:site_name" content="The Cryptomath" />
 
-    <meta property="og:locale" content="en_US" />
-<meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Free Crypto Score Tool | The Cryptomath" />
   <meta name="twitter:description" content="Evaluate any coin fast. Trend, momentum, volatility, liquidity, market structure. Free. No signup." />
   <meta name="twitter:image" content="https://thecryptomath.com/assets/og.jpg" />
@@ -1510,7 +1510,7 @@
       setStatus("Exported.", "ok");
     }
 
-        function trackScoreCalculated(score, regime, direction, mode) {
+    function trackScoreCalculated(score, regime, direction, mode) {
       // Cloudflare Web Analytics does not support custom events yet.
       return;
     }
@@ -1533,13 +1533,19 @@
       return "X";
     }
 
+    function getAssetForShare() {
+      const raw = $("asset") ? $("asset").value : "";
+      const a = String(raw || "").trim().toUpperCase().replace(/^\$/, "");
+      const clean = a.replace(/[^A-Z0-9]/g, "");
+      if (!clean) return "";
+      return "$" + clean;
+    }
+
     function shareOnX() {
       const score = getScoreForShare();
-      const text = `I just ran a crypto scan with the @thecryptomath Score
-
-Result ${score}/10
-
-Try it for free`;
+      const asset = getAssetForShare();
+      const headline = asset ? `I just ran a scan on ${asset} with the @thecryptomath Score` : `I just ran a scan with the @thecryptomath Score`;
+      const text = `${headline}\n\nResult ${score}/10\n\nTry it for free`;
       const url = "https://thecryptomath.com/score/";
       window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, "_blank");
 
@@ -1548,17 +1554,14 @@ Try it for free`;
 
     function shareOnTelegram() {
       const score = getScoreForShare();
-      const text = `I just ran a crypto scan with the @thecryptomath Score
-
-Result ${score}/10
-
-Try it for free`;
+      const asset = getAssetForShare();
+      const headline = asset ? `I just ran a scan on ${asset} with the @thecryptomath Score` : `I just ran a scan with the @thecryptomath Score`;
+      const text = `${headline}\n\nResult ${score}/10\n\nTry it for free`;
       const url = "https://thecryptomath.com/score/";
       window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, "_blank");
 
       trackScoreShared("telegram", score);
     }
-
 
     function bind() {
       $("mode").addEventListener("change", () => { applyModeUI(); scheduleAutoCalc(); });
