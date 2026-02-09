@@ -1436,7 +1436,8 @@ button:focus-visible {
 
 .ledger-stat-number {
   font-size: 1.55rem;
-  line-height: 1.05;
+  line-height: 1.15;
+  padding-bottom: 2px;
   font-weight: 850;
   letter-spacing: -0.02em;
   margin: 0 0 6px;
