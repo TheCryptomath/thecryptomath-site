@@ -108,6 +108,21 @@ a {
 }
 a:hover { color: var(--accent-bright); }
 
+/* Focus visible pour navigation clavier */
+*:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 h1, h2, h3, h4 {
   margin: 0;
   font-weight: 700;
