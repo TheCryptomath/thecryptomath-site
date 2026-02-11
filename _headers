@@ -4,7 +4,7 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; script-src 'self' https://static.cloudflareinsights.com 'sha256-FfHlzilsjFG+my0yCSpufmEch09kB0c6MrhPjdSZXAI=' 'sha256-nvZ8AmX7c0D6mzZ3wMvhntWfcNN/j0NicJuAqVUC7UA=' 'sha256-lMBtlhmf5Zqwc2y0S1iRqkwpOdVv5QIjHJODbEG354s=' 'sha256-kjDtMrsd3isv7axHA2ZHKksYU0QCLWcKYonK8dnSj0g=' 'sha256-uRbcEjiJORmMcK22vbKLVcdRFtSwRlFZfyfxCzZIg+o=' 'sha256-rFrU6v8iB05TnlW6tAhDw8E7nzIvP/gRQVjjnJON00k=' 'sha256-DzKjLysJ/scjZ2dDwnaOYdMpiZ4h+SunHVFgRuEaSFE='; connect-src 'self' https://cloudflareinsights.com; style-src 'self' 'unsafe-inline'
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; style-src 'self' 'unsafe-inline'
   Cache-Control: public, max-age=0, must-revalidate
 
 /sitemap.xml
