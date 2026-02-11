@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <script src="/js/theme.js?v=20260211"></script>
+
   <title>Newsletter | The Cryptomath</title>
   <meta name="description" content="Daily market reads by The Cryptomath. Clear, actionable context on trends, setups, and narratives. Read on Substack. Newsletter in French." />
   <meta name="color-scheme" content="light dark" />
@@ -37,19 +39,6 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 
   <!-- Theme anti flash -->
-  <script>
-    (function () {
-      try {
-        var t = localStorage.getItem("theme");
-        if (t === "dark") { document.documentElement.setAttribute("data-theme", "dark"); return; }
-        if (t === "light") { document.documentElement.removeAttribute("data-theme"); return; }
-        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          document.documentElement.setAttribute("data-theme", "dark");
-        }
-      } catch (e) {}
-    })();
-  </script>
-
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
   <link rel="stylesheet" href="/css/styles.css?v=20260209" />
