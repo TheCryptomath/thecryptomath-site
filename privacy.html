@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/js/theme.js?v=20260211"></script>
 
   <title>Privacy Policy | The Cryptomath</title>
   <meta name="description" content="Privacy policy for thecryptomath.com. No tracking cookies. Cloudflare Web Analytics only. What data is collected and how to contact me." />
@@ -35,19 +36,6 @@
   <meta name="twitter:image:width" content="1200" />
   <meta name="twitter:image:height" content="630" />
   <meta name="twitter:site" content="@thecryptomath" />
-
-  <script>
-(function(){
-  try{
-    var t = localStorage.getItem('theme');
-    if(t === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); return; }
-    if(t === 'light'){ document.documentElement.removeAttribute('data-theme'); return; }
-    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
-      document.documentElement.setAttribute('data-theme','dark');
-    }
-  }catch(e){}
-})();
-</script>
 
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
