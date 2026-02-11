@@ -13,6 +13,7 @@
   const apply = (theme) => {
     if (theme === 'dark') root.setAttribute('data-theme', 'dark');
     else root.removeAttribute('data-theme');
+
     if (btn) btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
     if (btn) btn.setAttribute('data-theme-current', theme);
   };
@@ -34,20 +35,17 @@
 (function() {
   const topbar = document.querySelector('.topbar');
   if (!topbar) return;
-  
+
   const handleScroll = () => {
-    if (window.scrollY > 50) {
-      topbar.classList.add('scrolled');
-    } else {
-      topbar.classList.remove('scrolled');
-    }
+    if (window.scrollY > 50) topbar.classList.add('scrolled');
+    else topbar.classList.remove('scrolled');
   };
-  
+
   window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll(); // Initial check
+  handleScroll();
 })();
 
-// Mobile menu toggle
+// Mobile menu toggle with focus trap + escape + focus restore
 (function() {
   const toggle = document.querySelector('[data-mobile-toggle]');
   const links = document.querySelector('[data-navlinks]');
@@ -57,21 +55,47 @@
   if (!links.id) links.id = 'navlinks';
   toggle.setAttribute('aria-controls', links.id);
 
+  const isOpen = () => links.classList.contains('open');
+
+  const focusToggle = () => {
+    try { toggle.focus({ preventScroll: true }); } catch { toggle.focus(); }
+  };
+
+  const getFocusable = () => {
+    const focusableSelectors = [
+      'a[href]',
+      'button:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])'
+    ].join(',');
+
+    const inside = Array.from(links.querySelectorAll(focusableSelectors))
+      .filter(el => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true');
+
+    // Inclure le bouton toggle pour éviter de tabuler hors du menu
+    return [toggle, ...inside];
+  };
+
   const close = () => {
+    if (!isOpen()) return;
     links.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
     toggle.textContent = 'Menu';
+    focusToggle();
   };
 
   const open = () => {
+    if (isOpen()) return;
     links.classList.add('open');
     toggle.setAttribute('aria-expanded', 'true');
     toggle.textContent = 'Close';
+
+    const focusable = getFocusable();
+    const firstLink = focusable.find(el => el !== toggle) || toggle;
+    try { firstLink.focus({ preventScroll: true }); } catch { firstLink.focus(); }
   };
 
   toggle.addEventListener('click', () => {
-    const isOpen = links.classList.contains('open');
-    isOpen ? close() : open();
+    isOpen() ? close() : open();
   });
 
   // Close menu when clicking a link
@@ -81,17 +105,42 @@
 
   // Close on outside click
   document.addEventListener('click', (e) => {
-    if (!links.classList.contains('open')) return;
+    if (!isOpen()) return;
     if (links.contains(e.target) || toggle.contains(e.target)) return;
     close();
   });
 
-  // Close on Escape
+  // Focus trap + Escape, single global listener
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') close();
+    if (!isOpen()) return;
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      close();
+      return;
+    }
+
+    if (e.key !== 'Tab') return;
+
+    const focusable = getFocusable();
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
   });
 })();
-
 
 // Intersection Observer for fade-in animations
 (function() {
@@ -100,7 +149,7 @@
     rootMargin: '0px',
     threshold: 0.1
   };
-  
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -109,7 +158,7 @@
       }
     });
   }, observerOptions);
-  
+
   document.querySelectorAll('.fade-in').forEach(el => {
     observer.observe(el);
   });
