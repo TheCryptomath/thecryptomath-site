@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <script src="/js/theme.js?v=20260211"></script>
+
   <title>Connect | The Cryptomath</title>
   <meta name="description" content="Official links and verified accounts. One place to reach me, follow my work, and avoid impersonators. Newsletter, tools, and socials." />
   <meta name="color-scheme" content="light dark" />
@@ -33,19 +35,6 @@
   <!-- Icons -->
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-
-  <script>
-    (function () {
-      try {
-        var t = localStorage.getItem("theme");
-        if (t === "dark") { document.documentElement.setAttribute("data-theme", "dark"); return; }
-        if (t === "light") { document.documentElement.removeAttribute("data-theme"); return; }
-        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          document.documentElement.setAttribute("data-theme", "dark");
-        }
-      } catch (e) {}
-    })();
-  </script>
 
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
