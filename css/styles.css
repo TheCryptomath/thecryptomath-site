@@ -863,7 +863,7 @@ p { margin: 0; }
   flex-shrink: 0;
 }
 
-.benefit h4 {
+.benefit h3 {
   font-weight: 600;
   margin-bottom: 4px;
 }
