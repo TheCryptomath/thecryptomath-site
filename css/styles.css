@@ -101,6 +101,11 @@ body::before {
   z-index: 1;
 }
 
+/* Disable grain on mobile */
+@media (max-width: 768px) {
+  body::before { display: none; }
+}
+
 a {
   color: inherit;
   text-decoration: none;
