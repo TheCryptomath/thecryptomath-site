@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <script src="/js/theme.js?v=20260211"></script>
+
   <title>The Cryptomath | Crypto analysis, newsletter & tools</title>
   <meta name="description" content="In crypto since 2017. Tracking trends, sharing market insights, and shipping projects. Newsletter, tools, and resources. Long-term focus." />
   <meta name="color-scheme" content="light dark" />
@@ -32,19 +34,6 @@
   <meta name="twitter:image:width" content="1200" />
   <meta name="twitter:image:height" content="630" />
   <meta name="twitter:site" content="@thecryptomath" />
-
-  <script>
-(function(){
-  try{
-    var t = localStorage.getItem('theme');
-    if(t === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); return; }
-    if(t === 'light'){ document.documentElement.removeAttribute('data-theme'); return; }
-    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
-      document.documentElement.setAttribute('data-theme','dark');
-    }
-  }catch(e){}
-})();
-</script>
 
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
