@@ -238,7 +238,7 @@
     .verdict.a { border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
     .verdict.s { border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.10); }
     .verdict.n { border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.10); }
-    .verdict h3 { margin-bottom: 6px; }
+    .verdict h2 { margin-bottom: 6px; }
     .verdict p { color: var(--text-secondary); line-height: 1.5; }
 
     .bars { margin-top: 12px; }
