@@ -15,12 +15,12 @@
   --border: rgba(14,15,18,0.10);
   --border-hover: rgba(14,15,18,0.18);
 
-  --accent: #2d5bff;
-  --accent-glow: rgba(45,91,255,0.14);
-  --accent-bright: #1f4cff;
+  --accent: #F7931A;
+  --accent-glow: rgba(247,147,26,0.22);
+  --accent-bright: #E07A00;
 
-  --gold: #b7791f;
-  --gold-muted: rgba(183,121,31,0.10);
+  --gold: #C2410C;
+  --gold-muted: rgba(194,65,12,0.10);
 
   --success: #16a34a;
   --live-pulse: #16a34a;
@@ -53,12 +53,12 @@
   --border: rgba(255,255,255,0.06);
   --border-hover: rgba(255,255,255,0.12);
 
-  --accent: #3b82f6;
-  --accent-glow: rgba(59,130,246,0.15);
-  --accent-bright: #60a5fa;
+  --accent: #F7931A;
+  --accent-glow: rgba(247,147,26,0.26);
+  --accent-bright: #FFB24D;
 
-  --gold: #f59e0b;
-  --gold-muted: rgba(245,158,11,0.10);
+  --gold: #C2410C;
+  --gold-muted: rgba(194,65,12,0.12);
 
   --success: #22c55e;
   --live-pulse: #22c55e;
@@ -1199,8 +1199,8 @@ p { margin: 0; }
   }
 
   .topbar .navlinks.open a[aria-current="page"] {
-    background: rgba(59,130,246,0.14);
-    border-color: rgba(59,130,246,0.28);
+    background: rgba(247,147,26,0.14);
+    border-color: rgba(247,147,26,0.28);
     color: rgba(244,244,245,0.95);
     box-shadow: inset 3px 0 0 rgba(96,165,250,0.95);
   }
@@ -1248,14 +1248,14 @@ p { margin: 0; }
   }
 
   html:not([data-theme="dark"]) .topbar .navlinks.open a:hover::after {
-    color: rgba(31,76,255,0.95);
+    color: rgba(247,147,26,0.95);
   }
 
   html:not([data-theme="dark"]) .topbar .navlinks.open a[aria-current="page"] {
-    background: rgba(45,91,255,0.10);
-    border-color: rgba(45,91,255,0.22);
+    background: rgba(247,147,26,0.12);
+    border-color: rgba(247,147,26,0.26);
     color: rgba(14,15,18,0.95);
-    box-shadow: inset 3px 0 0 rgba(31,76,255,0.95);
+    box-shadow: inset 3px 0 0 rgba(247,147,26,0.95);
   }
 }
 
@@ -1270,18 +1270,6 @@ button:focus-visible {
   border-radius: var(--radius-md);
 }
 
-/* Screen reader only */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
 
 /* Skip link */
 .skip-link {
