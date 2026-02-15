@@ -1477,8 +1477,8 @@ button:focus-visible {
   margin: 0 0 6px;
   background: linear-gradient(
     135deg,
-    var(--accent) 0%,
-    color-mix(in srgb, var(--accent) 45%, var(--gold)) 100%
+    var(--success) 0%,
+    color-mix(in srgb, var(--success) 55%, var(white) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
