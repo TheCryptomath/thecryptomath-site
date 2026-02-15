@@ -1469,20 +1469,51 @@ button:focus-visible {
 }
 
 .ledger-stat-number {
+  position: relative;
+  display: inline-block;
+
   font-size: 1.55rem;
   line-height: 1.15;
   padding-bottom: 2px;
   font-weight: 850;
   letter-spacing: -0.02em;
   margin: 0 0 6px;
+
   background: linear-gradient(
     135deg,
-    var(--success) 0%,
-    color-mix(in srgb, var(--success) 55%, white) 100%
+    color-mix(in srgb, var(--success) 82%, white) 0%,
+    var(--success) 55%,
+    color-mix(in srgb, var(--success) 72%, black) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+
+  text-shadow: 0 0 22px color-mix(in srgb, var(--success) 18%, transparent);
+}
+
+.ledger-stat-number::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--success) 60%, transparent),
+    transparent 70%
+  );
+  opacity: 0.65;
+}
+
+.ledger-stat:hover .ledger-stat-number{
+  text-shadow: 0 0 28px color-mix(in srgb, var(--success) 22%, transparent);
+}
+
+.ledger-stat:hover .ledger-stat-number::after{
+  opacity: 0.85;
 }
 
 .ledger-stat-label {
