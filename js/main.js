@@ -7,12 +7,17 @@
   const getPreferred = () => {
     const saved = localStorage.getItem(storageKey);
     if (saved === 'light' || saved === 'dark') return saved;
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+    // Default theme when nothing is saved
+    return 'dark';
   };
 
   const apply = (theme) => {
     if (theme === 'dark') root.setAttribute('data-theme', 'dark');
     else root.removeAttribute('data-theme');
+
+    // Helps the browser paint native UI consistently
+    try { root.style.colorScheme = theme; } catch (_) {}
 
     if (btn) btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
     if (btn) btn.setAttribute('data-theme-current', theme);
