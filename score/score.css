@@ -115,7 +115,7 @@
       transition: border-color 150ms ease, background 150ms ease;
     }
     .check:hover { border-color: rgba(255,255,255,0.15); }
-    .check input { margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
+    .check input { margin-top: 2px; accent-color: var(--success); cursor: pointer; }
     .check strong { display: block; font-size: 0.95rem; }
     .check span { display: block; margin-top: 4px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.35; }
 
