@@ -132,6 +132,31 @@ html[data-theme="dark"] select.input option { background: #0e0f12; color: #fffff
 
 .check:hover { border-color: rgba(255,255,255,0.15); }
 
+/* Checked card highlight (any checked card turns green) */
+.check:has(input:checked) {
+  border-color: color-mix(in srgb, var(--success) 45%, transparent);
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+}
+
+.check:has(input:checked):hover {
+  border-color: color-mix(in srgb, var(--success) 60%, transparent);
+  background: color-mix(in srgb, var(--success) 16%, transparent);
+}
+
+html:not([data-theme="dark"]) .check:has(input:checked) {
+  border-color: color-mix(in srgb, var(--success) 35%, transparent);
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+}
+
+html:not([data-theme="dark"]) .check:has(input:checked):hover {
+  border-color: color-mix(in srgb, var(--success) 50%, transparent);
+}
+
+/* Keyboard focus highlight */
+.check:has(input:focus-visible) {
+  border-color: color-mix(in srgb, var(--success) 65%, transparent);
+}
+
 .check input {
   margin-top: 2px;
   accent-color: var(--success);
@@ -176,12 +201,7 @@ html:not([data-theme="dark"]) .simple-hint .pill {
   background: rgba(14,15,18,0.03);
 }
 
-/* AUTO cards in green (success), not orange */
-.check.auto {
-  border-color: color-mix(in srgb, var(--success) 45%, transparent);
-  background: color-mix(in srgb, var(--success) 12%, transparent);
-}
-
+/* AUTO badge only (does not recolor the card, :has handles that) */
 .check.auto::after {
   content: "AUTO";
   position: absolute;
@@ -195,16 +215,6 @@ html:not([data-theme="dark"]) .simple-hint .pill {
   border: 1px solid color-mix(in srgb, var(--success) 55%, transparent);
   background: color-mix(in srgb, var(--success) 18%, transparent);
   color: color-mix(in srgb, var(--success) 85%, white);
-}
-
-.check.auto:hover {
-  border-color: color-mix(in srgb, var(--success) 60%, transparent);
-  background: color-mix(in srgb, var(--success) 16%, transparent);
-}
-
-html:not([data-theme="dark"]) .check.auto {
-  border-color: color-mix(in srgb, var(--success) 35%, transparent);
-  background: color-mix(in srgb, var(--success) 10%, transparent);
 }
 
 html:not([data-theme="dark"]) .check.auto::after {
@@ -249,7 +259,7 @@ html:not([data-theme="dark"]) .check.auto::after {
   background: rgba(239,68,68,0.08);
 }
 
-/* Auto summary block in green (success), not orange */
+/* Auto summary block */
 .auto-summary {
   margin-top: 10px;
   padding: 10px 12px;
