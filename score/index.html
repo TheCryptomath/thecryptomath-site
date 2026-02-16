@@ -109,7 +109,7 @@
         <section class="panel">
           <div class="panel-hd">
             <div class="panel-title">Inputs</div>
-            <div class="muted small" id="methodVersion">Method v1.4.7</div>
+            <div class="muted small" id="methodVersion">Method v2.0.8</div>
           </div>
           <div class="panel-bd">
 
@@ -188,21 +188,21 @@
                       <input type="checkbox" id="mLiq" />
                       <div>
                         <strong>Liquidity</strong>
-                        <span>DXY down or BTC dominance down for alts.</span>
+                        <span>Daily BTC trend slope. BTC dominance context for alts.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="mFlux" />
                       <div>
                         <strong>Flows</strong>
-                        <span>Stablecoin inflow plus asset outflows from exchanges.</span>
+                        <span>Stablecoin supply change over 7d, aligned with direction.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="mVal" />
                       <div>
                         <strong>Valuation</strong>
-                        <span>MVRV Z-Score near 0 or negative.</span>
+                        <span>Price distance to daily EMA200.</span>
                       </div>
                     </label>
                   </div>
@@ -217,28 +217,28 @@
                       <input type="checkbox" id="tMom" />
                       <div>
                         <strong>Momentum</strong>
-                        <span>RSI bullish divergence or deep Stoch RSI.</span>
+                        <span>RSI and Stoch RSI on 4h, regime-adjusted.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="tStr" />
                       <div>
                         <strong>Structure</strong>
-                        <span>Higher lows confirmed plus above EMA50.</span>
+                        <span>Swing structure and EMA50 on 4h.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="tVol" />
                       <div>
                         <strong>Volatility</strong>
-                        <span>Bollinger squeeze or breakout plus retest validated.</span>
+                        <span>Bollinger width percentile on 4h over 80 periods.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="tVolu" />
                       <div>
                         <strong>Volume</strong>
-                        <span>Impulse volume at least 1.5x average.</span>
+                        <span>4h volume ratio vs 20-period average, tiered.</span>
                       </div>
                     </label>
                   </div>
@@ -253,21 +253,21 @@
                       <input type="checkbox" id="pSent" />
                       <div>
                         <strong>Sentiment</strong>
-                        <span>Fear index low or organic social buzz increasing.</span>
+                        <span>Fear and Greed index, aligned with direction.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="pDer" />
                       <div>
                         <strong>Derivatives</strong>
-                        <span>Neutral or negative funding plus rising open interest.</span>
+                        <span>Funding conditions aligned with direction.</span>
                       </div>
                     </label>
                     <label class="check">
                       <input type="checkbox" id="pCat" />
                       <div>
                         <strong>Catalyst</strong>
-                        <span>Narrative within 7 days and not already priced in.</span>
+                        <span>Open interest change plus volume spike combined.</span>
                       </div>
                     </label>
                   </div>
@@ -347,7 +347,7 @@
             </div>
 
             <div class="verdict n" id="verdictBox" style="margin-top:14px;">
-              <h2 id="verdictTitle">No trade</h3>
+              <h2 id="verdictTitle">No trade</h2>
               <p id="verdictText">Fill inputs and click Calculate.</p>
             </div>
 
