@@ -1118,7 +1118,7 @@ p { margin: 0; }
 
   .topbar .container {
     padding-left: calc(16px + env(safe-area-inset-left));
-    padding-right: calc(16px + env(safe-area-inset-right));
+    padding-right: calc(24px + env(safe-area-inset-right));
   }
 
   .topbar .nav { position: relative; z-index: 10001; }
@@ -1134,7 +1134,7 @@ p { margin: 0; }
   }
 
   .topbar .mobile-toggle {
-    margin-right: 6px;
+    margin-right: 0;
   }
 
   .topbar .navlinks {
