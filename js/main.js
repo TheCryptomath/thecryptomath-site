@@ -1,3 +1,23 @@
+const UI_LANG = (document.documentElement.lang || 'en').toLowerCase().startsWith('fr') ? 'fr' : 'en';
+const UI_I18N = {
+  en: {
+    menu: 'Menu',
+    close: 'Close',
+    switchToLightTheme: 'Switch to light theme',
+    switchToDarkTheme: 'Switch to dark theme'
+  },
+  fr: {
+    menu: 'Menu',
+    close: 'Fermer',
+    switchToLightTheme: 'Passer au thème clair',
+    switchToDarkTheme: 'Passer au thème sombre'
+  }
+};
+
+function uiText(key) {
+  return (UI_I18N[UI_LANG] && UI_I18N[UI_LANG][key]) || UI_I18N.en[key] || key;
+}
+
 // Theme toggle
 (function() {
   const root = document.documentElement;
@@ -20,7 +40,7 @@
     try { root.style.colorScheme = theme; } catch (_) {}
 
     if (btn) {
-      btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      btn.setAttribute('aria-label', theme === 'dark' ? uiText('switchToLightTheme') : uiText('switchToDarkTheme'));
       btn.setAttribute('data-theme-current', theme);
 
       const svg = btn.querySelector('svg');
@@ -93,7 +113,7 @@
     if (!isOpen()) return;
     links.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
-    toggle.textContent = 'Menu';
+    toggle.textContent = uiText('menu');
     focusToggle();
   };
 
@@ -101,7 +121,7 @@
     if (isOpen()) return;
     links.classList.add('open');
     toggle.setAttribute('aria-expanded', 'true');
-    toggle.textContent = 'Close';
+    toggle.textContent = uiText('close');
 
     const focusable = getFocusable();
     const firstLink = focusable.find(el => el !== toggle) || toggle;
