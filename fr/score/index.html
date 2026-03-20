@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="/js/theme.js?v=20260211"></script>
+
+  <title>Outil Crypto Score gratuit | The Cryptomath</title>
+  <meta name="description" content="Outil de scoring crypto professionnel. Analyse tendance, momentum, volatilité, liquidité et structure de marché en quelques secondes. Gratuit. Sans inscription." />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#08090c">
+  <meta name="theme-color" content="#fbfbfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#08090c" media="(prefers-color-scheme: dark)">
+
+  <link rel="canonical" href="https://thecryptomath.com/fr/score/" />
+  <link rel="alternate" hreflang="en" href="https://thecryptomath.com/score/" />
+  <link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/score/" />
+  <link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/score/" />
+
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "The Cryptomath Score",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "url": "https://thecryptomath.com/fr/score/",
+      "description": "Système de scoring crypto professionnel pour identifier des configurations à forte probabilité.",
+      "creator": {
+        "@type": "Person",
+        "name": "The Cryptomath",
+        "url": "https://thecryptomath.com"
+      }
+    }
+  </script>
+
+  <meta property="og:title" content="Outil Crypto Score gratuit | The Cryptomath" />
+  <meta property="og:description" content="Outil de scoring crypto professionnel. Analyse tendance, momentum, volatilité, liquidité et structure de marché en quelques secondes. Gratuit. Sans inscription." />
+  <meta property="og:image" content="https://thecryptomath.com/assets/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thecryptomath.com/fr/score/" />
+  <meta property="og:site_name" content="The Cryptomath" />
+
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Outil Crypto Score gratuit | The Cryptomath" />
+  <meta name="twitter:description" content="Outil de scoring crypto professionnel. Analyse tendance, momentum, volatilité, liquidité et structure de marché en quelques secondes. Gratuit. Sans inscription." />
+  <meta name="twitter:image" content="https://thecryptomath.com/assets/og.jpg" />
+  <meta name="twitter:image:width" content="1200" />
+  <meta name="twitter:image:height" content="630" />
+  <meta name="twitter:site" content="@thecryptomath" />
+
+  <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
+  <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/styles.css?v=20260209" />
+  <link rel="stylesheet" href="/score/score.css?v=20260209" />
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+
+<body>
+  <a class="skip-link" href="#content">Aller au contenu</a>
+
+  <header class="topbar">
+    <div class="container">
+      <nav class="nav">
+        <a class="brand" href="/fr/">
+          <span class="brand-mark" aria-hidden="true">
+            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" />
+          </span>
+          <span>The Cryptomath</span>
+        </a>
+
+        <div class="navlinks" data-navlinks>
+          <a href="/fr/">Accueil</a>
+          <a href="/fr/build/">Projets</a>
+          <a href="/fr/score/">Score</a>
+          <a href="/fr/resources/">Ressources</a>
+          <a href="/fr/connect/">Contact</a>
+        </div>
+
+        <div class="nav-cta">
+          <a class="btn primary" href="/fr/newsletter/">Newsletter</a>
+          <div class="lang-switch" aria-label="Sélecteur de langue">
+            <a href="/score/" lang="en">EN</a>
+            <a href="/fr/score/" lang="fr" aria-current="true">FR</a>
+          </div>
+
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Basculer le thème">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span>Thème</span>
+          </button>
+
+          <button class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content" class="score-wrap">
+    <div class="container">
+      <section class="score-hero">
+        <div class="score-kicker">The Cryptomath Score</div>
+        <h1 class="score-title">Trade ou pas trade</h1>
+        <p class="score-sub">3 piliers. 10 critères. Un score.</p>
+      </section>
+
+      <div class="score-grid">
+        <section class="panel">
+          <div class="panel-hd">
+            <div class="panel-title">Paramètres</div>
+            <div class="muted small" id="methodVersion">Méthode v2.0.8</div>
+          </div>
+          <div class="panel-bd">
+
+            <div class="field">
+              <label class="label" for="asset">Actif</label>
+              <input class="input" id="asset" type="text" placeholder="BTC, SOL, ETH..." autocomplete="off" />
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label class="label" for="regime">Régime de marché</label>
+                <select class="input" id="regime">
+                  <option value="Auto">Auto</option>
+                  <option value="Bull">Haussier</option>
+                  <option value="Range">Range</option>
+                  <option value="Bear">Baissier</option>
+                </select>
+                <div class="right-note" id="regimeHint">
+                  Le régime est détecté automatiquement via le contexte de marché. Vous pouvez le modifier à tout moment.
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="direction">Direction</label>
+                <select class="input" id="direction">
+                  <option value="Long">Long</option>
+                  <option value="Short">Short</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="mode">Mode</label>
+              <select class="input" id="mode">
+                <option value="Pro">Pro</option>
+                <option value="Simple">Simple</option>
+              </select>
+              <div class="right-note" id="modeHint"></div>
+            </div>
+
+            <div id="simpleBlock" style="display:none;">
+              <div class="checks">
+                <label class="check">
+                  <input type="checkbox" id="simpleMacro" />
+                  <div>
+                    <strong>Macro OK</strong>
+                    <span>Liquidité, flux et valorisation sont alignés.</span>
+                    <span class="simple-hint" id="simpleHintMacro"></span>
+                  </div>
+                </label>
+                <label class="check">
+                  <input type="checkbox" id="simpleTech" />
+                  <div>
+                    <strong>Technique OK</strong>
+                    <span>Structure, momentum et signaux de breakout sont alignés.</span>
+                    <span class="simple-hint" id="simpleHintTech"></span>
+                  </div>
+                </label>
+                <label class="check">
+                  <input type="checkbox" id="simplePsy" />
+                  <div>
+                    <strong>Psy OK</strong>
+                    <span>Sentiment, dérivés et catalyseur sont alignés.</span>
+                    <span class="simple-hint" id="simpleHintPsy"></span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div id="proBlock">
+              <div class="panel" style="margin-top:12px;">
+                <div class="panel-hd"><div class="panel-title">Macro et on-chain</div></div>
+                <div class="panel-bd">
+                  <div class="checks">
+                    <label class="check">
+                      <input type="checkbox" id="mLiq" />
+                      <div>
+                        <strong>Liquidité</strong>
+                        <span>Pente de tendance journalière du BTC. Contexte de dominance BTC pour les alts.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="mFlux" />
+                      <div>
+                        <strong>Flux</strong>
+                        <span>Variation de l’offre de stablecoins sur 7 jours, alignée avec la direction.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="mVal" />
+                      <div>
+                        <strong>Valorisation</strong>
+                        <span>Distance du prix à l’EMA200 journalière.</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel" style="margin-top:12px;">
+                <div class="panel-hd"><div class="panel-title">Technique</div></div>
+                <div class="panel-bd">
+                  <div class="checks">
+                    <label class="check">
+                      <input type="checkbox" id="tMom" />
+                      <div>
+                        <strong>Momentum</strong>
+                        <span>RSI et Stoch RSI en 4h, ajustés selon le régime.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="tStr" />
+                      <div>
+                        <strong>Structure</strong>
+                        <span>Structure des swings et EMA50 en 4h.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="tVol" />
+                      <div>
+                        <strong>Volatilité</strong>
+                        <span>Percentile de largeur des bandes de Bollinger en 4h sur 80 périodes.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="tVolu" />
+                      <div>
+                        <strong>Volume</strong>
+                        <span>Ratio de volume 4h vs moyenne sur 20 périodes, par paliers.</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel" style="margin-top:12px;">
+                <div class="panel-hd"><div class="panel-title">Psychologie</div></div>
+                <div class="panel-bd">
+                  <div class="checks">
+                    <label class="check">
+                      <input type="checkbox" id="pSent" />
+                      <div>
+                        <strong>Sentiment</strong>
+                        <span>Indice Fear and Greed, aligné avec la direction.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="pDer" />
+                      <div>
+                        <strong>Dérivés</strong>
+                        <span>Conditions de funding alignées avec la direction.</span>
+                      </div>
+                    </label>
+                    <label class="check">
+                      <input type="checkbox" id="pCat" />
+                      <div>
+                        <strong>Catalyseur</strong>
+                        <span>Variation de l’open interest combinée à un pic de volume.</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top:12px;">
+              <div class="panel-hd">
+                <div class="panel-title">Trade optionnel</div>
+                <div class="muted small">Utilisé pour le downgrade du RR</div>
+              </div>
+              <div class="panel-bd">
+                <div class="row">
+                  <div class="field">
+                    <label class="label" for="entry">Entrée</label>
+                    <input class="input" id="entry" inputmode="decimal" placeholder="ex. 100" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="stop">Stop</label>
+                    <input class="input" id="stop" inputmode="decimal" placeholder="ex. 95" />
+                  </div>
+                </div>
+                <div class="field" style="margin-top:12px;">
+                  <label class="label" for="tp">Take profit</label>
+                  <input class="input" id="tp" inputmode="decimal" placeholder="ex. 120" />
+                </div>
+
+                <div class="btnrow">
+                  <button class="btn" id="autoFillBtn" type="button">Remplissage auto</button>
+                  <button class="btn primary" id="calcBtn" type="button">Calculer</button>
+                  <button class="btn" id="resetBtn" type="button">Réinitialiser</button>
+                  <button class="btn" id="exportBtn" type="button">Exporter en JSON</button>
+                </div>
+
+                <div class="status" id="status" role="status" aria-live="polite">Prêt.</div>
+                <div class="auto-summary" id="autoSummary"></div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <aside class="panel">
+          <div class="panel-hd">
+            <div class="panel-title">Résultats</div>
+            <div class="muted small" id="serverHint">Calculé côté serveur</div>
+          </div>
+
+          <div class="panel-bd">
+            <div class="metric">
+              <div class="k">Score</div>
+              <div class="v" id="scoreTotal">–</div>
+            </div>
+            <div class="metric">
+              <div class="k">RR</div>
+              <div class="v" id="rrVal">–</div>
+            </div>
+            <div class="metric">
+              <div class="k">RR min</div>
+              <div class="v" id="rrMin">–</div>
+            </div>
+
+            <div class="bars" id="bars">
+              <div class="bar">
+                <div class="top"><span>Macro</span><span id="macroTxt">–</span></div>
+                <div class="track"><div class="fill" id="macroFill"></div></div>
+              </div>
+              <div class="bar">
+                <div class="top"><span>Technique</span><span id="techTxt">–</span></div>
+                <div class="track"><div class="fill" id="techFill"></div></div>
+              </div>
+              <div class="bar">
+                <div class="top"><span>Psychologie</span><span id="psyTxt">–</span></div>
+                <div class="track"><div class="fill" id="psyFill"></div></div>
+              </div>
+            </div>
+
+            <div class="verdict n" id="verdictBox" style="margin-top:14px;">
+              <h2 id="verdictTitle">Pas de trade</h2>
+              <p id="verdictText">Renseignez les champs puis cliquez sur Calculer.</p>
+            </div>
+
+            <div class="panel" id="postScoreCta" style="margin-top:12px; display:none;">
+              <div class="panel-hd">
+                <div class="panel-title">Étape suivante</div>
+              </div>
+              <div class="panel-bd">
+                <p class="muted" style="margin:0 0 12px 0; line-height:1.55;">
+                  Recevez les lectures de marché hebdomadaires et les évolutions de la méthodologie.
+                </p>
+
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                  <a href="/fr/newsletter/" class="btn primary" id="ctaNewsletterBtn">S’abonner</a>
+                  <button type="button" class="btn" id="shareXBtn">Partager sur X</button>
+                  <button type="button" class="btn" id="shareTgBtn">Partager sur Telegram</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top:12px;">
+              <div class="panel-hd">
+                <div class="panel-title">Mode d’emploi</div>
+              </div>
+              <div class="panel-bd">
+                <p class="muted" style="margin:0; line-height:1.55;">
+                  Cet outil est un filtre. Utilisez-le pour éviter les configurations faibles et vous concentrer sur une confluence propre.
+                </p>
+
+                <div style="height:10px;"></div>
+
+                <div class="muted" style="font-weight:700; margin-bottom:6px;">Workflow rapide</div>
+                <ol class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
+                  <li>Tapez un actif. Exemple BTC, ETH, SOL.</li>
+                  <li>Laissez le régime sur Auto sauf si vous avez une bonne raison de le modifier.</li>
+                  <li>Cliquez sur Remplissage auto pour récupérer le contexte de marché et pré-cocher les signaux.</li>
+                  <li>Ajustez ce avec quoi vous n’êtes pas d’accord. Puis cliquez sur Calculer.</li>
+                  <li>Si le RR est sous le RR min, le verdict est downgradé volontairement.</li>
+                </ol>
+
+                <div style="height:10px;"></div>
+
+                <div class="muted" style="font-weight:700; margin-bottom:6px;">Ce que signifie chaque verdict</div>
+                <ul class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
+                  <li><strong>A+</strong> confluence forte. Bon pour les entrées intraday, swing et position avec contrôle du risque.</li>
+                  <li><strong>Spéculatif</strong> un certain edge, mais plus de bruit. Réduisez la taille, soyez plus strict sur l’exécution.</li>
+                  <li><strong>Pas de trade</strong> on passe. Attendez un meilleur alignement ou un meilleur régime.</li>
+                </ul>
+
+                <div style="height:10px;"></div>
+
+                <div class="muted" style="font-weight:700; margin-bottom:6px;">Horizon et cas d’usage</div>
+                <ul class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
+                  <li><strong>Scalp</strong> utilisez-le uniquement comme filtre directionnel. Confirmez avec votre graphique d’exécution.</li>
+                  <li><strong>Intraday</strong> meilleur fit. Le remplissage auto plus le contrôle du RR donnent une sélection disciplinée.</li>
+                  <li><strong>Swing</strong> très bon. La structure est volontairement stricte pour éviter le bruit.</li>
+                  <li><strong>Moyen ou long terme</strong> utilisez-le pour les entrées et renforcements. Relancez-le lors des changements de régime, pas chaque jour.</li>
+                </ul>
+              </div>
+            </div>
+
+            <p class="right-note">
+              Notes. Cet outil est éducatif. Il ne garantit aucun résultat. Gérez toujours votre risque.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a class="brand" href="/fr/" aria-label="Accueil The Cryptomath">
+            <span class="brand-mark" aria-hidden="true">
+              <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" />
+            </span>
+            <span>The Cryptomath</span>
+          </a>
+          <p>Si ce n’est pas ici, ce n’est pas moi.</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-col">
+            <h2>Navigation</h2>
+            <a href="/fr/">Accueil</a>
+            <a href="/fr/build/">Projets</a>
+            <a href="/fr/score/">Score</a>
+            <a href="/fr/resources/">Ressources</a>
+            <a href="/fr/connect/">Contact</a>
+          </div>
+
+          <div class="footer-col">
+            <h2>Liens</h2>
+            <a href="https://x.com/thecryptomath" target="_blank" rel="noopener">
+              Twitter <span class="sr-only">(ouvre dans un nouvel onglet)</span>
+            </a>
+            <a href="https://t.me/thecryptomath" target="_blank" rel="noopener">
+              Telegram <span class="sr-only">(ouvre dans un nouvel onglet)</span>
+            </a>
+            <a href="https://www.youtube.com/@TheCryptomath" target="_blank" rel="noopener">
+              YouTube <span class="sr-only">(ouvre dans un nouvel onglet)</span>
+            </a>
+            <a href="/fr/newsletter/">Newsletter</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span data-year></span> The Cryptomath. Tous droits réservés. <a href="/fr/privacy/">Politique de confidentialité</a></p>
+        <p>Contenu éducatif uniquement. Pas un conseil financier.</p>
+      </div>
+    </div>
+  </footer>
+  <script defer src="/score/score-loader.js?v=20260211"></script>
+  <script defer src="/js/main.js?v=20260211"></script>
+</body>
+</html>
