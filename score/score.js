@@ -7,6 +7,145 @@
 
     const $ = (id) => document.getElementById(id);
 
+    const SCORE_LANG = (document.documentElement.lang || "en").toLowerCase().startsWith("fr") ? "fr" : "en";
+
+    const SCORE_I18N = {
+      en: {
+        methodVersion: "Method v{v}",
+        noTrade: "No trade",
+        fillInputs: "Fill inputs and click Calculate.",
+        ready: "Ready.",
+        quickScan: "Quick Scan",
+        autoFill: "Auto fill",
+        simpleModeHtml: "Simple mode. Quick 3-pillar manual check.<br><span class=\"mode-teaser\" data-action=\"switch-pro\" role=\"button\" tabindex=\"0\">Quick scan runs the full scan and maps it to the 3 pillars. Switch to Pro for the full breakdown.</span>",
+        proMode: "Pro mode. Full 10-signal scoring with detailed breakdown.",
+        typeAssetAuto: "Type an asset to compute in Auto regime. Example BTC.",
+        updated: "Updated.",
+        autoDetectedSignals: "Auto detected <strong>{count} / 10</strong> signals",
+        scanSuggestsOk: "Scan suggests OK",
+        scanSuggestsCaution: "Scan suggests caution",
+        autoDetectedRegime: "Auto detected {regime}. You can override anytime.",
+        autoDetectsRegime: "Auto detects the regime using market context. You can override anytime.",
+        aPlusSetup: "A+ setup",
+        aPlusText: "Strong confluence. Risk-managed execution still required.",
+        speculative: "Speculative",
+        speculativeText: "Edge exists but risk is higher. Reduce size and keep stops tight.",
+        noTradeText: "Too much noise. Wait for better alignment.",
+        downgradedDueToRR: "Signal downgraded due to insufficient RR for this regime.",
+        entryStopEqual: "Entry and Stop cannot be equal.",
+        longInvalidStop: "For a long, Stop must be below Entry.",
+        longInvalidTp: "For a long, TP must be above Entry.",
+        shortInvalidStop: "For a short, Stop must be above Entry.",
+        shortInvalidTp: "For a short, TP must be below Entry.",
+        calculate: "Calculate",
+        calculating: "Calculating...",
+        ok: "OK",
+        accessDenied: "Access denied. Open this page from thecryptomath.com.",
+        requestError: "Request error. Try again.",
+        methodNotAllowed: "Method not allowed.",
+        unauthorized: "Unauthorized.",
+        rateLimited: "Rate limited. Slow down and retry.",
+        typeAssetFirst: "Type an asset first. Example BTC.",
+        upstreamUnavailable: "Upstream temporarily unavailable. Try again.",
+        upstreamError: "Upstream API error. Try again.",
+        badUpstreamJson: "Upstream returned invalid JSON. Try again.",
+        insufficientMarketData: "Not enough market data for this asset.",
+        unknownRegime: "Regime auto requires the latest API update.",
+        apiErrorCode: "API error. Code {code}",
+        scanning: "Scanning...",
+        autoFilling: "Auto filling...",
+        quickScanComplete: "Quick scan complete.",
+        quickScanFound: "Quick scan found <strong>{count}</strong> signals",
+        quickScanNoSignal: "Quick scan returned no signal.",
+        scanFailedCode: "Scan failed. Code {code}",
+        missingAsset: "Missing asset.",
+        nothingToExport: "Nothing to export yet. Click Calculate first.",
+        exported: "Exported.",
+        exportJson: "Export JSON",
+        shareHeadlineWithAsset: "I just ran a scan on {asset} with the @thecryptomath Score",
+        shareHeadlineNoAsset: "I just ran a scan with the @thecryptomath Score",
+        result: "Result {score}/10",
+        tryItFree: "Try it for free"
+      },
+      fr: {
+        methodVersion: "Méthode v{v}",
+        noTrade: "Pas de trade",
+        fillInputs: "Renseignez les champs puis cliquez sur Calculer.",
+        ready: "Prêt.",
+        quickScan: "Scan rapide",
+        autoFill: "Remplissage auto",
+        simpleModeHtml: "Mode Simple. Vérification manuelle rapide en 3 piliers.<br><span class=\"mode-teaser\" data-action=\"switch-pro\" role=\"button\" tabindex=\"0\">Le scan rapide lance le scan complet puis le condense en 3 piliers. Passez en mode Pro pour le détail complet.</span>",
+        proMode: "Mode Pro. Scoring complet sur 10 signaux avec détail par bloc.",
+        typeAssetAuto: "Tapez un actif pour calculer en régime Auto. Exemple BTC.",
+        updated: "Mis à jour.",
+        autoDetectedSignals: "Détection automatique <strong>{count} / 10</strong> signaux",
+        scanSuggestsOk: "Le scan suggère OK",
+        scanSuggestsCaution: "Le scan suggère de la prudence",
+        autoDetectedRegime: "Régime détecté automatiquement {regime}. Vous pouvez le modifier à tout moment.",
+        autoDetectsRegime: "Le régime est détecté automatiquement via le contexte de marché. Vous pouvez le modifier à tout moment.",
+        aPlusSetup: "Configuration A+",
+        aPlusText: "Confluence forte. Une exécution disciplinée et un risque maîtrisé restent indispensables.",
+        speculative: "Spéculatif",
+        speculativeText: "Il existe un avantage, mais le risque est plus élevé. Réduisez la taille et gardez des stops serrés.",
+        noTradeText: "Trop de bruit. Attendez un meilleur alignement.",
+        downgradedDueToRR: "La configuration a été dégradée à cause d’un RR insuffisant pour ce régime.",
+        entryStopEqual: "L’entrée et le stop ne peuvent pas être identiques.",
+        longInvalidStop: "Pour un long, le stop doit être sous l’entrée.",
+        longInvalidTp: "Pour un long, le take profit doit être au-dessus de l’entrée.",
+        shortInvalidStop: "Pour un short, le stop doit être au-dessus de l’entrée.",
+        shortInvalidTp: "Pour un short, le take profit doit être sous l’entrée.",
+        calculate: "Calculer",
+        calculating: "Calcul en cours...",
+        ok: "OK",
+        accessDenied: "Accès refusé. Ouvrez cette page depuis thecryptomath.com.",
+        requestError: "Erreur de requête. Réessayez.",
+        methodNotAllowed: "Méthode non autorisée.",
+        unauthorized: "Non autorisé.",
+        rateLimited: "Limite atteinte. Ralentissez puis réessayez.",
+        typeAssetFirst: "Tapez d’abord un actif. Exemple BTC.",
+        upstreamUnavailable: "Source amont temporairement indisponible. Réessayez.",
+        upstreamError: "Erreur de l’API amont. Réessayez.",
+        badUpstreamJson: "La source amont a renvoyé un JSON invalide. Réessayez.",
+        insufficientMarketData: "Pas assez de données marché pour cet actif.",
+        unknownRegime: "Le régime Auto nécessite la dernière mise à jour de l’API.",
+        apiErrorCode: "Erreur API. Code {code}",
+        scanning: "Scan en cours...",
+        autoFilling: "Remplissage en cours...",
+        quickScanComplete: "Scan rapide terminé.",
+        quickScanFound: "Le scan rapide a trouvé <strong>{count}</strong> signaux",
+        quickScanNoSignal: "Le scan rapide n’a renvoyé aucun signal.",
+        scanFailedCode: "Échec du scan. Code {code}",
+        missingAsset: "Actif manquant.",
+        nothingToExport: "Rien à exporter pour le moment. Cliquez d’abord sur Calculer.",
+        exported: "Exporté.",
+        exportJson: "Exporter en JSON",
+        shareHeadlineWithAsset: "Je viens de lancer un scan sur {asset} avec le Score de @thecryptomath",
+        shareHeadlineNoAsset: "Je viens de lancer un scan avec le Score de @thecryptomath",
+        result: "Résultat {score}/10",
+        tryItFree: "Essayez gratuitement"
+      }
+    };
+
+    function t(key, vars) {
+      const dict = SCORE_I18N[SCORE_LANG] || SCORE_I18N.en;
+      let text = dict[key] || SCORE_I18N.en[key] || key;
+      if (vars) {
+        for (const [k, v] of Object.entries(vars)) {
+          text = text.replaceAll("{" + k + "}", String(v));
+        }
+      }
+      return text;
+    }
+
+    function localizeRegime(regime) {
+      if (SCORE_LANG !== "fr") return regime;
+      if (regime === "Bull") return "Haussier";
+      if (regime === "Bear") return "Baissier";
+      if (regime === "Range") return "Range";
+      if (regime === "Auto") return "Auto";
+      return regime;
+    }
+
     const PRO_IDS = ["mLiq", "mFlux", "mVal", "tMom", "tStr", "tVol", "tVolu", "pSent", "pDer", "pCat"];
 
     const state = {
@@ -203,8 +342,8 @@
       const vb = $("verdictBox");
       vb.classList.remove("a", "s");
       vb.classList.add("n");
-      $("verdictTitle").textContent = "No trade";
-      $("verdictText").textContent = "Fill inputs and click Calculate.";
+      $("verdictTitle").textContent = t("noTrade");
+      $("verdictText").textContent = t("fillInputs");
 
       const cta = $("postScoreCta");
       if (cta) cta.style.display = "none";
@@ -230,7 +369,7 @@
       clearSimpleHints();
       resetResultsUI();
       applyModeUI();
-      setStatus("Ready.", "");
+      setStatus(t("ready"), "");
     }
 
     function applyAutoHighlights() {
@@ -255,34 +394,40 @@
         if (el) el.title = title || "";
       };
 
+      const noData = SCORE_LANG === "fr" ? "Pas de donnée" : "No data";
+      const manualCheck = SCORE_LANG === "fr" ? "Vérification manuelle requise" : "Manual check required";
+      const priceLabel = SCORE_LANG === "fr" ? "Prix " : "Price ";
+      const volumeRatioLabel = SCORE_LANG === "fr" ? "Ratio vol. " : "Vol ratio ";
+      const fundingLabel = SCORE_LANG === "fr" ? "Funding " : "Funding ";
+
       const liqParts = [];
       if (macro.btcDominance != null) liqParts.push("BTC dom " + fmtNum(macro.btcDominance, 2) + "%");
-      setTitle("mLiq", liqParts.length ? liqParts.join(" | ") : "No data");
+      setTitle("mLiq", liqParts.length ? liqParts.join(" | ") : noData);
 
       const flowParts = [];
-      if (macro.stablecoinChange7dPct != null) flowParts.push("7d " + fmtNum(macro.stablecoinChange7dPct, 2) + "%");
+      if (macro.stablecoinChange7dPct != null) flowParts.push("7j " + fmtNum(macro.stablecoinChange7dPct, 2) + "%");
       if (macro.stablecoinMcapUsd != null) flowParts.push("$" + (Number(macro.stablecoinMcapUsd) / 1e9).toFixed(1) + "B");
-      setTitle("mFlux", flowParts.length ? flowParts.join(" | ") : "No data");
+      setTitle("mFlux", flowParts.length ? flowParts.join(" | ") : noData);
 
-      setTitle("mVal", "Manual check required");
+      setTitle("mVal", manualCheck);
 
       const momParts = [];
       if (tech.rsi != null) momParts.push("RSI " + fmtNum(tech.rsi, 1));
       if (tech.stochRsi != null) momParts.push("StochRSI " + fmtNum(tech.stochRsi, 1));
-      setTitle("tMom", momParts.length ? momParts.join(" | ") : "No data");
+      setTitle("tMom", momParts.length ? momParts.join(" | ") : noData);
 
       const strParts = [];
-      if (market.price != null) strParts.push("Price " + fmtNum(market.price, 2));
+      if (market.price != null) strParts.push(priceLabel + fmtNum(market.price, 2));
       if (market.ema50 != null) strParts.push("EMA50 " + fmtNum(market.ema50, 2));
       if (tech.structure && tech.structure.reason) strParts.push(tech.structure.reason);
-      setTitle("tStr", strParts.length ? strParts.join(" | ") : "No data");
+      setTitle("tStr", strParts.length ? strParts.join(" | ") : noData);
 
-      setTitle("tVol", tech.bbWidthPct != null ? ("BB " + fmtNum(tech.bbWidthPct, 0) + "%") : "No data");
-      setTitle("tVolu", tech.volumeRatio != null ? ("Vol ratio " + fmtNum(tech.volumeRatio, 2) + "x") : "No data");
-      setTitle("pSent", psy.fearGreed != null ? ("F&G " + fmtNum(psy.fearGreed, 0)) : "No data");
-      setTitle("pDer", psy.fundingRate != null ? ("Funding " + fmtNum(psy.fundingRate, 6)) : "No data");
+      setTitle("tVol", tech.bbWidthPct != null ? ("BB " + fmtNum(tech.bbWidthPct, 0) + "%") : noData);
+      setTitle("tVolu", tech.volumeRatio != null ? (volumeRatioLabel + fmtNum(tech.volumeRatio, 2) + "x") : noData);
+      setTitle("pSent", psy.fearGreed != null ? ("F&G " + fmtNum(psy.fearGreed, 0)) : noData);
+      setTitle("pDer", psy.fundingRate != null ? (fundingLabel + fmtNum(psy.fundingRate, 6)) : noData);
 
-      setTitle("pCat", "Manual check required");
+      setTitle("pCat", manualCheck);
     }
 
     function applyAutoDetectedToUI(autoDetected, debug) {
@@ -325,7 +470,7 @@
       applyAutoTooltips(debug);
 
       const count = state.autoSet.size;
-      setAutoSummary("Auto detected <strong>" + count + " / 10</strong> signals");
+      setAutoSummary(t("autoDetectedSignals", { count }));
 
       state.lastDebug = debug;
     }
@@ -366,7 +511,7 @@
 
       const line = (block) => {
         const pill = "<span class=\"pill\">" + block.t + " / " + block.n + "</span>";
-        const suggest = block.ok ? "<em>Scan suggests OK</em>" : "Scan suggests caution";
+        const suggest = block.ok ? "<em>" + t("scanSuggestsOk") + "</em>" : t("scanSuggestsCaution");
         return pill + suggest;
       };
 
@@ -486,7 +631,7 @@
     }
 
     function renderScores(data, payload) {
-      $("methodVersion").textContent = "Method v" + (data.methodVersion || METHOD_VERSION);
+      $("methodVersion").textContent = t("methodVersion", { v: (data.methodVersion || METHOD_VERSION) });
 
       const s = data.scores || {};
       $("scoreTotal").textContent = (typeof s.total === "number") ? s.total.toFixed(1) + " / 10" : "–";
@@ -499,9 +644,9 @@
 
       const usedRegime = data.usedRegime || payload.regime;
       if (payload.regime === "Auto" && data.usedRegime) {
-        $("regimeHint").textContent = "Auto detected " + data.usedRegime + ". You can override anytime.";
+        $("regimeHint").textContent = t("autoDetectedRegime", { regime: localizeRegime(data.usedRegime) });
       } else {
-        $("regimeHint").textContent = "Auto detects the regime using market context. You can override anytime.";
+        $("regimeHint").textContent = t("autoDetectsRegime");
       }
 
       if (mode !== "Simple") {
@@ -525,20 +670,20 @@
       const v = s.finalVerdict || s.baseVerdict || "No trade";
       if (v === "A+") {
         vb.classList.add("a");
-        $("verdictTitle").textContent = "A+ setup";
-        $("verdictText").textContent = "Strong confluence. Risk-managed execution still required.";
+        $("verdictTitle").textContent = t("aPlusSetup");
+        $("verdictText").textContent = t("aPlusText");
       } else if (v === "Speculative") {
         vb.classList.add("s");
-        $("verdictTitle").textContent = "Speculative";
-        $("verdictText").textContent = "Edge exists but risk is higher. Reduce size and keep stops tight.";
+        $("verdictTitle").textContent = t("speculative");
+        $("verdictText").textContent = t("speculativeText");
       } else {
         vb.classList.add("n");
-        $("verdictTitle").textContent = "No trade";
-        $("verdictText").textContent = "Too much noise. Wait for better alignment.";
+        $("verdictTitle").textContent = t("noTrade");
+        $("verdictText").textContent = t("noTradeText");
       }
 
       if (s.baseVerdict && s.finalVerdict && s.baseVerdict !== s.finalVerdict) {
-        $("verdictText").textContent = "Setup downgraded due to insufficient RR for this regime.";
+        $("verdictText").textContent = t("downgradedDueToRR");
       }
 
       state.lastScore = (typeof s.total === "number") ? Number(s.total).toFixed(1) : null;
@@ -558,18 +703,14 @@
       $("bars").style.display = isSimple ? "none" : "block";
 
       const autoBtn = $("autoFillBtn");
-      if (autoBtn) autoBtn.textContent = isSimple ? "Quick Scan" : "Auto fill";
+      if (autoBtn) autoBtn.textContent = isSimple ? t("quickScan") : t("autoFill");
 
       const hintEl = $("modeHint");
       if (hintEl) {
         if (isSimple) {
-          hintEl.innerHTML =
-            "Simple mode. Quick 3-pillar manual check.<br>" +
-            "<span class=\"mode-teaser\" data-action=\"switch-pro\" role=\"button\" tabindex=\"0\">" +
-            "Quick scan runs the full scan and maps it to the 3 pillars. Switch to Pro for the full breakdown." +
-            "</span>";
+          hintEl.innerHTML = t("simpleModeHtml");
         } else {
-          hintEl.textContent = "Pro mode. Full 10-signal scoring with detailed breakdown.";
+          hintEl.textContent = t("proMode");
         }
       }
 
@@ -588,9 +729,9 @@
       const regime = $("regime").value;
 
       if (!asset && regime === "Auto") {
-        setStatus("Type an asset to compute in Auto regime. Example BTC.", "");
+        setStatus(t("typeAssetAuto"), "");
       } else {
-        setStatus("Updated.", "");
+        setStatus(t("updated"), "");
       }
 
       state.debounceTimer = setTimeout(() => {
@@ -660,14 +801,14 @@
 
         if (!asset && payload.regime === "Auto") {
           resetResultsUI();
-          setStatus("Type an asset to compute in Auto regime. Example BTC.", "");
+          setStatus(t("typeAssetAuto"), "");
           return;
         }
       }
 
       if (isAuto && !hasMeaningfulInputs(payload)) {
         resetResultsUI();
-        setStatus("Ready.", "");
+        setStatus(t("ready"), "");
         return;
       }
 
@@ -675,18 +816,18 @@
       const tradeErr = validateTradeClient(payload.direction, entry, stop, tp);
       if (tradeErr) {
         const map = {
-          trade_entry_equals_stop: "Entry and Stop cannot be equal.",
-          long_invalid_stop: "For a long, Stop must be below Entry.",
-          long_invalid_tp: "For a long, TP must be above Entry.",
-          short_invalid_stop: "For a short, Stop must be above Entry.",
-          short_invalid_tp: "For a short, TP must be below Entry."
+          trade_entry_equals_stop: t("entryStopEqual"),
+          long_invalid_stop: t("longInvalidStop"),
+          long_invalid_tp: t("longInvalidTp"),
+          short_invalid_stop: t("shortInvalidStop"),
+          short_invalid_tp: t("shortInvalidTp")
         };
         setStatus(map[tradeErr] || "Invalid trade inputs.", "err");
         return;
       }
 
       if (!isAuto) {
-        $("calcBtn").textContent = "Calculating...";
+        $("calcBtn").textContent = t("calculating");
         $("calcBtn").disabled = true;
       }
 
@@ -698,34 +839,34 @@
           trackScoreCalculated(state.lastScore, payload.regime, payload.direction, payload.mode);
         }
 
-        setStatus(isAuto ? "Updated." : "OK", "ok");
+        setStatus(isAuto ? t("updated") : t("ok"), "ok");
       } catch (e) {
         if (e && e.name === "AbortError") return;
         if (e && String(e.message) === "stale_response") return;
 
         const code = String(e && e.message ? e.message : "api_error");
         const map = {
-          forbidden_origin: "Access denied. Open this page from thecryptomath.com.",
-          invalid_json: "Request error. Try again.",
-          method_not_allowed: "Method not allowed.",
-          unauthorized: "Unauthorized.",
-          rate_limited: "Rate limited. Slow down and retry.",
-          missing_asset: "Type an asset first. Example BTC.",
-          upstream_unavailable: "Upstream temporarily unavailable. Try again.",
-          upstream_error: "Upstream API error. Try again.",
-          bad_upstream_json: "Upstream returned invalid JSON. Try again.",
-          insufficient_market_data: "Not enough market data for this asset.",
-          unknown_regime: "Regime auto requires the latest API update.",
-          trade_entry_equals_stop: "Entry and Stop cannot be equal.",
-          long_invalid_stop: "For a long, Stop must be below Entry.",
-          long_invalid_tp: "For a long, TP must be above Entry.",
-          short_invalid_stop: "For a short, Stop must be above Entry.",
-          short_invalid_tp: "For a short, TP must be below Entry."
+          forbidden_origin: t("accessDenied"),
+          invalid_json: t("requestError"),
+          method_not_allowed: t("methodNotAllowed"),
+          unauthorized: t("unauthorized"),
+          rate_limited: t("rateLimited"),
+          missing_asset: t("typeAssetFirst"),
+          upstream_unavailable: t("upstreamUnavailable"),
+          upstream_error: t("upstreamError"),
+          bad_upstream_json: t("badUpstreamJson"),
+          insufficient_market_data: t("insufficientMarketData"),
+          unknown_regime: t("unknownRegime"),
+          trade_entry_equals_stop: t("entryStopEqual"),
+          long_invalid_stop: t("longInvalidStop"),
+          long_invalid_tp: t("longInvalidTp"),
+          short_invalid_stop: t("shortInvalidStop"),
+          short_invalid_tp: t("shortInvalidTp")
         };
-        setStatus(map[code] || ("API error. Code " + code), "err");
+        setStatus(map[code] || t("apiErrorCode", { code }), "err");
       } finally {
         if (!isAuto) {
-          $("calcBtn").textContent = "Calculate";
+          $("calcBtn").textContent = t("calculate");
           $("calcBtn").disabled = false;
         }
       }
@@ -734,13 +875,13 @@
     async function runAutoFill() {
       const asset = normalizeAssetInput($("asset").value);
       if (!asset) {
-        setStatus("Type an asset first. Example BTC.", "err");
+        setStatus(t("typeAssetFirst"), "err");
         return;
       }
 
       const isSimple = ($("mode").value === "Simple");
 
-      $("autoFillBtn").textContent = isSimple ? "Scanning..." : "Auto filling...";
+      $("autoFillBtn").textContent = isSimple ? t("scanning") : t("autoFilling");
       $("autoFillBtn").disabled = true;
       $("autoFillBtn").classList.add("loading");
 
@@ -760,12 +901,12 @@
             const counts = applyQuickScanToSimple(autoDetected);
             renderSimpleShadowHints(autoDetected);
 
-            setAutoSummary("Quick scan found <strong>" + counts.total + "</strong> signals");
-            setStatus("Quick scan complete.", "ok");
+            setAutoSummary(t("quickScanFound", { count: counts.total }));
+            setStatus(t("quickScanComplete"), "ok");
           } else {
             clearSimpleHints();
             setAutoSummary("");
-            setStatus("Quick scan returned no signal.", "ok");
+            setStatus(t("quickScanNoSignal"), "ok");
           }
 
           await runCalculation(false);
@@ -788,25 +929,25 @@
         const payloadAfter = buildPayloadFromState();
         payloadAfter.mode = "Pro";
         renderScores(data, payloadAfter);
-        setStatus("OK", "ok");
+        setStatus(t("ok"), "ok");
       } catch (e) {
         if (e && e.name === "AbortError") return;
         if (e && String(e.message) === "stale_response") return;
 
         const code = String(e && e.message ? e.message : "api_error");
         const map = {
-          missing_asset: "Missing asset.",
-          upstream_unavailable: "Upstream temporarily unavailable. Try again.",
-          upstream_error: "Upstream API error. Try again.",
-          bad_upstream_json: "Upstream returned invalid JSON. Try again.",
-          insufficient_market_data: "Not enough market data for this asset.",
-          forbidden_origin: "Access denied. Open this page from thecryptomath.com.",
-          rate_limited: "Rate limited. Slow down and retry."
+          missing_asset: t("missingAsset"),
+          upstream_unavailable: t("upstreamUnavailable"),
+          upstream_error: t("upstreamError"),
+          bad_upstream_json: t("badUpstreamJson"),
+          insufficient_market_data: t("insufficientMarketData"),
+          forbidden_origin: t("accessDenied"),
+          rate_limited: t("rateLimited")
         };
-        setStatus(map[code] || ("Scan failed. Code " + code), "err");
+        setStatus(map[code] || t("scanFailedCode", { code }), "err");
       } finally {
         const isSimpleNow = ($("mode").value === "Simple");
-        $("autoFillBtn").textContent = isSimpleNow ? "Quick Scan" : "Auto fill";
+        $("autoFillBtn").textContent = isSimpleNow ? t("quickScan") : t("autoFill");
         $("autoFillBtn").disabled = false;
         $("autoFillBtn").classList.remove("loading");
       }
@@ -814,7 +955,7 @@
 
     function exportJSON() {
       if (!state.lastResponse) {
-        setStatus("Nothing to export yet. Click Calculate first.", "err");
+        setStatus(t("nothingToExport"), "err");
         return;
       }
       const blob = new Blob([JSON.stringify(state.lastResponse, null, 2)], { type: "application/json" });
@@ -827,7 +968,7 @@
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-      setStatus("Exported.", "ok");
+      setStatus(t("exported"), "ok");
     }
 
     function trackScoreCalculated(score, regime, direction, mode) {
@@ -864,8 +1005,8 @@
     function shareOnX() {
       const score = getScoreForShare();
       const asset = getAssetForShare();
-      const headline = asset ? `I just ran a scan on ${asset} with the @thecryptomath Score` : `I just ran a scan with the @thecryptomath Score`;
-      const text = `${headline}\n\nResult ${score}/10\n\nTry it for free`;
+      const headline = asset ? t("shareHeadlineWithAsset", { asset }) : t("shareHeadlineNoAsset");
+      const text = `${headline}\n\n${t("result", { score })}\n\n${t("tryItFree")}`;
       const url = "https://thecryptomath.com/score/";
       window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, "_blank");
 
@@ -875,8 +1016,8 @@
     function shareOnTelegram() {
       const score = getScoreForShare();
       const asset = getAssetForShare();
-      const headline = asset ? `I just ran a scan on ${asset} with the @thecryptomath Score` : `I just ran a scan with the @thecryptomath Score`;
-      const text = `${headline}\n\nResult ${score}/10\n\nTry it for free`;
+      const headline = asset ? t("shareHeadlineWithAsset", { asset }) : t("shareHeadlineNoAsset");
+      const text = `${headline}\n\n${t("result", { score })}\n\n${t("tryItFree")}`;
       const url = "https://thecryptomath.com/score/";
       window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, "_blank");
 
@@ -903,7 +1044,7 @@
             applyAutoHighlights();
 
             const count = state.autoSet.size;
-            if (count > 0) setAutoSummary("Auto detected <strong>" + count + " / 10</strong> signals");
+            if (count > 0) setAutoSummary(t("autoDetectedSignals", { count }));
             else setAutoSummary("");
           }
           scheduleAutoCalc();
@@ -937,7 +1078,8 @@
       });
     }
 
-    $("methodVersion").textContent = "Method v" + METHOD_VERSION;
+    $("methodVersion").textContent = t("methodVersion", { v: METHOD_VERSION });
+    if ($("exportBtn")) $("exportBtn").textContent = t("exportJson");
     $("regime").value = "Auto";
     applyModeUI();
     bind();
