@@ -2,7 +2,38 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-# AI Crawlers - Training blocked
+# OpenAI
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google AI usage controls
+User-agent: Google-Extended
+Disallow: /
+
+# Other AI / large-scale data collection bots kept blocked
 User-agent: Amazonbot
 Disallow: /
 
@@ -18,12 +49,6 @@ Disallow: /
 User-agent: CCBot
 Disallow: /
 
-User-agent: ChatGPT-User
-Disallow: /
-
-User-agent: ClaudeBot
-Disallow: /
-
 User-agent: Claude-Web
 Disallow: /
 
@@ -36,16 +61,7 @@ Disallow: /
 User-agent: FacebookBot
 Disallow: /
 
-User-agent: Google-Extended
-Disallow: /
-
-User-agent: GPTBot
-Disallow: /
-
 User-agent: meta-externalagent
-Disallow: /
-
-User-agent: PerplexityBot
 Disallow: /
 
 Sitemap: https://thecryptomath.com/sitemap.xml

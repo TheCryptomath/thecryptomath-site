@@ -3,3 +3,12 @@
 /connect.html     /connect     301
 /newsletter.html  /newsletter  301
 /privacy.html     /privacy     301
+
+/fr               /fr/               301
+/fr/build         /fr/build/         301
+/fr/connect       /fr/connect/       301
+/fr/newsletter    /fr/newsletter/    301
+/fr/resources     /fr/resources/     301
+/fr/privacy       /fr/privacy/       301
+/fr/score         /fr/score/         301
+
