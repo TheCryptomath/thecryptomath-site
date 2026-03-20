@@ -302,6 +302,40 @@ p { margin: 0; }
   opacity: 0.85;
 }
 
+
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.lang-switch a {
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.lang-switch a:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.lang-switch a[aria-current="true"] {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+
 /* ============================================
    BUTTONS
    ============================================ */
@@ -1598,4 +1632,9 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
   .ledger-stat {
     transition: none;
   }
+}
+
+
+@media (max-width: 480px) {
+  .lang-switch a { padding: 8px 9px; font-size: 0.75rem; }
 }
