@@ -38,9 +38,31 @@
   --topbar-bg: rgba(251,251,252,0.35);
   --topbar-bg-scrolled: rgba(251,251,252,0.85);
   --grain-opacity: 0.02;
+
+  /*
+   * Precomputed color-mix fallbacks
+   * Ensures compatibility with Safari < 16.4 and Chrome < 111.
+   * Values calculated from the base tokens above.
+   */
+  --_border-86: rgba(14,15,18,0.086);
+  --_border-88: rgba(14,15,18,0.088);
+  --_border-90: rgba(14,15,18,0.09);
+  --_border-92: rgba(14,15,18,0.092);
+  --_border-hover-90: rgba(14,15,18,0.162);
+  --_accent-42: rgba(247,147,26,0.42);
+  --_bg-deep-88: rgba(251,251,252,0.88);
+  --_bg-surface-88: rgba(255,255,255,0.88);
+  --_bg-surface-92: rgba(255,255,255,0.92);
+  --_bg-surface-94: rgba(255,255,255,0.94);
+  --_bg-elevated-55: rgba(244,245,248,0.55);
+  --_bg-elevated-68: rgba(244,245,248,0.68);
+  --_success-hi: #40b46b;   /* success 82% + white 18% */
+  --_success-lo: #107535;   /* success 72% + black 28% */
+  --_success-16: rgba(22,163,74,0.16);
+  --_success-26: rgba(22,163,74,0.26);
 }
 
-[data-theme="dark"] {
+html[data-theme="dark"] {
   --bg-deep: #08090c;
   --bg-surface: #0f1114;
   --bg-elevated: #16181d;
@@ -69,6 +91,24 @@
   --topbar-bg: rgba(8,9,12,0.35);
   --topbar-bg-scrolled: rgba(8,9,12,0.85);
   --grain-opacity: 0.03;
+
+  /* Dark-theme overrides for precomputed color-mix fallbacks */
+  --_border-86: rgba(255,255,255,0.052);
+  --_border-88: rgba(255,255,255,0.053);
+  --_border-90: rgba(255,255,255,0.054);
+  --_border-92: rgba(255,255,255,0.055);
+  --_border-hover-90: rgba(255,255,255,0.108);
+  --_accent-42: rgba(247,147,26,0.42);
+  --_bg-deep-88: rgba(8,9,12,0.88);
+  --_bg-surface-88: rgba(15,17,20,0.88);
+  --_bg-surface-92: rgba(15,17,20,0.92);
+  --_bg-surface-94: rgba(15,17,20,0.94);
+  --_bg-elevated-55: rgba(22,24,29,0.55);
+  --_bg-elevated-68: rgba(22,24,29,0.68);
+  --_success-hi: #4acf7b;   /* success 82% + white 18% */
+  --_success-lo: #188e44;   /* success 72% + black 28% */
+  --_success-16: rgba(34,197,94,0.16);
+  --_success-26: rgba(34,197,94,0.26);
 }
 
 /* Reset & Base */
@@ -112,21 +152,6 @@ a {
   transition: color 0.2s ease;
 }
 a:hover { color: var(--accent-bright); }
-
-/* Focus visible pour navigation clavier */
-*:focus {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-*:focus:not(:focus-visible) {
-  outline: none;
-}
-
-*:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
 
 .sr-only {
   position: absolute;
@@ -186,6 +211,7 @@ p { margin: 0; }
 
 .topbar.scrolled {
   background: var(--topbar-bg-scrolled);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
 }
@@ -273,7 +299,7 @@ p { margin: 0; }
   touch-action: manipulation;
 }
 
-.theme-toggle{
+.theme-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -291,18 +317,16 @@ p { margin: 0; }
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
-.theme-toggle:hover{
+.theme-toggle:hover {
   background: var(--bg-hover);
   border-color: var(--border-hover);
   transform: translateY(-1px);
 }
-.theme-toggle svg{
+.theme-toggle svg {
   width: 16px;
   height: 16px;
   opacity: 0.85;
 }
-
-
 
 .lang-switch {
   display: inline-flex;
@@ -393,6 +417,8 @@ p { margin: 0; }
    HERO SECTION
    ============================================ */
 .hero {
+  /* vh fallback for browsers without svh support (Android WebView, older Safari) */
+  min-height: min(92vh, 820px);
   min-height: min(92svh, 820px);
   display: flex;
   align-items: center;
@@ -710,8 +736,8 @@ p { margin: 0; }
   border-radius: 16px;
   overflow: hidden;
   margin: 10px 0 14px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  background: var(--bg-hover);
 }
 
 .project-thumb img {
@@ -720,6 +746,7 @@ p { margin: 0; }
   display: block;
   object-fit: cover;
   transform: scale(1.01);
+  transition: transform 0.3s ease;
 }
 .project-card:hover .project-thumb img { transform: scale(1.04); }
 
@@ -906,8 +933,8 @@ p { margin: 0; }
   width: 40px;
   height: 40px;
   border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--success) 16%, transparent);
-  border: 1px solid color-mix(in srgb, var(--success) 26%, transparent);
+  background: var(--_success-16);
+  border: 1px solid var(--_success-26);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1039,17 +1066,25 @@ p { margin: 0; }
 
 .cta-block .btn { position: relative; }
 
+.cta-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
 /* ============================================
    Home hero extras
    ============================================ */
-.microcopy{
+.microcopy {
   margin-top: 8px;
   margin-bottom: 28px;
   color: var(--text-muted);
   font-size: 0.9375rem;
 }
 
-.credibility{
+.credibility {
   padding: 14px 16px;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
@@ -1060,7 +1095,7 @@ p { margin: 0; }
   max-width: 100%;
 }
 
-.social-proof{
+.social-proof {
   margin-top: 14px;
   color: var(--text-muted);
   font-size: 0.9375rem;
@@ -1112,7 +1147,7 @@ p { margin: 0; }
    Mobile menu. Premium compact dropdown
    ============================================ */
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .topbar { z-index: 10000; }
   .topbar, .topbar .container, .topbar .nav { overflow: visible; }
 
@@ -1208,7 +1243,7 @@ p { margin: 0; }
 
     border-radius: 12px;
 
-    font-weight: 650;
+    font-weight: 700;
     font-size: 15px;
     line-height: 1.1;
 
@@ -1259,7 +1294,7 @@ p { margin: 0; }
 }
 
 /* Light theme dropdown */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   html:not([data-theme="dark"]) .topbar .navlinks.open {
     background: rgba(255,255,255,0.94);
     border: 1px solid rgba(14,15,18,0.10);
@@ -1313,7 +1348,6 @@ button:focus-visible {
   border-radius: var(--radius-md);
 }
 
-
 /* Skip link */
 .skip-link {
   position: absolute;
@@ -1326,7 +1360,7 @@ button:focus-visible {
   border-radius: var(--radius-md);
 }
 
-.skip-link:focus {
+.skip-link:focus-visible {
   left: 12px;
 }
 
@@ -1343,7 +1377,6 @@ button:focus-visible {
 
 /* ============================================
    THE LEDGER (Home)
-   Cleaner, more designed feel
    ============================================ */
 
 .ledger {
@@ -1378,10 +1411,8 @@ button:focus-visible {
   position: relative;
   padding: 18px 18px 18px 54px;
   border-radius: var(--radius-xl);
-  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
-  background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
-
-  /* helps matching height in some layouts */
+  border: 1px solid var(--_border-88);
+  background: var(--_bg-surface-92);
   min-height: 0;
 }
 
@@ -1395,9 +1426,9 @@ button:focus-visible {
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    color-mix(in srgb, var(--border) 92%, transparent) 10%,
-    color-mix(in srgb, var(--accent) 42%, transparent) 50%,
-    color-mix(in srgb, var(--border) 92%, transparent) 90%,
+    var(--_border-92) 10%,
+    var(--_accent-42) 50%,
+    var(--_border-92) 90%,
     transparent 100%
   );
   opacity: 0.65;
@@ -1428,16 +1459,16 @@ button:focus-visible {
   border-radius: 999px;
   background: var(--accent);
   box-shadow:
-    0 0 0 5px color-mix(in srgb, var(--bg-deep) 88%, transparent),
-    0 0 0 7px color-mix(in srgb, var(--border) 90%, transparent);
+    0 0 0 5px var(--_bg-deep-88),
+    0 0 0 7px var(--_border-90);
   transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .ledger-item:hover::before {
   transform: scale(1.12);
   box-shadow:
-    0 0 0 5px color-mix(in srgb, var(--bg-deep) 88%, transparent),
-    0 0 0 7px color-mix(in srgb, var(--border-hover) 90%, transparent),
+    0 0 0 5px var(--_bg-deep-88),
+    0 0 0 7px var(--_border-hover-90),
     0 0 16px var(--accent-glow);
 }
 
@@ -1455,14 +1486,14 @@ button:focus-visible {
 .ledger-details {
   border-radius: 16px;
   padding: 14px 16px;
-  border: 1px solid color-mix(in srgb, var(--border) 86%, transparent);
-  background: color-mix(in srgb, var(--bg-elevated) 55%, transparent);
+  border: 1px solid var(--_border-86);
+  background: var(--_bg-elevated-55);
   transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
 }
 
 .ledger-details:hover {
   border-color: var(--border-hover);
-  background: color-mix(in srgb, var(--bg-elevated) 68%, transparent);
+  background: var(--_bg-elevated-68);
   box-shadow: var(--shadow-sm);
 }
 
@@ -1497,8 +1528,8 @@ button:focus-visible {
 .ledger-stat {
   padding: 14px 14px;
   border-radius: 16px;
-  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
-  background: color-mix(in srgb, var(--bg-surface) 88%, transparent);
+  border: 1px solid var(--_border-88);
+  background: var(--_bg-surface-88);
   transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
   min-height: 0;
   height: 100%;
@@ -1507,7 +1538,7 @@ button:focus-visible {
 .ledger-stat:hover {
   border-color: var(--border-hover);
   box-shadow: var(--shadow-sm);
-  background: color-mix(in srgb, var(--bg-surface) 94%, transparent);
+  background: var(--_bg-surface-94);
 }
 
 .ledger-stat-number {
@@ -1517,15 +1548,15 @@ button:focus-visible {
   font-size: 1.55rem;
   line-height: 1.15;
   padding-bottom: 10px;
-  font-weight: 850;
+  font-weight: 800;    /* was 850 — not a valid weight; browser rounds to 800 anyway */
   letter-spacing: -0.02em;
   margin: 0 0 6px;
 
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--success) 82%, white) 0%,
+    var(--_success-hi) 0%,
     var(--success) 55%,
-    color-mix(in srgb, var(--success) 72%, black) 100%
+    var(--_success-lo) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1573,7 +1604,6 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
   opacity: 0.88;
 }
 
-/* Optional line under the section, keep if you still use it somewhere */
 .ledger-today {
   margin: 18px 0 0;
   color: var(--text-secondary);
@@ -1602,7 +1632,6 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
 
   .ledger-timeline { padding: 16px; }
 
-  /* Back to natural flow on smaller screens */
   .ledger-stats {
     height: auto;
     min-height: 0;
@@ -1641,7 +1670,6 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
     transition: none;
   }
 }
-
 
 @media (max-width: 480px) {
   .lang-switch a { padding: 8px 9px; font-size: 0.75rem; }
