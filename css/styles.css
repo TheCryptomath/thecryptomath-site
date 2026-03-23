@@ -1114,8 +1114,41 @@ p { margin: 0; }
   .mobile-toggle { display: inline-flex; }
   .nav { position: relative; }
 
-  .hero { padding: 100px 0 60px; min-height: auto; }
+  .hero { padding: 92px 0 56px; min-height: auto; }
   .hero-proof { gap: 24px; }
+
+  .hero-sub {
+    font-size: 1.125rem;
+    line-height: 1.55;
+  }
+
+  .social-proof {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .brand {
+    gap: 10px;
+    font-size: 1rem;
+    line-height: 1.05;
+  }
+
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    flex-shrink: 0;
+  }
+
+  .nav-cta { gap: 8px; }
+
+  .lang-switch a {
+    padding: 8px 9px;
+    font-size: 0.75rem;
+  }
+
+  .mobile-toggle,
+  .theme-toggle { min-height: 44px; }
 
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
 
@@ -1134,6 +1167,13 @@ p { margin: 0; }
   .nav-cta .btn.ghost { display: none; }
   .theme-toggle span { display: none; }
   .theme-toggle { padding: 10px; }
+
+  /* Shorten YouTube button label on small screens */
+  .hero-actions a[href*="youtube"] { font-size: 0; }
+  .hero-actions a[href*="youtube"]::before {
+    content: "Watch YouTube";
+    font-size: 0.875rem;
+  }
 }
 
 /* Hide topbar primary button on very small phones to fit Menu */
@@ -1141,6 +1181,12 @@ p { margin: 0; }
   .topbar .nav-cta .btn.primary {
     display: none !important;
   }
+
+  .brand { font-size: 0.95rem; }
+
+  .hero h1 { font-size: clamp(2.2rem, 11vw, 3.2rem); }
+
+  .hero-sub { font-size: 1.05rem; }
 }
 
 /* ============================================
@@ -1153,7 +1199,7 @@ p { margin: 0; }
 
   .topbar .container {
     padding-left: calc(16px + env(safe-area-inset-left)) !important;
-    padding-right: calc(16px + env(safe-area-inset-right)) !important;
+    padding-right: calc(20px + env(safe-area-inset-right)) !important;
   }
 
   .topbar .nav { position: relative; z-index: 10001; }
