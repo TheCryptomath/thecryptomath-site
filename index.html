@@ -4,9 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <script src="/js/theme.js?v=20260211"></script>
+  <!-- Inline theme script: must stay here to avoid FOUC on first load (no HTTP request) -->
+  <script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var saved = localStorage.getItem("theme");
+        var theme = (saved === "light" || saved === "dark") ? saved : "dark";
+        if (theme === "dark") root.setAttribute("data-theme", "dark");
+        else root.removeAttribute("data-theme");
+        root.style.colorScheme = theme;
+      } catch (_) {}
+    })();
+  </script>
 
-  <title>The Cryptomath | Crypto analysis, newsletter & tools</title>
+  <title>The Cryptomath | Crypto analysis, newsletter &amp; tools</title>
   <meta name="description" content="In crypto since 2017. Tracking trends, sharing market insights, and shipping projects. Newsletter, tools, and resources. Long-term focus." />
   <meta name="color-scheme" content="dark light" />
   <meta name="theme-color" content="#08090c">
@@ -21,7 +33,7 @@
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 
-  <meta property="og:title" content="The Cryptomath | Crypto analysis, newsletter & tools" />
+  <meta property="og:title" content="The Cryptomath | Crypto analysis, newsletter &amp; tools" />
   <meta property="og:description" content="In crypto since 2017. Tracking trends, sharing market insights, and shipping projects. Newsletter, tools, and resources. Long-term focus." />
   <meta property="og:image" content="https://thecryptomath.com/assets/og.jpg" />
   <meta property="og:image:width" content="1200" />
@@ -29,11 +41,11 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://thecryptomath.com/" />
   <meta property="og:site_name" content="The Cryptomath" />
-
-    <meta property="og:locale" content="en_US" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="fr_FR" />
-<meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="The Cryptomath | Crypto analysis, newsletter & tools" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Cryptomath | Crypto analysis, newsletter &amp; tools" />
   <meta name="twitter:description" content="In crypto since 2017. Tracking trends, sharing market insights, and shipping projects. Newsletter, tools, and resources. Long-term focus." />
   <meta name="twitter:image" content="https://thecryptomath.com/assets/og.jpg" />
   <meta name="twitter:image:width" content="1200" />
@@ -42,7 +54,7 @@
 
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
-  <link rel="stylesheet" href="/css/styles.css?v=20260209" />
+  <link rel="stylesheet" href="/css/styles.css?v=20260323" />
 
   <script type="application/ld+json">
   {
@@ -62,7 +74,10 @@
     "description":"In crypto since 2017. Tracking trends, sharing insights, shipping projects."
   }
   </script>
-  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script><!-- End Cloudflare Web Analytics -->
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script>
+  <!-- End Cloudflare Web Analytics -->
 </head>
 
 <body>
@@ -70,7 +85,7 @@
 
   <header class="topbar">
     <div class="container">
-      <nav class="nav">
+      <nav class="nav" aria-label="Main navigation">
         <a class="brand" href="/">
           <span class="brand-mark" aria-hidden="true">
             <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" />
@@ -88,19 +103,21 @@
 
         <div class="nav-cta">
           <a class="btn primary" href="/newsletter">Newsletter</a>
+
           <div class="lang-switch" aria-label="Language selector">
             <a href="/" lang="en" aria-current="true">EN</a>
             <a href="/fr/" lang="fr">FR</a>
           </div>
 
-          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
             <span>Theme</span>
           </button>
 
-          <button class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
+          <!-- aria-label intentionally absent: JS manages it dynamically via uiText() -->
+          <button class="mobile-toggle" type="button" data-mobile-toggle aria-expanded="false">Menu</button>
         </div>
       </nav>
     </div>
@@ -119,7 +136,6 @@
             Long-term focus.
           </p>
 
-          <!-- Wrapper that constrains CTAs to credibility width -->
           <div class="hero-cta-group">
             <div class="hero-actions">
               <a href="/newsletter" class="btn primary">
@@ -184,7 +200,6 @@
               </div>
             </div>
 
-            <!-- Important. Keep "card ledger-highlights" so it matches the Ledger CSS and aligns height -->
             <aside class="card ledger-highlights" aria-label="Highlights">
               <div class="ledger-stats">
                 <div class="ledger-stat">
@@ -209,7 +224,6 @@
               </div>
             </aside>
           </div>
-
         </div>
       </div>
     </section>
@@ -219,8 +233,7 @@
         <div class="cta-block">
           <h2>Proof over promises</h2>
           <p>Market insights, building in public. Everything I share lives here.</p>
-
-          <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+          <div class="cta-actions">
             <a href="/newsletter" class="btn primary">Join 1,000+ readers</a>
             <a href="/connect" class="btn">All official links</a>
           </div>
@@ -244,7 +257,8 @@
 
         <div class="footer-links">
           <div class="footer-col">
-            <h2>Navigate</h2>
+            <!-- h3 correct here: these are sub-headings under the page's h2 sections -->
+            <h3>Navigate</h3>
             <a href="/">Home</a>
             <a href="/build">Build</a>
             <a href="/score/">Score</a>
@@ -252,7 +266,7 @@
             <a href="/connect">Connect</a>
           </div>
           <div class="footer-col">
-            <h2>Projects</h2>
+            <h3>Projects</h3>
             <a href="https://t.me/TheCryptomath" target="_blank" rel="noopener">
               The Cryptomath channel <span class="sr-only">(opens in new tab)</span>
             </a>
@@ -274,6 +288,6 @@
     </div>
   </footer>
 
-  <script defer src="/js/main.js?v=20260211"></script>
+  <script defer src="/js/main.js?v=20260323"></script>
 </body>
 </html>
