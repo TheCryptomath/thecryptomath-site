@@ -702,6 +702,10 @@ p { margin: 0; }
   grid-template-columns: 1fr;
   gap: 20px;
 }
+.build-live-grid {
+  grid-template-columns: minmax(0, 480px);
+  justify-content: center;
+}
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
