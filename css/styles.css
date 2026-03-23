@@ -697,6 +697,11 @@ p { margin: 0; }
 .card-link::after { content: '→'; }
 
 /* Grid layouts */
+.grid-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
