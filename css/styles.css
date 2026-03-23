@@ -1117,15 +1117,15 @@ p { margin: 0; }
   .topbar, .topbar .container, .topbar .nav { overflow: visible; }
 
   .topbar .container {
-    padding-left: calc(16px + env(safe-area-inset-left));
-    padding-right: calc(16px + env(safe-area-inset-right));
+    padding-left: calc(16px + env(safe-area-inset-left)) !important;
+    padding-right: calc(16px + env(safe-area-inset-right)) !important;
   }
 
   .topbar .nav { position: relative; z-index: 10001; }
   .topbar .nav-cta {
     position: relative;
     z-index: 10002;
-    padding-right: calc(12px + env(safe-area-inset-right));
+    gap: 10px;
   }
 
   .topbar .theme-toggle,
