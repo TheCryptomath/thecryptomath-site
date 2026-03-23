@@ -1168,12 +1168,7 @@ p { margin: 0; }
   .theme-toggle span { display: none; }
   .theme-toggle { padding: 10px; }
 
-  /* Shorten YouTube button label on small screens */
-  .hero-actions a[href*="youtube"] { font-size: 0; }
-  .hero-actions a[href*="youtube"]::before {
-    content: "Watch YouTube";
-    font-size: 0.875rem;
-  }
+
 }
 
 /* Hide topbar primary button on very small phones to fit Menu */
