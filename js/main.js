@@ -27,8 +27,6 @@ function uiText(key) {
   const getPreferred = () => {
     const saved = localStorage.getItem(storageKey);
     if (saved === 'light' || saved === 'dark') return saved;
-
-    // Default theme when nothing is saved
     return 'dark';
   };
 
@@ -36,7 +34,6 @@ function uiText(key) {
     if (theme === 'dark') root.setAttribute('data-theme', 'dark');
     else root.removeAttribute('data-theme');
 
-    // Helps the browser paint native UI consistently
     try { root.style.colorScheme = theme; } catch (_) {}
 
     if (btn) {
@@ -48,12 +45,14 @@ function uiText(key) {
         svg.innerHTML = theme === 'dark'
           ? '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>'
           : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
-        }
+      }
     }
   };
 
-  const init = () => apply(getPreferred());
-  init();
+  // theme.js already applied the theme before this runs — only re-apply if state drifted
+  const currentTheme = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  if (currentTheme !== getPreferred()) apply(getPreferred());
+  else apply(currentTheme); // still sync the button UI
 
   if (!btn) return;
 
@@ -79,15 +78,15 @@ function uiText(key) {
   handleScroll();
 })();
 
-// Mobile menu toggle with focus trap + escape + focus restore
+// Mobile menu toggle with focus trap + escape + focus restore + resize
 (function() {
   const toggle = document.querySelector('[data-mobile-toggle]');
   const links = document.querySelector('[data-navlinks]');
   if (!toggle || !links) return;
 
-  // Accessibility wiring
   if (!links.id) links.id = 'navlinks';
   toggle.setAttribute('aria-controls', links.id);
+  toggle.setAttribute('aria-label', uiText('menu'));
 
   const isOpen = () => links.classList.contains('open');
 
@@ -96,16 +95,9 @@ function uiText(key) {
   };
 
   const getFocusable = () => {
-    const focusableSelectors = [
-      'a[href]',
-      'button:not([disabled])',
-      '[tabindex]:not([tabindex="-1"])'
-    ].join(',');
-
-    const inside = Array.from(links.querySelectorAll(focusableSelectors))
+    const sel = ['a[href]', 'button:not([disabled])', '[tabindex]:not([tabindex="-1"])'].join(',');
+    const inside = Array.from(links.querySelectorAll(sel))
       .filter(el => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true');
-
-    // Inclure le bouton toggle pour éviter de tabuler hors du menu
     return [toggle, ...inside];
   };
 
@@ -113,6 +105,7 @@ function uiText(key) {
     if (!isOpen()) return;
     links.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', uiText('menu'));
     toggle.textContent = uiText('menu');
     focusToggle();
   };
@@ -121,6 +114,7 @@ function uiText(key) {
     if (isOpen()) return;
     links.classList.add('open');
     toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', uiText('close'));
     toggle.textContent = uiText('close');
 
     const focusable = getFocusable();
@@ -132,19 +126,16 @@ function uiText(key) {
     isOpen() ? close() : open();
   });
 
-  // Close menu when clicking a link
   links.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', close);
   });
 
-  // Close on outside click
   document.addEventListener('click', (e) => {
     if (!isOpen()) return;
     if (links.contains(e.target) || toggle.contains(e.target)) return;
     close();
   });
 
-  // Focus trap + Escape, single global listener
   document.addEventListener('keydown', (e) => {
     if (!isOpen()) return;
 
@@ -174,16 +165,15 @@ function uiText(key) {
       }
     }
   });
+
+  // Close menu if viewport grows past mobile breakpoint
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && isOpen()) close();
+  }, { passive: true });
 })();
 
 // Intersection Observer for fade-in animations
 (function() {
-  const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-  };
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -191,11 +181,9 @@ function uiText(key) {
         observer.unobserve(entry.target);
       }
     });
-  }, observerOptions);
+  }, { root: null, rootMargin: '0px', threshold: 0.1 });
 
-  document.querySelectorAll('.fade-in').forEach(el => {
-    observer.observe(el);
-  });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 })();
 
 // Footer year
