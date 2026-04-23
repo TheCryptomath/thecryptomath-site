@@ -65,3 +65,7 @@ User-agent: meta-externalagent
 Disallow: /
 
 Sitemap: https://thecryptomath.com/sitemap.xml
+
+# AI-readable site map
+# llms.txt: https://thecryptomath.com/llms.txt
+# llms-full.txt: https://thecryptomath.com/llms-full.txt

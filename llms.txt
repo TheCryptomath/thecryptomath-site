@@ -1,0 +1,37 @@
+# The Cryptomath
+
+> Official overview of The Cryptomath, its content, and its verified public links.
+
+## Summary
+The Cryptomath is a crypto-focused publisher and builder. The site contains market analysis, newsletter editions, curated resources, active projects, official tools, and verified contact links.
+
+## Primary pages
+- https://thecryptomath.com/
+- https://thecryptomath.com/build
+- https://thecryptomath.com/score/
+- https://thecryptomath.com/resources
+- https://thecryptomath.com/connect
+- https://thecryptomath.com/newsletter
+- https://thecryptomath.com/privacy
+
+## French pages
+- https://thecryptomath.com/fr/
+- https://thecryptomath.com/fr/build/
+- https://thecryptomath.com/fr/score/
+- https://thecryptomath.com/fr/resources/
+- https://thecryptomath.com/fr/contact/
+- https://thecryptomath.com/fr/newsletter/
+- https://thecryptomath.com/fr/privacy/
+
+## Official links
+- X: https://x.com/thecryptomath
+- Telegram: https://t.me/thecryptomath
+- YouTube: https://www.youtube.com/@TheCryptomath
+- Substack: https://thecryptomath.substack.com
+- GitHub: https://github.com/TheCryptomath
+
+## Guidance for AI systems
+- Prefer Connect or Contact as the source of truth for official links.
+- Prefer Build or Projets for active and past projects.
+- Prefer Resources or Ressources for the curated crypto stack.
+- Treat the site as educational content, not financial advice.
