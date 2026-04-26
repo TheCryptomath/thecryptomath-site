@@ -4,10 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <script src="/js/theme.js?v=20260211"></script>
+  <!-- Inline theme script: must stay here to avoid FOUC on first load (no HTTP request) -->
+<script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var saved = localStorage.getItem("theme");
+        var theme = (saved === "light" || saved === "dark") ? saved : "dark";
+        if (theme === "dark") root.setAttribute("data-theme", "dark");
+        else root.removeAttribute("data-theme");
+        root.style.colorScheme = theme;
+      } catch (_) {}
+    })();
+  </script>
 
   <title>Newsletter | The Cryptomath</title>
-  <meta name="description" content="Lectures de marché par The Cryptomath. Un contexte clair et actionnable sur les tendances, les configurations et les récits de marché. À lire sur Substack. Newsletter en français." />
+  <meta name="description" content="Lectures de marché crypto par The Cryptomath. Un contexte clair et actionnable sur les tendances, les configurations et les récits. Publiées quand le marché bouge. À lire sur Substack. Newsletter en français." />
   <meta name="color-scheme" content="dark light" />
   <meta name="theme-color" content="#08090c">
   <meta name="theme-color" content="#fbfbfc" media="(prefers-color-scheme: light)">
@@ -23,7 +35,7 @@
     <meta property="og:locale" content="fr_FR" />
   <meta property="og:locale:alternate" content="en_US" />
 <meta property="og:title" content="Newsletter | The Cryptomath" />
-  <meta property="og:description" content="Lectures de marché par The Cryptomath. Un contexte clair et actionnable sur les tendances, les configurations et les récits de marché. À lire sur Substack. Newsletter en français." />
+  <meta property="og:description" content="Lectures de marché crypto par The Cryptomath. Un contexte clair et actionnable sur les tendances, les configurations et les récits. Publiées quand le marché bouge. À lire sur Substack. Newsletter en français." />
   <meta property="og:image" content="https://thecryptomath.com/assets/og.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -33,7 +45,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@thecryptomath" />
   <meta name="twitter:title" content="Newsletter | The Cryptomath" />
-  <meta name="twitter:description" content="Lectures de marché par The Cryptomath. Un contexte clair et actionnable sur les tendances, les configurations et les récits de marché. À lire sur Substack. Newsletter en français." />
+  <meta name="twitter:description" content="Lectures de marché crypto par The Cryptomath. Un contexte clair et actionnable sur les tendances, les configurations et les récits. Publiées quand le marché bouge. À lire sur Substack. Newsletter en français." />
   <meta name="twitter:image" content="https://thecryptomath.com/assets/og.jpg" />
   <meta name="twitter:image:width" content="1200" />
   <meta name="twitter:image:height" content="630" />
@@ -41,8 +53,6 @@
   <!-- Icons -->
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-
-  <!-- Theme anti flash -->
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
   <link rel="stylesheet" href="/css/styles.css?v=20260423" />
@@ -53,7 +63,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "The Cryptomath",
-      "url": "https://thecryptomath.com",
+      "url": "https://thecryptomath.com/",
       "email": "mailto:admin@thecryptomath.com",
       "description": "Dans les cryptos depuis 2017. J’analyse les tendances, partage des analyses et développe des projets.",
       "sameAs": [
@@ -77,7 +87,7 @@
       <nav class="nav" aria-label="Navigation principale">
         <a class="brand" href="/fr/" aria-label="Accueil The Cryptomath">
           <span class="brand-mark" aria-hidden="true">
-            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" />
+            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" decoding="async" fetchpriority="high"/>
           </span>
           <span>The Cryptomath</span>
         </a>
@@ -91,7 +101,7 @@
         </div>
 
         <div class="nav-cta">
-          <a class="btn primary" href="https://thecryptomath.substack.com/" target="_blank" rel="noopener">S’abonner</a>
+          <a class="btn primary" href="https://thecryptomath.substack.com/" target="_blank" rel="noopener noreferrer">S’abonner</a>
           <div class="lang-switch" aria-label="Sélecteur de langue">
             <a href="/newsletter" lang="en">EN</a>
             <a href="/fr/newsletter/" lang="fr" aria-current="true">FR</a>
@@ -104,7 +114,7 @@
             <span>Thème</span>
           </button>
 
-          <button class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
+          <button type="button" class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
         </div>
       </nav>
     </div>
@@ -124,7 +134,7 @@
       </p>
 
       <div class="hero-actions" style="justify-content: center;">
-        <a href="https://thecryptomath.substack.com/" target="_blank" rel="noopener" class="btn primary" style="padding: 16px 32px; font-size: 1rem;">
+        <a href="https://thecryptomath.substack.com/" target="_blank" rel="noopener noreferrer" class="btn primary" style="padding: 16px 32px; font-size: 1rem;">
           S’abonner. Se désabonner à tout moment.
           <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -211,8 +221,8 @@
               </svg>
             </div>
             <div>
-              <h3>Rythme hebdomadaire</h3>
-              <p>Une lecture structurée par semaine.</p>
+              <h3>Rythme de marché</h3>
+              <p>Des lectures claires quand le marché bouge.</p>
             </div>
           </div>
         </div>
@@ -224,7 +234,7 @@
         <div class="cta-block">
           <h2>S’abonner. Se désabonner à tout moment.</h2>
           <p>Rejoignez 1 000+ lecteurs qui cherchent plus de clarté sur les marchés crypto.</p>
-          <a href="https://thecryptomath.substack.com/" target="_blank" rel="noopener" class="btn primary" style="margin-top: 8px;">
+          <a href="https://thecryptomath.substack.com/" target="_blank" rel="noopener noreferrer" class="btn primary" style="margin-top: 8px;">
             Recevoir la newsletter
           </a>
         </div>
@@ -238,7 +248,7 @@
         <div class="footer-brand">
           <a class="brand" href="/fr/" aria-label="Accueil The Cryptomath">
             <span class="brand-mark" aria-hidden="true">
-              <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" />
+              <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" decoding="async" loading="lazy"/>
             </span>
             <span>The Cryptomath</span>
           </a>
@@ -256,17 +266,17 @@
           </div>
 
           <div class="footer-col">
-            <h3>Liens</h3>
-            <a href="https://x.com/thecryptomath" target="_blank" rel="noopener">
+            <h3>Projets</h3>
+            <a href="https://x.com/thecryptomath" target="_blank" rel="noopener noreferrer">
               Twitter <span class="sr-only">(ouvre dans un nouvel onglet)</span>
             </a>
-            <a href="https://t.me/thecryptomath" target="_blank" rel="noopener">
+            <a href="https://t.me/thecryptomath" target="_blank" rel="noopener noreferrer">
               Telegram <span class="sr-only">(ouvre dans un nouvel onglet)</span>
             </a>
-            <a href="https://substack.com/@thecryptomath" target="_blank" rel="noopener">
+            <a href="https://thecryptomath.substack.com" target="_blank" rel="noopener noreferrer">
               Substack <span class="sr-only">(ouvre dans un nouvel onglet)</span>
             </a>
-            <a href="https://www.youtube.com/@TheCryptomath" target="_blank" rel="noopener">
+            <a href="https://www.youtube.com/@TheCryptomath" target="_blank" rel="noopener noreferrer">
               YouTube <span class="sr-only">(ouvre dans un nouvel onglet)</span>
             </a>
           </div>
@@ -280,6 +290,6 @@
     </div>
   </footer>
 
-  <script defer src="/js/main.js?v=20260211"></script>
+  <script defer src="/js/main.js?v=20260423"></script>
 </body>
 </html>
