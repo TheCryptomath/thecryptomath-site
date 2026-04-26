@@ -3,7 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="/js/theme.js?v=20260211"></script>
+  <!-- Inline theme script: must stay here to avoid FOUC on first load (no HTTP request) -->
+<script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var saved = localStorage.getItem("theme");
+        var theme = (saved === "light" || saved === "dark") ? saved : "dark";
+        if (theme === "dark") root.setAttribute("data-theme", "dark");
+        else root.removeAttribute("data-theme");
+        root.style.colorScheme = theme;
+      } catch (_) {}
+    })();
+  </script>
 
   <title>Politique de confidentialité | The Cryptomath</title>
   <meta name="description" content="Politique de confidentialité de thecryptomath.com. Pas de cookies de suivi. Cloudflare Web Analytics uniquement. Données collectées et moyens de contact." />
@@ -55,7 +67,7 @@
     "isPartOf":{
       "@type":"WebSite",
       "name":"The Cryptomath",
-      "url":"https://thecryptomath.com/fr/"
+      "url":"https://thecryptomath.com/"
     }
   }
   </script>
@@ -71,7 +83,7 @@
       <nav class="nav" aria-label="Navigation principale">
         <a class="brand" href="/fr/">
           <span class="brand-mark" aria-hidden="true">
-            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" />
+            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" decoding="async" fetchpriority="high"/>
           </span>
           <span>The Cryptomath</span>
         </a>
@@ -98,7 +110,7 @@
             <span>Thème</span>
           </button>
 
-          <button class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
+          <button type="button" class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
         </div>
       </nav>
     </div>
@@ -196,7 +208,7 @@
         <div class="footer-brand">
           <a class="brand" href="/fr/" aria-label="Accueil The Cryptomath">
             <span class="brand-mark" aria-hidden="true">
-              <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" />
+              <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" decoding="async" loading="lazy"/>
             </span>
             <span>The Cryptomath</span>
           </a>
@@ -214,9 +226,9 @@
           </div>
           <div class="footer-col">
             <h3>Projets</h3>
-            <a href="https://t.me/TheCryptomath" target="_blank" rel="noopener">La chaîne The Cryptomath</a>
-            <a href="https://www.thecryptomasks.xyz" target="_blank" rel="noopener">The Cryptomasks</a>
-            <a href="https://t.me/CryptoSkillsTestBot" target="_blank" rel="noopener">Crypto Skills Test</a>
+            <a href="https://t.me/thecryptomath" target="_blank" rel="noopener noreferrer">La chaîne The Cryptomath</a>
+            <a href="https://www.thecryptomasks.xyz" target="_blank" rel="noopener noreferrer">The Cryptomasks</a>
+            <a href="https://t.me/CryptoSkillsTestBot" target="_blank" rel="noopener noreferrer">Crypto Skills Test</a>
             <a href="/fr/newsletter/">Newsletter</a>
           </div>
         </div>
@@ -229,6 +241,6 @@
     </div>
   </footer>
 
-  <script defer src="/js/main.js?v=20260211"></script>
+  <script defer src="/js/main.js?v=20260423"></script>
 </body>
 </html>
