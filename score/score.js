@@ -546,7 +546,14 @@ function switchToPro() {
   scheduleAutoCalc();
 }
 
-let currentController = null;
+// Channels independent. Avoids cross-cancellation between calc, shadow, autofill, autocalc.
+const apiChannels = {
+  calc: { controller: null, counter: 0 },
+  shadow: { controller: null, counter: 0 },
+  autofill: { controller: null, counter: 0 },
+  autocalc: { controller: null, counter: 0 }
+};
+
 let requestCounter = 0;
 
 const CLIENT_CACHE_TTL_MS = 60_000;
@@ -578,11 +585,13 @@ function sleep(ms) {
   return new Promise(r => setTimeout(r, ms));
 }
 
-async function callApi(payload) {
-  if (currentController) currentController.abort();
-  currentController = new AbortController();
+async function callApi(payload, channel = "calc") {
+  const ch = apiChannels[channel] || apiChannels.calc;
+  if (ch.controller) ch.controller.abort();
+  ch.controller = new AbortController();
 
-  const requestId = ++requestCounter;
+  const requestId = ++ch.counter;
+  requestCounter = requestId;
 
   const key = stableStringify(payload);
   const cached = cacheGet(key);
@@ -595,10 +604,10 @@ async function callApi(payload) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
-      signal: currentController.signal
+      signal: ch.controller.signal
     });
 
-    if (requestId !== requestCounter) throw new Error("stale_response");
+    if (requestId !== ch.counter) throw new Error("stale_response");
 
     const data = await res.json().catch(() => null);
 
@@ -778,7 +787,7 @@ async function runShadowScan(key) {
   payload.asset = asset;
 
   try {
-    const data = await callApi(payload);
+    const data = await callApi(payload, "shadow");
     const autoDetected = data.autoDetected || null;
 
     state.shadowLastKey = key;
@@ -832,7 +841,7 @@ async function runCalculation(isAuto) {
   }
 
   try {
-    const data = await callApi(payload);
+    const data = await callApi(payload, isAuto ? "autocalc" : "calc");
     renderScores(data, payload);
 
     if (!isAuto) {
@@ -894,7 +903,7 @@ async function runAutoFill() {
       scanPayload.autoFill = true;
       scanPayload.asset = asset;
 
-      const data = await callApi(scanPayload);
+      const data = await callApi(scanPayload, "autofill");
       const autoDetected = data.autoDetected || null;
 
       if (autoDetected) {
@@ -920,7 +929,7 @@ async function runAutoFill() {
     payload.autoFill = true;
     payload.asset = asset;
 
-    const data = await callApi(payload);
+    const data = await callApi(payload, "autofill");
 
     if (data.autoDetected) {
       applyAutoDetectedToUI(data.autoDetected, data.debug || null);

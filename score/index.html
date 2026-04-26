@@ -4,7 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <script src="/js/theme.js?v=20260211"></script>
+  <!-- Inline theme script: must stay here to avoid FOUC on first load (no HTTP request) -->
+<script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var saved = localStorage.getItem("theme");
+        var theme = (saved === "light" || saved === "dark") ? saved : "dark";
+        if (theme === "dark") root.setAttribute("data-theme", "dark");
+        else root.removeAttribute("data-theme");
+        root.style.colorScheme = theme;
+      } catch (_) {}
+    })();
+  </script>
 
   <title>Free Crypto Score Tool | The Cryptomath</title>
   <meta name="description" content="Professional crypto scoring tool. Analyze trend, momentum, volatility, liquidity, and market structure in seconds. Free. No signup." />
@@ -34,7 +46,7 @@
       "creator": {
         "@type": "Person",
         "name": "The Cryptomath",
-        "url": "https://thecryptomath.com"
+        "url": "https://thecryptomath.com/"
       }
     }
   </script>
@@ -60,8 +72,8 @@
 
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
-  <link rel="stylesheet" href="/css/styles.css?v=20260209" />
-  <link rel="stylesheet" href="/score/score.css?v=20260209" />
+  <link rel="stylesheet" href="/css/styles.css?v=20260423" />
+  <link rel="stylesheet" href="/score/score.css?v=20260423" />
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 
@@ -70,10 +82,10 @@
 
   <header class="topbar">
     <div class="container">
-      <nav class="nav">
-        <a class="brand" href="/">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="brand" href="/" aria-label="The Cryptomath home">
           <span class="brand-mark" aria-hidden="true">
-            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" />
+            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" decoding="async" fetchpriority="high"/>
           </span>
           <span>The Cryptomath</span>
         </a>
@@ -100,7 +112,7 @@
             <span>Theme</span>
           </button>
 
-          <button class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
+          <button type="button" class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
         </div>
       </nav>
     </div>
@@ -366,7 +378,7 @@
               </div>
               <div class="panel-bd">
                 <p class="muted" style="margin:0 0 12px 0; line-height:1.55;">
-                  Get weekly market reads and methodology updates.
+                  Get market reads and methodology updates when the market moves.
                 </p>
 
                 <div style="display:flex; gap:12px; flex-wrap:wrap;">
@@ -433,7 +445,7 @@
         <div class="footer-brand">
           <a class="brand" href="/" aria-label="The Cryptomath home">
             <span class="brand-mark" aria-hidden="true">
-              <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" />
+              <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" decoding="async" loading="lazy"/>
             </span>
             <span>The Cryptomath</span>
           </a>
@@ -452,13 +464,13 @@
 
           <div class="footer-col">
             <h2>Links</h2>
-            <a href="https://x.com/thecryptomath" target="_blank" rel="noopener">
+            <a href="https://x.com/thecryptomath" target="_blank" rel="noopener noreferrer">
               Twitter <span class="sr-only">(opens in new tab)</span>
             </a>
-            <a href="https://t.me/thecryptomath" target="_blank" rel="noopener">
+            <a href="https://t.me/thecryptomath" target="_blank" rel="noopener noreferrer">
               Telegram <span class="sr-only">(opens in new tab)</span>
             </a>
-            <a href="https://www.youtube.com/@TheCryptomath" target="_blank" rel="noopener">
+            <a href="https://www.youtube.com/@TheCryptomath" target="_blank" rel="noopener noreferrer">
               YouTube <span class="sr-only">(opens in new tab)</span>
             </a>
             <a href="/newsletter">Newsletter</a>
@@ -472,7 +484,7 @@
       </div>
     </div>
   </footer>
-  <script defer src="/score/score-loader.js?v=20260211"></script>
-  <script defer src="/js/main.js?v=20260211"></script>
+  <script defer src="/score/score-loader.js?v=20260423"></script>
+  <script defer src="/js/main.js?v=20260423"></script>
 </body>
 </html>
