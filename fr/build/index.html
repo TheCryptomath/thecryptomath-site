@@ -4,7 +4,19 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="/js/theme.js?v=20260211"></script>
+<!-- Inline theme script: must stay here to avoid FOUC on first load (no HTTP request) -->
+<script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var saved = localStorage.getItem("theme");
+        var theme = (saved === "light" || saved === "dark") ? saved : "dark";
+        if (theme === "dark") root.setAttribute("data-theme", "dark");
+        else root.removeAttribute("data-theme");
+        root.style.colorScheme = theme;
+      } catch (_) {}
+    })();
+  </script>
 <title>Projets | The Cryptomath</title>
 <meta content="Projets actifs, expériences passées et leçons apprises. The Cryptomasks, Crypto Skills Test et plus encore. Ce que je construis dans les crypto." name="description"/>
 <meta content="dark light" name="color-scheme"/>
@@ -37,26 +49,8 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260423" rel="stylesheet"/>
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "The Cryptomath",
-    "url": "https://thecryptomath.com/",
-    "email": "mailto:admin@thecryptomath.com",
-    "sameAs": [
-      "https://x.com/thecryptomath",
-      "https://t.me/thecryptomath",
-      "https://www.instagram.com/thecryptomath",
-      "https://warpcast.com/thecryptomath",
-      "https://www.reddit.com/user/TheCryptomath",
-      "https://thecryptomath.substack.com"
-    ],
-    "description": "Actif dans les cryptos depuis 2017. Analyses de marché, contenu éducatif, outils et projets."
-  }
-  </script>
 <!-- Cloudflare Web Analytics -->
-<script type="application/ld+json">{"@context": "https://schema.org","@graph": [{"@type": "CollectionPage","@id": "https://thecryptomath.com/fr/build/#webpage","url": "https://thecryptomath.com/fr/build/","name": "Projets | The Cryptomath","description": "Projets actifs, expérimentations passées et leçons tirées chez The Cryptomath.","isPartOf": {"@id": "https://thecryptomath.com/#website"},"about": {"@id": "https://thecryptomath.com/#organization"},"inLanguage": "fr-FR"},{"@type": "ItemList","name": "Projets et expérimentations de The Cryptomath","itemListElement": [{"@type": "ListItem","position": 1,"name": "The Cryptomasks","url": "https://www.thecryptomasks.xyz"},{"@type": "ListItem","position": 2,"name": "Crypto Skills Test","url": "https://t.me/CryptoSkillsTestBot"},{"@type": "ListItem","position": 3,"name": "SmallCapDAO","url": "https://thecryptomath.com/fr/build/#smallcapdao"},{"@type": "ListItem","position": 4,"name": "9FE","url": "https://thecryptomath.com/fr/build/#nine-fungible-editions"},{"@type": "ListItem","position": 5,"name": "Pulsart","url": "https://thecryptomath.com/fr/build/#pulsart"},{"@type": "ListItem","position": 6,"name": "Masks token","url": "https://thecryptomath.com/fr/build/#masks-token"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org","@graph": [{"@type": "CollectionPage","@id": "https://thecryptomath.com/fr/build/#webpage","url": "https://thecryptomath.com/fr/build/","name": "Projets | The Cryptomath","description": "Projets actifs, expérimentations passées et leçons tirées chez The Cryptomath.","isPartOf": {"@id": "https://thecryptomath.com/#website"},"about": {"@id": "https://thecryptomath.com/#person"},"inLanguage": "fr-FR"},{"@type": "ItemList","name": "Projets et expérimentations de The Cryptomath","itemListElement": [{"@type": "ListItem","position": 1,"name": "The Cryptomasks","url": "https://www.thecryptomasks.xyz"},{"@type": "ListItem","position": 2,"name": "Crypto Skills Test","url": "https://t.me/CryptoSkillsTestBot"},{"@type": "ListItem","position": 3,"name": "SmallCapDAO","url": "https://thecryptomath.com/fr/build/#smallcapdao"},{"@type": "ListItem","position": 4,"name": "9FE","url": "https://thecryptomath.com/fr/build/#nine-fungible-editions"},{"@type": "ListItem","position": 5,"name": "Pulsart","url": "https://thecryptomath.com/fr/build/#pulsart"},{"@type": "ListItem","position": 6,"name": "Masks token","url": "https://thecryptomath.com/fr/build/#masks-token"}]}]}</script>
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -96,19 +90,20 @@
   ]
 }</script>
 
-<script type="application/ld+json">{
+<script type="application/ld+json">
+{
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": "https://thecryptomath.com/#organization",
+      "@type": "Person",
+      "@id": "https://thecryptomath.com/#person",
       "name": "The Cryptomath",
       "url": "https://thecryptomath.com/",
-      "logo": {
+      "email": "admin@thecryptomath.com",
+      "image": {
         "@type": "ImageObject",
         "url": "https://thecryptomath.com/assets/logo.png"
       },
-      "email": "admin@thecryptomath.com",
       "sameAs": [
         "https://x.com/thecryptomath",
         "https://t.me/thecryptomath",
@@ -119,7 +114,7 @@
         "https://github.com/TheCryptomath",
         "https://www.youtube.com/@TheCryptomath"
       ],
-      "description": "Marque éditoriale The Cryptomath. Analyses crypto, newsletter, outils, ressources et liens officiels."
+      "description": "Builder et publisher crypto indépendant, actif depuis 2017. Analyses de marché, contenu éducatif, outils et projets."
     },
     {
       "@type": "WebSite",
@@ -127,7 +122,7 @@
       "url": "https://thecryptomath.com/",
       "name": "The Cryptomath",
       "publisher": {
-        "@id": "https://thecryptomath.com/#organization"
+        "@id": "https://thecryptomath.com/#person"
       },
       "inLanguage": [
         "en-US",
@@ -136,7 +131,8 @@
       "description": "Site officiel de The Cryptomath. Analyses crypto, éditions de newsletter, outils, ressources et liens vérifiés."
     }
   ]
-}</script>
+}
+</script>
 <script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
@@ -146,7 +142,7 @@
 <nav aria-label="Navigation principale" class="nav">
 <a class="brand" href="/fr/">
 <span aria-hidden="true" class="brand-mark">
-<img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192"/>
+<img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192" decoding="async" fetchpriority="high"/>
 </span>
 <span>The Cryptomath</span>
 </a>
@@ -169,7 +165,7 @@
 </svg>
 <span>Thème</span>
 </button>
-<button aria-expanded="false" aria-label="Menu" class="mobile-toggle" data-mobile-toggle="">Menu</button>
+<button type="button" aria-expanded="false" aria-label="Menu" class="mobile-toggle" data-mobile-toggle="">Menu</button>
 </div>
 </nav>
 </div>
@@ -191,7 +187,7 @@
 <p class="section-sub">Des projets actifs que vous pouvez explorer dès maintenant.</p>
 </div>
 <div class="grid-1 build-live-grid">
-<a class="card project-card featured" href="https://www.thecryptomasks.xyz" rel="noopener" target="_blank">
+<a class="card project-card featured" href="https://www.thecryptomasks.xyz" rel="noopener noreferrer" target="_blank">
 <div class="project-thumb">
 <img alt="Projet The Cryptomasks" height="572" loading="lazy" src="/assets/cryptomasks.png" width="571"/>
 </div>
@@ -212,7 +208,7 @@
 <div class="card">
 <div class="experiment">
 <div class="experiment-info">
-<h3><a href="https://t.me/CryptoSkillsTestBot" rel="noopener" target="_blank">Crypto Skills Test</a></h3>
+<h3><a href="https://t.me/CryptoSkillsTestBot" rel="noopener noreferrer" target="_blank">Crypto Skills Test</a></h3>
 <p class="experiment-desc">Bot Telegram qui mesure le niveau crypto dans un format rapide et concret.</p>
 </div>
 <span class="experiment-status shipped">Lancé</span>
@@ -254,7 +250,7 @@
 <div class="cta-block">
 <h2>Envie de voir l’envers du décor ?</h2>
 <p>Je partage ce qui a été lancé, ce qui a bloqué, et ce que chaque build a clarifié.</p>
-<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+<div class="cta-actions">
 <a class="btn primary" href="/fr/newsletter/">Rejoindre 1 000+ lecteurs</a>
 <a class="btn" href="/fr/contact/">Contact</a>
 </div>
@@ -268,7 +264,7 @@
 <div class="footer-brand">
 <a aria-label="Accueil The Cryptomath" class="brand" href="/fr/">
 <span aria-hidden="true" class="brand-mark">
-<img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192"/>
+<img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192" decoding="async" loading="lazy"/>
 </span>
 <span>The Cryptomath</span>
 </a>
@@ -284,14 +280,14 @@
 <a href="/fr/contact/">Contact</a>
 </div>
 <div class="footer-col">
-<h3>Liens</h3>
-<a href="https://x.com/thecryptomath" rel="noopener" target="_blank">
+<h3>Projets</h3>
+<a href="https://x.com/thecryptomath" rel="noopener noreferrer" target="_blank">
             Twitter <span class="sr-only">(ouvre dans un nouvel onglet)</span>
 </a>
-<a href="https://t.me/thecryptomath" rel="noopener" target="_blank">
+<a href="https://t.me/thecryptomath" rel="noopener noreferrer" target="_blank">
             Telegram <span class="sr-only">(ouvre dans un nouvel onglet)</span>
 </a>
-<a href="https://www.youtube.com/@TheCryptomath" rel="noopener" target="_blank">
+<a href="https://www.youtube.com/@TheCryptomath" rel="noopener noreferrer" target="_blank">
             YouTube <span class="sr-only">(ouvre dans un nouvel onglet)</span>
 </a>
 <a href="/fr/newsletter/">Newsletter</a>
@@ -304,6 +300,6 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/js/main.js?v=20260211"></script>
+<script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
