@@ -4,7 +4,19 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="/js/theme.js?v=20260211"></script>
+<!-- Inline theme script: must stay here to avoid FOUC on first load (no HTTP request) -->
+<script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var saved = localStorage.getItem("theme");
+        var theme = (saved === "light" || saved === "dark") ? saved : "dark";
+        if (theme === "dark") root.setAttribute("data-theme", "dark");
+        else root.removeAttribute("data-theme");
+        root.style.colorScheme = theme;
+      } catch (_) {}
+    })();
+  </script>
 <title>Ressources | The Cryptomath</title>
 <meta content="Une sélection d’outils crypto que j’utilise vraiment. Portefeuilles, trading, applications on-chain et bases de sécurité. Mise à jour quand ma sélection évolue." name="description"/>
 <meta content="dark light" name="color-scheme"/>
@@ -26,7 +38,6 @@
 <meta content="website" property="og:type"/>
 <meta content="https://thecryptomath.com/fr/resources/" property="og:url"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="@thecryptomath" name="twitter:site"/>
 <meta content="Ressources | The Cryptomath" name="twitter:title"/>
 <meta content="Une sélection d’outils crypto que j’utilise vraiment. Portefeuilles, trading, applications on-chain et bases de sécurité. Mise à jour quand ma sélection évolue." name="twitter:description"/>
 <meta content="https://thecryptomath.com/assets/og.jpg" name="twitter:image"/>
@@ -36,29 +47,10 @@
 <!-- Icons -->
 <link href="/favicon.ico" rel="icon"/>
 <link href="/assets/apple-touch-icon.png" rel="apple-touch-icon"/>
-<!-- Theme anti flash -->
-<link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
+  <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260423" rel="stylesheet"/>
 <!-- Schema -->
-<script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "The Cryptomath",
-      "url": "https://thecryptomath.com",
-      "email": "mailto:admin@thecryptomath.com",
-      "description": "Actif dans les cryptos depuis 2017. Analyses de marché, contenu éducatif, outils et projets.",
-      "sameAs": [
-        "https://x.com/thecryptomath",
-        "https://t.me/thecryptomath",
-        "https://www.instagram.com/thecryptomath",
-        "https://warpcast.com/thecryptomath",
-        "https://www.reddit.com/user/TheCryptomath",
-        "https://substack.com/@thecryptomath"
-      ]
-    }
-  </script>
 <!-- Cloudflare Web Analytics -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -73,7 +65,7 @@
         "@id": "https://thecryptomath.com/#website"
       },
       "about": {
-        "@id": "https://thecryptomath.com/#organization"
+        "@id": "https://thecryptomath.com/#person"
       },
       "inLanguage": "fr-FR"
     },
@@ -172,19 +164,20 @@
   ]
 }</script>
 
-<script type="application/ld+json">{
+<script type="application/ld+json">
+{
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": "https://thecryptomath.com/#organization",
+      "@type": "Person",
+      "@id": "https://thecryptomath.com/#person",
       "name": "The Cryptomath",
       "url": "https://thecryptomath.com/",
-      "logo": {
+      "email": "admin@thecryptomath.com",
+      "image": {
         "@type": "ImageObject",
         "url": "https://thecryptomath.com/assets/logo.png"
       },
-      "email": "admin@thecryptomath.com",
       "sameAs": [
         "https://x.com/thecryptomath",
         "https://t.me/thecryptomath",
@@ -195,7 +188,7 @@
         "https://github.com/TheCryptomath",
         "https://www.youtube.com/@TheCryptomath"
       ],
-      "description": "Marque éditoriale The Cryptomath. Analyses crypto, newsletter, outils, ressources et liens officiels."
+      "description": "Builder et publisher crypto indépendant, actif depuis 2017. Analyses de marché, contenu éducatif, outils et projets."
     },
     {
       "@type": "WebSite",
@@ -203,7 +196,7 @@
       "url": "https://thecryptomath.com/",
       "name": "The Cryptomath",
       "publisher": {
-        "@id": "https://thecryptomath.com/#organization"
+        "@id": "https://thecryptomath.com/#person"
       },
       "inLanguage": [
         "en-US",
@@ -212,7 +205,8 @@
       "description": "Site officiel de The Cryptomath. Analyses crypto, éditions de newsletter, outils, ressources et liens vérifiés."
     }
   ]
-}</script>
+}
+</script>
 <script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
@@ -221,7 +215,7 @@
 <div class="container">
 <nav aria-label="Navigation principale" class="nav">
 <a aria-label="Accueil The Cryptomath" class="brand" href="/fr/">
-<span aria-hidden="true" class="brand-mark"><img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192"/></span>
+<span aria-hidden="true" class="brand-mark"><img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192" decoding="async" fetchpriority="high"/></span>
 <span>The Cryptomath</span>
 </a>
 <div class="navlinks" data-navlinks="">
@@ -243,7 +237,7 @@
 </svg>
 <span>Thème</span>
 </button>
-<button aria-expanded="false" aria-label="Menu" class="mobile-toggle" data-mobile-toggle="">Menu</button>
+<button type="button" aria-expanded="false" aria-label="Menu" class="mobile-toggle" data-mobile-toggle="">Menu</button>
 </div>
 </nav>
 </div>
@@ -265,31 +259,31 @@
 <p class="section-sub">Si je ne devais en garder qu’un par catégorie.</p>
 </div>
 <div class="grid-2">
-<a class="card project-card featured" href="https://rabby.io/" rel="noopener" target="_blank">
+<a class="card project-card featured" href="https://rabby.io/" rel="noopener noreferrer" target="_blank">
 <div class="card-label live">Wallet</div>
 <h3>Rabby</h3>
 <p class="card-desc">Wallet que j’utilise en priorité pour signer plus sûrement, avec alertes sur approvals, phishing et transactions à risque.</p>
 <span class="card-link">Ouvrir</span>
 </a>
-<a class="card project-card featured" href="https://www.coingecko.com/" rel="noopener" target="_blank">
+<a class="card project-card featured" href="https://www.coingecko.com/" rel="noopener noreferrer" target="_blank">
 <div class="card-label live">Données crypto</div>
 <h3>CoinGecko</h3>
 <p class="card-desc">Plateforme de données que j’ouvre d’abord pour les prix, listings, market caps et la couverture large du marché.</p>
 <span class="card-link">Ouvrir</span>
 </a>
-<a class="card project-card featured" href="https://app.hyperliquid.xyz/join/THECRYPTOMATH" rel="noopener" target="_blank">
+<a class="card project-card featured" href="https://app.hyperliquid.xyz/join/THECRYPTOMATH" rel="noopener noreferrer" target="_blank">
 <div class="card-label live">Perps DEX</div>
 <h3>Hyperliquid</h3>
 <p class="card-desc">Plateforme perps que j’utilise pour la liquidité onchain, l’exécution rapide et l’activité de marché.</p>
 <span class="card-link">Ouvrir</span>
 </a>
-<a class="card project-card featured" href="https://defillama.com" rel="noopener" target="_blank">
+<a class="card project-card featured" href="https://defillama.com" rel="noopener noreferrer" target="_blank">
 <div class="card-label live">Données DeFi</div>
 <h3>DeFiLlama</h3>
 <p class="card-desc">Outil DeFi que j’utilise pour la TVL, les rendements, les revenus, les stablecoins et les comparaisons entre chaînes.</p>
 <span class="card-link">Ouvrir</span>
 </a>
-<a class="card project-card featured" href="https://www.ether.fi/refer/dba017d4" rel="noopener" target="_blank">
+<a class="card project-card featured" href="https://www.ether.fi/refer/dba017d4" rel="noopener noreferrer" target="_blank">
 <div class="card-label live">Carte crypto</div>
 <h3>EtherFi Cash</h3>
 <p class="card-desc">Produit carte qui permet de dépenser tout en gardant une logique crypto avec rendement en arrière-plan.</p>
@@ -305,19 +299,19 @@
 <p class="section-sub">Des outils utiles que je garde toujours à portée.</p>
 </div>
 <div class="grid-2">
-<a class="card project-card" href="https://glider.fi/r/64d0f547" rel="noopener" target="_blank">
+<a class="card project-card" href="https://glider.fi/r/64d0f547" rel="noopener noreferrer" target="_blank">
 <div class="card-label">Portefeuilles automatisés</div>
 <h3>Glider</h3>
 <p class="card-desc">Outil d’automatisation pour exécuter des stratégies et gérer des règles de portefeuille.</p>
 <span class="card-link">Ouvrir</span>
 </a>
-<a class="card project-card" href="https://relay.link/bridge" rel="noopener" target="_blank">
+<a class="card project-card" href="https://relay.link/bridge" rel="noopener noreferrer" target="_blank">
 <div class="card-label">Bridge</div>
 <h3>Relay</h3>
 <p class="card-desc">Bridge simple pour déplacer des actifs rapidement entre chaînes.</p>
 <span class="card-link">Ouvrir</span>
 </a>
-<a class="card project-card" href="https://debank.com" rel="noopener" target="_blank">
+<a class="card project-card" href="https://debank.com" rel="noopener noreferrer" target="_blank">
 <div class="card-label">Suivi de portefeuille</div>
 <h3>DeBank</h3>
 <p class="card-desc">Tableau de bord pour suivre wallets, positions et activité DeFi au même endroit.</p>
@@ -345,7 +339,7 @@
 <div class="footer-content">
 <div class="footer-brand">
 <a aria-label="Accueil The Cryptomath" class="brand" href="/fr/">
-<span aria-hidden="true" class="brand-mark"><img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192"/></span>
+<span aria-hidden="true" class="brand-mark"><img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192" decoding="async" loading="lazy"/></span>
 <span>The Cryptomath</span>
 </a>
 <p>Si ce n’est pas ici, ce n’est pas moi.</p>
@@ -360,14 +354,14 @@
 <a href="/fr/contact/">Contact</a>
 </div>
 <div class="footer-col">
-<h3>Liens</h3>
-<a href="https://x.com/thecryptomath" rel="noopener" target="_blank">
+<h3>Projets</h3>
+<a href="https://x.com/thecryptomath" rel="noopener noreferrer" target="_blank">
               Twitter <span class="sr-only">(ouvre dans un nouvel onglet)</span>
 </a>
-<a href="https://t.me/thecryptomath" rel="noopener" target="_blank">
+<a href="https://t.me/thecryptomath" rel="noopener noreferrer" target="_blank">
               Telegram <span class="sr-only">(ouvre dans un nouvel onglet)</span>
 </a>
-<a href="https://www.youtube.com/@TheCryptomath" rel="noopener" target="_blank">
+<a href="https://www.youtube.com/@TheCryptomath" rel="noopener noreferrer" target="_blank">
               YouTube <span class="sr-only">(ouvre dans un nouvel onglet)</span>
 </a>
 <a href="/fr/newsletter/">Newsletter</a>
@@ -380,6 +374,6 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/js/main.js?v=20260211"></script>
+<script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
