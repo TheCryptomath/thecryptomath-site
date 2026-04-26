@@ -49,7 +49,7 @@ function uiText(key) {
     }
   };
 
-  // theme.js already applied the theme before this runs — only re-apply if state drifted
+  // Inline theme script already applied the theme before this runs — only re-apply if state drifted
   const currentTheme = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
   if (currentTheme !== getPreferred()) apply(getPreferred());
   else apply(currentTheme); // still sync the button UI
