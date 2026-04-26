@@ -4,7 +4,19 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="/js/theme.js?v=20260211"></script>
+<!-- Inline theme script: must stay here to avoid FOUC on first load (no HTTP request) -->
+<script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var saved = localStorage.getItem("theme");
+        var theme = (saved === "light" || saved === "dark") ? saved : "dark";
+        if (theme === "dark") root.setAttribute("data-theme", "dark");
+        else root.removeAttribute("data-theme");
+        root.style.colorScheme = theme;
+      } catch (_) {}
+    })();
+  </script>
 <title>The Cryptomath | Analyse crypto, newsletter et outils</title>
 <meta content="Dans les crypto depuis 2017. J’analyse les tendances, partage des lectures de marché et développe des projets. Newsletter, outils et ressources. Vision long terme." name="description"/>
 <meta content="dark light" name="color-scheme"/>
@@ -37,24 +49,6 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260423" rel="stylesheet"/>
-<script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Person",
-    "name":"The Cryptomath",
-    "url":"https://thecryptomath.com/fr/",
-    "email":"mailto:admin@thecryptomath.com",
-    "sameAs":[
-      "https://x.com/thecryptomath",
-      "https://t.me/thecryptomath",
-      "https://www.instagram.com/thecryptomath",
-      "https://warpcast.com/thecryptomath",
-      "https://www.reddit.com/user/TheCryptomath",
-      "https://thecryptomath.substack.com"
-    ],
-    "description":"Actif dans les cryptos depuis 2017. Analyses de marché, contenu éducatif, outils et projets."
-  }
-  </script>
 <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -96,19 +90,20 @@
   }
   </script>
 <!-- Cloudflare Web Analytics -->
-<script type="application/ld+json">{
+<script type="application/ld+json">
+{
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": "https://thecryptomath.com/#organization",
+      "@type": "Person",
+      "@id": "https://thecryptomath.com/#person",
       "name": "The Cryptomath",
       "url": "https://thecryptomath.com/",
-      "logo": {
+      "email": "admin@thecryptomath.com",
+      "image": {
         "@type": "ImageObject",
         "url": "https://thecryptomath.com/assets/logo.png"
       },
-      "email": "admin@thecryptomath.com",
       "sameAs": [
         "https://x.com/thecryptomath",
         "https://t.me/thecryptomath",
@@ -119,7 +114,7 @@
         "https://github.com/TheCryptomath",
         "https://www.youtube.com/@TheCryptomath"
       ],
-      "description": "Marque média et builder The Cryptomath. Analyses crypto, contenu éducatif, outils, projets et liens officiels."
+      "description": "Builder et publisher crypto indépendant, actif depuis 2017. Analyses de marché, contenu éducatif, outils et projets."
     },
     {
       "@type": "WebSite",
@@ -127,7 +122,7 @@
       "url": "https://thecryptomath.com/",
       "name": "The Cryptomath",
       "publisher": {
-        "@id": "https://thecryptomath.com/#organization"
+        "@id": "https://thecryptomath.com/#person"
       },
       "inLanguage": [
         "en-US",
@@ -136,7 +131,8 @@
       "description": "Site officiel de The Cryptomath. Analyses crypto, éditions de newsletter, pages projets, outils, ressources sélectionnées et liens vérifiés."
     }
   ]
-}</script>
+}
+</script>
 <script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
@@ -146,7 +142,7 @@
 <nav aria-label="Navigation principale" class="nav">
 <a class="brand" href="/fr/">
 <span aria-hidden="true" class="brand-mark">
-<img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192"/>
+<img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192" decoding="async" fetchpriority="high"/>
 </span>
 <span>The Cryptomath</span>
 </a>
@@ -169,7 +165,7 @@
 </svg>
 <span>Thème</span>
 </button>
-<button aria-expanded="false" aria-label="Menu" class="mobile-toggle" data-mobile-toggle="">Menu</button>
+<button type="button" aria-expanded="false" aria-label="Menu" class="mobile-toggle" data-mobile-toggle="">Menu</button>
 </div>
 </nav>
 </div>
@@ -194,7 +190,7 @@
 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
 </svg>
 </a>
-<a class="btn" href="https://www.youtube.com/@TheCryptomath" rel="noopener" target="_blank">
+<a class="btn" href="https://www.youtube.com/@TheCryptomath" rel="noopener noreferrer" target="_blank">
                 Voir sur YouTube
                 <svg aria-hidden="true" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
 <path d="M8 5v14l11-7z" stroke-linejoin="round"></path>
@@ -241,7 +237,7 @@
 <div class="ledger-item">
 <div class="ledger-year">2025</div>
 <div class="ledger-details">
-<p>J’ai lancé une newsletter quotidienne qui transforme les narratives rapides du marché en lectures structurées et notes actionnables.</p>
+<p>J’ai lancé une newsletter qui transforme les narratives rapides du marché en lectures structurées et notes actionnables.</p>
 </div>
 </div>
 </div>
@@ -301,7 +297,7 @@
 <div class="cta-block">
 <h2>Des preuves, pas des promesses</h2>
 <p>Analyses de marché, outils, projets et preuves publiques. L’essentiel de ce que je partage est documenté ici.</p>
-<div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+<div class="cta-actions">
 <a class="btn primary" href="/fr/newsletter/">Rejoindre 1 000+ lecteurs</a>
 <a class="btn" href="/fr/contact/">Tous les liens officiels</a>
 </div>
@@ -315,7 +311,7 @@
 <div class="footer-brand">
 <a aria-label="Accueil The Cryptomath" class="brand" href="/fr/">
 <span aria-hidden="true" class="brand-mark">
-<img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192"/>
+<img alt="" class="brand-mark-img" height="192" src="/assets/logo.png" width="192" decoding="async" loading="lazy"/>
 </span>
 <span>The Cryptomath</span>
 </a>
@@ -332,10 +328,10 @@
 </div>
 <div class="footer-col">
 <h3>Projets</h3>
-<a href="https://t.me/TheCryptomath" rel="noopener" target="_blank">
+<a href="https://t.me/thecryptomath" rel="noopener noreferrer" target="_blank">
               La chaîne The Cryptomath <span class="sr-only">(ouvre dans un nouvel onglet)</span>
 </a>
-<a href="https://www.thecryptomasks.xyz" rel="noopener" target="_blank">
+<a href="https://www.thecryptomasks.xyz" rel="noopener noreferrer" target="_blank">
               The Cryptomasks <span class="sr-only">(ouvre dans un nouvel onglet)</span>
 </a>
 <a href="/fr/newsletter/">Newsletter</a>
@@ -348,6 +344,6 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/js/main.js?v=20260211"></script>
+<script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
