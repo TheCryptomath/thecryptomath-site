@@ -1,0 +1,253 @@
+/* /score/performance.css — minimal, design-system aligned */
+
+.perf-main {
+  padding-block: 2rem 4rem;
+}
+
+.perf-hero {
+  padding-block: 2rem 1.5rem;
+  border-bottom: 1px solid var(--border, rgba(255,255,255,0.08));
+}
+
+.perf-hero .eyebrow {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted, rgba(255,255,255,0.55));
+  margin-bottom: 0.5rem;
+}
+
+.perf-hero h1 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: 0.75rem;
+}
+
+.perf-hero .lead {
+  max-width: 60ch;
+  color: var(--muted, rgba(255,255,255,0.7));
+  margin-bottom: 1rem;
+}
+
+.perf-hero .meta {
+  font-size: 0.85rem;
+  color: var(--muted, rgba(255,255,255,0.55));
+  margin: 0;
+}
+
+.perf-section {
+  padding-block: 2.5rem;
+  border-bottom: 1px solid var(--border, rgba(255,255,255,0.06));
+}
+
+.perf-section:last-of-type {
+  border-bottom: none;
+}
+
+.perf-section h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.perf-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.perf-section-head h2 {
+  margin: 0;
+}
+
+.perf-section-head .muted {
+  color: var(--muted, rgba(255,255,255,0.55));
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Overview cards */
+.perf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.perf-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: var(--card, rgba(255,255,255,0.03));
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  border-radius: 12px;
+}
+
+.perf-card .label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted, rgba(255,255,255,0.55));
+  margin-bottom: 0.25rem;
+}
+
+.perf-card .value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stats blocks */
+.perf-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.stats-block {
+  padding: 1rem;
+  background: var(--card, rgba(255,255,255,0.03));
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  border-radius: 12px;
+}
+
+.stats-block h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted, rgba(255,255,255,0.55));
+  margin-bottom: 0.75rem;
+}
+
+.stats-block dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4rem 1rem;
+  font-size: 0.9rem;
+}
+
+.stats-block dt {
+  color: var(--muted, rgba(255,255,255,0.65));
+}
+
+.stats-block dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border, rgba(255,255,255,0.15));
+  background: transparent;
+  color: var(--muted, rgba(255,255,255,0.7));
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chip:hover {
+  border-color: var(--text, rgba(255,255,255,0.4));
+  color: var(--text, rgba(255,255,255,0.9));
+}
+
+.chip.active {
+  background: var(--text, rgba(255,255,255,0.95));
+  color: var(--bg, #08090c);
+  border-color: var(--text, rgba(255,255,255,0.95));
+}
+
+/* Table */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  border-radius: 12px;
+}
+
+.perf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.perf-table th,
+.perf-table td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border, rgba(255,255,255,0.05));
+  white-space: nowrap;
+}
+
+.perf-table th {
+  background: var(--card, rgba(255,255,255,0.04));
+  font-weight: 500;
+  color: var(--muted, rgba(255,255,255,0.7));
+  position: sticky;
+  top: 0;
+}
+
+.perf-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.perf-table tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.perf-table .loading,
+.perf-table .empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--muted, rgba(255,255,255,0.55));
+}
+
+.dir-long  { color: #4ade80; }
+.dir-short { color: #f87171; }
+
+.perf-pos { color: #4ade80; }
+.perf-neg { color: #f87171; }
+
+.tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(255,255,255,0.06);
+  color: var(--muted);
+}
+
+.tag.exceptional   { background: rgba(250,204,21,0.15);  color: #facc15; }
+.tag.signal        { background: rgba(74,222,128,0.15); color: #4ade80; }
+.tag.watch_emergency { background: rgba(168,85,247,0.15); color: #a855f7; }
+.tag.watchlist     { background: rgba(96,165,250,0.15); color: #60a5fa; }
+
+.perf-disclaimer {
+  background: var(--card, rgba(255,255,255,0.02));
+}
+
+.perf-disclaimer p {
+  max-width: 70ch;
+  color: var(--muted, rgba(255,255,255,0.7));
+}
+
+@media (max-width: 640px) {
+  .perf-table {
+    font-size: 0.75rem;
+  }
+  .perf-table th,
+  .perf-table td {
+    padding: 0.45rem 0.5rem;
+  }
+}
