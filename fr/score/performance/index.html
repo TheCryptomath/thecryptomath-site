@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Inline theme script: must stay here to avoid FOUC on first load (no HTTP request) -->
+<script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var saved = localStorage.getItem("theme");
+        var theme = (saved === "light" || saved === "dark") ? saved : "dark";
+        if (theme === "dark") root.setAttribute("data-theme", "dark");
+        else root.removeAttribute("data-theme");
+        root.style.colorScheme = theme;
+      } catch (_) {}
+    })();
+  </script>
+
+  <title>Performance du Score Tool | The Cryptomath</title>
+  <meta name="description" content="Journal public de chaque signal émis par le Score Tool. Données brutes, sans win-rate marketing. Mise à jour horaire." />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#08090c">
+  <meta name="theme-color" content="#fbfbfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#08090c" media="(prefers-color-scheme: dark)">
+
+  <link rel="canonical" href="https://thecryptomath.com/fr/score/performance/" />
+  <link rel="alternate" hreflang="en" href="https://thecryptomath.com/score/performance/" />
+  <link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/score/performance/" />
+  <link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/score/performance/" />
+
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+  <meta property="og:title" content="Performance du Score Tool | The Cryptomath" />
+  <meta property="og:description" content="Journal public de chaque signal émis par le Score Tool. Données brutes, sans win-rate marketing." />
+  <meta property="og:image" content="https://thecryptomath.com/assets/og.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thecryptomath.com/fr/score/performance/" />
+  <meta property="og:site_name" content="The Cryptomath" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Performance du Score Tool | The Cryptomath" />
+  <meta name="twitter:description" content="Journal public de chaque signal émis par le Score Tool." />
+  <meta name="twitter:image" content="https://thecryptomath.com/assets/og.jpg" />
+  <meta name="twitter:site" content="@thecryptomath" />
+
+  <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
+  <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/styles.css?v=20260423" />
+  <link rel="stylesheet" href="/score/performance.css?v=20260427" />
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+
+<body>
+  <a class="skip-link" href="#content">Aller au contenu</a>
+
+  <header class="topbar">
+    <div class="container">
+      <nav class="nav" aria-label="Navigation principale">
+        <a class="brand" href="/fr/" aria-label="The Cryptomath accueil">
+          <span class="brand-mark" aria-hidden="true">
+            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" decoding="async" fetchpriority="high"/>
+          </span>
+          <span>The Cryptomath</span>
+        </a>
+
+        <div class="navlinks" data-navlinks>
+          <a href="/fr/">Accueil</a>
+          <a href="/fr/build/">Build</a>
+          <a href="/fr/score/">Score</a>
+          <a href="/fr/resources/">Ressources</a>
+          <a href="/fr/contact/">Contact</a>
+        </div>
+
+        <div class="nav-cta">
+          <a class="btn primary" href="/fr/newsletter/">Newsletter</a>
+          <div class="lang-switch" aria-label="Sélecteur de langue">
+            <a href="/score/performance/" lang="en">EN</a>
+            <a href="/fr/score/performance/" lang="fr" aria-current="true">FR</a>
+          </div>
+
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Changer de thème">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span>Thème</span>
+          </button>
+
+          <button type="button" class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content" class="perf-main">
+    <section class="perf-hero">
+      <div class="container">
+        <p class="eyebrow">Score Tool · Journal public</p>
+        <h1>Suivi de performance</h1>
+        <p class="lead">
+          Chaque signal émis par le Score Tool est enregistré et suivi dans le temps. Cette page
+          montre les données brutes. Pas de win-rate marketing, pas de captures sélectionnées.
+          Les prix sont rafraîchis chaque heure. L'outil est un scanner de confluence, pas un moteur
+          de signaux de trading.
+        </p>
+        <p class="meta" id="perfMeta">Chargement…</p>
+      </div>
+    </section>
+
+    <section class="perf-section">
+      <div class="container">
+        <h2>Vue d'ensemble</h2>
+        <div class="perf-grid" id="perfSummary">
+          <div class="perf-card"><span class="label">Exceptional</span><span class="value" data-summary="exceptional">—</span></div>
+          <div class="perf-card"><span class="label">Signal</span><span class="value" data-summary="signal">—</span></div>
+          <div class="perf-card"><span class="label">Watch emergency</span><span class="value" data-summary="watch_emergency">—</span></div>
+          <div class="perf-card"><span class="label">Watchlist</span><span class="value" data-summary="watchlist">—</span></div>
+          <div class="perf-card"><span class="label">Actifs</span><span class="value" data-summary="active">—</span></div>
+          <div class="perf-card"><span class="label">Expirés</span><span class="value" data-summary="expired">—</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="perf-section">
+      <div class="container">
+        <div class="perf-section-head">
+          <h2>Statistiques agrégées</h2>
+          <p class="muted">Direction correcte = le prix a bougé dans le sens du signal au dernier check.</p>
+        </div>
+        <div class="perf-stats" id="perfStats">Chargement…</div>
+      </div>
+    </section>
+
+    <section class="perf-section">
+      <div class="container">
+        <div class="perf-section-head">
+          <h2>Derniers signaux</h2>
+          <div class="filters">
+            <button type="button" class="chip active" data-filter="">Tous</button>
+            <button type="button" class="chip" data-filter="exceptional">Exceptional</button>
+            <button type="button" class="chip" data-filter="signal">Signal</button>
+            <button type="button" class="chip" data-filter="watch_emergency">Watch-E</button>
+            <button type="button" class="chip" data-filter="watchlist">Watchlist</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="perf-table" aria-describedby="perfTableDesc">
+            <caption id="perfTableDesc" class="sr-only">Derniers signaux suivis</caption>
+            <thead>
+              <tr>
+                <th>Quand</th>
+                <th>Type</th>
+                <th>Actif</th>
+                <th>Sens</th>
+                <th>Régime</th>
+                <th>Score</th>
+                <th>Prix@T0</th>
+                <th>Prix actuel</th>
+                <th>+24h</th>
+                <th>+7j</th>
+                <th title="Observé aux checks horaires, pas tick-by-tick">MFE obs.</th>
+                <th title="Observé aux checks horaires, pas tick-by-tick">MAE obs.</th>
+                <th>Perf-Dir</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody id="perfTableBody">
+              <tr><td colspan="14" class="loading">Chargement…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="perf-section perf-disclaimer">
+      <div class="container">
+        <h2>À propos de ces données</h2>
+        <p>
+          Le Score Tool détecte des confluences sur trois piliers (Macro, Tech, Psycho) et émet
+          quatre catégories : <em>Exceptional</em>, <em>Signal</em>, <em>Watch emergency</em> et <em>Watchlist</em>.
+          Une fois émis, chaque signal est suivi à +1h, +4h, +24h, +7j et +30j. Direction correcte signifie
+          que le prix a bougé dans le sens prédit au moment de la dernière mise à jour.
+        </p>
+        <p>
+          Les prix sont vérifiés une fois par heure. Les colonnes de jalon (+24h, +7j) capturent la
+          première observation après cet horizon, pas le prix exact à la minute précise. Les MFE et
+          MAE observés sont les meilleurs et pires mouvements directionnels constatés sur ces
+          checks horaires, pas des maxima tick-by-tick.
+        </p>
+        <p>
+          Aucun PnL théorique n'est calculé. Le scanner ne construit pas encore d'entrées, de stops ou
+          de take-profits. Ce que vous voyez ici, c'est ce qui s'est passé sur le prix après chaque appel.
+          Rien de plus, rien de moins.
+        </p>
+        <p class="muted">Contenu éducatif uniquement. Pas un conseil en investissement.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a class="brand" href="/fr/" aria-label="The Cryptomath accueil">
+            <span class="brand-mark" aria-hidden="true">
+              <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" decoding="async" loading="lazy"/>
+            </span>
+            <span>The Cryptomath</span>
+          </a>
+          <p>Si ce n'est pas ici, ce n'est pas moi.</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-col">
+            <h2>Naviguer</h2>
+            <a href="/fr/">Accueil</a>
+            <a href="/fr/build/">Build</a>
+            <a href="/fr/score/">Score</a>
+            <a href="/fr/score/performance/">Performance</a>
+            <a href="/fr/resources/">Ressources</a>
+            <a href="/fr/contact/">Contact</a>
+          </div>
+
+          <div class="footer-col">
+            <h2>Projets</h2>
+            <a href="https://x.com/thecryptomath" target="_blank" rel="noopener noreferrer">
+              Twitter <span class="sr-only">(nouvel onglet)</span>
+            </a>
+            <a href="https://t.me/thecryptomath" target="_blank" rel="noopener noreferrer">
+              Telegram <span class="sr-only">(nouvel onglet)</span>
+            </a>
+            <a href="https://www.youtube.com/@TheCryptomath" target="_blank" rel="noopener noreferrer">
+              YouTube <span class="sr-only">(nouvel onglet)</span>
+            </a>
+            <a href="/fr/newsletter/">Newsletter</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span data-year></span> The Cryptomath. Tous droits réservés. <a href="/fr/privacy/">Politique de confidentialité</a></p>
+        <p>Contenu éducatif uniquement. Pas un conseil en investissement.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script defer src="/score/performance.js?v=20260427"></script>
+  <script defer src="/js/main.js?v=20260423"></script>
+</body>
+</html>
