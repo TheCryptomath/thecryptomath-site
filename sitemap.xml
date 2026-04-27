@@ -43,6 +43,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/score/" />
   </url>
   <url>
+    <loc>https://thecryptomath.com/score/performance/</loc>
+    <lastmod>2026-04-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/score/performance/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/score/performance/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/score/performance/" />
+  </url>
+  <url>
+    <loc>https://thecryptomath.com/fr/score/performance/</loc>
+    <lastmod>2026-04-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/score/performance/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/score/performance/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/score/performance/" />
+  </url>
+  <url>
     <loc>https://thecryptomath.com/resources</loc>
     <lastmod>2026-04-26</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/resources" />
