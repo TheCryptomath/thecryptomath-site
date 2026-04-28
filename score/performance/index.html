@@ -18,8 +18,8 @@
     })();
   </script>
 
-  <title>Score Tool Performance | The Cryptomath</title>
-  <meta name="description" content="Public performance log of every signal emitted by the Cryptomath Score Tool. Raw data, no win-rate marketing. Updated every hour." />
+  <title>Score Tool Detections | The Cryptomath</title>
+  <meta name="description" content="Public log of every detection emitted by the Cryptomath Score Tool. Raw data, no win-rate marketing. Updated every hour." />
   <meta name="color-scheme" content="dark light" />
   <meta name="theme-color" content="#08090c">
   <meta name="theme-color" content="#fbfbfc" media="(prefers-color-scheme: light)">
@@ -33,23 +33,23 @@
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 
-  <meta property="og:title" content="Score Tool Performance | The Cryptomath" />
-  <meta property="og:description" content="Public performance log of every signal emitted by the Cryptomath Score Tool. Raw data, no win-rate marketing." />
+  <meta property="og:title" content="Score Tool Detections | The Cryptomath" />
+  <meta property="og:description" content="Public log of every detection emitted by the Cryptomath Score Tool. Raw data, no win-rate marketing." />
   <meta property="og:image" content="https://thecryptomath.com/assets/og.jpg" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://thecryptomath.com/score/performance/" />
   <meta property="og:site_name" content="The Cryptomath" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Score Tool Performance | The Cryptomath" />
-  <meta name="twitter:description" content="Public performance log of every signal emitted by the Cryptomath Score Tool." />
+  <meta name="twitter:title" content="Score Tool Detections | The Cryptomath" />
+  <meta name="twitter:description" content="Public log of every detection emitted by the Cryptomath Score Tool." />
   <meta name="twitter:image" content="https://thecryptomath.com/assets/og.jpg" />
   <meta name="twitter:site" content="@thecryptomath" />
 
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
   <link rel="stylesheet" href="/css/styles.css?v=20260423" />
-  <link rel="stylesheet" href="/score/performance.css?v=20260427" />
+  <link rel="stylesheet" href="/score/performance.css?v=20260428" />
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 
@@ -98,9 +98,9 @@
     <section class="perf-hero">
       <div class="container">
         <p class="eyebrow">Score Tool · Public log</p>
-        <h1>Performance tracking</h1>
+        <h1>Detection tracking</h1>
         <p class="lead">
-          Every signal emitted by the Cryptomath Score Tool is logged and tracked over time.
+          Every detection emitted by the Score Tool is logged and tracked over time.
           This page shows the raw data. No win-rate marketing, no cherry-picked screenshots.
           Prices are refreshed hourly. The tool is a confluence scanner, not a trading signal engine.
         </p>
@@ -126,7 +126,7 @@
       <div class="container">
         <div class="perf-section-head">
           <h2>Aggregate stats</h2>
-          <p class="muted">Direction-correct = price moved in the signal direction at time of last check.</p>
+          <p class="muted">Direction-correct = price moved in the detection direction at time of last check.</p>
         </div>
         <div class="perf-stats" id="perfStats">Loading…</div>
       </div>
@@ -135,7 +135,7 @@
     <section class="perf-section">
       <div class="container">
         <div class="perf-section-head">
-          <h2>Latest signals</h2>
+          <h2>Latest detections</h2>
           <div class="filters">
             <button type="button" class="chip active" data-filter="">All</button>
             <button type="button" class="chip" data-filter="exceptional">Exceptional</button>
@@ -146,12 +146,12 @@
         </div>
         <div class="table-wrap">
           <table class="perf-table" aria-describedby="perfTableDesc">
-            <caption id="perfTableDesc" class="sr-only">Latest tracked signals</caption>
+            <caption id="perfTableDesc" class="sr-only">Latest tracked detections</caption>
             <thead>
               <tr>
                 <th>When</th>
                 <th>Type</th>
-                <th>Asset</th>
+                <th class="col-asset">Asset</th>
                 <th>Dir</th>
                 <th>Regime</th>
                 <th>Score</th>
@@ -161,7 +161,7 @@
                 <th>+7d</th>
                 <th title="Observed at hourly checks, not tick-by-tick">Obs MFE</th>
                 <th title="Observed at hourly checks, not tick-by-tick">Obs MAE</th>
-                <th>Dir-Perf</th>
+                <th>Dir. perf.</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -179,7 +179,7 @@
         <p>
           The Score Tool detects confluence on three pillars (Macro, Tech, Psycho) and emits four
           categories: <em>Exceptional</em>, <em>Signal</em>, <em>Watch emergency</em>, and <em>Watchlist</em>.
-          Once emitted, each entry is tracked at +1h, +4h, +24h, +7d and +30d. Direction-correct means the
+          Once emitted, each detection is tracked at +1h, +4h, +24h, +7d and +30d. Direction-correct means the
           price moved in the predicted direction at the time of the last update.
         </p>
         <p>
@@ -189,7 +189,7 @@
         </p>
         <p>
           No theoretical PnL is computed. The scanner does not yet build entries, stops or take-profits.
-          What you see here is what happened to the price after each call. Nothing more, nothing less.
+          What you see here is what happened to the price after each detection. Nothing more, nothing less.
         </p>
         <p class="muted">Educational content only. Not financial advice.</p>
       </div>
@@ -243,7 +243,7 @@
     </div>
   </footer>
 
-  <script defer src="/score/performance.js?v=20260427"></script>
+  <script defer src="/score/performance.js?v=20260428"></script>
   <script defer src="/js/main.js?v=20260423"></script>
 </body>
 </html>
