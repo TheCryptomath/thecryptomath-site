@@ -18,8 +18,8 @@
     })();
   </script>
 
-  <title>Performance du Score Tool | The Cryptomath</title>
-  <meta name="description" content="Journal public de chaque signal émis par le Score Tool. Données brutes, sans win-rate marketing. Mise à jour horaire." />
+  <title>Suivi des détections du Score Tool | The Cryptomath</title>
+  <meta name="description" content="Journal public de chaque détection émise par le Score Tool. Données brutes, sans win-rate marketing. Mise à jour horaire." />
   <meta name="color-scheme" content="dark light" />
   <meta name="theme-color" content="#08090c">
   <meta name="theme-color" content="#fbfbfc" media="(prefers-color-scheme: light)">
@@ -33,23 +33,23 @@
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 
-  <meta property="og:title" content="Performance du Score Tool | The Cryptomath" />
-  <meta property="og:description" content="Journal public de chaque signal émis par le Score Tool. Données brutes, sans win-rate marketing." />
+  <meta property="og:title" content="Suivi des détections du Score Tool | The Cryptomath" />
+  <meta property="og:description" content="Journal public de chaque détection émise par le Score Tool. Données brutes, sans win-rate marketing." />
   <meta property="og:image" content="https://thecryptomath.com/assets/og.jpg" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://thecryptomath.com/fr/score/performance/" />
   <meta property="og:site_name" content="The Cryptomath" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Performance du Score Tool | The Cryptomath" />
-  <meta name="twitter:description" content="Journal public de chaque signal émis par le Score Tool." />
+  <meta name="twitter:title" content="Suivi des détections du Score Tool | The Cryptomath" />
+  <meta name="twitter:description" content="Journal public de chaque détection émise par le Score Tool." />
   <meta name="twitter:image" content="https://thecryptomath.com/assets/og.jpg" />
   <meta name="twitter:site" content="@thecryptomath" />
 
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
   <link rel="stylesheet" href="/css/styles.css?v=20260423" />
-  <link rel="stylesheet" href="/score/performance.css?v=20260427" />
+  <link rel="stylesheet" href="/score/performance.css?v=20260428" />
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 
@@ -98,10 +98,10 @@
     <section class="perf-hero">
       <div class="container">
         <p class="eyebrow">Score Tool · Journal public</p>
-        <h1>Suivi de performance</h1>
+        <h1>Suivi des détections</h1>
         <p class="lead">
-          Chaque signal émis par le Score Tool est enregistré et suivi dans le temps. Cette page
-          montre les données brutes. Pas de win-rate marketing, pas de captures sélectionnées.
+          Chaque détection émise par le Score Tool est enregistrée et suivie dans le temps.
+          Cette page montre les données brutes. Pas de win-rate marketing, pas de captures sélectionnées.
           Les prix sont rafraîchis chaque heure. L'outil est un scanner de confluence, pas un moteur
           de signaux de trading.
         </p>
@@ -127,7 +127,7 @@
       <div class="container">
         <div class="perf-section-head">
           <h2>Statistiques agrégées</h2>
-          <p class="muted">Direction correcte = le prix a bougé dans le sens du signal au dernier check.</p>
+          <p class="muted">Direction correcte = le prix a bougé dans le sens de la détection au dernier check.</p>
         </div>
         <div class="perf-stats" id="perfStats">Chargement…</div>
       </div>
@@ -136,9 +136,9 @@
     <section class="perf-section">
       <div class="container">
         <div class="perf-section-head">
-          <h2>Derniers signaux</h2>
+          <h2>Dernières détections</h2>
           <div class="filters">
-            <button type="button" class="chip active" data-filter="">Tous</button>
+            <button type="button" class="chip active" data-filter="">Toutes</button>
             <button type="button" class="chip" data-filter="exceptional">Exceptional</button>
             <button type="button" class="chip" data-filter="signal">Signal</button>
             <button type="button" class="chip" data-filter="watch_emergency">Watch-E</button>
@@ -147,12 +147,12 @@
         </div>
         <div class="table-wrap">
           <table class="perf-table" aria-describedby="perfTableDesc">
-            <caption id="perfTableDesc" class="sr-only">Derniers signaux suivis</caption>
+            <caption id="perfTableDesc" class="sr-only">Dernières détections suivies</caption>
             <thead>
               <tr>
                 <th>Quand</th>
                 <th>Type</th>
-                <th>Actif</th>
+                <th class="col-asset">Actif</th>
                 <th>Sens</th>
                 <th>Régime</th>
                 <th>Score</th>
@@ -162,7 +162,7 @@
                 <th>+7j</th>
                 <th title="Observé aux checks horaires, pas tick-by-tick">MFE obs.</th>
                 <th title="Observé aux checks horaires, pas tick-by-tick">MAE obs.</th>
-                <th>Perf-Dir</th>
+                <th>Perf. dir.</th>
                 <th>Statut</th>
               </tr>
             </thead>
@@ -180,7 +180,7 @@
         <p>
           Le Score Tool détecte des confluences sur trois piliers (Macro, Tech, Psycho) et émet
           quatre catégories : <em>Exceptional</em>, <em>Signal</em>, <em>Watch emergency</em> et <em>Watchlist</em>.
-          Une fois émis, chaque signal est suivi à +1h, +4h, +24h, +7j et +30j. Direction correcte signifie
+          Une fois émise, chaque détection est suivie à +1h, +4h, +24h, +7j et +30j. Direction correcte signifie
           que le prix a bougé dans le sens prédit au moment de la dernière mise à jour.
         </p>
         <p>
@@ -191,8 +191,8 @@
         </p>
         <p>
           Aucun PnL théorique n'est calculé. Le scanner ne construit pas encore d'entrées, de stops ou
-          de take-profits. Ce que vous voyez ici, c'est ce qui s'est passé sur le prix après chaque appel.
-          Rien de plus, rien de moins.
+          de take-profits. Ce que vous voyez ici, c'est ce qui s'est passé sur le prix après chaque
+          détection. Rien de plus, rien de moins.
         </p>
         <p class="muted">Contenu éducatif uniquement. Pas un conseil en investissement.</p>
       </div>
@@ -246,7 +246,7 @@
     </div>
   </footer>
 
-  <script defer src="/score/performance.js?v=20260427"></script>
+  <script defer src="/score/performance.js?v=20260428"></script>
   <script defer src="/js/main.js?v=20260423"></script>
 </body>
 </html>
