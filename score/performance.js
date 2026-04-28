@@ -7,11 +7,10 @@
   const I18N = {
     en: {
       loading: "Loading…",
-      empty: "No data yet. Signals will appear as they are emitted by the Score Tool.",
-      lastUpdate: (when) => `Last update ${when}.`,
-      sample: (n) => `Sample size: ${n} entries.`,
+      empty: "No data yet. Detections will appear as the Score Tool emits them.",
+      lastUpdate: (when) => `Last update: ${when}.`,
+      sample: (n) => `Sample: ${n} entries.`,
       neverUpdated: "No update yet.",
-      directionCorrect: "Direction-correct",
       avgMfe: "Avg MFE",
       avgMae: "Avg MAE",
       avgPerf: "Avg dir-perf",
@@ -19,22 +18,24 @@
       byType: "By type",
       byRegime: "By regime",
       byDirection: "By direction",
-      error: "Could not load data. Check back in a moment."
+      error: "Could not load data. Check back in a moment.",
+      pending: "to come"
     },
     fr: {
       loading: "Chargement…",
-      empty: "Aucune donnée pour l'instant. Les signaux apparaîtront au fur et à mesure.",
-      lastUpdate: (when) => `Dernière mise à jour ${when}.`,
+      empty: "Aucune donnée pour l'instant. Les détections apparaîtront au fur et à mesure.",
+      lastUpdate: (when) => `Dernière mise à jour : ${when}.`,
       sample: (n) => `Échantillon : ${n} entrées.`,
       neverUpdated: "Pas encore de mise à jour.",
-      directionCorrect: "Direction correcte",
       avgMfe: "MFE moyen",
       avgMae: "MAE moyen",
       avgPerf: "Perf dir. moyenne",
       count: "Nombre",
       byType: "Par type",
       byRegime: "Par régime",
-      byDirection: "Par direction"
+      byDirection: "Par direction",
+      error: "Impossible de charger les données. Réessayez dans un instant.",
+      pending: "à venir"
     }
   };
 
@@ -78,8 +79,16 @@
   function fmtDate(ts) {
     if (!ts) return "—";
     const d = new Date(ts);
-    return d.toLocaleString(lang === "fr" ? "fr-FR" : "en-GB", {
-      year: "numeric", month: "short", day: "2-digit",
+    if (lang === "fr") {
+      const day = d.getDate();
+      const month = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"][d.getMonth()];
+      const year = d.getFullYear();
+      const hh = String(d.getHours()).padStart(2, "0");
+      const mm = String(d.getMinutes()).padStart(2, "0");
+      return `${day} ${month} ${year} à ${hh}h${mm}`;
+    }
+    return d.toLocaleString("en-GB", {
+      year: "numeric", month: "long", day: "2-digit",
       hour: "2-digit", minute: "2-digit"
     });
   }
@@ -98,7 +107,10 @@
 
   function priceAtMilestone(item, key) {
     const v = item.priceAt && item.priceAt[key];
-    if (v === null || v === undefined) return "—";
+    if (v === null || v === undefined) {
+      // Pas encore atteint = "à venir" / "to come"
+      return `<span class="muted-cell">${t.pending}</span>`;
+    }
 
     // Calculer la perf entre T0 et milestone
     const p0 = item.priceAtT0;
@@ -160,12 +172,18 @@
     const html = sections.map(section => {
       const block = data.stats[section.key] || {};
       const rows = Object.entries(block).map(([label, agg]) => {
+        // Format X/Y correctes au lieu du % qui peut faire win-rate marketing
+        let directionLine = "";
+        if (agg.count > 0 && agg.directionCorrectPct !== null && agg.directionCorrectPct !== undefined) {
+          const correctCount = Math.round((agg.directionCorrectPct / 100) * agg.count);
+          const plural = agg.count > 1 ? (lang === "fr" ? "correctes" : "correct") : (lang === "fr" ? "correcte" : "correct");
+          directionLine = ` · ${correctCount}/${agg.count} ${plural}`;
+        }
+
         return `
           <dt>${escapeHtml(label)}</dt>
           <dd>
-            <span title="${t.count}">${agg.count}</span>
-            ${agg.directionCorrectPct !== null && agg.directionCorrectPct !== undefined
-              ? ` · ${fmtPct(agg.directionCorrectPct, 1)} ${t.directionCorrect}` : ""}
+            <span title="${t.count}">${agg.count}</span>${directionLine}
           </dd>
         `;
       }).join("");
@@ -215,7 +233,7 @@
         <tr>
           <td title="${escapeHtml(fmtDate(item.ts))}">${fmtAge(item.ts)}</td>
           <td><span class="tag ${escapeHtml(item.type || "")}">${escapeHtml(item.type || "—")}</span></td>
-          <td><strong>${escapeHtml(item.asset || "—")}</strong></td>
+          <td class="col-asset"><strong>${escapeHtml(item.asset || "—")}</strong></td>
           <td class="${dirClass}">${escapeHtml(item.direction || "—")}</td>
           <td>${escapeHtml(item.regime || "—")}</td>
           <td>${item.score !== null && item.score !== undefined ? Number(item.score).toFixed(1) : "—"}</td>
