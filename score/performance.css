@@ -25,6 +25,7 @@
 .perf-hero .lead {
   color: var(--muted, rgba(255,255,255,0.7));
   margin-bottom: 1rem;
+  max-width: 760px;
 }
 
 .perf-hero .meta {
@@ -67,6 +68,7 @@
 }
 
 /* Overview cards */
+
 .perf-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -97,6 +99,7 @@
 }
 
 /* Stats blocks */
+
 .perf-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -137,6 +140,7 @@
 }
 
 /* Filters */
+
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -166,6 +170,7 @@
 }
 
 /* Table */
+
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--border, rgba(255,255,255,0.08));
@@ -175,13 +180,13 @@
 .perf-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-variant-numeric: tabular-nums;
 }
 
 .perf-table th,
 .perf-table td {
-  padding: 0.6rem 0.75rem;
+  padding: 0.55rem 0.55rem;
   text-align: left;
   border-bottom: 1px solid var(--border, rgba(255,255,255,0.05));
   white-space: nowrap;
@@ -189,12 +194,12 @@
 
 .perf-table th.col-asset,
 .perf-table td.col-asset {
-  min-width: 100px;
+  min-width: 84px;
 }
 
 .perf-table th {
   background: var(--card, rgba(255,255,255,0.04));
-  font-weight: 500;
+  font-weight: 600;
   color: var(--muted, rgba(255,255,255,0.7));
   position: sticky;
   top: 0;
@@ -238,10 +243,25 @@
   color: var(--muted);
 }
 
-.tag.exceptional   { background: rgba(250,204,21,0.15);  color: #facc15; }
-.tag.signal        { background: rgba(74,222,128,0.15); color: #4ade80; }
-.tag.watch_emergency { background: rgba(168,85,247,0.15); color: #a855f7; }
-.tag.watchlist     { background: rgba(96,165,250,0.15); color: #60a5fa; }
+.tag.exceptional {
+  background: rgba(250,204,21,0.15);
+  color: #facc15;
+}
+
+.tag.signal {
+  background: rgba(74,222,128,0.15);
+  color: #4ade80;
+}
+
+.tag.watch_emergency {
+  background: rgba(168,85,247,0.15);
+  color: #a855f7;
+}
+
+.tag.watchlist {
+  background: rgba(96,165,250,0.15);
+  color: #60a5fa;
+}
 
 .perf-disclaimer {
   background: var(--card, rgba(255,255,255,0.02));
@@ -249,12 +269,161 @@
 
 .perf-disclaimer p {
   color: var(--muted, rgba(255,255,255,0.7));
+  max-width: 860px;
+}
+
+/* Light mode fixes */
+
+html:not([data-theme="dark"]) .perf-main {
+  color: #111827;
+}
+
+html:not([data-theme="dark"]) .perf-hero {
+  border-bottom-color: #d6dbe4;
+}
+
+html:not([data-theme="dark"]) .perf-section {
+  border-bottom-color: #d6dbe4;
+}
+
+html:not([data-theme="dark"]) .perf-hero .eyebrow {
+  color: #6b7280;
+}
+
+html:not([data-theme="dark"]) .perf-hero .lead,
+html:not([data-theme="dark"]) .perf-hero .meta,
+html:not([data-theme="dark"]) .perf-section-head .muted,
+html:not([data-theme="dark"]) .perf-disclaimer p,
+html:not([data-theme="dark"]) .muted-cell {
+  color: #374151;
+}
+
+html:not([data-theme="dark"]) .perf-card,
+html:not([data-theme="dark"]) .stats-block,
+html:not([data-theme="dark"]) .table-wrap {
+  background: #ffffff;
+  border-color: #d6dbe4;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+html:not([data-theme="dark"]) .perf-card .label,
+html:not([data-theme="dark"]) .stats-block h3,
+html:not([data-theme="dark"]) .stats-block dt {
+  color: #4b5563;
+}
+
+html:not([data-theme="dark"]) .perf-card .value,
+html:not([data-theme="dark"]) .stats-block dd,
+html:not([data-theme="dark"]) .perf-table {
+  color: #111827;
+}
+
+html:not([data-theme="dark"]) .perf-table th {
+  background: #f3f4f6;
+  color: #374151;
+  border-bottom-color: #d6dbe4;
+}
+
+html:not([data-theme="dark"]) .perf-table td {
+  border-bottom-color: #e5e7eb;
+  color: #111827;
+}
+
+html:not([data-theme="dark"]) .perf-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+html:not([data-theme="dark"]) .perf-table .loading,
+html:not([data-theme="dark"]) .perf-table .empty {
+  color: #6b7280;
+}
+
+html:not([data-theme="dark"]) .chip {
+  background: #ffffff;
+  border-color: #d6dbe4;
+  color: #374151;
+}
+
+html:not([data-theme="dark"]) .chip:hover {
+  border-color: #111827;
+  color: #111827;
+}
+
+html:not([data-theme="dark"]) .chip.active {
+  background: #111827;
+  border-color: #111827;
+  color: #ffffff;
+}
+
+html:not([data-theme="dark"]) .dir-long,
+html:not([data-theme="dark"]) .perf-pos {
+  color: #047857;
+}
+
+html:not([data-theme="dark"]) .dir-short,
+html:not([data-theme="dark"]) .perf-neg {
+  color: #dc2626;
+}
+
+html:not([data-theme="dark"]) .tag {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d6dbe4;
+}
+
+html:not([data-theme="dark"]) .tag.exceptional {
+  background: #fef9c3;
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+html:not([data-theme="dark"]) .tag.signal {
+  background: #dcfce7;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+html:not([data-theme="dark"]) .tag.watch_emergency {
+  background: #f3e8ff;
+  border-color: #e9d5ff;
+  color: #7e22ce;
+}
+
+html:not([data-theme="dark"]) .tag.watchlist {
+  background: #dbeafe;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+html:not([data-theme="dark"]) .perf-disclaimer {
+  background: #f9fafb;
+}
+
+/* Responsive */
+
+@media (max-width: 860px) {
+  .perf-table {
+    min-width: 980px;
+  }
 }
 
 @media (max-width: 640px) {
+  .perf-main {
+    padding-block: 1rem 3rem;
+  }
+
+  .perf-hero {
+    padding-block: 1.5rem 1.25rem;
+  }
+
+  .perf-section {
+    padding-block: 2rem;
+  }
+
   .perf-table {
     font-size: 0.75rem;
   }
+
   .perf-table th,
   .perf-table td {
     padding: 0.45rem 0.5rem;
