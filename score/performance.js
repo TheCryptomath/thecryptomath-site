@@ -19,7 +19,10 @@
       byRegime: "By regime",
       byDirection: "By direction",
       error: "Could not load data. Check back in a moment.",
-      pending: "to come"
+      pending: "to come",
+      statusTracked: "TRACKED",
+      statusEnded: "ENDED",
+      statusUnknown: "—"
     },
     fr: {
       loading: "Chargement…",
@@ -35,7 +38,10 @@
       byRegime: "Par régime",
       byDirection: "Par direction",
       error: "Impossible de charger les données. Réessayez dans un instant.",
-      pending: "à venir"
+      pending: "à venir",
+      statusTracked: "SUIVI",
+      statusEnded: "TERMINÉ",
+      statusUnknown: "—"
     }
   };
 
@@ -74,6 +80,23 @@
     if (n >= 1) return n.toFixed(2);
     if (n >= 0.01) return n.toFixed(4);
     return n.toPrecision(3);
+  }
+
+  // Map raw API status to a user-facing label that does not suggest the
+  // detection is still tradable. "active" means the tracking window is still
+  // open (some milestones not reached yet), not that the trade idea is live.
+  function mapStatusLabel(rawStatus) {
+    const s = String(rawStatus || "").toLowerCase();
+    if (s === "active") return t.statusTracked;
+    if (s === "expired" || s === "ended") return t.statusEnded;
+    return t.statusUnknown;
+  }
+
+  function statusCssClass(rawStatus) {
+    const s = String(rawStatus || "").toLowerCase();
+    if (s === "active") return "tracked";
+    if (s === "expired" || s === "ended") return "ended";
+    return "";
   }
 
   function fmtDate(ts) {
@@ -244,7 +267,7 @@
           <td class="perf-pos">${fmtPct(item.mfe, 1)}</td>
           <td class="perf-neg">${fmtPct(item.mae, 1)}</td>
           <td class="${perfClass}">${fmtPct(perf, 1)}</td>
-          <td><span class="tag">${escapeHtml(item.status || "—")}</span></td>
+          <td><span class="tag ${statusCssClass(item.status)}">${escapeHtml(mapStatusLabel(item.status))}</span></td>
         </tr>
       `;
     }).join("");
