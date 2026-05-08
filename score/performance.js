@@ -267,7 +267,7 @@
           <td class="perf-pos">${fmtPct(item.mfe, 1)}</td>
           <td class="perf-neg">${fmtPct(item.mae, 1)}</td>
           <td class="${perfClass}">${fmtPct(perf, 1)}</td>
-          <td class="col-status"><span class="tag ${statusCssClass(item.status)}">${escapeHtml(mapStatusLabel(item.status))}</span></td>
+          <td><span class="tag ${statusCssClass(item.status)}">${escapeHtml(mapStatusLabel(item.status))}</span></td>
         </tr>
       `;
     }).join("");
