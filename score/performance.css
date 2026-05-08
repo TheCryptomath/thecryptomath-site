@@ -192,6 +192,11 @@
   min-width: 100px;
 }
 
+.perf-table th.col-status,
+.perf-table td.col-status {
+  min-width: 90px;
+}
+
 .perf-table th {
   background: var(--card, rgba(255,255,255,0.04));
   font-weight: 500;
