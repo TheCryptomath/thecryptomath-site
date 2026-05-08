@@ -1,252 +1,289 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+/* /score/performance.css — minimal, design-system aligned */
 
-  <!-- Inline theme script: must stay here to avoid FOUC on first load (no HTTP request) -->
-<script>
-    (function () {
-      try {
-        var root = document.documentElement;
-        var saved = localStorage.getItem("theme");
-        var theme = (saved === "light" || saved === "dark") ? saved : "dark";
-        if (theme === "dark") root.setAttribute("data-theme", "dark");
-        else root.removeAttribute("data-theme");
-        root.style.colorScheme = theme;
-      } catch (_) {}
-    })();
-  </script>
+.perf-main {
+  padding-block: 2rem 4rem;
+}
 
-  <title>Score Tool Detections | The Cryptomath</title>
-  <meta name="description" content="Public log of every detection emitted by the Cryptomath Score Tool. Raw data, no win-rate marketing. Updated every hour." />
-  <meta name="color-scheme" content="dark light" />
-  <meta name="theme-color" content="#08090c">
-  <meta name="theme-color" content="#fbfbfc" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#08090c" media="(prefers-color-scheme: dark)">
+.perf-hero {
+  padding-block: 2rem 1.5rem;
+  border-bottom: 1px solid var(--border, rgba(255,255,255,0.08));
+}
 
-  <link rel="canonical" href="https://thecryptomath.com/score/performance/" />
-  <link rel="alternate" hreflang="en" href="https://thecryptomath.com/score/performance/" />
-  <link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/score/performance/" />
-  <link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/score/performance/" />
+.perf-hero .eyebrow {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted, rgba(255,255,255,0.55));
+  margin-bottom: 0.5rem;
+}
 
-  <link rel="icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+.perf-hero h1 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: 0.75rem;
+}
 
-  <meta property="og:title" content="Score Tool Detections | The Cryptomath" />
-  <meta property="og:description" content="Public log of every detection emitted by the Cryptomath Score Tool. Raw data, no win-rate marketing." />
-  <meta property="og:image" content="https://thecryptomath.com/assets/og.jpg" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://thecryptomath.com/score/performance/" />
-  <meta property="og:site_name" content="The Cryptomath" />
+.perf-hero .lead {
+  color: var(--muted, rgba(255,255,255,0.7));
+  margin-bottom: 1rem;
+}
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Score Tool Detections | The Cryptomath" />
-  <meta name="twitter:description" content="Public log of every detection emitted by the Cryptomath Score Tool." />
-  <meta name="twitter:image" content="https://thecryptomath.com/assets/og.jpg" />
-  <meta name="twitter:site" content="@thecryptomath" />
+.perf-hero .meta {
+  font-size: 0.85rem;
+  color: var(--muted, rgba(255,255,255,0.55));
+  margin: 0;
+}
 
-  <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
-  <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
-  <link rel="stylesheet" href="/css/styles.css?v=20260423" />
-  <link rel="stylesheet" href="/score/performance.css?v=20260507c" />
-<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script><!-- End Cloudflare Web Analytics -->
-</head>
+.perf-section {
+  padding-block: 2.5rem;
+  border-bottom: 1px solid var(--border, rgba(255,255,255,0.06));
+}
 
-<body>
-  <a class="skip-link" href="#content">Skip to content</a>
+.perf-section:last-of-type {
+  border-bottom: none;
+}
 
-  <header class="topbar">
-    <div class="container">
-      <nav class="nav" aria-label="Main navigation">
-        <a class="brand" href="/" aria-label="The Cryptomath home">
-          <span class="brand-mark" aria-hidden="true">
-            <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" decoding="async" fetchpriority="high"/>
-          </span>
-          <span>The Cryptomath</span>
-        </a>
+.perf-section h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
 
-        <div class="navlinks" data-navlinks>
-          <a href="/">Home</a>
-          <a href="/build">Build</a>
-          <a href="/score/">Score</a>
-          <a href="/resources">Resources</a>
-          <a href="/connect">Connect</a>
-        </div>
+.perf-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
 
-        <div class="nav-cta">
-          <a class="btn primary" href="/newsletter">Newsletter</a>
-          <div class="lang-switch" aria-label="Language selector">
-            <a href="/score/performance/" lang="en" aria-current="true">EN</a>
-            <a href="/fr/score/performance/" lang="fr">FR</a>
-          </div>
+.perf-section-head h2 {
+  margin: 0;
+}
 
-          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-            <span>Theme</span>
-          </button>
+.perf-section-head .muted {
+  color: var(--muted, rgba(255,255,255,0.55));
+  font-size: 0.85rem;
+  margin: 0;
+}
 
-          <button type="button" class="mobile-toggle" data-mobile-toggle aria-expanded="false" aria-label="Menu">Menu</button>
-        </div>
-      </nav>
-    </div>
-  </header>
+/* Overview cards */
 
-  <main id="content" class="perf-main">
-    <section class="perf-hero">
-      <div class="container">
-        <p class="eyebrow">Score Tool · Public log</p>
-        <h1>Detection tracking</h1>
-        <p class="lead">
-          Every detection emitted by the Score Tool is logged and tracked over time.
-          This page shows the raw data. No win-rate marketing, no cherry-picked screenshots.
-          Prices are refreshed hourly. The tool is a confluence scanner, not a trading signal engine.
-        </p>
-        <p class="meta" id="perfMeta">Loading…</p>
-      </div>
-    </section>
+.perf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
 
-    <section class="perf-section">
-      <div class="container">
-        <h2>Overview</h2>
-        <div class="perf-grid" id="perfSummary">
-          <div class="perf-card"><span class="label">Exceptional</span><span class="value" data-summary="exceptional">—</span></div>
-          <div class="perf-card"><span class="label">Signal</span><span class="value" data-summary="signal">—</span></div>
-          <div class="perf-card"><span class="label">Watch emergency</span><span class="value" data-summary="watch_emergency">—</span></div>
-          <div class="perf-card"><span class="label">Watchlist</span><span class="value" data-summary="watchlist">—</span></div>
-          <div class="perf-card"><span class="label">Actifs</span><span class="value" data-summary="active">—</span></div>
-          <div class="perf-card"><span class="label">Expirés</span><span class="value" data-summary="expired">—</span></div>
-        </div>
-      </div>
-    </section>
+.perf-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: var(--card, rgba(255,255,255,0.03));
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  border-radius: 12px;
+}
 
-    <section class="perf-section">
-      <div class="container">
-        <div class="perf-section-head">
-          <h2>Aggregate stats</h2>
-          <p class="muted">Direction-correct = price moved in the detection direction at time of last check.</p>
-        </div>
-        <div class="perf-stats" id="perfStats">Loading…</div>
-      </div>
-    </section>
+.perf-card .label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted, rgba(255,255,255,0.55));
+  margin-bottom: 0.25rem;
+}
 
-    <section class="perf-section">
-      <div class="container">
-        <div class="perf-section-head">
-          <h2>Latest detections</h2>
-          <div class="filters">
-            <button type="button" class="chip active" data-filter="">All</button>
-            <button type="button" class="chip" data-filter="exceptional">Exceptional</button>
-            <button type="button" class="chip" data-filter="signal">Signal</button>
-            <button type="button" class="chip" data-filter="watch_emergency">Watch-E</button>
-            <button type="button" class="chip" data-filter="watchlist">Watchlist</button>
-          </div>
-        </div>
-        <div class="table-wrap">
-          <table class="perf-table" aria-describedby="perfTableDesc">
-            <caption id="perfTableDesc" class="sr-only">Latest detections suivies</caption>
-            <thead>
-              <tr>
-                <th>When</th>
-                <th>Type</th>
-                <th class="col-asset">Asset</th>
-                <th>Dir</th>
-                <th>Regime</th>
-                <th>Score</th>
-                <th title="Price at detection">Start</th>
-                <th title="Latest observed price">Current</th>
-                <th>+24h</th>
-                <th>+7d</th>
-                <th title="Best observed move">MFE</th>
-                <th title="Worst observed move">MAE</th>
-                <th title="Directional performance">Perf.</th>
-                <th class="col-status">Status</th>
-              </tr>
-            </thead>
-            <tbody id="perfTableBody">
-              <tr><td colspan="14" class="loading">Loading…</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+.perf-card .value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
 
-    <section class="perf-section perf-disclaimer">
-      <div class="container">
-        <h2>About this data</h2>
-        <p>
-          The Score Tool detects confluence on three pillars (Macro, Tech, Psycho) and emits four
-          categories: <em>Exceptional</em>, <em>Signal</em>, <em>Watch emergency</em>, and <em>Watchlist</em>.
-          Once emitted, each detection is tracked at +1h, +4h, +24h, +7d and +30d. Direction-correct means the
-          price moved in the predicted direction at the time of the last update.
-        </p>
-        <p>
-          Prices are checked once per hour. Milestone columns (+24h, +7d) capture the first observation
-          after that horizon, not the exact price at the precise minute. Observed MFE and MAE are the
-          best and worst directional moves seen across these hourly checks, not tick-by-tick maxima.
-        </p>
-        <p>
-          No theoretical PnL is computed. The scanner does not yet build entries, stops or take-profits.
-          What you see here is what happened to the price after each detection. Nothing more, nothing less.
-        </p>
-        <p class="muted">Educational content only. Not financial advice.</p>
-      </div>
-    </section>
-  </main>
+/* Stats blocks */
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <a class="brand" href="/" aria-label="The Cryptomath home">
-            <span class="brand-mark" aria-hidden="true">
-              <img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" decoding="async" loading="lazy"/>
-            </span>
-            <span>The Cryptomath</span>
-          </a>
-          <p>If it's not here, it's not me.</p>
-        </div>
+.perf-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
 
-        <div class="footer-links">
-          <div class="footer-col">
-            <h2>Navigate</h2>
-            <a href="/">Home</a>
-            <a href="/build">Build</a>
-            <a href="/score/">Score</a>
-            <a href="/score/performance/">Performance</a>
-            <a href="/resources">Resources</a>
-            <a href="/connect">Connect</a>
-          </div>
+.stats-block {
+  padding: 1rem;
+  background: var(--card, rgba(255,255,255,0.03));
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  border-radius: 12px;
+}
 
-          <div class="footer-col">
-            <h2>Links</h2>
-            <a href="https://x.com/thecryptomath" target="_blank" rel="noopener noreferrer">
-              Twitter <span class="sr-only">(opens in new tab)</span>
-            </a>
-            <a href="https://t.me/thecryptomath" target="_blank" rel="noopener noreferrer">
-              Telegram <span class="sr-only">(opens in new tab)</span>
-            </a>
-            <a href="https://www.youtube.com/@TheCryptomath" target="_blank" rel="noopener noreferrer">
-              YouTube <span class="sr-only">(opens in new tab)</span>
-            </a>
-            <a href="/newsletter">Newsletter</a>
-          </div>
-        </div>
-      </div>
+.stats-block h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted, rgba(255,255,255,0.55));
+  margin-bottom: 0.75rem;
+}
 
-      <div class="footer-bottom">
-        <p>© <span data-year></span> The Cryptomath. All rights reserved. <a href="/privacy">Privacy policy</a></p>
-        <p>Educational content only. Not financial advice.</p>
-      </div>
-    </div>
-  </footer>
+.stats-block dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4rem 1rem;
+  font-size: 0.9rem;
+}
 
-  <script defer src="/score/performance.js?v=20260507b"></script>
-  <script defer src="/js/main.js?v=20260423"></script>
-</body>
-</html>
+.stats-block dt {
+  color: var(--muted, rgba(255,255,255,0.65));
+}
+
+.stats-block dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* Filters */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border, rgba(255,255,255,0.15));
+  background: transparent;
+  color: var(--muted, rgba(255,255,255,0.7));
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chip:hover {
+  border-color: var(--text, rgba(255,255,255,0.4));
+  color: var(--text, rgba(255,255,255,0.9));
+}
+
+.chip.active {
+  background: var(--text, rgba(255,255,255,0.95));
+  color: var(--bg, #08090c);
+  border-color: var(--text, rgba(255,255,255,0.95));
+}
+
+/* Table */
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  border-radius: 12px;
+}
+
+.perf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.perf-table th,
+.perf-table td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border, rgba(255,255,255,0.05));
+  white-space: nowrap;
+}
+
+.perf-table th.col-asset,
+.perf-table td.col-asset {
+  min-width: 100px;
+}
+
+.perf-table th.col-status,
+.perf-table td.col-status {
+  min-width: 82px;
+}
+
+.perf-table th {
+  background: var(--card, rgba(255,255,255,0.04));
+  font-weight: 500;
+  color: var(--muted, rgba(255,255,255,0.7));
+  position: sticky;
+  top: 0;
+}
+
+.perf-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.perf-table tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.perf-table .loading,
+.perf-table .empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--muted, rgba(255,255,255,0.55));
+}
+
+.muted-cell {
+  color: var(--muted, rgba(255,255,255,0.4));
+  font-style: italic;
+  font-size: 0.85em;
+}
+
+.dir-long  { color: #4ade80; }
+.dir-short { color: #f87171; }
+
+.perf-pos { color: #4ade80; }
+.perf-neg { color: #f87171; }
+
+.tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(255,255,255,0.06);
+  color: var(--muted);
+}
+
+.tag.exceptional {
+  background: rgba(250,204,21,0.15);
+  color: #facc15;
+}
+
+.tag.signal {
+  background: rgba(74,222,128,0.15);
+  color: #4ade80;
+}
+
+.tag.watch_emergency {
+  background: rgba(168,85,247,0.15);
+  color: #a855f7;
+}
+
+.tag.watchlist {
+  background: rgba(96,165,250,0.15);
+  color: #60a5fa;
+}
+
+.tag.tracked {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.75);
+}
+
+.tag.ended {
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.45);
+}
+
+.perf-disclaimer {
+  background: var(--card, rgba(255,255,255,0.02));
+}
+
+.perf-disclaimer p {
+  color: var(--muted, rgba(255,255,255,0.7));
+}
 
 /* Light mode fixes */
 
@@ -385,4 +422,17 @@ html:not([data-theme="dark"]) .tag.ended {
 
 html:not([data-theme="dark"]) .perf-disclaimer {
   background: #f9fafb;
+}
+
+/* Responsive */
+
+@media (max-width: 640px) {
+  .perf-table {
+    font-size: 0.75rem;
+  }
+
+  .perf-table th,
+  .perf-table td {
+    padding: 0.45rem 0.5rem;
+  }
 }
