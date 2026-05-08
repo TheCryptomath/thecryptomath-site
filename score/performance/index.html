@@ -49,7 +49,7 @@
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
   <link rel="stylesheet" href="/css/styles.css?v=20260423" />
-  <link rel="stylesheet" href="/score/performance.css?v=20260428" />
+  <link rel="stylesheet" href="/score/performance.css?v=20260507" />
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 
@@ -116,8 +116,8 @@
           <div class="perf-card"><span class="label">Signal</span><span class="value" data-summary="signal">—</span></div>
           <div class="perf-card"><span class="label">Watch emergency</span><span class="value" data-summary="watch_emergency">—</span></div>
           <div class="perf-card"><span class="label">Watchlist</span><span class="value" data-summary="watchlist">—</span></div>
-          <div class="perf-card"><span class="label">Active</span><span class="value" data-summary="active">—</span></div>
-          <div class="perf-card"><span class="label">Expired</span><span class="value" data-summary="expired">—</span></div>
+          <div class="perf-card"><span class="label">Tracked</span><span class="value" data-summary="active">—</span></div>
+          <div class="perf-card"><span class="label">Ended</span><span class="value" data-summary="expired">—</span></div>
         </div>
       </div>
     </section>
@@ -155,13 +155,13 @@
                 <th>Dir</th>
                 <th>Regime</th>
                 <th>Score</th>
-                <th title="Price at the time of detection">Start</th>
-                <th title="Latest observed price">Current</th>
+                <th>Price@T0</th>
+                <th>Price now</th>
                 <th>+24h</th>
                 <th>+7d</th>
-                <th title="Observed at hourly checks, not tick-by-tick">MFE</th>
-                <th title="Observed at hourly checks, not tick-by-tick">MAE</th>
-                <th title="Directional performance">Perf.</th>
+                <th title="Observed at hourly checks, not tick-by-tick">Obs MFE</th>
+                <th title="Observed at hourly checks, not tick-by-tick">Obs MAE</th>
+                <th>Dir. perf.</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -188,7 +188,7 @@
           best and worst directional moves seen across these hourly checks, not tick-by-tick maxima.
         </p>
         <p>
-          No theoretical PnL is computed. The scanner does not build entries, stops or take-profits.
+          No theoretical PnL is computed. The scanner does not yet build entries, stops or take-profits.
           What you see here is what happened to the price after each detection. Nothing more, nothing less.
         </p>
         <p class="muted">Educational content only. Not financial advice.</p>
@@ -243,7 +243,7 @@
     </div>
   </footer>
 
-  <script defer src="/score/performance.js?v=20260428"></script>
+  <script defer src="/score/performance.js?v=20260507"></script>
   <script defer src="/js/main.js?v=20260423"></script>
 </body>
 </html>
