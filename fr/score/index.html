@@ -72,9 +72,91 @@
 
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
-  <link rel="stylesheet" href="/css/styles.css?v=20260423" />
-  <link rel="stylesheet" href="/score/score.css?v=20260509" />
+  <link rel="stylesheet" href="/css/styles.css?v=20260509" />
+  <link rel="stylesheet" href="/score/score.css?v=20260509b" />
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script><!-- End Cloudflare Web Analytics -->
+
+  <!-- Added structured data audit fixes -->
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Comment utiliser le Score Tool ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Utilise-le comme un filtre pour éviter les setups crypto faibles et te concentrer sur les confluences propres. Renseigne un actif, garde le régime en Auto sauf raison forte, utilise Auto fill, ajuste ce que tu contestes, puis calcule."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Que signifie un verdict A+ ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A+ signifie une confluence forte. Le résultat peut aider pour des entrées intraday, swing ou position avec une gestion du risque stricte."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Que signifie Speculative ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Speculative signifie qu’il existe peut-être un edge, mais avec plus de bruit. La taille de position et l’exécution doivent être plus strictes."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Que signifie No trade ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No trade signifie qu’il vaut mieux ignorer le setup et attendre un meilleur alignement ou un meilleur régime."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Le Score Tool est-il un conseil financier ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Non. Le Score Tool est éducatif et ne garantit aucun résultat. La gestion du risque reste indispensable."
+            }
+        }
+    ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Offer",
+    "name": "Score Scan Early Access",
+    "url": "https://forms.gle/wxSxrQawVk4GUdqt6",
+    "price": "200",
+    "priceCurrency": "USDC",
+    "availability": "https://schema.org/LimitedAvailability",
+    "description": "Accès Early Access au canal privé automatisé Score Scan. Accès annuel à 200 USDC. Accès mensuel à 25 USDC."
+}
+  </script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Accueil",
+            "item": "https://thecryptomath.com/fr/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Score",
+            "item": "https://thecryptomath.com/fr/score/"
+        }
+    ]
+}
+  </script>
 </head>
 
 <body>
@@ -102,7 +184,7 @@
           <a class="btn primary" href="/fr/newsletter/">Newsletter</a>
           <div class="lang-switch" aria-label="Sélecteur de langue">
             <a href="/score/" lang="en">EN</a>
-            <a href="/fr/score/" lang="fr" aria-current="true">FR</a>
+            <a href="/fr/score/" lang="fr" aria-current="page">FR</a>
           </div>
 
           <button class="theme-toggle" type="button" data-theme-toggle aria-label="Basculer le thème">
@@ -305,16 +387,16 @@
                 <div class="row">
                   <div class="field">
                     <label class="label" for="entry">Entrée</label>
-                    <input class="input" id="entry" inputmode="decimal" placeholder="ex. 100" />
+                    <input type="number" step="any" min="0" class="input" id="entry" inputmode="decimal" placeholder="ex. 100" />
                   </div>
                   <div class="field">
                     <label class="label" for="stop">Stop</label>
-                    <input class="input" id="stop" inputmode="decimal" placeholder="ex. 95" />
+                    <input type="number" step="any" min="0" class="input" id="stop" inputmode="decimal" placeholder="ex. 95" />
                   </div>
                 </div>
                 <div class="field" style="margin-top:12px;">
                   <label class="label" for="tp">Take profit</label>
-                  <input class="input" id="tp" inputmode="decimal" placeholder="ex. 120" />
+                  <input type="number" step="any" min="0" class="input" id="tp" inputmode="decimal" placeholder="ex. 120" />
                 </div>
 
                 <div class="btnrow">
