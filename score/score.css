@@ -436,3 +436,28 @@ html:not([data-theme="dark"]) .score-cta-btn {
 html:not([data-theme="dark"]) .score-cta-btn:hover {
   background: rgba(74,222,128,0.18);
 }
+
+/* Light theme hardening */
+html:not([data-theme="dark"]) .score-hero {
+  background: linear-gradient(180deg, var(--bg-surface), var(--bg-elevated));
+}
+
+html:not([data-theme="dark"]) .score-kicker,
+html:not([data-theme="dark"]) .panel {
+  background: var(--bg-surface);
+}
+
+html:not([data-theme="dark"]) .input,
+html:not([data-theme="dark"]) select.input {
+  background: var(--bg-surface);
+}
+
+html:not([data-theme="dark"]) .check {
+  border-color: var(--border);
+  background: var(--bg-surface);
+}
+
+html:not([data-theme="dark"]) .check:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-hover);
+}

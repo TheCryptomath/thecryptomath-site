@@ -436,3 +436,12 @@ html:not([data-theme="dark"]) .perf-disclaimer {
     padding: 0.45rem 0.5rem;
   }
 }
+
+/* Light theme hardening */
+html:not([data-theme="dark"]) .perf-card,
+html:not([data-theme="dark"]) .stats-block,
+html:not([data-theme="dark"]) .detection-row,
+html:not([data-theme="dark"]) .perf-table-wrap {
+  background: var(--bg-surface);
+  border-color: var(--border);
+}
