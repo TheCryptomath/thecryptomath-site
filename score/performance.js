@@ -194,7 +194,11 @@
 
     const html = sections.map(section => {
       const block = data.stats[section.key] || {};
-      const rows = Object.entries(block).map(([label, agg]) => {
+      const rows = Object.entries(block)
+        // Hide deprecated watch_emergency category when empty (kept in API
+        // for historical records but no longer emitted publicly).
+        .filter(([label, agg]) => !(label === "watch_emergency" && (!agg || !agg.count)))
+        .map(([label, agg]) => {
         // Format X/Y correctes au lieu du % qui peut faire win-rate marketing
         let directionLine = "";
         if (agg.count > 0 && agg.directionCorrectPct !== null && agg.directionCorrectPct !== undefined) {
