@@ -356,3 +356,83 @@ html:not([data-theme="dark"]) .auto-summary {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+/* ===== Score CTA - Early Access (discret, sobre) ===== */
+.score-cta {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+.score-cta-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  background: var(--card, rgba(255,255,255,0.02));
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.score-cta-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+  color: var(--text);
+}
+
+.score-cta-text {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin: 0 0 0.75rem;
+}
+
+.score-cta-text.score-cta-meta {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.score-cta-btn {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: rgba(74,222,128,0.08);
+  color: #4ade80;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.score-cta-btn:hover {
+  background: rgba(74,222,128,0.14);
+  transform: translateY(-1px);
+}
+
+.score-cta-foot {
+  margin: 1rem 0 0;
+  font-size: 0.82rem;
+  opacity: 0.7;
+}
+
+.score-cta-foot a {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.score-cta-foot a:hover {
+  color: var(--text);
+}
+
+/* Light mode adjustments */
+html:not([data-theme="dark"]) .score-cta-btn {
+  background: rgba(74,222,128,0.10);
+  color: #15803d;
+}
+
+html:not([data-theme="dark"]) .score-cta-btn:hover {
+  background: rgba(74,222,128,0.18);
+}
