@@ -114,7 +114,6 @@
         <div class="perf-grid" id="perfSummary">
           <div class="perf-card"><span class="label">Exceptional</span><span class="value" data-summary="exceptional">—</span></div>
           <div class="perf-card"><span class="label">Signal</span><span class="value" data-summary="signal">—</span></div>
-          <div class="perf-card"><span class="label">Watch emergency</span><span class="value" data-summary="watch_emergency">—</span></div>
           <div class="perf-card"><span class="label">Watchlist</span><span class="value" data-summary="watchlist">—</span></div>
           <div class="perf-card"><span class="label">Tracked</span><span class="value" data-summary="active">—</span></div>
           <div class="perf-card"><span class="label">Ended</span><span class="value" data-summary="expired">—</span></div>
@@ -140,7 +139,6 @@
             <button type="button" class="chip active" data-filter="">All</button>
             <button type="button" class="chip" data-filter="exceptional">Exceptional</button>
             <button type="button" class="chip" data-filter="signal">Signal</button>
-            <button type="button" class="chip" data-filter="watch_emergency">Watch-E</button>
             <button type="button" class="chip" data-filter="watchlist">Watchlist</button>
           </div>
         </div>
@@ -177,8 +175,8 @@
       <div class="container">
         <h2>About this data</h2>
         <p>
-          The Score Tool detects confluence on three pillars (Macro, Tech, Psycho) and emits four
-          categories: <em>Exceptional</em>, <em>Signal</em>, <em>Watch emergency</em>, and <em>Watchlist</em>.
+          The Score Tool detects confluence on three pillars (Macro, Tech, Psycho) and emits three
+          categories: <em>Exceptional</em>, <em>Signal</em>, and <em>Watchlist</em>.
           Once emitted, each detection is tracked at +1h, +4h, +24h, +7d and +30d. Direction-correct means the
           price moved in the predicted direction at the time of the last update.
         </p>
@@ -243,7 +241,7 @@
     </div>
   </footer>
 
-  <script defer src="/score/performance.js?v=20260507b"></script>
+  <script defer src="/score/performance.js?v=20260509"></script>
   <script defer src="/js/main.js?v=20260423"></script>
 </body>
 </html>
