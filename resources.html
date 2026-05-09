@@ -49,7 +49,7 @@
 <link href="/assets/apple-touch-icon.png" rel="apple-touch-icon"/>
   <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
-<link href="/css/styles.css?v=20260423" rel="stylesheet"/>
+<link href="/css/styles.css?v=20260509" rel="stylesheet"/>
 <!-- Schema -->
 <!-- Cloudflare Web Analytics -->
 <script type="application/ld+json">{
@@ -173,7 +173,6 @@
       "@id": "https://thecryptomath.com/#person",
       "name": "The Cryptomath",
       "url": "https://thecryptomath.com/",
-      "email": "admin@thecryptomath.com",
       "image": {
         "@type": "ImageObject",
         "url": "https://thecryptomath.com/assets/logo.png"
@@ -208,6 +207,26 @@
 }
 </script>
 <script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://thecryptomath.com/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Resources",
+            "item": "https://thecryptomath.com/resources"
+        }
+    ]
+}
+  </script>
 </head>
 <body>
 <a class="skip-link" href="#content">Skip to content</a>
@@ -228,11 +247,11 @@
 <div class="nav-cta">
 <a class="btn primary" href="/newsletter">Newsletter</a>
 <div aria-label="Language selector" class="lang-switch">
-<a aria-current="true" href="/resources" lang="en">EN</a>
+<a aria-current="page" href="/resources" lang="en">EN</a>
 <a href="/fr/resources/" lang="fr">FR</a>
 </div>
 <button aria-label="Toggle theme" class="theme-toggle" data-theme-toggle="" type="button">
-<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
 </svg>
 <span>Theme</span>
@@ -258,6 +277,7 @@
 <h2>My stack</h2>
 <p class="section-sub">If I had to keep only one per category.</p>
 </div>
+<p class="affiliate-disclosure">Some links may contain referral codes. No product is recommended because of this.</p>
 <div class="grid-2">
 <a class="card project-card featured" href="https://rabby.io/" rel="noopener noreferrer" target="_blank">
 <div class="card-label live">Wallet</div>
@@ -271,7 +291,7 @@
 <p class="card-desc">Data platform I open first for prices, listings, market caps, and broad market coverage.</p>
 <span class="card-link">Open</span>
 </a>
-<a class="card project-card featured" href="https://app.hyperliquid.xyz/join/THECRYPTOMATH" rel="noopener noreferrer" target="_blank">
+<a class="card project-card featured" href="https://app.hyperliquid.xyz/join/THECRYPTOMATH" rel="sponsored noopener noreferrer" target="_blank">
 <div class="card-label live">Perps DEX</div>
 <h3>Hyperliquid</h3>
 <p class="card-desc">Perps platform I use for onchain liquidity, fast execution, and deep market activity.</p>
@@ -283,7 +303,7 @@
 <p class="card-desc">DeFi data tool I use for TVL, yields, revenue, stablecoins, and cross-chain comparisons.</p>
 <span class="card-link">Open</span>
 </a>
-<a class="card project-card featured" href="https://www.ether.fi/refer/dba017d4" rel="noopener noreferrer" target="_blank">
+<a class="card project-card featured" href="https://www.ether.fi/refer/dba017d4" rel="sponsored noopener noreferrer" target="_blank">
 <div class="card-label live">Crypto card</div>
 <h3>EtherFi Cash</h3>
 <p class="card-desc">Card product that lets users spend while keeping a yield-oriented crypto setup in the background.</p>
@@ -299,7 +319,7 @@
 <p class="section-sub">Useful tools that I keep nearby.</p>
 </div>
 <div class="grid-2">
-<a class="card project-card" href="https://glider.fi/r/64d0f547" rel="noopener noreferrer" target="_blank">
+<a class="card project-card" href="https://glider.fi/r/64d0f547" rel="sponsored noopener noreferrer" target="_blank">
 <div class="card-label">Automated portfolios</div>
 <h3>Glider</h3>
 <p class="card-desc">Automation tool for running strategies and portfolio rules from a cleaner workflow.</p>
