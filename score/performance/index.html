@@ -48,9 +48,60 @@
 
   <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
   <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
-  <link rel="stylesheet" href="/css/styles.css?v=20260423" />
-  <link rel="stylesheet" href="/score/performance.css?v=20260507d" />
+  <link rel="stylesheet" href="/css/styles.css?v=20260509" />
+  <link rel="stylesheet" href="/score/performance.css?v=20260509" />
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}'></script><!-- End Cloudflare Web Analytics -->
+
+  <!-- Added structured data audit fixes -->
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "The Cryptomath Score Tool detection tracking",
+    "description": "Public log of detections emitted by the Cryptomath Score Tool. The page displays raw detection tracking, aggregate statistics, and latest detections.",
+    "url": "https://thecryptomath.com/score/performance/",
+    "creator": {
+        "@type": "Person",
+        "name": "The Cryptomath",
+        "url": "https://thecryptomath.com/"
+    },
+    "temporalCoverage": "2026/..",
+    "isAccessibleForFree": true,
+    "keywords": [
+        "crypto",
+        "score tool",
+        "market detection",
+        "public tracking",
+        "trading education"
+    ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://thecryptomath.com/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Score",
+            "item": "https://thecryptomath.com/score/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Performance",
+            "item": "https://thecryptomath.com/score/performance/"
+        }
+    ]
+}
+  </script>
 </head>
 
 <body>
@@ -77,7 +128,7 @@
         <div class="nav-cta">
           <a class="btn primary" href="/newsletter">Newsletter</a>
           <div class="lang-switch" aria-label="Language selector">
-            <a href="/score/performance/" lang="en" aria-current="true">EN</a>
+            <a href="/score/performance/" lang="en" aria-current="page">EN</a>
             <a href="/fr/score/performance/" lang="fr">FR</a>
           </div>
 
@@ -209,7 +260,7 @@
 
         <div class="footer-links">
           <div class="footer-col">
-            <h2>Navigate</h2>
+            <h3>Navigate</h3>
             <a href="/">Home</a>
             <a href="/build">Build</a>
             <a href="/score/">Score</a>
@@ -219,7 +270,7 @@
           </div>
 
           <div class="footer-col">
-            <h2>Links</h2>
+            <h3>Links</h3>
             <a href="https://x.com/thecryptomath" target="_blank" rel="noopener noreferrer">
               Twitter <span class="sr-only">(opens in new tab)</span>
             </a>
