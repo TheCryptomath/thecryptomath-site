@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html data-theme="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Inline theme script: must stay here to avoid FOUC on first load (no HTTP request) -->
+<script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var saved = localStorage.getItem("theme");
+        var theme = (saved === "light" || saved === "dark") ? saved : "dark";
+        if (theme === "dark") root.setAttribute("data-theme", "dark");
+        else root.removeAttribute("data-theme");
+        root.style.colorScheme = theme;
+      } catch (_) {}
+    })();
+  </script>
+<title>Narrative Framework | The Cryptomath</title>
+<meta content="A practical framework to evaluate crypto narratives before they become obvious. Criteria, scoring bands, examples, and traps." name="description"/>
+<meta content="dark light" name="color-scheme"/>
+<meta content="#08090c" name="theme-color"/>
+<meta content="#fbfbfc" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#08090c" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<link href="https://thecryptomath.com/narrative-framework" rel="canonical"/>
+<link href="https://thecryptomath.com/narrative-framework" hreflang="en" rel="alternate"/>
+<link href="https://thecryptomath.com/fr/narrative-framework/" hreflang="fr" rel="alternate"/>
+<link href="https://thecryptomath.com/narrative-framework" hreflang="x-default" rel="alternate"/>
+<meta content="The Cryptomath" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="fr_FR" property="og:locale:alternate"/>
+<meta content="Narrative Framework | The Cryptomath" property="og:title"/>
+<meta content="A practical framework to evaluate crypto narratives before they become obvious. Criteria, scoring bands, examples, and traps." property="og:description"/>
+<meta content="https://thecryptomath.com/assets/og.jpg" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="website" property="og:type"/>
+<meta content="https://thecryptomath.com/narrative-framework" property="og:url">
+<meta content="summary_large_image" name="twitter:card">
+<meta content="Narrative Framework | The Cryptomath" name="twitter:title">
+<meta content="A practical framework to evaluate crypto narratives before they become obvious. Criteria, scoring bands, examples, and traps." name="twitter:description"/>
+<meta content="https://thecryptomath.com/assets/og.jpg" name="twitter:image"/>
+<meta content="1200" name="twitter:image:width"/>
+<meta content="630" name="twitter:image:height"/>
+<meta content="@thecryptomath" name="twitter:site"/>
+<!-- Icons -->
+<link href="/favicon.ico" rel="icon"/>
+<link href="/assets/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
+<link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
+<link href="/css/styles.css?v=20260509" rel="stylesheet"/>
+<!-- Schema -->
+<!-- Cloudflare Web Analytics -->
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://thecryptomath.com/narrative-framework#webpage",
+      "url": "https://thecryptomath.com/narrative-framework",
+      "name": "The Cryptomath Narrative Framework",
+      "description": "A practical framework to evaluate crypto narratives before they become obvious, with criteria, scoring bands, examples, and common traps.",
+      "isPartOf": {
+        "@id": "https://thecryptomath.com/#website"
+      },
+      "about": {
+        "@id": "https://thecryptomath.com/#person"
+      },
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://thecryptomath.com/narrative-framework#article",
+      "headline": "The Cryptomath Narrative Framework",
+      "description": "A practical framework to evaluate crypto narratives before they become obvious, with criteria, scoring bands, examples, and common traps.",
+      "author": {
+        "@id": "https://thecryptomath.com/#person"
+      },
+      "publisher": {
+        "@id": "https://thecryptomath.com/#person"
+      },
+      "datePublished": "2026-05-09",
+      "dateModified": "2026-05-09",
+      "mainEntityOfPage": {
+        "@id": "https://thecryptomath.com/narrative-framework#webpage"
+      },
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "DefinedTermSet",
+      "@id": "https://thecryptomath.com/narrative-framework#terms",
+      "name": "The Cryptomath Narrative Framework criteria",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "name": "Problem pressure",
+          "description": "The real frustration, structural shift, or new demand that gives a crypto narrative pressure beyond pure hype."
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Timing",
+          "description": "The alignment between market conditions, infrastructure, regulation, and user behavior at the current moment."
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Liquidity path",
+          "description": "The practical route for capital to enter through tokens, listings, incentives, yields, unlocks, or liquid venues."
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Attention velocity",
+          "description": "The speed and independence with which different groups start repeating the same narrative language."
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Product proof",
+          "description": "Observable evidence such as usage, revenue, retention, developer activity, user behavior, or credible prototypes."
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Distribution surface",
+          "description": "The number and quality of actors with incentives to spread the narrative across markets and communities."
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Asymmetry",
+          "description": "The remaining upside compared with how obvious, crowded, and priced-in the narrative already is."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Narrative Framework?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Narrative Framework is a practical way to evaluate crypto narratives through problem pressure, timing, liquidity, attention, product proof, distribution, and asymmetry."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the framework financial advice?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It is an educational research framework. It helps structure judgment but it does not replace personal research or risk management."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why start with narratives?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Narratives often move capital before fundamentals become obvious. A clear framework helps separate early signal from late consensus."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should a narrative be scored?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Each dimension is scored from 0 to 5. The total helps classify a narrative as noise, watchlist, active, or crowded."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://thecryptomath.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Narrative Framework",
+          "item": "https://thecryptomath.com/narrative-framework"
+        }
+      ]
+    }
+  ]
+}</script>
+<script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="topbar">
+<div class="container">
+<nav aria-label="Main navigation" class="nav">
+<a aria-label="The Cryptomath home" class="brand" href="/">
+<span aria-hidden="true" class="brand-mark"><img alt="" class="brand-mark-img" decoding="async" fetchpriority="high" height="192" src="/assets/logo.png" width="192"/></span>
+<span>The Cryptomath</span>
+</a>
+<div class="navlinks" data-navlinks="">
+<a href="/">Home</a>
+<a href="/build">Build</a>
+<a href="/score/">Score</a>
+<a aria-current="page" href="/narrative-framework">Framework</a>
+<a href="/resources">Resources</a>
+<a href="/connect">Connect</a>
+</div>
+<div class="nav-cta">
+<a class="btn primary" href="/newsletter">Newsletter</a>
+<div aria-label="Language selector" class="lang-switch">
+<a aria-current="page" href="/narrative-framework" lang="en">EN</a>
+<a href="/fr/narrative-framework/" lang="fr">FR</a>
+</div>
+<button aria-label="Toggle theme" class="theme-toggle" data-theme-toggle="" type="button">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+<span>Theme</span>
+</button>
+<button aria-expanded="false" aria-label="Menu" class="mobile-toggle" data-mobile-toggle="" type="button">Menu</button>
+</div>
+</nav>
+</div>
+</header>
+<main id="content">
+<section class="section" style="padding-top: 140px;">
+<div class="container">
+<div class="section-header">
+<div class="hero-badge">Research framework</div>
+<h1>The Cryptomath Narrative Framework</h1>
+<p class="section-sub">A practical way to judge crypto narratives before they become obvious.</p>
+</div>
+<div aria-label="Quick answer" class="answer-block">
+<div class="answer-block-kicker">Quick answer</div>
+<h2 class="answer-block-title">The Narrative Framework scores a crypto narrative across seven dimensions. Problem pressure, timing, liquidity path, attention velocity, product proof, distribution surface, and asymmetry.</h2>
+<p>It is not a prediction machine. It is a way to avoid chasing late consensus while keeping early ideas honest.</p>
+</div>
+</div>
+</section>
+<section class="section" style="padding-top: 0;">
+<div class="container">
+<blockquote class="framework-quote">
+      A strong narrative is not just a story people repeat. It is a story with pressure behind it, capital moving toward it, and enough proof to survive first contact with reality.
+      <footer>The Cryptomath</footer>
+</blockquote>
+</div>
+</section>
+<section class="section" style="padding-top: 0;">
+<div class="container">
+<div class="section-header">
+<h2>The seven dimensions</h2>
+<p class="section-sub">Each dimension is scored from 0 to 5. The total gives a research signal, not a buy signal.</p>
+</div>
+<div class="framework-grid">
+<article class="card framework-factor"><span class="framework-number">1</span><div><h3>Problem pressure</h3><p class="card-desc">The narrative must answer a real frustration, structural shift, or new demand. The stronger the pressure, the less the narrative needs pure hype.</p><div class="framework-meta"><span class="framework-pill">0 to 5</span><span class="framework-pill">Need</span></div></div></article>
+<article class="card framework-factor"><span class="framework-number">2</span><div><h3>Timing</h3><p class="card-desc">A good idea can still be too early or too late. Timing checks whether the market, infrastructure, regulation, and user behavior are aligned now.</p><div class="framework-meta"><span class="framework-pill">0 to 5</span><span class="framework-pill">Window</span></div></div></article>
+<article class="card framework-factor"><span class="framework-number">3</span><div><h3>Liquidity path</h3><p class="card-desc">Narratives need a path for capital to enter. Tokens, listings, incentives, yields, unlocks, and liquid venues all matter.</p><div class="framework-meta"><span class="framework-pill">0 to 5</span><span class="framework-pill">Capital</span></div></div></article>
+<article class="card framework-factor"><span class="framework-number">4</span><div><h3>Attention velocity</h3><p class="card-desc">Attention is not just follower count. It is speed, repetition, memetic clarity, and how quickly independent groups start using the same language.</p><div class="framework-meta"><span class="framework-pill">0 to 5</span><span class="framework-pill">Mindshare</span></div></div></article>
+<article class="card framework-factor"><span class="framework-number">5</span><div><h3>Product proof</h3><p class="card-desc">The best narratives still need evidence. Usage, revenue, retention, developer activity, user behavior, or credible prototypes reduce narrative risk.</p><div class="framework-meta"><span class="framework-pill">0 to 5</span><span class="framework-pill">Reality</span></div></div></article>
+<article class="card framework-factor"><span class="framework-number">6</span><div><h3>Distribution surface</h3><p class="card-desc">A narrative travels faster when founders, exchanges, apps, creators, communities, funds, and users all have reasons to spread it.</p><div class="framework-meta"><span class="framework-pill">0 to 5</span><span class="framework-pill">Spread</span></div></div></article>
+<article class="card framework-factor featured"><span class="framework-number">7</span><div><h3>Asymmetry</h3><p class="card-desc">The final question is simple. Is the upside still meaningful compared with how obvious, crowded, and priced-in the narrative already is?</p><div class="framework-meta"><span class="framework-pill">0 to 5</span><span class="framework-pill">Edge</span></div></div></article>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<div class="section-header"><h2>Scoring bands</h2><p class="section-sub">The score should guide research priority, not replace judgment.</p></div>
+<div class="framework-score">
+<article class="card"><div class="framework-score-value">0-10</div><h3>Noise</h3><p class="card-desc">Too weak, too vague, or too dependent on pure promotion.</p></article>
+<article class="card"><div class="framework-score-value">11-20</div><h3>Watchlist</h3><p class="card-desc">Interesting early signal, but still missing proof or timing.</p></article>
+<article class="card featured"><div class="framework-score-value">21-28</div><h3>Active</h3><p class="card-desc">Strong enough to research deeply and track regularly.</p></article>
+<article class="card"><div class="framework-score-value">29-35</div><h3>Crowded</h3><p class="card-desc">Powerful narrative, but often late. The key question becomes entry quality.</p></article>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<div class="section-header"><h2>How to apply it</h2><p class="section-sub">Use the same grid every time. That is what makes the framework useful.</p></div>
+<div class="framework-table-wrap"><table class="framework-table"><thead><tr><th>Step</th><th>Question</th><th>What to look for</th></tr></thead><tbody>
+<tr><td><strong>1</strong></td><td>What problem creates pressure?</td><td>A real pain point, market inefficiency, regulatory shift, cultural shift, or user behavior change.</td></tr>
+<tr><td><strong>2</strong></td><td>Why now?</td><td>New infrastructure, new liquidity, better UX, fresh incentives, or a catalyst that did not exist before.</td></tr>
+<tr><td><strong>3</strong></td><td>Where can capital enter?</td><td>Liquid tokens, upcoming launches, public markets, points, yield, funds, or exchange attention.</td></tr>
+<tr><td><strong>4</strong></td><td>Who repeats the story?</td><td>Builders, users, analysts, funds, exchanges, communities, and creators using similar language independently.</td></tr>
+<tr><td><strong>5</strong></td><td>What proves it is real?</td><td>Usage, revenue, retention, developer traction, public data, or repeated behavior across more than one project.</td></tr>
+<tr><td><strong>6</strong></td><td>How far can it spread?</td><td>Simple memes, clear categories, easy onboarding, strong communities, and incentives for many actors to talk about it.</td></tr>
+<tr><td><strong>7</strong></td><td>Is there still asymmetry?</td><td>Compare upside with consensus, valuation, crowding, unlocks, reflexivity, and downside risk.</td></tr>
+</tbody></table></div>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<div class="section-header"><h2>Common traps</h2><p class="section-sub">Most mistakes come from confusing attention with signal.</p></div>
+<div class="grid-3">
+<article class="card"><h3>Late consensus</h3><p class="card-desc">When everyone can explain the narrative perfectly, the easy part of the trade may already be gone.</p></article>
+<article class="card"><h3>Fake usage</h3><p class="card-desc">Incentives can create activity that disappears as soon as rewards stop. Usage needs context.</p></article>
+<article class="card"><h3>No liquidity path</h3><p class="card-desc">A strong idea with no practical way for capital to enter can stay intellectually right and financially irrelevant.</p></article>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<div class="answer-block"><div class="answer-block-kicker">Next step</div><h2 class="answer-block-title">This framework will be used as the base layer for future cycle and narrative pages.</h2><p>Start with the newsletter for live market context, or use the Score Tool when you want a more structured setup view.</p><div class="hero-actions" style="margin-top: 18px;"><a class="btn primary" href="/newsletter">Read the newsletter</a><a class="btn" href="/score/">Open the Score Tool</a></div></div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="container">
+<div class="footer-content">
+<div class="footer-brand">
+<a aria-label="The Cryptomath home" class="brand" href="/">
+<span aria-hidden="true" class="brand-mark">
+<img alt="" class="brand-mark-img" decoding="async" height="192" loading="lazy" src="/assets/logo.png" width="192"/>
+</span>
+<span>The Cryptomath</span>
+</a>
+<p>If it's not here, it's not me.</p>
+</div>
+<div class="footer-links">
+<div class="footer-col">
+<h3>Navigate</h3>
+<a href="/">Home</a>
+<a href="/build">Build</a>
+<a href="/score/">Score</a>
+<a href="/score/performance/">Performance</a>
+<a href="/narrative-framework">Framework</a>
+<a href="/resources">Resources</a>
+<a href="/connect">Connect</a>
+</div>
+<div class="footer-col">
+<h3>Links</h3>
+<a href="https://x.com/thecryptomath" rel="noopener noreferrer" target="_blank">Twitter <span class="sr-only">(opens in new tab)</span></a>
+<a href="https://t.me/thecryptomath" rel="noopener noreferrer" target="_blank">Telegram <span class="sr-only">(opens in new tab)</span></a>
+<a href="https://www.youtube.com/@TheCryptomath" rel="noopener noreferrer" target="_blank">YouTube <span class="sr-only">(opens in new tab)</span></a>
+<a href="/newsletter">Newsletter</a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© <span data-year=""></span> The Cryptomath. All rights reserved. <a href="/privacy">Privacy policy</a></p>
+<p>Educational content only. Not financial advice.</p>
+</div>
+</div>
+</footer>
+<script defer="" src="/js/main.js?v=20260423"></script>
+</body>
+</html>

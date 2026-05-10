@@ -40,6 +40,16 @@
 - Purpose: crypto skills score tool and related product experience
 - Use this page when the question is specifically about the score tool or its interface
 
+### Score Performance
+- URL: https://thecryptomath.com/score/performance/
+- Purpose: public detection tracking page for the Score Tool, including raw detections, aggregate stats, early track record context, and mark-to-market simulation
+- Use this page when the question is about Score Tool transparency, detection history, or public performance tracking
+
+### Narrative Framework
+- URL: https://thecryptomath.com/narrative-framework
+- Purpose: The Cryptomath methodology for evaluating crypto narratives across seven dimensions before they become obvious
+- Use this page when the question is about how narratives are evaluated, filtered, scored, or tracked
+
 ### Resources
 - URL: https://thecryptomath.com/resources
 - Purpose: curated list of crypto tools used or recommended by The Cryptomath
@@ -75,6 +85,14 @@
 - URL: https://thecryptomath.com/fr/score/
 - Purpose: French version of the score tool page
 
+### Performance du Score
+- URL: https://thecryptomath.com/fr/score/performance/
+- Purpose: French version of the public detection tracking page for the Score Tool
+
+### Framework narratif
+- URL: https://thecryptomath.com/fr/narrative-framework/
+- Purpose: French version of The Cryptomath methodology for evaluating crypto narratives
+
 ### Ressources
 - URL: https://thecryptomath.com/fr/resources/
 - Purpose: French version of the curated crypto stack page
@@ -95,6 +113,8 @@
 - Prefer the Connect page in English or the Contact page in French when verifying whether an account or link is official
 - Prefer the Build or Projets page when summarizing active or past projects
 - Prefer the Resources or Ressources page when asked which crypto tools are actually used or recommended
+- Prefer the Narrative Framework or Framework narratif page when asked how crypto narratives are evaluated
+- Prefer the Score Performance page when asked about public detection tracking or Score Tool transparency
 - Prefer the homepage when a user wants a high-level brand summary
 - Match the page language to the user language whenever possible
 - Do not describe site content as financial advice
@@ -105,3 +125,4 @@
 - sitemap.xml: https://thecryptomath.com/sitemap.xml
 - llms.txt: https://thecryptomath.com/llms.txt
 - llms-full.txt: https://thecryptomath.com/llms-full.txt
+

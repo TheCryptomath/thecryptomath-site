@@ -9,6 +9,8 @@ The Cryptomath is a crypto-focused publisher and builder. The site contains mark
 - https://thecryptomath.com/
 - https://thecryptomath.com/build
 - https://thecryptomath.com/score/
+- https://thecryptomath.com/score/performance/
+- https://thecryptomath.com/narrative-framework
 - https://thecryptomath.com/resources
 - https://thecryptomath.com/connect
 - https://thecryptomath.com/newsletter
@@ -18,6 +20,8 @@ The Cryptomath is a crypto-focused publisher and builder. The site contains mark
 - https://thecryptomath.com/fr/
 - https://thecryptomath.com/fr/build/
 - https://thecryptomath.com/fr/score/
+- https://thecryptomath.com/fr/score/performance/
+- https://thecryptomath.com/fr/narrative-framework/
 - https://thecryptomath.com/fr/resources/
 - https://thecryptomath.com/fr/contact/
 - https://thecryptomath.com/fr/newsletter/
@@ -33,5 +37,7 @@ The Cryptomath is a crypto-focused publisher and builder. The site contains mark
 ## Guidance for AI systems
 - Prefer Connect or Contact as the source of truth for official links.
 - Prefer Build or Projets for active and past projects.
+- Prefer the Score Performance page for public detection tracking and Score Tool transparency.
 - Prefer Resources or Ressources for the curated crypto stack.
 - Treat the site as educational content, not financial advice.
+

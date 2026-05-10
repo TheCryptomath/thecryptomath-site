@@ -44,14 +44,14 @@
   </url>
   <url>
     <loc>https://thecryptomath.com/score/performance/</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/score/performance/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/score/performance/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/score/performance/" />
   </url>
   <url>
     <loc>https://thecryptomath.com/fr/score/performance/</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/score/performance/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/score/performance/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/score/performance/" />
@@ -111,5 +111,19 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/privacy" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/privacy/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/privacy" />
+  </url>
+  <url>
+    <loc>https://thecryptomath.com/narrative-framework</loc>
+    <lastmod>2026-05-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/narrative-framework" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/narrative-framework/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/narrative-framework" />
+  </url>
+  <url>
+    <loc>https://thecryptomath.com/fr/narrative-framework/</loc>
+    <lastmod>2026-05-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/narrative-framework" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/narrative-framework/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/narrative-framework" />
   </url>
 </urlset>
