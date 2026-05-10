@@ -47,7 +47,7 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260509" rel="stylesheet"/>
-<link href="/score/performance.css?v=20260510" rel="stylesheet"/>
+<link href="/score/performance.css?v=20260510b" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
@@ -180,11 +180,32 @@
 <h3>Exceptional is rare by design</h3>
 <p>The highest tier is intentionally strict. Zero recent Exceptional detections means the scanner did not see maximum confluence, not that the tier is unused.</p>
 </article>
+<article class="perf-note-card">
+<h3>Closure rule</h3>
+<p>Each detection is tracked for a maximum of 90 days. Trade-formatted detections, with explicit entry, stop and target, close earlier if a TP or SL is hit. Older open detections close at their current price. Rule activated on 2026-05-10.</p>
+</article>
 </div>
 <div class="perf-simulation" id="perfSimulation" aria-live="polite">
-<span class="sim-label">1 USDC per detection simulation</span>
+<div class="sim-main">
+<span class="sim-label">Current simulated value</span>
 <span class="sim-value">Loading…</span>
-<span class="sim-note">Current mark-to-market only. Not realized PnL.</span>
+<span class="sim-note">1 USDC per detection. Current unrealized value only. Not realized PnL.</span>
+</div>
+<div class="sim-range" aria-label="Observed amplitude">
+<span class="sim-range-title">Observed amplitude</span>
+<dl>
+<dt title="Maximum favorable excursion reached by the open detections.">Best move observed</dt>
+<dd data-sim-mfe>—</dd>
+<dt title="Maximum adverse excursion reached by the open detections.">Worst move observed</dt>
+<dd data-sim-mae>—</dd>
+<dt title="Median favorable excursion per detection.">Median favorable</dt>
+<dd data-sim-mfe-median>—</dd>
+<dt title="Median adverse excursion per detection.">Median adverse</dt>
+<dd data-sim-mae-median>—</dd>
+<dt title="Current simulated value divided by the best favorable move observed. Capped at 0% when current value is negative.">Capture rate</dt>
+<dd data-sim-capture>—</dd>
+</dl>
+</div>
 </div>
 </div>
 <section class="perf-section">
@@ -295,7 +316,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260510"></script>
+<script defer="" src="/score/performance.js?v=20260510b"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
