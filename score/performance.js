@@ -27,10 +27,9 @@
       simNoPerf: "Performance data is not available yet.",
       simLine: (total, count, ended) => `${total} across ${count} detections · ${ended} ended`,
       simFoot: (active) => `Simulation normalized to 1 USDC per detection. ${active} still tracked. Current unrealized value only. Not realized PnL.`,
-      totalBest: (v) => `${v} cumulative`,
-      totalWorst: (v) => `${v} cumulative`,
-      medianValue: (v) => `${v} median`,
-      captureRate: (v) => `${v}%`,
+      totalGroupTitle: (n) => `Across all ${n} detections`,
+      totalGroupTitleFallback: "Across all detections",
+      medianGroupTitle: "Per detection (median)",
       captureUnavailable: "—"
     },
     fr: {
@@ -55,10 +54,9 @@
       simNoPerf: "Les données de performance ne sont pas encore disponibles.",
       simLine: (total, count, ended) => `${total} sur ${count} détections · ${ended} terminées`,
       simFoot: (active) => `Simulation normalisée à 1 USDC par détection. ${active} encore suivies. Valeur latente actuelle uniquement. Pas un PnL réalisé.`,
-      totalBest: (v) => `${v} cumulés`,
-      totalWorst: (v) => `${v} cumulés`,
-      medianValue: (v) => `${v} médian`,
-      captureRate: (v) => `${v}%`,
+      totalGroupTitle: (n) => `Sur les ${n} détections`,
+      totalGroupTitleFallback: "Sur l'ensemble des détections",
+      medianGroupTitle: "Par détection (médiane)",
       captureUnavailable: "—"
     }
   };
@@ -96,6 +94,12 @@
     const d = decimals === undefined ? 3 : decimals;
     const sign = v > 0 ? "+" : "";
     return sign + Number(v).toFixed(d) + " USDC";
+  }
+
+  function fmtCapturePct(v, decimals) {
+    if (v === null || v === undefined || !isFinite(v)) return "—";
+    const d = decimals === undefined ? 1 : decimals;
+    return Number(v).toFixed(d) + "%";
   }
 
   function median(values) {
@@ -321,15 +325,21 @@
     if (!root) return;
     const valueEl = root.querySelector(".sim-value");
     const noteEl = root.querySelector(".sim-note");
+    const totalTitleEl = root.querySelector("[data-sim-total-title]");
+    const medianTitleEl = root.querySelector("[data-sim-median-title]");
     const mfeEl = root.querySelector("[data-sim-mfe]");
     const maeEl = root.querySelector("[data-sim-mae]");
     const mfeMedianEl = root.querySelector("[data-sim-mfe-median]");
     const maeMedianEl = root.querySelector("[data-sim-mae-median]");
     const captureEl = root.querySelector("[data-sim-capture]");
 
+    // Median group title is static, set it on every render (idempotent)
+    if (medianTitleEl) medianTitleEl.textContent = t.medianGroupTitle;
+
     if (!data || !data.ok || !Array.isArray(data.items) || data.items.length === 0) {
       if (valueEl) valueEl.textContent = t.simNoData;
       if (noteEl) noteEl.textContent = "";
+      if (totalTitleEl) totalTitleEl.textContent = t.totalGroupTitleFallback;
       [mfeEl, maeEl, mfeMedianEl, maeMedianEl, captureEl].forEach(el => { if (el) el.textContent = "—"; });
       return;
     }
@@ -338,6 +348,7 @@
     if (usable.length === 0) {
       if (valueEl) valueEl.textContent = t.simNoPerf;
       if (noteEl) noteEl.textContent = "";
+      if (totalTitleEl) totalTitleEl.textContent = t.totalGroupTitleFallback;
       [mfeEl, maeEl, mfeMedianEl, maeMedianEl, captureEl].forEach(el => { if (el) el.textContent = "—"; });
       return;
     }
@@ -368,11 +379,12 @@
 
     if (valueEl) valueEl.textContent = t.simLine(total, usable.length, ended);
     if (noteEl) noteEl.textContent = t.simFoot(active);
-    if (mfeEl) mfeEl.textContent = mfeUsdcValues.length ? t.totalBest(fmtUsdc(mfeTotal, 3)) : "—";
-    if (maeEl) maeEl.textContent = maeUsdcValues.length ? t.totalWorst(fmtUsdc(maeTotal, 3)) : "—";
-    if (mfeMedianEl) mfeMedianEl.textContent = mfeMed !== null ? t.medianValue(fmtUsdc(mfeMed, 3)) : "—";
-    if (maeMedianEl) maeMedianEl.textContent = maeMed !== null ? t.medianValue(fmtUsdc(maeMed, 3)) : "—";
-    if (captureEl) captureEl.textContent = capture !== null ? t.captureRate(Math.min(999, capture).toFixed(1)) : t.captureUnavailable;
+    if (totalTitleEl) totalTitleEl.textContent = t.totalGroupTitle(usable.length);
+    if (mfeEl) mfeEl.textContent = mfeUsdcValues.length ? fmtUsdc(mfeTotal, 3) : "—";
+    if (maeEl) maeEl.textContent = maeUsdcValues.length ? fmtUsdc(maeTotal, 3) : "—";
+    if (mfeMedianEl) mfeMedianEl.textContent = mfeMed !== null ? fmtUsdc(mfeMed, 3) : "—";
+    if (maeMedianEl) maeMedianEl.textContent = maeMed !== null ? fmtUsdc(maeMed, 3) : "—";
+    if (captureEl) captureEl.textContent = capture !== null ? fmtCapturePct(Math.min(999, capture), 1) : t.captureUnavailable;
   }
 
   // -------------------------------------------------------------------

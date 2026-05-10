@@ -596,6 +596,53 @@ html:not([data-theme="dark"]) .sim-range dt {
   color: #374151;
 }
 
+/* Group structure inside observed amplitude */
+.sim-range-group {
+  margin-bottom: 0.85rem;
+}
+
+.sim-range-group:last-child {
+  margin-bottom: 0;
+}
+
+.sim-range-group-title {
+  margin: 0 0 0.4rem 0;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--muted, rgba(255,255,255,0.5));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+html:not([data-theme="dark"]) .sim-range-group-title {
+  color: #6b7280;
+}
+
+.sim-range-capture {
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--border, rgba(255,255,255,0.10));
+}
+
+html:not([data-theme="dark"]) .sim-range-capture {
+  border-top-color: #e2e6ed;
+}
+
+.sim-range-capture dd {
+  font-size: 1rem;
+}
+
+.sim-range-formula {
+  margin: 0.3rem 0 0 0;
+  font-size: 0.7rem;
+  color: var(--muted, rgba(255,255,255,0.45));
+  font-style: italic;
+  text-align: right;
+}
+
+html:not([data-theme="dark"]) .sim-range-formula {
+  color: #6b7280;
+}
+
 @media (max-width: 760px) {
   .perf-simulation {
     grid-template-columns: 1fr;
