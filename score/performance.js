@@ -25,8 +25,13 @@
       statusUnknown: "—",
       simNoData: "Waiting for detection data.",
       simNoPerf: "Performance data is not available yet.",
-      simLine: (total, count, ended) => `${total} on ${count} detections · ${ended} ended`,
-      simFoot: (active) => `${active} still tracked. This is current mark-to-market, not realized PnL.`
+      simLine: (total, count, ended) => `${total} across ${count} detections · ${ended} ended`,
+      simFoot: (active) => `${active} still tracked. Current unrealized value only. Not realized PnL.`,
+      totalBest: (v) => `${v} total`,
+      totalWorst: (v) => `${v} total`,
+      medianValue: (v) => `${v} median`,
+      captureRate: (v) => `${v}%`,
+      captureUnavailable: "—"
     },
     fr: {
       loading: "Chargement…",
@@ -49,7 +54,12 @@
       simNoData: "En attente des données de détection.",
       simNoPerf: "Les données de performance ne sont pas encore disponibles.",
       simLine: (total, count, ended) => `${total} sur ${count} détections · ${ended} terminées`,
-      simFoot: (active) => `${active} encore suivies. Mark-to-market actuel, pas un PnL réalisé.`
+      simFoot: (active) => `${active} encore suivies. Valeur latente actuelle uniquement. Pas un PnL réalisé.`,
+      totalBest: (v) => `${v} au total`,
+      totalWorst: (v) => `${v} au total`,
+      medianValue: (v) => `${v} médian`,
+      captureRate: (v) => `${v}%`,
+      captureUnavailable: "—"
     }
   };
 
@@ -79,6 +89,21 @@
     const d = decimals === undefined ? 2 : decimals;
     const sign = v > 0 ? "+" : "";
     return sign + Number(v).toFixed(d) + "%";
+  }
+
+  function fmtUsdc(v, decimals) {
+    if (v === null || v === undefined || !isFinite(v)) return "—";
+    const d = decimals === undefined ? 3 : decimals;
+    const sign = v > 0 ? "+" : "";
+    return sign + Number(v).toFixed(d) + " USDC";
+  }
+
+  function median(values) {
+    const arr = values.filter(v => typeof v === "number" && isFinite(v)).slice().sort((a, b) => a - b);
+    if (!arr.length) return null;
+    const mid = Math.floor(arr.length / 2);
+    if (arr.length % 2) return arr[mid];
+    return (arr[mid - 1] + arr[mid]) / 2;
   }
 
   function fmtPrice(v) {
@@ -296,10 +321,16 @@
     if (!root) return;
     const valueEl = root.querySelector(".sim-value");
     const noteEl = root.querySelector(".sim-note");
+    const mfeEl = root.querySelector("[data-sim-mfe]");
+    const maeEl = root.querySelector("[data-sim-mae]");
+    const mfeMedianEl = root.querySelector("[data-sim-mfe-median]");
+    const maeMedianEl = root.querySelector("[data-sim-mae-median]");
+    const captureEl = root.querySelector("[data-sim-capture]");
 
     if (!data || !data.ok || !Array.isArray(data.items) || data.items.length === 0) {
       if (valueEl) valueEl.textContent = t.simNoData;
       if (noteEl) noteEl.textContent = "";
+      [mfeEl, maeEl, mfeMedianEl, maeMedianEl, captureEl].forEach(el => { if (el) el.textContent = "—"; });
       return;
     }
 
@@ -307,6 +338,7 @@
     if (usable.length === 0) {
       if (valueEl) valueEl.textContent = t.simNoPerf;
       if (noteEl) noteEl.textContent = "";
+      [mfeEl, maeEl, mfeMedianEl, maeMedianEl, captureEl].forEach(el => { if (el) el.textContent = "—"; });
       return;
     }
 
@@ -316,10 +348,31 @@
       return st === "expired" || st === "ended";
     }).length;
     const active = usable.length - ended;
-    const total = `${pnl >= 0 ? "+" : ""}${pnl.toFixed(3)} USDC`;
+    const total = fmtUsdc(pnl, 3);
+
+    const mfeUsdcValues = usable
+      .filter(item => typeof item.mfe === "number" && isFinite(item.mfe))
+      .map(item => Math.max(0, item.mfe) / 100);
+    const maeUsdcValues = usable
+      .filter(item => typeof item.mae === "number" && isFinite(item.mae))
+      .map(item => {
+        const raw = item.mae;
+        return (raw > 0 ? -raw : raw) / 100;
+      });
+
+    const mfeTotal = mfeUsdcValues.reduce((sum, v) => sum + v, 0);
+    const maeTotal = maeUsdcValues.reduce((sum, v) => sum + v, 0);
+    const mfeMed = median(mfeUsdcValues);
+    const maeMed = median(maeUsdcValues);
+    const capture = mfeTotal > 0 ? Math.max(0, (pnl / mfeTotal) * 100) : null;
 
     if (valueEl) valueEl.textContent = t.simLine(total, usable.length, ended);
     if (noteEl) noteEl.textContent = t.simFoot(active);
+    if (mfeEl) mfeEl.textContent = mfeUsdcValues.length ? t.totalBest(fmtUsdc(mfeTotal, 3)) : "—";
+    if (maeEl) maeEl.textContent = maeUsdcValues.length ? t.totalWorst(fmtUsdc(maeTotal, 3)) : "—";
+    if (mfeMedianEl) mfeMedianEl.textContent = mfeMed !== null ? t.medianValue(fmtUsdc(mfeMed, 3)) : "—";
+    if (maeMedianEl) maeMedianEl.textContent = maeMed !== null ? t.medianValue(fmtUsdc(maeMed, 3)) : "—";
+    if (captureEl) captureEl.textContent = capture !== null ? t.captureRate(Math.min(999, capture).toFixed(1)) : t.captureUnavailable;
   }
 
   // -------------------------------------------------------------------

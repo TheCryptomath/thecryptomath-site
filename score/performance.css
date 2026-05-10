@@ -540,3 +540,75 @@ html:not([data-theme="dark"]) .perf-table-wrap {
   background: var(--bg-surface);
   border-color: var(--border);
 }
+
+/* Simulation metrics and observed amplitude */
+.perf-simulation {
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  align-items: stretch;
+}
+
+.sim-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.sim-range {
+  padding-left: 1rem;
+  border-left: 1px solid var(--border, rgba(255,255,255,0.10));
+}
+
+.sim-range-title {
+  display: block;
+  color: var(--muted, rgba(255,255,255,0.65));
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.55rem;
+}
+
+.sim-range dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+}
+
+.sim-range dt {
+  color: var(--muted, rgba(255,255,255,0.62));
+}
+
+.sim-range dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+html:not([data-theme="dark"]) .sim-range {
+  border-left-color: #d6dbe4;
+}
+
+html:not([data-theme="dark"]) .sim-range-title,
+html:not([data-theme="dark"]) .sim-range dt {
+  color: #374151;
+}
+
+@media (max-width: 760px) {
+  .perf-simulation {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-range {
+    padding-left: 0;
+    padding-top: 1rem;
+    border-left: 0;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.10));
+  }
+
+  html:not([data-theme="dark"]) .sim-range {
+    border-top-color: #d6dbe4;
+  }
+}
