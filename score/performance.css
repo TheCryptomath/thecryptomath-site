@@ -77,6 +77,7 @@
 .perf-card {
   display: flex;
   flex-direction: column;
+  min-height: 92px;
   padding: 1rem;
   background: var(--card, rgba(255,255,255,0.03));
   border: 1px solid var(--border, rgba(255,255,255,0.08));
@@ -102,10 +103,12 @@
 .perf-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  min-height: 168px;
   gap: 1rem;
 }
 
 .stats-block {
+  min-height: 136px;
   padding: 1rem;
   background: var(--card, rgba(255,255,255,0.03));
   border: 1px solid var(--border, rgba(255,255,255,0.08));
@@ -168,10 +171,102 @@
   border-color: var(--text, rgba(255,255,255,0.95));
 }
 
+
+/* Evidence and early track record framing */
+
+.perf-evidence-section {
+  background: var(--card, rgba(255,255,255,0.015));
+}
+
+.perf-note-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.perf-note-card {
+  min-height: 156px;
+  padding: 1rem;
+  background: var(--card, rgba(255,255,255,0.03));
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  border-radius: 12px;
+}
+
+.perf-note-card h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.perf-note-card p {
+  color: var(--muted, rgba(255,255,255,0.7));
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.perf-simulation {
+  min-height: 92px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.35rem 1rem;
+  align-items: baseline;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(74,222,128,0.10), rgba(96,165,250,0.08));
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  border-radius: 12px;
+}
+
+.sim-label {
+  color: var(--muted, rgba(255,255,255,0.65));
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.sim-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.sim-note {
+  grid-column: 1 / -1;
+  color: var(--muted, rgba(255,255,255,0.6));
+  font-size: 0.85rem;
+}
+
+html:not([data-theme="dark"]) .perf-evidence-section {
+  background: #f9fafb;
+}
+
+html:not([data-theme="dark"]) .perf-note-card {
+  background: #ffffff;
+  border-color: #d6dbe4;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+html:not([data-theme="dark"]) .perf-note-card p,
+html:not([data-theme="dark"]) .sim-label,
+html:not([data-theme="dark"]) .sim-note {
+  color: #374151;
+}
+
+html:not([data-theme="dark"]) .perf-simulation {
+  background: linear-gradient(135deg, rgba(220,252,231,0.95), rgba(219,234,254,0.95));
+  border-color: #d6dbe4;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+html:not([data-theme="dark"]) .sim-value {
+  color: #111827;
+}
+
 /* Table */
 
 .table-wrap {
   overflow-x: auto;
+  min-height: 820px;
   border: 1px solid var(--border, rgba(255,255,255,0.08));
   border-radius: 12px;
 }

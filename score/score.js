@@ -844,9 +844,6 @@ async function runCalculation(isAuto) {
     const data = await callApi(payload, isAuto ? "autocalc" : "calc");
     renderScores(data, payload);
 
-    if (!isAuto) {
-      trackScoreCalculated(state.lastScore, payload.regime, payload.direction, payload.mode);
-    }
 
     setStatus(isAuto ? t("updated") : t("ok"), "ok");
   } catch (e) {
@@ -980,20 +977,6 @@ function exportJSON() {
   setStatus(t("exported"), "ok");
 }
 
-function trackScoreCalculated(score, regime, direction, mode) {
-  // Cloudflare Web Analytics does not support custom events yet.
-  return;
-}
-
-function trackNewsletterClick(source) {
-  // Cloudflare Web Analytics does not support custom events yet.
-  return;
-}
-
-function trackScoreShared(platform, score) {
-  // Cloudflare Web Analytics does not support custom events yet.
-  return;
-}
 
 function getScoreForShare() {
   const raw = $("scoreTotal") ? $("scoreTotal").textContent : "";
@@ -1018,8 +1001,6 @@ function shareOnX() {
   const text = `${headline}\n\n${t("result", { score })}\n\n${t("tryItFree")}`;
   const url = "https://thecryptomath.com/score/";
   window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, "_blank");
-
-  trackScoreShared("x", score);
 }
 
 function shareOnTelegram() {
@@ -1029,8 +1010,6 @@ function shareOnTelegram() {
   const text = `${headline}\n\n${t("result", { score })}\n\n${t("tryItFree")}`;
   const url = "https://thecryptomath.com/score/";
   window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, "_blank");
-
-  trackScoreShared("telegram", score);
 }
 
 function bind() {
@@ -1065,7 +1044,6 @@ function bind() {
   $("resetBtn").addEventListener("click", resetAll);
   $("exportBtn").addEventListener("click", exportJSON);
 
-  $("ctaNewsletterBtn").addEventListener("click", () => trackNewsletterClick("score_post"));
   $("shareXBtn").addEventListener("click", shareOnX);
   $("shareTgBtn").addEventListener("click", shareOnTelegram);
 
@@ -1087,8 +1065,21 @@ function bind() {
   });
 }
 
-$("methodVersion").textContent = t("methodVersion", { v: METHOD_VERSION });
-if ($("exportBtn")) $("exportBtn").textContent = t("exportJson");
-$("regime").value = "Auto";
-applyModeUI();
-bind();
+function initScoreTool() {
+  const methodVersionEl = $("methodVersion");
+  const regimeEl = $("regime");
+
+  if (!methodVersionEl || !regimeEl) return;
+
+  methodVersionEl.textContent = t("methodVersion", { v: METHOD_VERSION });
+  if ($("exportBtn")) $("exportBtn").textContent = t("exportJson");
+  regimeEl.value = "Auto";
+  applyModeUI();
+  bind();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initScoreTool, { once: true });
+} else {
+  initScoreTool();
+}

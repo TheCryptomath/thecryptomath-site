@@ -22,7 +22,11 @@
       pending: "to come",
       statusTracked: "TRACKED",
       statusEnded: "ENDED",
-      statusUnknown: "—"
+      statusUnknown: "—",
+      simNoData: "Waiting for detection data.",
+      simNoPerf: "Performance data is not available yet.",
+      simLine: (total, count, ended) => `${total} on ${count} detections · ${ended} ended`,
+      simFoot: (active) => `${active} still tracked. This is current mark-to-market, not realized PnL.`
     },
     fr: {
       loading: "Chargement…",
@@ -41,7 +45,11 @@
       pending: "à venir",
       statusTracked: "SUIVI",
       statusEnded: "TERMINÉ",
-      statusUnknown: "—"
+      statusUnknown: "—",
+      simNoData: "En attente des données de détection.",
+      simNoPerf: "Les données de performance ne sont pas encore disponibles.",
+      simLine: (total, count, ended) => `${total} sur ${count} détections · ${ended} terminées`,
+      simFoot: (active) => `${active} encore suivies. Mark-to-market actuel, pas un PnL réalisé.`
     }
   };
 
@@ -279,6 +287,41 @@
     tbody.innerHTML = rows;
   }
 
+
+  // -------------------------------------------------------------------
+  // Render 1 USDC directional simulation
+  // -------------------------------------------------------------------
+  function renderSimulation(data) {
+    const root = document.getElementById("perfSimulation");
+    if (!root) return;
+    const valueEl = root.querySelector(".sim-value");
+    const noteEl = root.querySelector(".sim-note");
+
+    if (!data || !data.ok || !Array.isArray(data.items) || data.items.length === 0) {
+      if (valueEl) valueEl.textContent = t.simNoData;
+      if (noteEl) noteEl.textContent = "";
+      return;
+    }
+
+    const usable = data.items.filter(item => typeof item.directionalPerfPct === "number" && isFinite(item.directionalPerfPct));
+    if (usable.length === 0) {
+      if (valueEl) valueEl.textContent = t.simNoPerf;
+      if (noteEl) noteEl.textContent = "";
+      return;
+    }
+
+    const pnl = usable.reduce((sum, item) => sum + (item.directionalPerfPct / 100), 0);
+    const ended = usable.filter(item => {
+      const st = String(item.status || "").toLowerCase();
+      return st === "expired" || st === "ended";
+    }).length;
+    const active = usable.length - ended;
+    const total = `${pnl >= 0 ? "+" : ""}${pnl.toFixed(3)} USDC`;
+
+    if (valueEl) valueEl.textContent = t.simLine(total, usable.length, ended);
+    if (noteEl) noteEl.textContent = t.simFoot(active);
+  }
+
   // -------------------------------------------------------------------
   // Filters
   // -------------------------------------------------------------------
@@ -305,6 +348,7 @@
     ]);
     renderSummary(summary);
     renderStats(stats);
+    renderSimulation(list);
     renderList(list);
   }
 
