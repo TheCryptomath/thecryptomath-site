@@ -47,7 +47,7 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260509" rel="stylesheet"/>
-<link href="/score/performance.css?v=20260510b" rel="stylesheet"/>
+<link href="/score/performance.css?v=20260510c" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
@@ -193,18 +193,31 @@
 </div>
 <div class="sim-range" aria-label="Observed amplitude">
 <span class="sim-range-title">Observed amplitude</span>
+<div class="sim-range-group">
+<h4 class="sim-range-group-title" data-sim-total-title>Across all detections</h4>
 <dl>
 <dt title="Maximum favorable excursion reached by the open detections.">Best move observed</dt>
 <dd data-sim-mfe>—</dd>
 <dt title="Maximum adverse excursion reached by the open detections.">Worst move observed</dt>
 <dd data-sim-mae>—</dd>
-<dt title="Median favorable excursion per detection.">Median favorable</dt>
+</dl>
+</div>
+<div class="sim-range-group">
+<h4 class="sim-range-group-title" data-sim-median-title>Per detection (median)</h4>
+<dl>
+<dt title="Median favorable excursion per detection.">Favorable move</dt>
 <dd data-sim-mfe-median>—</dd>
-<dt title="Median adverse excursion per detection.">Median adverse</dt>
+<dt title="Median adverse excursion per detection.">Adverse move</dt>
 <dd data-sim-mae-median>—</dd>
+</dl>
+</div>
+<div class="sim-range-group sim-range-capture">
+<dl>
 <dt title="Current simulated value divided by the best favorable move observed. Capped at 0% when current value is negative.">Capture rate</dt>
 <dd data-sim-capture>—</dd>
 </dl>
+<p class="sim-range-formula">current value / best move observed</p>
+</div>
 </div>
 </div>
 </div>
@@ -316,7 +329,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260510c"></script>
+<script defer="" src="/score/performance.js?v=20260510d"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
