@@ -47,7 +47,7 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260509" rel="stylesheet"/>
-<link href="/score/performance.css?v=20260510b" rel="stylesheet"/>
+<link href="/score/performance.css?v=20260510c" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
@@ -193,18 +193,31 @@
 </div>
 <div class="sim-range" aria-label="Amplitude observée">
 <span class="sim-range-title">Amplitude observée</span>
+<div class="sim-range-group">
+<h4 class="sim-range-group-title" data-sim-total-title>Sur l'ensemble des détections</h4>
 <dl>
 <dt title="Meilleur mouvement favorable atteint par les détections ouvertes.">Meilleur mouvement observé</dt>
 <dd data-sim-mfe>—</dd>
 <dt title="Pire mouvement défavorable atteint par les détections ouvertes.">Pire mouvement observé</dt>
 <dd data-sim-mae>—</dd>
-<dt title="Mouvement favorable médian par détection.">Médiane favorable</dt>
+</dl>
+</div>
+<div class="sim-range-group">
+<h4 class="sim-range-group-title" data-sim-median-title>Par détection (médiane)</h4>
+<dl>
+<dt title="Mouvement favorable médian par détection.">Mouvement favorable</dt>
 <dd data-sim-mfe-median>—</dd>
-<dt title="Mouvement défavorable médian par détection.">Médiane défavorable</dt>
+<dt title="Mouvement défavorable médian par détection.">Mouvement défavorable</dt>
 <dd data-sim-mae-median>—</dd>
+</dl>
+</div>
+<div class="sim-range-group sim-range-capture">
+<dl>
 <dt title="Valeur simulée actuelle divisée par le meilleur mouvement favorable observé. Plancher à 0% si la valeur actuelle est négative.">Capture rate</dt>
 <dd data-sim-capture>—</dd>
 </dl>
+<p class="sim-range-formula">valeur actuelle / meilleur mouvement observé</p>
+</div>
 </div>
 </div>
 </div>
@@ -318,7 +331,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260510c"></script>
+<script defer="" src="/score/performance.js?v=20260510d"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
