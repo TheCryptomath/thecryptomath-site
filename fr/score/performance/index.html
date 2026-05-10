@@ -47,7 +47,7 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260509" rel="stylesheet"/>
-<link href="/score/performance.css?v=20260510" rel="stylesheet"/>
+<link href="/score/performance.css?v=20260510b" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
@@ -180,11 +180,32 @@
 <h3>Exceptional est rare par design</h3>
 <p>Le niveau le plus élevé est volontairement strict. Zéro détection Exceptional récente signifie que le scanner n’a pas vu de confluence maximale, pas que le niveau est inutilisé.</p>
 </article>
+<article class="perf-note-card">
+<h3>Règle de clôture</h3>
+<p>Chaque détection est suivie pendant 90 jours maximum. Les détections avec entrée, stop et objectif explicites sont clôturées plus tôt si le TP ou le SL est touché. Les anciennes détections ouvertes sont clôturées au prix courant. Règle activée le 10 mai 2026.</p>
+</article>
 </div>
 <div class="perf-simulation" id="perfSimulation" aria-live="polite">
-<span class="sim-label">Simulation 1 USDC par détection</span>
+<div class="sim-main">
+<span class="sim-label">Valeur simulée actuelle</span>
 <span class="sim-value">Chargement…</span>
-<span class="sim-note">Mark-to-market actuel uniquement. Pas un PnL réalisé.</span>
+<span class="sim-note">1 USDC par détection. Valeur latente actuelle uniquement. Pas un PnL réalisé.</span>
+</div>
+<div class="sim-range" aria-label="Amplitude observée">
+<span class="sim-range-title">Amplitude observée</span>
+<dl>
+<dt title="Meilleur mouvement favorable atteint par les détections ouvertes.">Meilleur mouvement observé</dt>
+<dd data-sim-mfe>—</dd>
+<dt title="Pire mouvement défavorable atteint par les détections ouvertes.">Pire mouvement observé</dt>
+<dd data-sim-mae>—</dd>
+<dt title="Mouvement favorable médian par détection.">Médiane favorable</dt>
+<dd data-sim-mfe-median>—</dd>
+<dt title="Mouvement défavorable médian par détection.">Médiane défavorable</dt>
+<dd data-sim-mae-median>—</dd>
+<dt title="Valeur simulée actuelle divisée par le meilleur mouvement favorable observé. Plancher à 0% si la valeur actuelle est négative.">Capture rate</dt>
+<dd data-sim-capture>—</dd>
+</dl>
+</div>
 </div>
 </div>
 <section class="perf-section">
@@ -297,7 +318,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260510"></script>
+<script defer="" src="/score/performance.js?v=20260510b"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
