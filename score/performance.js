@@ -409,7 +409,7 @@
     const [summary, stats, list] = await Promise.all([
       fetchJSON("/summary"),
       fetchJSON("/stats"),
-      fetchJSON(`/list?limit=50${currentFilter ? "&type=" + encodeURIComponent(currentFilter) : ""}`)
+      fetchJSON(`/list?limit=200${currentFilter ? "&type=" + encodeURIComponent(currentFilter) : ""}`)
     ]);
     renderSummary(summary);
     renderStats(stats);
@@ -418,7 +418,7 @@
   }
 
   async function loadList() {
-    const list = await fetchJSON(`/list?limit=50${currentFilter ? "&type=" + encodeURIComponent(currentFilter) : ""}`);
+    const list = await fetchJSON(`/list?limit=200${currentFilter ? "&type=" + encodeURIComponent(currentFilter) : ""}`);
     renderList(list);
   }
 
