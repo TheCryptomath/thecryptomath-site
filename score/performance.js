@@ -18,6 +18,7 @@
       byType: "By type",
       byRegime: "By regime",
       byDirection: "By direction",
+      statsAwaitingDiversity: "Aggregate breakdowns will appear once detections span multiple types, regimes, or directions.",
       error: "Could not load data. Check back in a moment.",
       pending: "to come",
       statusTracked: "TRACKED",
@@ -45,6 +46,7 @@
       byType: "Par type",
       byRegime: "Par régime",
       byDirection: "Par direction",
+      statsAwaitingDiversity: "Les détails par type, régime et direction apparaîtront dès que les détections couvriront plusieurs catégories.",
       error: "Impossible de charger les données. Réessayez dans un instant.",
       pending: "à venir",
       statusTracked: "SUIVI",
@@ -231,11 +233,20 @@
 
     const html = sections.map(section => {
       const block = data.stats[section.key] || {};
-      const rows = Object.entries(block)
+      const nonEmpty = Object.entries(block)
         // Hide deprecated watch_emergency category when empty (kept in API
         // for historical records but no longer emitted publicly).
         .filter(([label, agg]) => !(label === "watch_emergency" && (!agg || !agg.count)))
-        .map(([label, agg]) => {
+        // Drop buckets with no data so the cards don't look empty.
+        .filter(([, agg]) => agg && agg.count > 0);
+
+      // Skip the whole card if fewer than 2 buckets carry data: with only
+      // one populated bucket, the comparison is trivial and the card is
+      // duplicative with the overview. It will re-appear automatically as
+      // soon as a second bucket gains data.
+      if (nonEmpty.length < 2) return "";
+
+      const rows = nonEmpty.map(([label, agg]) => {
         // Format X/Y correctes au lieu du % qui peut faire win-rate marketing
         let directionLine = "";
         if (agg.count > 0 && agg.directionCorrectPct !== null && agg.directionCorrectPct !== undefined) {
@@ -255,12 +266,14 @@
       return `
         <div class="stats-block">
           <h3>${section.title}</h3>
-          <dl>${rows || `<dt class="muted">—</dt><dd></dd>`}</dl>
+          <dl>${rows}</dl>
         </div>
       `;
     }).join("");
 
-    root.innerHTML = html;
+    root.innerHTML = html.trim()
+      ? html
+      : `<p class="muted">${t.statsAwaitingDiversity}</p>`;
 
     if (data.sample !== undefined) {
       const meta = document.getElementById("perfMeta");
