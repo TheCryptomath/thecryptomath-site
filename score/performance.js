@@ -52,7 +52,7 @@
       statusUnknown: "—",
       simNoData: "En attente des données de détection.",
       simNoPerf: "Les données de performance ne sont pas encore disponibles.",
-      simLine: (total, count, ended) => `${total} sur ${count} détections · ${ended} terminées`,
+      simLine: (total, count, ended) => `${total} sur ${count} détections · ${ended} ${ended > 1 ? "terminées" : "terminée"}`,
       simFoot: (active) => `Simulation. 1 USDC alloué par détection. ${active} encore suivies. Résultat actuel non clôturé.`,
       totalGroupTitle: (n) => `Sur les ${n} détections`,
       totalGroupTitleFallback: "Sur l'ensemble des détections",
