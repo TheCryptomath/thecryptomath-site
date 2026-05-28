@@ -47,7 +47,7 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260511" rel="stylesheet"/>
-<link href="/score/performance.css?v=20260511" rel="stylesheet"/>
+<link href="/score/performance.css?v=20260528" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
@@ -221,11 +221,12 @@
 </div>
 </div>
 </div>
+</section>
 <section class="perf-section">
 <div class="container">
 <div class="perf-section-head">
 <h2>Aggregate stats</h2>
-<p class="muted">Direction correct = price reached the favorable side at least once since detection.</p>
+<p class="muted" id="perfStatsNote">Comparable results use the +7d milestone only. MFE is the best favorable move observed during hourly checks.</p>
 </div>
 <div class="perf-stats" id="perfStats">Loading…</div>
 </div>
@@ -243,7 +244,7 @@
 </div>
 <div class="table-wrap">
 <table aria-describedby="perfTableDesc" class="perf-table">
-<caption class="sr-only" id="perfTableDesc">Latest detections suivies</caption>
+<caption class="sr-only" id="perfTableDesc">Latest tracked detections</caption>
 <thead>
 <tr>
 <th>When</th>
@@ -275,8 +276,9 @@
 <p>
           The Score Tool detects confluence on three pillars (Macro, Tech, Psycho) and emits three
           categories: <em>Exceptional</em>, <em>Signal</em>, and <em>Watchlist</em>.
-          Once emitted, each detection is tracked at +1h, +4h, +24h, +7d and +30d. Direction-correct means the
-          price moved in the predicted direction at the time of the last update.
+          Once emitted, each Watchlist detection is tracked for 7 days, each Signal for 21 days and each Exceptional for 45 days.
+          Fixed-horizon statistics use only detections that have reached +7d. Positive at least once means the price moved in
+          the expected direction during at least one hourly observation. It is not a win rate.
         </p>
 <p>
           Prices are checked once per hour. Milestone columns (+24h, +7d) capture the first observation
@@ -329,7 +331,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260511"></script>
+<script defer="" src="/score/performance.js?v=20260528"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
