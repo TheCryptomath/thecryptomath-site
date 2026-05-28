@@ -47,7 +47,7 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260511" rel="stylesheet"/>
-<link href="/score/performance.css?v=20260511" rel="stylesheet"/>
+<link href="/score/performance.css?v=20260528" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
@@ -221,11 +221,12 @@
 </div>
 </div>
 </div>
+</section>
 <section class="perf-section">
 <div class="container">
 <div class="perf-section-head">
 <h2>Statistiques agrégées</h2>
-<p class="muted">Direction correcte = le prix a atteint le côté favorable au moins une fois depuis la détection.</p>
+<p class="muted" id="perfStatsNote">Les résultats comparables utilisent uniquement le jalon +7j. La MFE correspond au meilleur mouvement favorable observé lors des vérifications horaires.</p>
 </div>
 <div class="perf-stats" id="perfStats">Chargement…</div>
 </div>
@@ -275,8 +276,9 @@
 <p>
           Le Score Tool détecte des confluences sur trois piliers (Macro, Tech, Psycho) et émet
           trois catégories : <em>Exceptional</em>, <em>Signal</em> et <em>Watchlist</em>.
-          Une fois émise, chaque détection est suivie à +1h, +4h, +24h, +7j et +30j. Direction correcte signifie
-          que le prix a bougé dans le sens prédit au moment de la dernière mise à jour.
+          Une fois émise, chaque détection Watchlist est suivie pendant 7 jours, chaque Signal pendant 21 jours et chaque Exceptional pendant 45 jours.
+          Les statistiques à horizon fixe utilisent uniquement les détections ayant atteint +7j. Positive au moins une fois signifie que
+          le prix a évolué dans le sens attendu lors d’au moins une vérification horaire. Ce n’est pas un taux de réussite.
         </p>
 <p>
           Les prix sont vérifiés une fois par heure. Les colonnes de jalon (+24h, +7j) capturent la
@@ -331,7 +333,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260511"></script>
+<script defer="" src="/score/performance.js?v=20260528"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
