@@ -39,7 +39,13 @@
       totalGroupTitle: (n) => `Across all ${n} detections`,
       totalGroupTitleFallback: "Across all detections",
       medianGroupTitle: "Per detection (median)",
-      captureUnavailable: "—"
+      captureUnavailable: "—",
+      captureBelowEntry: "Simulated value currently below entry",
+      captureFormula: "current value / best move observed",
+      simAllTitle: "All tracked detections",
+      simSignalsTitle: "Signals only (Signal + Exceptional)",
+      simSignalsLine: (total, count, ended) => `${total} across ${count} detections · ${ended} ended`,
+      simSignalsNone: "No Signal or Exceptional detection tracked yet."
     },
     fr: {
       loading: "Chargement…",
@@ -75,7 +81,13 @@
       totalGroupTitle: (n) => `Sur les ${n} détections`,
       totalGroupTitleFallback: "Sur l'ensemble des détections",
       medianGroupTitle: "Par détection (médiane)",
-      captureUnavailable: "—"
+      captureUnavailable: "—",
+      captureBelowEntry: "Valeur simulée actuellement sous le point d'entrée",
+      captureFormula: "valeur actuelle / meilleur mouvement observé",
+      simAllTitle: "Toutes les détections suivies",
+      simSignalsTitle: "Signaux uniquement (Signal + Exceptional)",
+      simSignalsLine: (total, count, ended) => `${total} sur ${count} détections · ${ended} ${ended > 1 ? "terminées" : "terminée"}`,
+      simSignalsNone: "Aucune détection Signal ou Exceptional suivie pour l'instant."
     }
   };
 
@@ -397,59 +409,56 @@
     const mfeMedianEl = root.querySelector("[data-sim-mfe-median]");
     const maeMedianEl = root.querySelector("[data-sim-mae-median]");
     const captureEl = root.querySelector("[data-sim-capture]");
+    const captureNoteEl = root.querySelector("[data-sim-capture-note]");
+    const allTitleEl = root.querySelector("[data-sim-all-title]");
+    const sigTitleEl = root.querySelector("[data-sim-signals-title]");
+    const sigValueEl = root.querySelector("[data-sim-signals-value]");
 
-    // Median group title is static, set it on every render (idempotent)
+    // Static / idempotent labels
     if (medianTitleEl) medianTitleEl.textContent = t.medianGroupTitle;
+    if (allTitleEl) allTitleEl.textContent = t.simAllTitle;
+    if (sigTitleEl) sigTitleEl.textContent = t.simSignalsTitle;
 
-    if (!data || !data.ok || !Array.isArray(data.items) || data.items.length === 0) {
+    // v2.7.8: simulation is computed server-side over the FULL universe
+    // (loadAllTracked), exposed as data.simulation.{allTracked,signalsOnly}.
+    // This stays exact past 200 detections, unlike the old /list-based math.
+    const sim = data && data.ok ? data.simulation : null;
+    const all = sim ? sim.allTracked : null;
+    const sig = sim ? sim.signalsOnly : null;
+
+    if (!all || !Number.isFinite(Number(all.count)) || all.count === 0 ||
+        all.currentSimulatedValue === null || all.currentSimulatedValue === undefined) {
       if (valueEl) valueEl.textContent = t.simNoData;
       if (noteEl) noteEl.textContent = "";
       if (totalTitleEl) totalTitleEl.textContent = t.totalGroupTitleFallback;
+      if (sigValueEl) sigValueEl.textContent = "—";
+      if (captureNoteEl) captureNoteEl.textContent = t.captureFormula;
       [mfeEl, maeEl, mfeMedianEl, maeMedianEl, captureEl].forEach(el => { if (el) el.textContent = "—"; });
       return;
     }
 
-    const usable = data.items.filter(item => typeof item.directionalPerfPct === "number" && isFinite(item.directionalPerfPct));
-    if (usable.length === 0) {
-      if (valueEl) valueEl.textContent = t.simNoPerf;
-      if (noteEl) noteEl.textContent = "";
-      if (totalTitleEl) totalTitleEl.textContent = t.totalGroupTitleFallback;
-      [mfeEl, maeEl, mfeMedianEl, maeMedianEl, captureEl].forEach(el => { if (el) el.textContent = "—"; });
-      return;
+    // All tracked
+    if (valueEl) valueEl.textContent = t.simLine(fmtUsdc(all.currentSimulatedValue, 3), all.count, all.ended);
+    if (noteEl) noteEl.textContent = t.simFoot(all.active);
+    if (totalTitleEl) totalTitleEl.textContent = t.totalGroupTitle(all.count);
+
+    // Signals only
+    if (sigValueEl) {
+      sigValueEl.textContent = (sig && sig.count)
+        ? t.simSignalsLine(fmtUsdc(sig.currentSimulatedValue, 3), sig.count, sig.ended)
+        : t.simSignalsNone;
     }
 
-    const pnl = usable.reduce((sum, item) => sum + (item.directionalPerfPct / 100), 0);
-    const ended = usable.filter(item => {
-      const st = String(item.status || "").toLowerCase();
-      return st === "expired" || st === "ended";
-    }).length;
-    const active = usable.length - ended;
-    const total = fmtUsdc(pnl, 3);
+    // Observed amplitude (computed over all tracked detections)
+    if (mfeEl) mfeEl.textContent = all.mfeTotal !== null && all.mfeTotal !== undefined ? fmtUsdc(all.mfeTotal, 3) : "—";
+    if (maeEl) maeEl.textContent = all.maeTotal !== null && all.maeTotal !== undefined ? fmtUsdc(all.maeTotal, 3) : "—";
+    if (mfeMedianEl) mfeMedianEl.textContent = all.mfeMedian !== null && all.mfeMedian !== undefined ? fmtUsdc(all.mfeMedian, 3) : "—";
+    if (maeMedianEl) maeMedianEl.textContent = all.maeMedian !== null && all.maeMedian !== undefined ? fmtUsdc(all.maeMedian, 3) : "—";
 
-    const mfeUsdcValues = usable
-      .filter(item => typeof item.mfe === "number" && isFinite(item.mfe))
-      .map(item => Math.max(0, item.mfe) / 100);
-    const maeUsdcValues = usable
-      .filter(item => typeof item.mae === "number" && isFinite(item.mae))
-      .map(item => {
-        const raw = item.mae;
-        return (raw > 0 ? -raw : raw) / 100;
-      });
-
-    const mfeTotal = mfeUsdcValues.reduce((sum, v) => sum + v, 0);
-    const maeTotal = maeUsdcValues.reduce((sum, v) => sum + v, 0);
-    const mfeMed = median(mfeUsdcValues);
-    const maeMed = median(maeUsdcValues);
-    const capture = mfeTotal > 0 ? Math.max(0, (pnl / mfeTotal) * 100) : null;
-
-    if (valueEl) valueEl.textContent = t.simLine(total, usable.length, ended);
-    if (noteEl) noteEl.textContent = t.simFoot(active);
-    if (totalTitleEl) totalTitleEl.textContent = t.totalGroupTitle(usable.length);
-    if (mfeEl) mfeEl.textContent = mfeUsdcValues.length ? fmtUsdc(mfeTotal, 3) : "—";
-    if (maeEl) maeEl.textContent = maeUsdcValues.length ? fmtUsdc(maeTotal, 3) : "—";
-    if (mfeMedianEl) mfeMedianEl.textContent = mfeMed !== null ? fmtUsdc(mfeMed, 3) : "—";
-    if (maeMedianEl) maeMedianEl.textContent = maeMed !== null ? fmtUsdc(maeMed, 3) : "—";
+    // Capture rate: backend returns null when simulated value <= 0
+    const capture = (all.captureRate === null || all.captureRate === undefined) ? null : Number(all.captureRate);
     if (captureEl) captureEl.textContent = capture !== null ? fmtCapturePct(Math.min(999, capture), 1) : t.captureUnavailable;
+    if (captureNoteEl) captureNoteEl.textContent = capture === null ? t.captureBelowEntry : t.captureFormula;
   }
 
   // -------------------------------------------------------------------
@@ -478,7 +487,7 @@
     ]);
     renderSummary(summary);
     renderStats(stats);
-    renderSimulation(list);
+    renderSimulation(stats);
     renderList(list);
   }
 

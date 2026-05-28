@@ -286,6 +286,24 @@
   font-size: 0.85rem;
 }
 
+.sim-label-signals {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border, rgba(255,255,255,0.12));
+  display: block;
+}
+
+.sim-value-signals {
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted, rgba(255,255,255,0.82));
+}
+
+html:not([data-theme="dark"]) .sim-value-signals {
+  color: #1f2937;
+}
+
 html:not([data-theme="dark"]) .perf-evidence-section {
   background: #f9fafb;
 }
