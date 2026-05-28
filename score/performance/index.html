@@ -47,7 +47,7 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260511" rel="stylesheet"/>
-<link href="/score/performance.css?v=20260528" rel="stylesheet"/>
+<link href="/score/performance.css?v=20260528c" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
@@ -187,9 +187,11 @@
 </div>
 <div class="perf-simulation" id="perfSimulation" aria-live="polite">
 <div class="sim-main">
-<span class="sim-label">Current simulated value</span>
+<span class="sim-label" data-sim-all-title>All tracked detections</span>
 <span class="sim-value">Loading…</span>
 <span class="sim-note">1 USDC per detection. Current unrealized value only. Not realized PnL.</span>
+<span class="sim-label sim-label-signals" data-sim-signals-title>Signals only (Signal + Exceptional)</span>
+<span class="sim-value-signals" data-sim-signals-value>—</span>
 </div>
 <div class="sim-range" aria-label="Observed amplitude">
 <span class="sim-range-title">Observed amplitude</span>
@@ -213,10 +215,10 @@
 </div>
 <div class="sim-range-group sim-range-capture">
 <dl>
-<dt title="Current simulated value divided by the best favorable move observed. Capped at 0% when current value is negative.">Capture rate</dt>
+<dt title="Current simulated value divided by the best favorable move observed. Shown only when the simulated value is positive.">Capture rate</dt>
 <dd data-sim-capture>—</dd>
 </dl>
-<p class="sim-range-formula">current value / best move observed</p>
+<p class="sim-range-formula" data-sim-capture-note>current value / best move observed</p>
 </div>
 </div>
 </div>
@@ -331,7 +333,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260528"></script>
+<script defer="" src="/score/performance.js?v=20260528c"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
