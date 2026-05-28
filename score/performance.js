@@ -15,6 +15,14 @@
       avgMae: "Avg MAE",
       avgPerf: "Avg dir-perf",
       count: "Count",
+      winRate7d: "Positive at +7d",
+      medianPerf7d: "Median perf. at +7d",
+      avgPerf7d: "Average perf. at +7d",
+      avgMfeObserved: "Average MFE observed",
+      touchedProfitPct: "Positive at least once",
+      sampleAt7d: (n, total) => `${n}/${total} with +7d data`,
+      fixedHorizonNote: "Comparable results use the +7d milestone only. MFE is the best favorable move observed during hourly checks.",
+      no7dData: "Waiting for +7d data",
       byType: "By type",
       byRegime: "By regime",
       byDirection: "By direction",
@@ -43,6 +51,14 @@
       avgMae: "MAE moyen",
       avgPerf: "Perf dir. moyenne",
       count: "Nombre",
+      winRate7d: "Détections positives à +7j",
+      medianPerf7d: "Perf. médiane à +7j",
+      avgPerf7d: "Perf. moyenne à +7j",
+      avgMfeObserved: "MFE observée moyenne",
+      touchedProfitPct: "Positive au moins une fois",
+      sampleAt7d: (n, total) => `${n}/${total} avec données +7j`,
+      fixedHorizonNote: "Les résultats comparables utilisent uniquement le jalon +7j. La MFE correspond au meilleur mouvement favorable observé lors des vérifications horaires.",
+      no7dData: "En attente des données +7j",
       byType: "Par type",
       byRegime: "Par régime",
       byDirection: "Par direction",
@@ -102,6 +118,29 @@
     if (v === null || v === undefined || !isFinite(v)) return "—";
     const d = decimals === undefined ? 1 : decimals;
     return Number(v).toFixed(d) + "%";
+  }
+
+  function metricTone(v) {
+    if (v === null || v === undefined || !isFinite(v)) return "";
+    if (Number(v) > 0) return "perf-pos";
+    if (Number(v) < 0) return "perf-neg";
+    return "";
+  }
+
+  function displayBucketLabel(label) {
+    const key = String(label || "");
+    const labels = {
+      exceptional: "Exceptional",
+      signal: "Signal",
+      watchlist: "Watchlist",
+      watch_emergency: "Watchlist",
+      Bull: "Bull",
+      Range: "Range",
+      Bear: "Bear",
+      Long: "Long",
+      Short: "Short"
+    };
+    return labels[key] || key.replace(/_/g, " ");
   }
 
   function median(values) {
@@ -219,7 +258,11 @@
   // -------------------------------------------------------------------
   function renderStats(data) {
     const root = document.getElementById("perfStats");
+    const note = document.getElementById("perfStatsNote");
     if (!root) return;
+
+    if (note) note.textContent = t.fixedHorizonNote;
+
     if (!data || !data.ok || !data.stats) {
       root.textContent = t.empty;
       return;
@@ -234,39 +277,48 @@
     const html = sections.map(section => {
       const block = data.stats[section.key] || {};
       const nonEmpty = Object.entries(block)
-        // Hide deprecated watch_emergency category when empty (kept in API
-        // for historical records but no longer emitted publicly).
         .filter(([label, agg]) => !(label === "watch_emergency" && (!agg || !agg.count)))
-        // Drop buckets with no data so the cards don't look empty.
         .filter(([, agg]) => agg && agg.count > 0);
 
-      // Skip the whole card if fewer than 2 buckets carry data: with only
-      // one populated bucket, the comparison is trivial and the card is
-      // duplicative with the overview. It will re-appear automatically as
-      // soon as a second bucket gains data.
-      if (nonEmpty.length < 2) return "";
+      if (!nonEmpty.length) return "";
 
-      const rows = nonEmpty.map(([label, agg]) => {
-        // Format X/Y correctes au lieu du % qui peut faire win-rate marketing
-        let directionLine = "";
-        if (agg.count > 0 && agg.directionCorrectPct !== null && agg.directionCorrectPct !== undefined) {
-          const correctCount = Math.round((agg.directionCorrectPct / 100) * agg.count);
-          const plural = agg.count > 1 ? (lang === "fr" ? "correctes" : "correct") : (lang === "fr" ? "correcte" : "correct");
-          directionLine = ` · ${correctCount}/${agg.count} ${plural}`;
-        }
+      const buckets = nonEmpty.map(([label, agg]) => {
+        const count = Number(agg.count) || 0;
+        const sample7d = Number(agg.sample7d) || 0;
+        const has7d = sample7d > 0;
+        const winRate = has7d ? fmtCapturePct(agg.winRate7d, 1) : "—";
+        const median7d = has7d ? fmtPct(agg.medianPerf7d, 2) : "—";
+        const avg7d = has7d ? fmtPct(agg.avgPerf7d, 2) : "—";
+        const avgMfe = fmtPct(agg.avgMfe, 2);
+        const touched = fmtCapturePct(agg.touchedProfitPct, 1);
+        const sampleText = has7d ? t.sampleAt7d(sample7d, count) : t.no7dData;
 
         return `
-          <dt>${escapeHtml(label)}</dt>
-          <dd>
-            <span title="${t.count}">${agg.count}</span>${directionLine}
-          </dd>
+          <div class="stats-bucket">
+            <div class="stats-bucket-head">
+              <h4>${escapeHtml(displayBucketLabel(label))}</h4>
+              <span class="stats-sample">${escapeHtml(sampleText)}</span>
+            </div>
+            <dl class="stats-metrics">
+              <dt class="metric-primary">${t.winRate7d}</dt>
+              <dd class="metric-primary">${winRate}</dd>
+              <dt>${t.medianPerf7d}</dt>
+              <dd class="${metricTone(agg.medianPerf7d)}">${median7d}</dd>
+              <dt>${t.avgPerf7d}</dt>
+              <dd class="${metricTone(agg.avgPerf7d)}">${avg7d}</dd>
+              <dt>${t.avgMfeObserved}</dt>
+              <dd class="${metricTone(agg.avgMfe)}">${avgMfe}</dd>
+              <dt>${t.touchedProfitPct}</dt>
+              <dd>${touched}</dd>
+            </dl>
+          </div>
         `;
       }).join("");
 
       return `
         <div class="stats-block">
           <h3>${section.title}</h3>
-          <dl>${rows}</dl>
+          ${buckets}
         </div>
       `;
     }).join("");
