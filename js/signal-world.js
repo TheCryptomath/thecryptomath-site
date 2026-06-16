@@ -20,13 +20,14 @@
         source: 'Source',
         fallbackTitle: 'Le brief du matin, trié et vérifié.',
         fallbackDesc: 'La lecture du jour arrive ici quand le brief est publié.',
-        introDesc: 'Approche les balises pour explorer l’écosystème The Cryptomath.',
+        introDesc: 'Approche les lieux pour explorer l’écosystème The Cryptomath.',
         pages: [
-          ['NEWSLETTER', 'La newsletter', 'Analyses quotidiennes et lectures de marché.', '/fr/newsletter/'],
-          ['SCORE', 'Score', 'Le scanner de signaux crypto.', '/fr/score/'],
-          ['BUILD', 'Build', 'Les projets et expérimentations en cours.', '/fr/build/'],
-          ['CADRE', 'Narrative Framework', 'Lire les narratifs avant le marché.', '/fr/narrative-framework/'],
-          ['RESSOURCES', 'Ressources', 'La stack crypto sélectionnée.', '/fr/resources/']
+          ['NEWSLETTER', 'La newsletter', 'Antenne de diffusion des analyses quotidiennes.', '/fr/newsletter/', 'antenna'],
+          ['SCORE', 'Score', 'Radar des signaux crypto.', '/fr/score/', 'radar'],
+          ['BUILD', 'Build', 'Atelier des projets et expérimentations en cours.', '/fr/build/', 'workshop'],
+          ['FRAMEWORK', 'Narrative Framework', 'Observatoire des narratifs avant le marché.', '/fr/narrative-framework/', 'observatory'],
+          ['RESSOURCES', 'Ressources', 'Coffre et terminal de la stack crypto sélectionnée.', '/fr/resources/', 'terminal'],
+          ['CONNECT', 'Contact', 'Station radio pour suivre ou contacter The Cryptomath.', '/fr/contact/', 'radio']
         ]
       }
     : {
@@ -36,13 +37,14 @@
         source: 'Source',
         fallbackTitle: 'The morning brief, filtered and verified.',
         fallbackDesc: 'Today’s market read appears here when the brief is live.',
-        introDesc: 'Move close to the beacons to explore The Cryptomath ecosystem.',
+        introDesc: 'Move close to the landmarks to explore The Cryptomath ecosystem.',
         pages: [
-          ['NEWSLETTER', 'Newsletter', 'Daily editions and market reads.', '/newsletter'],
-          ['SCORE', 'Score', 'The crypto signal scanner.', '/score/'],
-          ['BUILD', 'Build', 'Current projects and experiments.', '/build'],
-          ['FRAMEWORK', 'Narrative Framework', 'Reading narratives before the market does.', '/narrative-framework'],
-          ['RESOURCES', 'Resources', 'The curated crypto stack.', '/resources']
+          ['NEWSLETTER', 'Newsletter', 'The broadcast antenna for daily market reads.', '/newsletter', 'antenna'],
+          ['SCORE', 'Score', 'The radar for crypto signals.', '/score/', 'radar'],
+          ['BUILD', 'Build', 'The workshop for current projects and experiments.', '/build', 'workshop'],
+          ['FRAMEWORK', 'Narrative Framework', 'The observatory for market narratives.', '/narrative-framework', 'observatory'],
+          ['RESOURCES', 'Resources', 'The vault and terminal for the curated crypto stack.', '/resources', 'terminal'],
+          ['CONNECT', 'Connect', 'The radio station to follow or contact The Cryptomath.', '/connect', 'radio']
         ]
       };
 
@@ -293,36 +295,230 @@
     placeOnPlanet(group, directionFromLatLon(decoPositions[i][0], decoPositions[i][1]), 0.01);
   }
 
+  function toonMat(color) {
+    return new THREE.MeshToonMaterial({ color, gradientMap: grad });
+  }
+
+  function basicMat(color, opacity) {
+    return new THREE.MeshBasicMaterial({
+      color,
+      transparent: typeof opacity === 'number',
+      opacity: typeof opacity === 'number' ? opacity : 1,
+      side: THREE.DoubleSide
+    });
+  }
+
+  const LAND = {
+    body: 0x52677e,
+    body2: 0x2b3c50,
+    roof: 0x1a2735,
+    metal: 0xb7c0cb,
+    glass: 0xffb24d
+  };
+
+  function meshBox(w, h, d, color) {
+    return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), toonMat(color));
+  }
+
+  function meshCyl(r1, r2, h, color, segments) {
+    return new THREE.Mesh(new THREE.CylinderGeometry(r1, r2, h, segments || 12), toonMat(color));
+  }
+
+  function meshSphere(r, color, segments) {
+    return new THREE.Mesh(new THREE.SphereGeometry(r, segments || 16, segments || 16), toonMat(color));
+  }
+
+  function meshTorus(radius, tube, color) {
+    return new THREE.Mesh(new THREE.TorusGeometry(radius, tube, 8, 36), basicMat(color, 0.92));
+  }
+
+  function addBeacon(group, y, glowSize) {
+    const orb = new THREE.Mesh(new THREE.SphereGeometry(0.09, 16, 16), new THREE.MeshBasicMaterial({ color: ACCENT }));
+    orb.position.y = y;
+    group.add(orb);
+    const glow = glowSprite(ACCENT, glowSize || 0.72, 0.48);
+    glow.position.y = y;
+    group.add(glow);
+    return { orb, glow };
+  }
+
+  function buildAntenna() {
+    const group = new THREE.Group();
+    const base = meshCyl(0.18, 0.22, 0.12, LAND.body2, 16);
+    base.position.y = 0.06;
+    group.add(base);
+    const mast = meshCyl(0.026, 0.038, 0.72, LAND.metal, 8);
+    mast.position.y = 0.46;
+    group.add(mast);
+    const dish = meshTorus(0.18, 0.012, ACCENT);
+    dish.position.set(0, 0.62, 0.08);
+    group.add(dish);
+    const inner = new THREE.Mesh(new THREE.CircleGeometry(0.13, 28), basicMat(ACCENT, 0.16));
+    inner.position.set(0, 0.62, 0.081);
+    group.add(inner);
+    const wave1 = meshTorus(0.27, 0.008, ACCENT);
+    wave1.position.set(0, 0.80, 0.03);
+    wave1.scale.set(1.15, 0.62, 1);
+    group.add(wave1);
+    const wave2 = meshTorus(0.39, 0.007, ACCENT);
+    wave2.position.set(0, 0.83, 0.03);
+    wave2.scale.set(1.18, 0.56, 1);
+    group.add(wave2);
+    const beacon = addBeacon(group, 0.90, 0.78);
+    return { group, orb: beacon.orb, glow: beacon.glow, labelY: 1.22, labelScale: 0.9 };
+  }
+
+  function buildRadar() {
+    const group = new THREE.Group();
+    const base = meshCyl(0.27, 0.31, 0.14, LAND.body2, 18);
+    base.position.y = 0.07;
+    group.add(base);
+    const neck = meshCyl(0.04, 0.05, 0.34, LAND.metal, 10);
+    neck.position.y = 0.29;
+    group.add(neck);
+    const dish = meshTorus(0.24, 0.018, LAND.metal);
+    dish.position.set(0, 0.53, 0.08);
+    dish.rotation.x = -0.22;
+    group.add(dish);
+    const face = new THREE.Mesh(new THREE.CircleGeometry(0.21, 32), basicMat(ACCENT, 0.12));
+    face.position.set(0, 0.53, 0.081);
+    face.rotation.x = -0.22;
+    group.add(face);
+    const sweep = new THREE.Mesh(new THREE.ConeGeometry(0.26, 0.62, 28, 1, true), basicMat(ACCENT, 0.13));
+    sweep.position.set(0, 0.56, 0.36);
+    sweep.rotation.x = Math.PI / 2;
+    group.add(sweep);
+    const beacon = addBeacon(group, 0.82, 0.82);
+    return { group, orb: beacon.orb, glow: beacon.glow, labelY: 1.14, labelScale: 1.04 };
+  }
+
+  function buildWorkshop() {
+    const group = new THREE.Group();
+    const house = meshBox(0.48, 0.32, 0.42, LAND.body);
+    house.position.y = 0.22;
+    group.add(house);
+    const roof = new THREE.Mesh(new THREE.ConeGeometry(0.42, 0.24, 4), toonMat(LAND.roof));
+    roof.position.y = 0.50;
+    roof.rotation.y = Math.PI / 4;
+    group.add(roof);
+    const door = meshBox(0.13, 0.18, 0.018, ACCENT);
+    door.position.set(-0.11, 0.16, 0.22);
+    group.add(door);
+    const chimney = meshBox(0.08, 0.20, 0.08, LAND.metal);
+    chimney.position.set(0.16, 0.62, -0.08);
+    group.add(chimney);
+    const spark = meshSphere(0.045, ACCENT, 10);
+    spark.position.set(0.16, 0.76, -0.08);
+    group.add(spark);
+    const beacon = addBeacon(group, 0.80, 0.68);
+    return { group, orb: beacon.orb, glow: beacon.glow, labelY: 1.10, labelScale: 1.0 };
+  }
+
+  function buildObservatory() {
+    const group = new THREE.Group();
+    const base = meshCyl(0.30, 0.34, 0.18, LAND.body2, 24);
+    base.position.y = 0.09;
+    group.add(base);
+    const body = meshCyl(0.25, 0.27, 0.26, LAND.body, 20);
+    body.position.y = 0.30;
+    group.add(body);
+    const dome = new THREE.Mesh(new THREE.SphereGeometry(0.28, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), toonMat(LAND.metal));
+    dome.position.y = 0.43;
+    group.add(dome);
+    const scope = meshCyl(0.035, 0.045, 0.46, ACCENT, 12);
+    scope.position.set(0.20, 0.62, 0.08);
+    scope.rotation.z = -0.95;
+    scope.rotation.x = 0.25;
+    group.add(scope);
+    const lens = meshSphere(0.055, ACCENT, 12);
+    lens.position.set(0.36, 0.76, 0.12);
+    group.add(lens);
+    const beacon = addBeacon(group, 0.86, 0.72);
+    return { group, orb: beacon.orb, glow: beacon.glow, labelY: 1.20, labelScale: 0.82 };
+  }
+
+  function buildTerminal() {
+    const group = new THREE.Group();
+    const chest = meshBox(0.52, 0.27, 0.38, LAND.body2);
+    chest.position.y = 0.20;
+    group.add(chest);
+    const lid = meshBox(0.57, 0.09, 0.42, LAND.metal);
+    lid.position.y = 0.38;
+    group.add(lid);
+    const lock = meshBox(0.09, 0.10, 0.025, ACCENT);
+    lock.position.set(0, 0.24, 0.205);
+    group.add(lock);
+    const screen = meshBox(0.34, 0.18, 0.022, ACCENT);
+    screen.position.set(0, 0.60, 0.04);
+    screen.rotation.x = -0.28;
+    group.add(screen);
+    const stand = meshCyl(0.025, 0.035, 0.22, LAND.metal, 8);
+    stand.position.y = 0.48;
+    group.add(stand);
+    const beacon = addBeacon(group, 0.82, 0.72);
+    return { group, orb: beacon.orb, glow: beacon.glow, labelY: 1.13, labelScale: 0.86 };
+  }
+
+  function buildRadio() {
+    const group = new THREE.Group();
+    const hut = meshBox(0.36, 0.24, 0.32, LAND.body);
+    hut.position.y = 0.18;
+    group.add(hut);
+    const mast = meshCyl(0.020, 0.030, 0.82, LAND.metal, 8);
+    mast.position.y = 0.55;
+    group.add(mast);
+    const bar1 = meshCyl(0.010, 0.010, 0.40, LAND.metal, 6);
+    bar1.position.y = 0.57;
+    bar1.rotation.z = Math.PI / 2;
+    group.add(bar1);
+    const bar2 = meshCyl(0.010, 0.010, 0.34, LAND.metal, 6);
+    bar2.position.y = 0.73;
+    bar2.rotation.z = Math.PI / 2;
+    group.add(bar2);
+    const wave1 = meshTorus(0.24, 0.007, ACCENT);
+    wave1.position.y = 0.93;
+    wave1.scale.set(1.1, 0.58, 1);
+    group.add(wave1);
+    const wave2 = meshTorus(0.36, 0.006, ACCENT);
+    wave2.position.y = 0.97;
+    wave2.scale.set(1.12, 0.52, 1);
+    group.add(wave2);
+    const beacon = addBeacon(group, 0.99, 0.78);
+    return { group, orb: beacon.orb, glow: beacon.glow, labelY: 1.30, labelScale: 0.92 };
+  }
+
+  function buildLandmark(type) {
+    if (type === 'antenna') return buildAntenna();
+    if (type === 'radar') return buildRadar();
+    if (type === 'workshop') return buildWorkshop();
+    if (type === 'observatory') return buildObservatory();
+    if (type === 'terminal') return buildTerminal();
+    if (type === 'radio') return buildRadio();
+    return buildAntenna();
+  }
+
   const nodeGroups = [];
   const pagePositions = [
-    [0.60, -0.82],
-    [0.48, 2.62],
-    [0.40, 1.36],
-    [0.50, 0.46],
-    [0.56, -2.20]
+    [0.58, -0.90],
+    [0.50, 2.68],
+    [0.40, 1.62],
+    [0.52, 0.34],
+    [0.58, -2.28],
+    [0.42, -0.10]
   ];
   copy.pages.forEach((p, i) => {
     const pos = pagePositions[i] || [0.48, (i / copy.pages.length) * Math.PI * 2];
     const lat = pos[0];
     const lon = pos[1];
-    const group = new THREE.Group();
-    const h = 0.64;
-    const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.065, h, 8), material('mast', palette.dark.mast));
-    mast.position.y = h / 2;
-    group.add(mast);
-    const orb = new THREE.Mesh(new THREE.SphereGeometry(0.105, 16, 16), new THREE.MeshBasicMaterial({ color: ACCENT }));
-    orb.position.y = h + 0.08;
-    group.add(orb);
-    const glow = glowSprite(ACCENT, 0.7, 0.45);
-    glow.position.y = h + 0.08;
-    group.add(glow);
-    const label = labelSprite(p[0], p[0].length > 8 ? 0.96 : 1.08);
-    label.position.y = h + 0.48;
+    const landmark = buildLandmark(p[4]);
+    const group = landmark.group;
+    const label = labelSprite(p[0], p[0].length > 8 ? (landmark.labelScale || 0.9) : (landmark.labelScale || 1.02));
+    label.position.y = landmark.labelY || 1.1;
     group.add(label);
     group.userData = {
       kind: 'page',
-      orb,
-      glow,
+      orb: landmark.orb,
+      glow: landmark.glow,
       data: { tag: p[0], title: p[1], desc: p[2], url: p[3] }
     };
     placeOnPlanet(group, directionFromLatLon(lat, lon), 0.02);
