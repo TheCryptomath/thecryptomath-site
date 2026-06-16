@@ -102,13 +102,16 @@
   camera.position.set(0, 1.25, 8.5);
   camera.lookAt(0, 0, 0);
 
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x344055, 0.95));
-  const keyLight = new THREE.DirectionalLight(0xffffff, 1.05);
-  keyLight.position.set(6, 9, 6);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x1d2633, 0.62));
+  const keyLight = new THREE.DirectionalLight(0xffffff, 1.42);
+  keyLight.position.set(5.5, 9, 7.5);
   scene.add(keyLight);
-  const warmLight = new THREE.DirectionalLight(0xF7931A, 0.44);
-  warmLight.position.set(-7, 2, -4);
+  const warmLight = new THREE.DirectionalLight(0xF7931A, 0.64);
+  warmLight.position.set(-7, 2.2, -4);
   scene.add(warmLight);
+  const rimLight = new THREE.DirectionalLight(0xFFB24D, 0.55);
+  rimLight.position.set(-4.5, 5, 6);
+  scene.add(rimLight);
 
   function isDark() {
     return root.getAttribute('data-theme') === 'dark';
@@ -124,8 +127,8 @@
       fog: 0xf7f7f8
     },
     dark: {
-      planet: 0x141a24,
-      mast: 0x2a3645,
+      planet: 0x31445a,
+      mast: 0xb7c0cb,
       head: 0xE8EDF2,
       dust: 0x9fb4d6,
       dustOpacity: 0.55,
@@ -137,7 +140,7 @@
   const themed = [];
 
   function toonGradient() {
-    const data = new Uint8Array([82, 82, 82, 156, 156, 156, 255, 255, 255]);
+    const data = new Uint8Array([52, 52, 52, 132, 132, 132, 255, 255, 255]);
     const texture = new THREE.DataTexture(data, 3, 1, THREE.RGBFormat);
     texture.minFilter = THREE.NearestFilter;
     texture.magFilter = THREE.NearestFilter;
@@ -197,7 +200,7 @@
     new THREE.MeshBasicMaterial({
       color: ACCENT,
       transparent: true,
-      opacity: 0.07,
+      opacity: 0.18,
       side: THREE.BackSide,
       blending: THREE.AdditiveBlending
     })
@@ -272,7 +275,11 @@
     return sprite;
   }
 
-  for (let i = 0; i < 7; i += 1) {
+  const decoPositions = [
+    [0.58, -1.08], [0.46, -0.36], [0.64, 0.34], [0.42, 1.04],
+    [0.54, 1.82], [0.38, 2.55], [0.68, -2.35]
+  ];
+  for (let i = 0; i < decoPositions.length; i += 1) {
     const group = new THREE.Group();
     const height = 0.28 + (i % 3) * 0.11;
     const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.04, height, 6), material('mast', palette.dark.mast));
@@ -281,15 +288,23 @@
     const tip = new THREE.Mesh(new THREE.SphereGeometry(0.045, 10, 10), new THREE.MeshBasicMaterial({ color: ACCENT }));
     tip.position.y = height + 0.03;
     group.add(tip);
-    placeOnPlanet(group, randDir(i + 2.7), 0.01);
+    placeOnPlanet(group, directionFromLatLon(decoPositions[i][0], decoPositions[i][1]), 0.01);
   }
 
   const nodeGroups = [];
+  const pagePositions = [
+    [0.60, -0.82],
+    [0.48, 2.62],
+    [0.40, 1.36],
+    [0.50, 0.46],
+    [0.56, -2.20]
+  ];
   copy.pages.forEach((p, i) => {
-    const lat = [-0.24, 0.1, -0.04, 0.24, -0.16][i] || 0;
-    const lon = (i / copy.pages.length) * Math.PI * 2 + 0.42;
+    const pos = pagePositions[i] || [0.48, (i / copy.pages.length) * Math.PI * 2];
+    const lat = pos[0];
+    const lon = pos[1];
     const group = new THREE.Group();
-    const h = 0.58;
+    const h = 0.64;
     const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.065, h, 8), material('mast', palette.dark.mast));
     mast.position.y = h / 2;
     group.add(mast);
@@ -299,8 +314,8 @@
     const glow = glowSprite(ACCENT, 0.7, 0.45);
     glow.position.y = h + 0.08;
     group.add(glow);
-    const label = labelSprite(p[0], p[0].length > 8 ? 0.82 : 0.95);
-    label.position.y = h + 0.43;
+    const label = labelSprite(p[0], p[0].length > 8 ? 0.96 : 1.08);
+    label.position.y = h + 0.48;
     group.add(label);
     group.userData = {
       kind: 'page',
@@ -314,18 +329,18 @@
 
   const signal = new THREE.Group();
   (function buildSignal() {
-    const h = 0.78;
+    const h = 0.88;
     const post = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.08, h, 8), material('mast', palette.dark.mast));
     post.position.y = h / 2;
     signal.add(post);
     const orb = new THREE.Mesh(new THREE.SphereGeometry(0.16, 18, 18), new THREE.MeshBasicMaterial({ color: ACCENT }));
     orb.position.y = h + 0.12;
     signal.add(orb);
-    const glow = glowSprite(ACCENT, 1.45, 0.62);
+    const glow = glowSprite(ACCENT, 1.75, 0.72);
     glow.position.y = h + 0.12;
     signal.add(glow);
-    const label = labelSprite(copy.signalTag.toUpperCase(), lang === 'fr' ? 0.98 : 0.85);
-    label.position.y = h + 0.56;
+    const label = labelSprite(copy.signalTag.toUpperCase(), lang === 'fr' ? 1.1 : 0.96);
+    label.position.y = h + 0.64;
     signal.add(label);
     signal.userData = { kind: 'signal', orb, glow, data: null };
     placeOnPlanet(signal, directionFromLatLon(0.72, -0.15), 0.02);
@@ -334,29 +349,29 @@
 
   const hero = new THREE.Group();
   const heroMesh = new THREE.Group();
-  const body = new THREE.Mesh(new THREE.SphereGeometry(0.25, 18, 18), new THREE.MeshToonMaterial({ color: ACCENT, gradientMap: grad }));
-  body.scale.set(1, 1.24, 1);
-  body.position.y = 0.32;
+  const body = new THREE.Mesh(new THREE.SphereGeometry(0.38, 18, 18), new THREE.MeshToonMaterial({ color: ACCENT, gradientMap: grad }));
+  body.scale.set(1, 1.26, 1);
+  body.position.y = 0.48;
   heroMesh.add(body);
-  const head = new THREE.Mesh(new THREE.SphereGeometry(0.16, 16, 16), material('head', palette.dark.head));
-  head.position.y = 0.72;
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.23, 16, 16), material('head', palette.dark.head));
+  head.position.y = 1.04;
   heroMesh.add(head);
-  const visor = new THREE.Mesh(new THREE.BoxGeometry(0.23, 0.055, 0.1), new THREE.MeshBasicMaterial({ color: ACCENT }));
-  visor.position.set(0, 0.72, 0.12);
+  const visor = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.075, 0.15), new THREE.MeshBasicMaterial({ color: ACCENT }));
+  visor.position.set(0, 1.04, 0.18);
   heroMesh.add(visor);
-  const heroGlow = glowSprite(ACCENT, 1.15, 0.28);
-  heroGlow.position.y = 0.42;
+  const heroGlow = glowSprite(ACCENT, 1.75, 0.34);
+  heroGlow.position.y = 0.62;
   heroMesh.add(heroGlow);
   hero.add(heroMesh);
-  hero.position.set(0, R + 0.14, 0);
+  hero.position.set(0, R + 0.20, 0);
   scene.add(hero);
 
   let shadow = new THREE.Mesh(
-    new THREE.CircleGeometry(0.42, 24),
+    new THREE.CircleGeometry(0.58, 24),
     new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.3 })
   );
   shadow.rotation.x = -Math.PI / 2;
-  shadow.position.set(0, R + 0.035, 0);
+  shadow.position.set(0, R + 0.045, 0);
   scene.add(shadow);
 
   let dust;
@@ -471,7 +486,7 @@
     height = Math.max(360, Math.floor(rect.height));
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
-    camera.position.set(0, height < 520 ? 1.15 : 1.25, width < 520 ? 9.8 : 8.5);
+    camera.position.set(0, height < 520 ? 1.18 : 1.32, width < 520 ? 10.1 : 8.9);
     camera.lookAt(0, 0.12, 0);
     camera.updateProjectionMatrix();
   }
@@ -581,7 +596,7 @@
     hero.rotation.y += dt * 0.34;
 
     const pulse = reduceMotion ? 1 : 1 + Math.sin(t * 2.2) * 0.13;
-    if (signal.userData.glow) signal.userData.glow.scale.setScalar(1.45 * pulse);
+    if (signal.userData.glow) signal.userData.glow.scale.setScalar(1.75 * pulse);
     if (dust && !reduceMotion) dust.rotation.y += dt * 0.006;
 
     checkNodes(t);
