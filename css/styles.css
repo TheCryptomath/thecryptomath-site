@@ -2168,6 +2168,8 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
 
 .signal-answer {
   margin-top: 0;
+  width: 100%;
+  max-width: none;
 }
 
 @media (max-width: 980px) {
