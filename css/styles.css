@@ -2252,3 +2252,170 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
     animation: none;
   }
 }
+
+
+/* ============================================
+   HOME GLOBAL LAYOUT FIX
+   Keeps the 3D world, but makes the full homepage feel balanced on desktop.
+   ============================================ */
+.home-signal .container {
+  width: calc(100% - 48px);
+  max-width: 1280px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.home-signal .signal-hero {
+  min-height: auto;
+  padding-top: clamp(116px, 12vh, 140px);
+  padding-bottom: clamp(50px, 7vh, 76px);
+}
+
+.home-signal .signal-hero-grid {
+  grid-template-columns: minmax(350px, 0.84fr) minmax(560px, 1.16fr);
+  gap: clamp(40px, 4.8vw, 78px);
+}
+
+.home-signal .signal-copy {
+  max-width: 620px;
+}
+
+.home-signal .signal-copy h1 {
+  font-size: clamp(3.6rem, 5.9vw, 5.85rem);
+}
+
+.home-signal .signal-sub {
+  max-width: 560px;
+}
+
+.home-signal .signal-world-card {
+  aspect-ratio: 1.30 / 1;
+  min-height: clamp(470px, 42vw, 640px);
+}
+
+.home-signal .section {
+  padding-top: 66px;
+  padding-bottom: 66px;
+}
+
+.home-signal .signal-hero + .section,
+.home-signal .section-tight {
+  padding-top: 30px;
+}
+
+.home-signal .signal-intro-section {
+  padding-bottom: 44px;
+}
+
+.home-signal .signal-answer {
+  max-width: none;
+  width: 100%;
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(280px, 0.82fr);
+  gap: 8px 34px;
+  align-items: end;
+  padding: 26px 30px;
+}
+
+.home-signal .signal-answer .answer-block-kicker {
+  grid-column: 1 / -1;
+}
+
+.home-signal .signal-answer .answer-block-title {
+  margin-bottom: 0;
+  max-width: 760px;
+  font-size: clamp(1.08rem, 1.38vw, 1.28rem);
+  line-height: 1.42;
+}
+
+.home-signal .signal-answer p {
+  max-width: 62ch;
+  line-height: 1.7;
+}
+
+.home-signal .section-header {
+  margin-bottom: 36px;
+}
+
+.home-signal .ledger {
+  max-width: none;
+}
+
+.home-signal .ledger-intro {
+  max-width: 82ch;
+  margin-bottom: 30px;
+}
+
+.home-signal .ledger-body {
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.78fr);
+  gap: 28px;
+}
+
+@media (min-width: 1180px) {
+  .home-signal .faq-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .home-signal .faq-item {
+    padding: 20px;
+  }
+
+  .home-signal .faq-item h3 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 1180px) {
+  .home-signal .signal-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-signal .signal-copy {
+    max-width: 760px;
+  }
+
+  .home-signal .signal-world-card {
+    min-height: clamp(460px, 68vw, 600px);
+  }
+
+  .home-signal .signal-answer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .home-signal .ledger-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-signal .container {
+    width: 100%;
+    max-width: none;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .home-signal .section {
+    padding-top: 54px;
+    padding-bottom: 54px;
+  }
+
+  .home-signal .signal-answer {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-signal .signal-copy h1 {
+    font-size: clamp(2.35rem, 13vw, 3.55rem);
+  }
+
+  .home-signal .signal-world-card {
+    aspect-ratio: auto;
+    min-height: clamp(420px, 122vw, 500px);
+  }
+}
