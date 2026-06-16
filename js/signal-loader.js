@@ -31,7 +31,7 @@
     wrap.classList.add('is-loading-world');
 
     loadScript('/js/three.min.js?v=0.128.0')
-      .then(() => loadScript('/js/signal-world.js?v=20260616-sharp-v1'))
+      .then(() => loadScript('/js/signal-world.js?v=20260616-audit-v1'))
       .then(() => wrap.classList.remove('is-loading-world'))
       .catch(() => {
         wrap.classList.remove('is-loading-world');

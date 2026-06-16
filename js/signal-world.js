@@ -95,6 +95,25 @@
   const qd = new THREE.Quaternion();
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  let contextLost = false;
+
+  canvas.addEventListener('webglcontextlost', (event) => {
+    event.preventDefault();
+    contextLost = true;
+    updatePanel({
+      tag: copy.signalTag,
+      title: copy.fallbackTitle,
+      desc: copy.fallbackDesc,
+      url: lang === 'fr' ? '/fr/newsletter/' : '/newsletter'
+    }, true);
+  }, false);
+
+  canvas.addEventListener('webglcontextrestored', () => {
+    contextLost = false;
+    resize();
+    applyTheme();
+  }, false);
+
   function worldPixelRatio() {
     // Supersample the 3D portal so it stays crisp on 1x desktop screens
     // and when the canvas is visually constrained inside the 1080px layout.
@@ -766,6 +785,12 @@
   let leanZ = 0;
 
   function tick() {
+    if (contextLost) {
+      clock.getDelta();
+      window.requestAnimationFrame(tick);
+      return;
+    }
+
     if (document.hidden || !worldVisible) {
       clock.getDelta();
       window.requestAnimationFrame(tick);
