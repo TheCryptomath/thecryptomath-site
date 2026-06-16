@@ -1,9 +1,9 @@
 /* ========================================
-   Cryptomath Score v2.0.8
+   Cryptomath Score v2.9.0
    ======================================== */
 
 const API_PATH = "/api/score";
-const METHOD_VERSION = "2.0.8";
+const METHOD_VERSION = "2.9.0";
 
 const $ = (id) => document.getElementById(id);
 
