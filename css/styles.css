@@ -1920,3 +1920,333 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
   .framework-grid,
   .framework-score { grid-template-columns: 1fr; }
 }
+
+/* ============================================
+   SIGNAL WORLD HOME
+   ============================================ */
+.signal-hero {
+  min-height: min(94vh, 900px);
+  min-height: min(94svh, 900px);
+  position: relative;
+  overflow: hidden;
+  padding: 132px 0 72px;
+  display: flex;
+  align-items: center;
+  isolation: isolate;
+}
+
+.signal-hero::before {
+  content: '';
+  position: absolute;
+  inset: -24% -12% auto auto;
+  width: min(68vw, 900px);
+  height: min(68vw, 900px);
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 68%);
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: -2;
+}
+
+.signal-hero::after {
+  content: '';
+  position: absolute;
+  inset: auto auto -30% -20%;
+  width: min(62vw, 760px);
+  height: min(62vw, 760px);
+  background: radial-gradient(circle, rgba(194,65,12,0.10) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -2;
+}
+
+.signal-orbit-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 78% 38%, rgba(247,147,26,0.12), transparent 30%),
+    linear-gradient(180deg, transparent 0%, var(--bg-deep) 96%);
+}
+
+.signal-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+  gap: clamp(34px, 5vw, 72px);
+  align-items: center;
+}
+
+.signal-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 620px;
+}
+
+.signal-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--_bg-surface-88);
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+}
+
+.signal-eyebrow span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 18px var(--accent-glow);
+}
+
+.signal-copy h1 {
+  margin-bottom: 22px;
+  font-size: clamp(2.7rem, 6.5vw, 5.35rem);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+}
+
+.signal-copy h1 span {
+  background: linear-gradient(135deg, var(--accent-bright), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.signal-sub {
+  max-width: 570px;
+  margin-bottom: 30px;
+  color: var(--text-secondary);
+  font-size: clamp(1.08rem, 1.55vw, 1.28rem);
+  line-height: 1.65;
+}
+
+.signal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.signal-proof {
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.signal-world-card {
+  position: relative;
+  aspect-ratio: 1.16 / 1;
+  min-height: clamp(430px, 54vw, 620px);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 52% 32%, rgba(247,147,26,0.12), transparent 34%),
+    linear-gradient(145deg, var(--_bg-surface-94), var(--_bg-elevated-68));
+  box-shadow: var(--shadow-md), 0 0 80px rgba(247,147,26,0.10);
+  overflow: hidden;
+  touch-action: none;
+}
+
+.signal-world-card::before {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.signal-world-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.world-panel {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 22px;
+  z-index: 2;
+  max-width: 430px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--_bg-surface-92);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-sm);
+}
+
+.world-panel-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--accent-bright);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.world-panel-kicker::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.world-panel h2 {
+  margin-bottom: 6px;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  line-height: 1.25;
+}
+
+.world-panel p {
+  margin-bottom: 12px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.world-panel a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-bright);
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.world-panel a::after {
+  content: '→';
+  transition: transform 0.2s ease;
+}
+
+.world-panel a:hover::after {
+  transform: translateX(3px);
+}
+
+.world-controls {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 2;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--_bg-surface-88);
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+
+.section-tight {
+  padding-top: 46px;
+}
+
+.signal-intro-section {
+  padding-bottom: 26px;
+}
+
+.signal-answer {
+  margin-top: 0;
+}
+
+@media (max-width: 980px) {
+  .signal-hero {
+    min-height: auto;
+    padding: 124px 0 56px;
+  }
+
+  .signal-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .signal-world-card {
+    min-height: clamp(460px, 72vw, 540px);
+  }
+}
+
+@media (max-width: 640px) {
+  .signal-hero {
+    padding: 112px 0 44px;
+  }
+
+  .signal-copy h1 {
+    font-size: clamp(2.35rem, 13vw, 3.55rem);
+  }
+
+  .signal-actions .btn {
+    width: 100%;
+  }
+
+  .signal-world-card {
+    min-height: clamp(420px, 122vw, 500px);
+    border-radius: 24px;
+  }
+
+  .world-panel {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    padding: 16px;
+  }
+
+  .world-controls {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .signal-world-card {
+    min-height: 400px;
+  }
+
+  .world-panel h2 {
+    font-size: 1rem;
+  }
+
+  .world-panel p {
+    font-size: 0.9rem;
+  }
+}
+
+.signal-world-card.is-loading-world::after {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 18px var(--accent-glow);
+  opacity: 0.82;
+}
+
+.signal-world-card.is-world-unavailable .signal-world-canvas {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signal-hero::before,
+  .signal-hero::after {
+    animation: none;
+  }
+}
