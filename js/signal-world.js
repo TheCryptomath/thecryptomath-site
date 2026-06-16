@@ -557,8 +557,8 @@
   const visor = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.075, 0.15), new THREE.MeshBasicMaterial({ color: ACCENT }));
   visor.position.set(0, 1.04, 0.18);
   heroMesh.add(visor);
-  const heroGlow = glowSprite(ACCENT, 1.75, 0.34);
-  heroGlow.position.y = 0.62;
+  const heroGlow = glowSprite(ACCENT, 0.82, 0.16);
+  heroGlow.position.y = 0.58;
   heroMesh.add(heroGlow);
   hero.add(heroMesh);
   hero.position.set(0, R + 0.20, 0);
