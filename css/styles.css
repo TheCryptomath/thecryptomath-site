@@ -2255,167 +2255,125 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
 
 
 /* ============================================
-   HOME GLOBAL LAYOUT FIX
-   Keeps the 3D world, but makes the full homepage feel balanced on desktop.
+   HOME LAYOUT 1080 FIX
+   Keep the home aligned with the rest of the site and contain the 3D glow.
    ============================================ */
-.home-signal .container {
-  width: calc(100% - 48px);
-  max-width: 1280px;
-  padding-left: 0;
-  padding-right: 0;
+.signal-hero .container.signal-hero-grid {
+  max-width: var(--container);
+  overflow: clip;
+  overflow-clip-margin: 18px;
 }
 
-.home-signal .signal-hero {
-  min-height: auto;
-  padding-top: clamp(116px, 12vh, 140px);
-  padding-bottom: clamp(50px, 7vh, 76px);
+@supports not (overflow: clip) {
+  .signal-hero .container.signal-hero-grid {
+    overflow: hidden;
+  }
 }
 
-.home-signal .signal-hero-grid {
-  grid-template-columns: minmax(350px, 0.84fr) minmax(560px, 1.16fr);
-  gap: clamp(40px, 4.8vw, 78px);
-}
+@media (min-width: 981px) {
+  .signal-hero {
+    padding-top: clamp(120px, 12vh, 136px);
+    padding-bottom: clamp(56px, 7vh, 76px);
+  }
 
-.home-signal .signal-copy {
-  max-width: 620px;
-}
+  .signal-hero-grid {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(30px, 4vw, 56px);
+  }
 
-.home-signal .signal-copy h1 {
-  font-size: clamp(3.6rem, 5.9vw, 5.85rem);
-}
+  .signal-copy {
+    max-width: 520px;
+  }
 
-.home-signal .signal-sub {
-  max-width: 560px;
-}
+  .signal-copy h1 {
+    font-size: clamp(3.05rem, 5.45vw, 5rem);
+  }
 
-.home-signal .signal-world-card {
-  aspect-ratio: 1.30 / 1;
-  min-height: clamp(470px, 42vw, 640px);
-}
+  .signal-sub {
+    max-width: 500px;
+  }
 
-.home-signal .section {
-  padding-top: 66px;
-  padding-bottom: 66px;
-}
-
-.home-signal .signal-hero + .section,
-.home-signal .section-tight {
-  padding-top: 30px;
-}
-
-.home-signal .signal-intro-section {
-  padding-bottom: 44px;
-}
-
-.home-signal .signal-answer {
-  max-width: none;
-  width: 100%;
-  margin-top: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 0.98fr) minmax(280px, 0.82fr);
-  gap: 8px 34px;
-  align-items: end;
-  padding: 26px 30px;
-}
-
-.home-signal .signal-answer .answer-block-kicker {
-  grid-column: 1 / -1;
-}
-
-.home-signal .signal-answer .answer-block-title {
-  margin-bottom: 0;
-  max-width: 760px;
-  font-size: clamp(1.08rem, 1.38vw, 1.28rem);
-  line-height: 1.42;
-}
-
-.home-signal .signal-answer p {
-  max-width: 62ch;
-  line-height: 1.7;
-}
-
-.home-signal .section-header {
-  margin-bottom: 36px;
-}
-
-.home-signal .ledger {
-  max-width: none;
-}
-
-.home-signal .ledger-intro {
-  max-width: 82ch;
-  margin-bottom: 30px;
-}
-
-.home-signal .ledger-body {
-  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.78fr);
-  gap: 28px;
+  .signal-world-card {
+    min-height: clamp(420px, 37vw, 520px);
+    aspect-ratio: 1.22 / 1;
+    box-shadow:
+      0 28px 76px rgba(0,0,0,0.30),
+      0 0 58px rgba(247,147,26,0.14);
+  }
 }
 
 @media (min-width: 1180px) {
-  .home-signal .faq-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
-  }
-
-  .home-signal .faq-item {
-    padding: 20px;
-  }
-
-  .home-signal .faq-item h3 {
-    font-size: 1rem;
+  .signal-hero .container.signal-hero-grid {
+    overflow-clip-margin: 24px;
   }
 }
 
-@media (max-width: 1180px) {
+
+/* ============================================
+   HOME 1080 FINAL ALIGNMENT
+   Same 1080 grid as the rest of the site. Contained 3D portal glow.
+   ============================================ */
+.home-signal .container {
+  max-width: var(--container);
+}
+
+.home-signal .signal-hero {
+  overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+  .home-signal .signal-hero {
+    overflow-x: hidden;
+  }
+}
+
+.home-signal .signal-hero .container.signal-hero-grid {
+  max-width: var(--container);
+  overflow: clip;
+  overflow-clip-margin: 8px;
+}
+
+@supports not (overflow: clip) {
+  .home-signal .signal-hero .container.signal-hero-grid {
+    overflow: hidden;
+  }
+}
+
+.home-signal .signal-world-card {
+  box-shadow: 0 24px 60px -18px rgba(0,0,0,0.46), 0 0 0 1px rgba(247,147,26,0.10);
+}
+
+@media (min-width: 981px) {
+  .home-signal .signal-hero {
+    padding-top: clamp(116px, 11vh, 132px);
+    padding-bottom: clamp(52px, 6.5vh, 72px);
+  }
+
   .home-signal .signal-hero-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.90fr) minmax(0, 1.10fr);
+    gap: clamp(30px, 3.4vw, 48px);
   }
 
   .home-signal .signal-copy {
-    max-width: 760px;
+    max-width: 500px;
   }
 
-  .home-signal .signal-world-card {
-    min-height: clamp(460px, 68vw, 600px);
-  }
-
-  .home-signal .signal-answer {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 980px) {
-  .home-signal .ledger-body {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .home-signal .container {
-    width: 100%;
-    max-width: none;
-    padding-left: 18px;
-    padding-right: 18px;
-  }
-
-  .home-signal .section {
-    padding-top: 54px;
-    padding-bottom: 54px;
-  }
-
-  .home-signal .signal-answer {
-    padding: 20px;
-  }
-}
-
-@media (max-width: 640px) {
   .home-signal .signal-copy h1 {
-    font-size: clamp(2.35rem, 13vw, 3.55rem);
+    font-size: clamp(3rem, 5.25vw, 4.85rem);
+  }
+
+  .home-signal .signal-sub {
+    max-width: 490px;
   }
 
   .home-signal .signal-world-card {
-    aspect-ratio: auto;
-    min-height: clamp(420px, 122vw, 500px);
+    min-height: clamp(410px, 36vw, 505px);
+    aspect-ratio: 1.23 / 1;
+  }
+}
+
+@media (min-width: 1180px) {
+  .home-signal .signal-hero .container.signal-hero-grid {
+    overflow-clip-margin: 10px;
   }
 }
