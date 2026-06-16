@@ -114,13 +114,19 @@
     applyTheme();
   }, false);
 
+  let adaptivePixelRatioCap = 2.75;
+  let renderedPixelRatio = 0;
+  let perfFrameCount = 0;
+  let smoothDt = 1 / 60;
+
   function worldPixelRatio() {
     // Supersample the 3D portal so it stays crisp on 1x desktop screens
     // and when the canvas is visually constrained inside the 1080px layout.
     const dpr = window.devicePixelRatio || 1;
-    return Math.min(Math.max(dpr, 1.85), 2.75);
+    return Math.min(Math.max(dpr, 1.85), adaptivePixelRatioCap);
   }
-  renderer.setPixelRatio(worldPixelRatio());
+  renderedPixelRatio = worldPixelRatio();
+  renderer.setPixelRatio(renderedPixelRatio);
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.setClearColor(0x000000, 0);
 
@@ -193,9 +199,16 @@
       if (typeof color !== 'undefined') item.mat.color.setHex(color);
     });
     if (dust) {
-      dust.material.color.setHex(p.dust);
-      dust.material.opacity = p.dustOpacity;
+      if (dust.material.uniforms) {
+        dust.material.uniforms.uColor.value.setHex(p.dust);
+        dust.material.uniforms.uOpacity.value = p.dustOpacity;
+      } else {
+        dust.material.color.setHex(p.dust);
+        dust.material.opacity = p.dustOpacity;
+      }
     }
+    if (nebula) nebula.material.opacity = isDark() ? 0.30 : 0.18;
+    if (dataLayer) dataLayer.material.opacity = isDark() ? 0.16 : 0.10;
     if (shadow) shadow.material.opacity = isDark() ? 0.34 : 0.16;
   }
 
@@ -224,13 +237,141 @@
   const planet = new THREE.Mesh(planetGeo, material('planet', palette.dark.planet));
   planetGroup.add(planet);
 
-  const glowShell = new THREE.Mesh(
-    new THREE.SphereGeometry(R * 1.16, 32, 32),
+  function makeNebulaTexture() {
+    const c = document.createElement('canvas');
+    c.width = 512;
+    c.height = 512;
+    const ctx = c.getContext('2d');
+    ctx.clearRect(0, 0, c.width, c.height);
+    const g = ctx.createRadialGradient(246, 264, 12, 246, 264, 246);
+    g.addColorStop(0, 'rgba(247,147,26,0.24)');
+    g.addColorStop(0.24, 'rgba(247,147,26,0.15)');
+    g.addColorStop(0.58, 'rgba(247,147,26,0.055)');
+    g.addColorStop(1, 'rgba(247,147,26,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, c.width, c.height);
+
+    ctx.save();
+    ctx.translate(256, 256);
+    ctx.rotate(-0.28);
+    for (let i = 0; i < 18; i += 1) {
+      const y = -115 + i * 13;
+      const alpha = 0.018 + ((i % 4) * 0.006);
+      ctx.strokeStyle = 'rgba(255,178,77,' + alpha + ')';
+      ctx.lineWidth = 22 + (i % 5) * 4;
+      ctx.beginPath();
+      ctx.moveTo(-260, y);
+      ctx.bezierCurveTo(-110, y - 35, 75, y + 34, 265, y - 14);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    const tex = new THREE.CanvasTexture(c);
+    tex.encoding = THREE.sRGBEncoding;
+    return tex;
+  }
+
+  function makeDataLayerTexture() {
+    const c = document.createElement('canvas');
+    c.width = 1024;
+    c.height = 512;
+    const ctx = c.getContext('2d');
+    ctx.clearRect(0, 0, c.width, c.height);
+
+    function prand(seed) {
+      const x = Math.sin(seed * 127.1) * 43758.5453123;
+      return x - Math.floor(x);
+    }
+
+    for (let i = 0; i < 34; i += 1) {
+      const y = 70 + prand(i + 1) * 372;
+      const x = prand(i + 4) * 1024;
+      const len = 120 + prand(i + 8) * 260;
+      const lift = (prand(i + 13) - 0.5) * 78;
+      ctx.strokeStyle = 'rgba(247,147,26,' + (0.10 + prand(i + 21) * 0.12).toFixed(3) + ')';
+      ctx.lineWidth = 1 + prand(i + 34) * 1.4;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.bezierCurveTo(x + len * 0.33, y + lift, x + len * 0.66, y - lift, x + len, y + lift * 0.25);
+      ctx.stroke();
+    }
+
+    for (let i = 0; i < 115; i += 1) {
+      const x = prand(i + 101) * 1024;
+      const y = 48 + prand(i + 205) * 416;
+      const r = 0.9 + prand(i + 309) * 2.3;
+      ctx.fillStyle = 'rgba(255,178,77,' + (0.08 + prand(i + 411) * 0.22).toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    const tex = new THREE.CanvasTexture(c);
+    tex.encoding = THREE.sRGBEncoding;
+    tex.wrapS = THREE.RepeatWrapping;
+    tex.wrapT = THREE.ClampToEdgeWrapping;
+    return tex;
+  }
+
+  const dataLayer = new THREE.Mesh(
+    new THREE.SphereGeometry(R * 1.024, 64, 32),
     new THREE.MeshBasicMaterial({
-      color: ACCENT,
+      map: makeDataLayerTexture(),
       transparent: true,
-      opacity: 0.18,
-      side: THREE.BackSide,
+      opacity: 0.16,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    })
+  );
+  planetGroup.add(dataLayer);
+
+  const nebula = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: makeNebulaTexture(),
+    transparent: true,
+    opacity: 0.30,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    depthTest: true
+  }));
+  nebula.position.set(0.72, 0.08, -4.25);
+  nebula.scale.set(7.8, 5.8, 1);
+  scene.add(nebula);
+
+  const glowShell = new THREE.Mesh(
+    new THREE.SphereGeometry(R * 1.19, 48, 32),
+    new THREE.ShaderMaterial({
+      uniforms: {
+        uColor: { value: new THREE.Color(ACCENT) },
+        uIntensity: { value: 0.58 },
+        uTime: { value: 0 }
+      },
+      vertexShader: [
+        'varying vec3 vNormal;',
+        'varying vec3 vViewPosition;',
+        'void main() {',
+        '  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);',
+        '  vNormal = normalize(normalMatrix * normal);',
+        '  vViewPosition = -mvPosition.xyz;',
+        '  gl_Position = projectionMatrix * mvPosition;',
+        '}'
+      ].join('\n'),
+      fragmentShader: [
+        'uniform vec3 uColor;',
+        'uniform float uIntensity;',
+        'uniform float uTime;',
+        'varying vec3 vNormal;',
+        'varying vec3 vViewPosition;',
+        'void main() {',
+        '  float facing = max(dot(normalize(vNormal), normalize(vViewPosition)), 0.0);',
+        '  float fresnel = pow(1.0 - facing, 2.15);',
+        '  float breath = 0.92 + sin(uTime * 0.55) * 0.08;',
+        '  float alpha = smoothstep(0.10, 0.95, fresnel) * uIntensity * breath;',
+        '  gl_FragColor = vec4(uColor, alpha);',
+        '}'
+      ].join('\n'),
+      transparent: true,
+      depthWrite: false,
+      side: THREE.FrontSide,
       blending: THREE.AdditiveBlending
     })
   );
@@ -599,22 +740,54 @@
 
   let dust;
   (function buildDust() {
-    const count = 650;
+    const count = 760;
     const geo = new THREE.BufferGeometry();
     const pos = new Float32Array(count * 3);
+    const phase = new Float32Array(count);
+    const size = new Float32Array(count);
     for (let i = 0; i < count; i += 1) {
-      const dir = randDir(i + 14.4).multiplyScalar(18 + ((i * 17) % 24));
+      const radius = 16 + ((i * 19) % 31);
+      const dir = randDir(i + 14.4).multiplyScalar(radius);
       pos[i * 3] = dir.x;
       pos[i * 3 + 1] = dir.y;
       pos[i * 3 + 2] = dir.z;
+      phase[i] = (i * 2.399963) % (Math.PI * 2);
+      size[i] = 4.4 + ((i * 13) % 10) * 0.55;
     }
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    dust = new THREE.Points(geo, new THREE.PointsMaterial({
-      color: palette.dark.dust,
-      size: 0.09,
-      sizeAttenuation: true,
+    geo.setAttribute('aPhase', new THREE.BufferAttribute(phase, 1));
+    geo.setAttribute('aSize', new THREE.BufferAttribute(size, 1));
+    dust = new THREE.Points(geo, new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new THREE.Color(palette.dark.dust) },
+        uOpacity: { value: palette.dark.dustOpacity }
+      },
+      vertexShader: [
+        'uniform float uTime;',
+        'attribute float aPhase;',
+        'attribute float aSize;',
+        'varying float vTwinkle;',
+        'void main() {',
+        '  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);',
+        '  vTwinkle = 0.72 + sin(uTime * 0.82 + aPhase) * 0.28;',
+        '  gl_PointSize = aSize * vTwinkle * (190.0 / -mvPosition.z);',
+        '  gl_Position = projectionMatrix * mvPosition;',
+        '}'
+      ].join('\n'),
+      fragmentShader: [
+        'uniform vec3 uColor;',
+        'uniform float uOpacity;',
+        'varying float vTwinkle;',
+        'void main() {',
+        '  float d = length(gl_PointCoord - vec2(0.5));',
+        '  float alpha = smoothstep(0.5, 0.0, d) * uOpacity * vTwinkle;',
+        '  gl_FragColor = vec4(uColor, alpha);',
+        '}'
+      ].join('\n'),
       transparent: true,
-      opacity: palette.dark.dustOpacity
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
     }));
     scene.add(dust);
   })();
@@ -707,7 +880,8 @@
     const rect = wrap.getBoundingClientRect();
     width = Math.max(320, Math.ceil(rect.width));
     height = Math.max(360, Math.ceil(rect.height));
-    renderer.setPixelRatio(worldPixelRatio());
+    renderedPixelRatio = worldPixelRatio();
+    renderer.setPixelRatio(renderedPixelRatio);
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.position.set(0, height < 520 ? 1.28 : 1.46, width < 520 ? 11.45 : 10.65);
@@ -717,6 +891,30 @@
 
   resize();
   window.addEventListener('resize', resize);
+
+  function tunePixelRatio(dt) {
+    if (reduceMotion) return;
+    smoothDt = smoothDt * 0.94 + dt * 0.06;
+    perfFrameCount += 1;
+    if (perfFrameCount < 90) return;
+
+    if (smoothDt > 0.032 && adaptivePixelRatioCap > 2.01) {
+      adaptivePixelRatioCap = 2.0;
+      renderedPixelRatio = worldPixelRatio();
+      renderer.setPixelRatio(renderedPixelRatio);
+      renderer.setSize(width, height, false);
+      perfFrameCount = 0;
+      return;
+    }
+
+    if (smoothDt < 0.019 && adaptivePixelRatioCap < 2.75) {
+      adaptivePixelRatioCap = 2.75;
+      renderedPixelRatio = worldPixelRatio();
+      renderer.setPixelRatio(renderedPixelRatio);
+      renderer.setSize(width, height, false);
+      perfFrameCount = 0;
+    }
+  }
 
   function currentSignalData(index) {
     const item = signalItems[Math.max(0, index)] || signalItems[0];
@@ -731,12 +929,22 @@
   function checkNodes(time) {
     let best = null;
     let bestAngle = 0.5;
-    nodeGroups.forEach((group) => {
+    nodeGroups.forEach((group, i) => {
       group.getWorldPosition(scratch);
       const angle = scratch.clone().normalize().angleTo(UP);
       const near = angle < 0.5;
       if (group.userData.orb) group.userData.orb.scale.setScalar(near ? 1.48 : 1);
-      if (group.userData.glow) group.userData.glow.material.opacity = near ? 0.88 : (group.userData.kind === 'signal' ? 0.62 : 0.45);
+      if (group.userData.glow) {
+        if (near) {
+          group.userData.glow.material.opacity = 0.88;
+        } else if (group.userData.kind === 'signal') {
+          group.userData.glow.material.opacity = 0.62;
+        } else {
+          // Subtle desynced idle breathing, page beacons only, never the active (near) node.
+          var amp = reduceMotion ? 0 : 0.07;
+          group.userData.glow.material.opacity = 0.45 + Math.sin(time * 1.1 + i * 1.7) * amp;
+        }
+      }
       if (near && angle < bestAngle) {
         best = group;
         bestAngle = angle;
@@ -799,6 +1007,21 @@
 
     const dt = Math.min(clock.getDelta(), 0.05);
     const t = clock.elapsedTime;
+    tunePixelRatio(dt);
+
+    if (!reduceMotion) {
+      if (glowShell.material.uniforms) glowShell.material.uniforms.uTime.value = t;
+      if (dust && dust.material.uniforms) dust.material.uniforms.uTime.value = t;
+    }
+    if (dataLayer && !reduceMotion) {
+      dataLayer.rotation.y += dt * 0.032;
+      dataLayer.rotation.x = Math.sin(t * 0.18) * 0.018;
+      dataLayer.material.opacity = 0.145 + Math.sin(t * 0.43) * 0.018;
+    }
+    if (nebula && !reduceMotion) {
+      nebula.material.opacity = 0.28 + Math.sin(t * 0.24) * 0.035;
+      nebula.rotation.z = Math.sin(t * 0.12) * 0.035;
+    }
 
     let mx = 0;
     let mz = 0;
@@ -818,8 +1041,13 @@
     const moving = !!(mx || mz || Math.abs(dragX) > 0.01 || Math.abs(dragY) > 0.01);
     if (!moving && !reduceMotion) spin(axisY, 0.05 * dt);
 
-    leanX += ((mx ? -Math.sign(mx) * 0.48 : 0) - leanX) * 0.12;
-    leanZ += ((mz ? Math.sign(mz) * 0.48 : 0) - leanZ) * 0.12;
+    // Lean reacts to keyboard AND to drag velocity, since drag is the primary input.
+    // Same axis convention as movement: dragY spins axisX -> leanX, dragX spins axisZ -> leanZ.
+    var clamp1 = function (v) { return v < -1 ? -1 : (v > 1 ? 1 : v); };
+    var driveX = clamp1(mx + dragY * 7);
+    var driveZ = clamp1(mz + dragX * 7);
+    leanX += ((-driveX * 0.48) - leanX) * 0.12;
+    leanZ += ((driveZ * 0.48) - leanZ) * 0.12;
     heroMesh.rotation.x = leanX * 0.45;
     heroMesh.rotation.z = leanZ * 0.45;
     heroMesh.position.y = moving ? Math.abs(Math.sin(t * 11)) * 0.07 : Math.sin(t * 1.6) * 0.018;
