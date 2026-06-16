@@ -1,3 +1,5 @@
+/contact        /connect     301
+/contact/       /connect     301
 /build.html       /build       301
 /resources.html   /resources   301
 /connect.html     /connect     301
