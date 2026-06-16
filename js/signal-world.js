@@ -114,7 +114,9 @@
   scene.add(rimLight);
 
   function isDark() {
-    return root.getAttribute('data-theme') === 'dark';
+    // The 3D scene intentionally stays dark in both site themes.
+    // It works as a dark signal portal on the light site instead of trying to relight the planet.
+    return true;
   }
 
   const palette = {
@@ -486,7 +488,7 @@
     height = Math.max(360, Math.floor(rect.height));
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
-    camera.position.set(0, height < 520 ? 1.18 : 1.32, width < 520 ? 10.1 : 8.9);
+    camera.position.set(0, height < 520 ? 1.26 : 1.42, width < 520 ? 10.9 : 9.75);
     camera.lookAt(0, 0.12, 0);
     camera.updateProjectionMatrix();
   }
