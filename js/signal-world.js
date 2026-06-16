@@ -684,8 +684,8 @@
     height = Math.max(360, Math.floor(rect.height));
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
-    camera.position.set(0, height < 520 ? 1.26 : 1.42, width < 520 ? 10.9 : 9.75);
-    camera.lookAt(0, 0.12, 0);
+    camera.position.set(0, height < 520 ? 1.28 : 1.46, width < 520 ? 11.45 : 10.65);
+    camera.lookAt(0, 0.16, 0);
     camera.updateProjectionMatrix();
   }
 
