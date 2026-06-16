@@ -95,7 +95,13 @@
   const qd = new THREE.Quaternion();
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  function worldPixelRatio() {
+    // Supersample the 3D portal so it stays crisp on 1x desktop screens
+    // and when the canvas is visually constrained inside the 1080px layout.
+    const dpr = window.devicePixelRatio || 1;
+    return Math.min(Math.max(dpr, 1.85), 2.75);
+  }
+  renderer.setPixelRatio(worldPixelRatio());
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.setClearColor(0x000000, 0);
 
@@ -680,8 +686,9 @@
 
   function resize() {
     const rect = wrap.getBoundingClientRect();
-    width = Math.max(320, Math.floor(rect.width));
-    height = Math.max(360, Math.floor(rect.height));
+    width = Math.max(320, Math.ceil(rect.width));
+    height = Math.max(360, Math.ceil(rect.height));
+    renderer.setPixelRatio(worldPixelRatio());
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.position.set(0, height < 520 ? 1.28 : 1.46, width < 520 ? 11.45 : 10.65);
