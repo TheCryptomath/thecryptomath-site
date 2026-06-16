@@ -89,6 +89,13 @@
   const root = document.documentElement;
   canvas.tabIndex = -1;
 
+  // Smooth canvas reveal on first render. Instant under reduced motion.
+  let revealed = reduceMotion;
+  if (!reduceMotion) {
+    canvas.style.opacity = '0';
+    canvas.style.transition = 'opacity 900ms ease';
+  }
+
   const R = 3.2;
   const UP = new THREE.Vector3(0, 1, 0);
   const scratch = new THREE.Vector3();
@@ -158,7 +165,7 @@
       mast: 0xcfc8bd,
       head: 0x0e0f12,
       dust: 0xC2410C,
-      dustOpacity: 0.12,
+      dustOpacity: 0.10,
       fog: 0xf7f7f8
     },
     dark: {
@@ -166,7 +173,7 @@
       mast: 0xb7c0cb,
       head: 0xE8EDF2,
       dust: 0x9fb4d6,
-      dustOpacity: 0.55,
+      dustOpacity: 0.47,
       fog: 0x08090c
     }
   };
@@ -752,7 +759,7 @@
       pos[i * 3 + 1] = dir.y;
       pos[i * 3 + 2] = dir.z;
       phase[i] = (i * 2.399963) % (Math.PI * 2);
-      size[i] = 4.4 + ((i * 13) % 10) * 0.55;
+      size[i] = 3.3 + ((i * 13) % 10) * 0.4;
     }
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     geo.setAttribute('aPhase', new THREE.BufferAttribute(phase, 1));
@@ -770,7 +777,7 @@
         'varying float vTwinkle;',
         'void main() {',
         '  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);',
-        '  vTwinkle = 0.72 + sin(uTime * 0.82 + aPhase) * 0.28;',
+        '  vTwinkle = 0.72 + sin(uTime * 0.58 + aPhase) * 0.28;',
         '  gl_PointSize = aSize * vTwinkle * (190.0 / -mvPosition.z);',
         '  gl_Position = projectionMatrix * mvPosition;',
         '}'
@@ -1059,6 +1066,10 @@
 
     checkNodes(t);
     renderer.render(scene, camera);
+    if (!revealed) {
+      revealed = true;
+      canvas.style.opacity = '1';
+    }
     window.requestAnimationFrame(tick);
   }
 
