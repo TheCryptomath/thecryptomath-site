@@ -4,7 +4,7 @@
     window.__scoreLoaded = true;
 
     const s = document.createElement("script");
-    s.src = "/score/score.js?v=20260510";
+    s.src = "/score/score.js?v=20260701";
     s.async = true;
     document.head.appendChild(s);
   };

@@ -17,8 +17,8 @@
       } catch (_) {}
     })();
   </script>
-<title>Free Crypto Score Tool | The Cryptomath</title>
-<meta content="Professional crypto scoring tool. Analyze trend, momentum, volatility, liquidity, and market structure in seconds. Free. No signup." name="description"/>
+<title>Experimental Crypto Confluence Score | The Cryptomath</title>
+<meta content="Experimental crypto confluence tool for structured market research. Free, transparent, and not a validated trading signal." name="description"/>
 <meta content="dark light" name="color-scheme"/>
 <meta content="#08090c" name="theme-color"/>
 <meta content="#fbfbfc" media="(prefers-color-scheme: light)" name="theme-color"/>
@@ -38,7 +38,7 @@
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "Web",
       "url": "https://thecryptomath.com/score/",
-      "description": "Professional-grade scoring system to identify high-probability crypto setups.",
+      "description": "Experimental confluence scoring system for structured crypto market research. The score is not a probability of success.",
       "creator": {
         "@type": "Person",
         "name": "The Cryptomath",
@@ -46,8 +46,8 @@
       }
     }
   </script>
-<meta content="Free Crypto Score Tool | The Cryptomath" property="og:title">
-<meta content="Professional crypto scoring tool. Analyze trend, momentum, volatility, liquidity, and market structure in seconds. Free. No signup." property="og:description">
+<meta content="Experimental Crypto Confluence Score | The Cryptomath" property="og:title">
+<meta content="Experimental crypto confluence tool for structured market research. Free, transparent, and not a validated trading signal." property="og:description">
 <meta content="https://thecryptomath.com/assets/og.jpg" property="og:image">
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
@@ -57,8 +57,8 @@
 <meta content="en_US" property="og:locale"/>
 <meta content="fr_FR" property="og:locale:alternate"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Free Crypto Score Tool | The Cryptomath" name="twitter:title"/>
-<meta content="Professional crypto scoring tool. Analyze trend, momentum, volatility, liquidity, and market structure in seconds. Free. No signup." name="twitter:description"/>
+<meta content="Experimental Crypto Confluence Score | The Cryptomath" name="twitter:title"/>
+<meta content="Experimental crypto confluence tool for structured market research. Free, transparent, and not a validated trading signal." name="twitter:description"/>
 <meta content="https://thecryptomath.com/assets/og.jpg" name="twitter:image"/>
 <meta content="1200" name="twitter:image:width"/>
 <meta content="630" name="twitter:image:height"/>
@@ -66,7 +66,7 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260509" rel="stylesheet"/>
-<link href="/score/score.css?v=20260509b" rel="stylesheet"/>
+<link href="/score/score.css?v=20260701" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
@@ -87,7 +87,7 @@
             "name": "What does an A+ verdict mean?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "A+ means strong confluence. It can be useful for intraday, swing, and position entries when combined with strict risk control."
+                "text": "A+ means the current method detected strong confluence. It does not represent a validated probability of success and still requires independent judgment."
             }
         },
         {
@@ -95,7 +95,7 @@
             "name": "What does Speculative mean?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Speculative means there may be some edge, but with higher noise. Position size and execution should be stricter."
+                "text": "Speculative means the method detected partial confluence with more uncertainty. It is not evidence of a proven edge."
             }
         },
         {
@@ -126,7 +126,7 @@
     "price": "400",
     "priceCurrency": "USDC",
     "availability": "https://schema.org/InStock",
-    "description": "Public Access to the automated Score Scan private channel. Annual access is 400 USDC. Monthly access is 50 USDC."
+    "description": "Access to the automated experimental Score Scan research channel. Detections are publicly tracked and are not validated trading signals. Annual access is 400 USDC. Monthly access is 50 USDC."
 }
   </script>
 <script type="application/ld+json">
@@ -189,8 +189,8 @@
 <div class="container">
 <section class="score-hero">
 <div class="score-kicker">The Cryptomath Score</div>
-<h1 class="score-title">Trade or No Trade</h1>
-<p class="score-sub">3 pillars. 10 criteria. One score.</p>
+<h1 class="score-title">Crypto Confluence Scanner</h1>
+<p class="score-sub">3 pillars. 10 criteria. One experimental confluence score.</p>
 </section>
 <div class="score-grid">
 <section class="panel">
@@ -356,7 +356,7 @@
 <div class="panel" style="margin-top:12px;">
 <div class="panel-hd">
 <div class="panel-title">Trade (optional)</div>
-<div class="muted small">Used for RR downgrade</div>
+<div class="muted small">Optional execution plan used for internal consistency checks</div>
 </div>
 <div class="panel-bd">
 <div class="row">
@@ -395,11 +395,12 @@
 <div class="k">Score</div>
 <div class="v" id="scoreTotal">–</div>
 </div>
-<div class="metric">
+<p class="score-experimental-note"><strong>Experimental methodology.</strong> This score measures detected confluence. It is not a probability of success, a validated trading signal, or financial advice.</p>
+<div class="metric score-rr-metric" aria-hidden="true">
 <div class="k">RR</div>
 <div class="v" id="rrVal">–</div>
 </div>
-<div class="metric">
+<div class="metric score-rr-metric" aria-hidden="true">
 <div class="k">RR min</div>
 <div class="v" id="rrMin">–</div>
 </div>
@@ -442,10 +443,10 @@
 </div>
 <div class="panel-bd">
 <p class="muted" style="margin:0 0 12px 0; line-height:1.55;">
-                  This tool is the tactical layer of the <a href="/narrative-framework">Narrative Framework</a>. The framework filters what is worth tracking. The Score Tool filters how to enter.
+                  This tool is the tactical layer of the <a href="/narrative-framework">Narrative Framework</a>. The framework filters what is worth tracking. The Score Tool structures the confluence check.
                 </p>
 <p class="muted" style="margin:0; line-height:1.55;">
-                  This tool is a filter. Use it to avoid weak setups and focus on clean confluence.
+                  This tool is an experimental research filter. The score does not represent a historical probability of success.
                 </p>
 <div style="height:10px;"></div>
 <div class="muted" style="font-weight:700; margin-bottom:6px;">Fast workflow</div>
@@ -454,7 +455,7 @@
 <li>Keep Regime on Auto unless you have a strong reason to override.</li>
 <li>Click Auto fill to pull market context and pre-check signals.</li>
 <li>Adjust what you disagree with. Then click Calculate.</li>
-<li>If RR is below RR min, the verdict is downgraded on purpose.</li>
+<li>An inconsistent optional execution plan may downgrade the verdict.</li>
 </ol>
 <div style="height:10px;"></div>
 <div class="muted" style="font-weight:700; margin-bottom:6px;">What each verdict means</div>
@@ -467,7 +468,7 @@
 <div class="muted" style="font-weight:700; margin-bottom:6px;">Timeframes and use cases</div>
 <ul class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
 <li><strong>Scalp</strong> use this as a direction filter only. Confirm with your execution chart.</li>
-<li><strong>Intraday</strong> best fit. Auto fill plus RR check gives disciplined selection.</li>
+<li><strong>Intraday</strong> use it as a structured research filter, then validate execution on your own chart.</li>
 <li><strong>Swing</strong> very good. Structure is intentionally strict to avoid chop.</li>
 <li><strong>Mid or long term</strong> use it for entries and adds. Re-run on regime shifts, not every day.</li>
 </ul>
@@ -486,7 +487,7 @@
 <h2 class="score-cta-title">Want the automated layer?</h2>
 <p class="score-cta-text">
             The Score Tool is free.
-            The private channel adds the automated Score Scan that runs 24/7 and pushes confluence detections to Telegram, with public tracking.
+            The private channel adds the automated experimental Score Scan, running 24/7 and publishing confluence detections to Telegram with public outcome tracking. These are not validated trading signals.
           </p>
 <p class="score-cta-text score-cta-meta">
             Public Access. 400 USDC / year or 50 USDC / month.
@@ -539,7 +540,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/score-loader.js?v=20260510"></script>
+<script defer="" src="/score/score-loader.js?v=20260701"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>

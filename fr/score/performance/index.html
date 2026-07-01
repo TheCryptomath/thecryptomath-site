@@ -17,8 +17,8 @@
       } catch (_) {}
     })();
   </script>
-<title>Suivi des détections du Score Tool | The Cryptomath</title>
-<meta content="Journal public de chaque détection émise par le Score Tool. Données brutes, sans win-rate marketing. Mise à jour horaire." name="description"/>
+<title>Suivi expérimental des détections | The Cryptomath</title>
+<meta content="Journal public de recherche des détections expérimentales du Score Tool. Résultats bruts, mis à jour chaque heure, sans signaux validés." name="description"/>
 <meta content="dark light" name="color-scheme"/>
 <meta content="#08090c" name="theme-color"/>
 <meta content="#fbfbfc" media="(prefers-color-scheme: light)" name="theme-color"/>
@@ -29,8 +29,8 @@
 <link href="https://thecryptomath.com/score/performance/" hreflang="x-default" rel="alternate"/>
 <link href="/favicon.ico" rel="icon"/>
 <link href="/assets/apple-touch-icon.png" rel="apple-touch-icon"/>
-<meta content="Suivi des détections du Score Tool | The Cryptomath" property="og:title">
-<meta content="Journal public de chaque détection émise par le Score Tool. Données brutes, sans win-rate marketing." property="og:description">
+<meta content="Suivi expérimental des détections | The Cryptomath" property="og:title">
+<meta content="Journal public de recherche des détections expérimentales du Score Tool. Résultats bruts, sans signaux validés." property="og:description">
 <meta content="https://thecryptomath.com/assets/og.jpg" property="og:image">
 <meta content="1200" property="og:image:width">
 <meta content="630" property="og:image:height">
@@ -40,22 +40,22 @@
 <meta content="https://thecryptomath.com/fr/score/performance/" property="og:url"/>
 <meta content="The Cryptomath" property="og:site_name"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Suivi des détections du Score Tool | The Cryptomath" name="twitter:title"/>
-<meta content="Journal public de chaque détection émise par le Score Tool." name="twitter:description"/>
+<meta content="Suivi expérimental des détections | The Cryptomath" name="twitter:title"/>
+<meta content="Journal public de recherche des détections expérimentales du Score Tool." name="twitter:description"/>
 <meta content="https://thecryptomath.com/assets/og.jpg" name="twitter:image"/>
 <meta content="@thecryptomath" name="twitter:site"/>
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260616-audit-v1" rel="stylesheet"/>
-<link href="/score/performance.css?v=20260528c" rel="stylesheet"/>
+<link href="/score/performance.css?v=20260701" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "Dataset",
-    "name": "Suivi public des détections du Cryptomath Score Tool",
-    "description": "Journal public des détections émises par le Cryptomath Score Tool. La page affiche le suivi brut, les statistiques agrégées et les dernières détections.",
+    "name": "Suivi expérimental des détections du Cryptomath Score Tool",
+    "description": "Jeu de données public de recherche pour les détections expérimentales du Score Tool. La page affiche le suivi brut, les statistiques de recherche à +24h et le suivi à plus long terme. Elle ne présente pas de signaux de trading validés.",
     "url": "https://thecryptomath.com/fr/score/performance/",
     "creator": {
         "@type": "Person",
@@ -138,13 +138,17 @@
 <main class="perf-main" id="content">
 <section class="perf-hero">
 <div class="container">
-<p class="eyebrow">Score Tool · Journal public</p>
-<h1>Suivi des détections</h1>
+<p class="eyebrow">Score Tool · Journal de recherche ouvert</p>
+<h1>Suivi expérimental des détections</h1>
 <p class="lead">
-          Chaque détection émise par le Score Tool est enregistrée et suivie dans le temps.
-          Cette page montre les données brutes. Pas de win-rate marketing, pas de captures sélectionnées.
-          Les prix sont rafraîchis chaque heure. L'outil est un scanner de confluence et un journal de marché transparent, pas un groupe de signaux.
+          Score Scan est un système expérimental de détection de marché, actuellement calibré sur des données réelles.
+          Chaque détection publiée est enregistrée et suivie publiquement. Les résultats ci-dessous sont des observations de recherche,
+          pas des signaux de trading validés ni des conseils financiers.
         </p>
+<div class="perf-experimental-notice">
+<strong>Comment lire le score</strong>
+<span>Le score mesure une confluence expérimentale. Il ne représente pas une probabilité historique de réussite.</span>
+</div>
 <p class="meta" id="perfMeta">Chargement…</p>
 </div>
 </section>
@@ -152,72 +156,62 @@
 <div class="container">
 <h2>Vue d'ensemble</h2>
 <div class="perf-grid" id="perfSummary">
-<div class="perf-card"><span class="label">Exceptional</span><span class="value" data-summary="exceptional">—</span></div>
-<div class="perf-card"><span class="label">Signal</span><span class="value" data-summary="signal">—</span></div>
-<div class="perf-card"><span class="label">Watchlist</span><span class="value" data-summary="watchlist">—</span></div>
-<div class="perf-card"><span class="label">Actifs</span><span class="value" data-summary="active">—</span></div>
-<div class="perf-card"><span class="label">Expirés</span><span class="value" data-summary="expired">—</span></div>
+<div class="perf-card"><span class="label">Détections expérimentales</span><span class="value" data-summary="experimental">—</span></div>
+<div class="perf-card"><span class="label">Exceptional · niveau historique</span><span class="value" data-summary="exceptional">—</span></div>
+<div class="perf-card"><span class="label">Active · ≤24h</span><span class="value" data-summary="active24">—</span></div>
+<div class="perf-card"><span class="label">Suivi recherche</span><span class="value" data-summary="research">—</span></div>
+<div class="perf-card"><span class="label">Recherche terminée</span><span class="value" data-summary="complete">—</span></div>
 </div>
 </div>
-
 </section>
 <section class="perf-section perf-evidence-section" aria-labelledby="evidenceTitle">
 <div class="container">
 <div class="perf-section-head">
-<h2 id="evidenceTitle">Comment lire ce track record</h2>
-<p class="muted">Le produit est jeune. L’objectif est d’abord la transparence, pas un win-rate marketing poli.</p>
+<h2 id="evidenceTitle">Comment lire ce journal de recherche</h2>
+<p class="muted">La transparence d'abord. Aucun edge validé n'est revendiqué.</p>
 </div>
 <div class="perf-note-grid" id="perfEvidence">
 <article class="perf-note-card">
-<h3>Échantillon précoce</h3>
-<p>La plupart des détections peuvent encore être suivies plutôt que clôturées. Lis la performance actuelle comme un journal live, pas comme un track record mature.</p>
+<h3>Calibration expérimentale</h3>
+<p>La méthodologie actuelle est encore testée. Les résultats historiques ne valident pas le score comme stratégie de trading.</p>
 </article>
 <article class="perf-note-card">
-<h3>Le beta marché compte</h3>
-<p>Un régime haussier peut rendre des détections long-only meilleures qu’elles ne le sont vraiment. Une comparaison benchmark sera ajoutée quand il y aura assez de données clôturées.</p>
+<h3>Fenêtre publique de 24 heures</h3>
+<p>Une détection est affichée comme active uniquement pendant ses premières 24 heures. C'est une fenêtre de recherche, pas une consigne d'entrée ou de sortie.</p>
 </article>
 <article class="perf-note-card">
-<h3>Exceptional est rare par design</h3>
-<p>Le niveau le plus élevé est volontairement strict. Zéro détection Exceptional récente signifie que le scanner n’a pas vu de confluence maximale, pas que le niveau est inutilisé.</p>
+<h3>Le suivi long reste visible</h3>
+<p>Après 24 heures, le statut devient Suivi recherche. Le résultat à +7j reste visible pour étudier ce qui se passe après la fenêtre principale.</p>
 </article>
 <article class="perf-note-card">
-<h3>Règle de clôture</h3>
-<p>Chaque détection est suivie selon sa catégorie. Les Watchlist sont suivies pendant 7 jours, les Signal pendant 21 jours, et les Exceptional pendant 45 jours.</p>
+<h3>Les anciens labels sont fusionnés</h3>
+<p>Signal et Watchlist sont affichés publiquement comme Détection expérimentale. Leur hiérarchie historique n'a pas démontré de séparation fiable des performances.</p>
 </article>
 </div>
 <div class="perf-simulation" id="perfSimulation" aria-live="polite">
 <div class="sim-main">
 <span class="sim-label" data-sim-all-title>Toutes les détections suivies</span>
 <span class="sim-value">Chargement…</span>
-<span class="sim-note">1 USDC par détection. Valeur latente actuelle uniquement. Pas un PnL réalisé.</span>
-<span class="sim-label sim-label-signals" data-sim-signals-title>Signaux uniquement (Signal + Exceptional)</span>
-<span class="sim-value-signals" data-sim-signals-value>—</span>
+<span class="sim-note">1 USDC par détection. Valeur latente actuelle uniquement. Recherche expérimentale, pas un PnL réalisé.</span>
 </div>
 <div class="sim-range" aria-label="Amplitude observée">
 <span class="sim-range-title">Amplitude observée</span>
 <div class="sim-range-group">
 <h4 class="sim-range-group-title" data-sim-total-title>Sur l'ensemble des détections</h4>
 <dl>
-<dt title="Meilleur mouvement favorable atteint par les détections ouvertes.">Meilleur mouvement observé</dt>
-<dd data-sim-mfe>—</dd>
-<dt title="Pire mouvement défavorable atteint par les détections ouvertes.">Pire mouvement observé</dt>
-<dd data-sim-mae>—</dd>
+<dt title="Meilleur mouvement favorable atteint par les détections suivies.">Meilleur mouvement observé</dt><dd data-sim-mfe>—</dd>
+<dt title="Pire mouvement défavorable atteint par les détections suivies.">Pire mouvement observé</dt><dd data-sim-mae>—</dd>
 </dl>
 </div>
 <div class="sim-range-group">
 <h4 class="sim-range-group-title" data-sim-median-title>Par détection (médiane)</h4>
 <dl>
-<dt title="Mouvement favorable médian par détection.">Mouvement favorable</dt>
-<dd data-sim-mfe-median>—</dd>
-<dt title="Mouvement défavorable médian par détection.">Mouvement défavorable</dt>
-<dd data-sim-mae-median>—</dd>
+<dt title="Mouvement favorable médian par détection.">Mouvement favorable</dt><dd data-sim-mfe-median>—</dd>
+<dt title="Mouvement défavorable médian par détection.">Mouvement défavorable</dt><dd data-sim-mae-median>—</dd>
 </dl>
 </div>
 <div class="sim-range-group sim-range-capture">
-<dl>
-<dt title="Valeur simulée actuelle divisée par le meilleur mouvement favorable observé. Affiché uniquement quand la valeur simulée est positive.">Capture rate</dt>
-<dd data-sim-capture>—</dd>
-</dl>
+<dl><dt title="Valeur simulée actuelle divisée par le meilleur mouvement favorable observé. Affiché uniquement quand la valeur simulée est positive.">Capture rate</dt><dd data-sim-capture>—</dd></dl>
 <p class="sim-range-formula" data-sim-capture-note>valeur actuelle / meilleur mouvement observé</p>
 </div>
 </div>
@@ -228,7 +222,7 @@
 <div class="container">
 <div class="perf-section-head">
 <h2>Statistiques agrégées</h2>
-<p class="muted" id="perfStatsNote">Les résultats comparables utilisent uniquement le jalon +7j. La MFE correspond au meilleur mouvement favorable observé lors des vérifications horaires.</p>
+<p class="muted" id="perfStatsNote">+24h est la fenêtre de recherche publique principale. +7j reste un suivi de recherche secondaire.</p>
 </div>
 <div class="perf-stats" id="perfStats">Chargement…</div>
 </div>
@@ -239,9 +233,8 @@
 <h2>Dernières détections</h2>
 <div class="filters">
 <button class="chip active" data-filter="" type="button">Toutes</button>
+<button class="chip" data-filter="experimental" type="button">Expérimentales</button>
 <button class="chip" data-filter="exceptional" type="button">Exceptional</button>
-<button class="chip" data-filter="signal" type="button">Signal</button>
-<button class="chip" data-filter="watchlist" type="button">Watchlist</button>
 </div>
 </div>
 <div class="table-wrap">
@@ -250,15 +243,15 @@
 <thead>
 <tr>
 <th>Quand</th>
-<th>Type</th>
+<th>Classification</th>
 <th class="col-asset">Actif</th>
 <th>Sens</th>
 <th>Régime</th>
-<th>Score</th>
+<th title="Score de confluence expérimental. Ce n’est pas une probabilité de réussite.">Score*</th>
 <th title="Prix au moment de la détection">Départ</th>
 <th title="Dernier prix observé">Actuel</th>
-<th>+24h</th>
-<th>+7j</th>
+<th class="horizon-primary" title="Fenêtre de recherche publique principale">+24h · principal</th>
+<th title="Suivi de recherche secondaire">+7j · recherche</th>
 <th title="Meilleur mouvement observé">MFE</th>
 <th title="Pire mouvement observé">MAE</th>
 <th title="Performance directionnelle">Perf.</th>
@@ -276,24 +269,18 @@
 <div class="container">
 <h2>À propos de ces données</h2>
 <p>
-          Le Score Tool détecte des confluences sur trois piliers (Macro, Tech, Psycho) et émet
-          trois catégories : <em>Exceptional</em>, <em>Signal</em> et <em>Watchlist</em>.
-          Une fois émise, chaque détection Watchlist est suivie pendant 7 jours, chaque Signal pendant 21 jours et chaque Exceptional pendant 45 jours.
-          Les statistiques à horizon fixe utilisent uniquement les détections ayant atteint +7j. Positive au moins une fois signifie que
-          le prix a évolué dans le sens attendu lors d’au moins une vérification horaire. Ce n’est pas un taux de réussite.
+          Le Score Tool mesure une confluence à partir des piliers Macro, Technique et Psychologie. Le score est expérimental et n'a pas démontré de probabilité historique fiable de réussite. Les anciens labels Signal et Watchlist sont donc fusionnés publiquement sous <em>Détection expérimentale</em>.
         </p>
 <p>
-          Les prix sont vérifiés une fois par heure. Les colonnes de jalon (+24h, +7j) capturent la
-          première observation après cet horizon, pas le prix exact à la minute précise. Les MFE et
-          MAE observés sont les meilleurs et pires mouvements directionnels constatés sur ces
-          checks horaires, pas des maxima tick-by-tick.
+          Une détection est marquée Active uniquement pendant ses premières 24 heures. Elle reste ensuite visible en Suivi recherche jusqu'à la fin du suivi technique. Le jalon +7j est conservé pour la transparence et la recherche, pas comme durée de détention recommandée.
         </p>
 <p>
-          Aucun PnL théorique n'est calculé. Le scanner ne construit pas encore d'entrées, de stops ou
-          de take-profits. Ce que vous voyez ici, c'est ce qui s'est passé sur le prix après chaque
-          détection. Rien de plus, rien de moins.
+          Les prix sont vérifiés une fois par heure. Les colonnes de jalon capturent la première observation après l'horizon visé, pas le prix exact à la minute précise. Les MFE et MAE sont les meilleurs et pires mouvements directionnels observés lors des vérifications horaires, pas des extrêmes tick par tick.
         </p>
-<p class="muted">Contenu éducatif uniquement. Pas un conseil en investissement.</p>
+<p>
+          Le scanner ne fournit pas d'entrée, de stop, de take-profit ni de rendement attendu validés. Ce que vous voyez correspond uniquement à l'évolution du prix après chaque détection expérimentale. Rien de plus, rien de moins.
+        </p>
+<p class="muted">Recherche expérimentale uniquement. Pas un signal de trading validé ni un conseil en investissement.</p>
 </div>
 </section>
 </main>
@@ -335,7 +322,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260528c"></script>
+<script defer="" src="/score/performance.js?v=20260701"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>

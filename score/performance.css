@@ -741,3 +741,83 @@ html:not([data-theme="dark"]) .sim-range-formula {
     border-top-color: #d6dbe4;
   }
 }
+
+
+/* Experimental public framing */
+.perf-experimental-notice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 760px;
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(96,165,250,0.28);
+  border-radius: 10px;
+  background: rgba(96,165,250,0.08);
+  color: var(--text, rgba(255,255,255,0.95));
+}
+
+.perf-experimental-notice span {
+  color: var(--muted, rgba(255,255,255,0.7));
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.horizon-primary {
+  font-weight: 700 !important;
+  color: var(--text, rgba(255,255,255,0.95)) !important;
+}
+
+.tag.experimental {
+  background: rgba(96,165,250,0.15);
+  color: #60a5fa;
+}
+
+.tag.active-24h {
+  background: rgba(74,222,128,0.15);
+  color: #4ade80;
+}
+
+.tag.research-tracking {
+  background: rgba(168,85,247,0.15);
+  color: #c084fc;
+}
+
+.tag.research-complete {
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.45);
+}
+
+html:not([data-theme="dark"]) .perf-experimental-notice {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #111827;
+}
+
+html:not([data-theme="dark"]) .perf-experimental-notice span {
+  color: #374151;
+}
+
+html:not([data-theme="dark"]) .tag.experimental {
+  background: #dbeafe;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+html:not([data-theme="dark"]) .tag.active-24h {
+  background: #dcfce7;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+html:not([data-theme="dark"]) .tag.research-tracking {
+  background: #f3e8ff;
+  border-color: #e9d5ff;
+  color: #7e22ce;
+}
+
+html:not([data-theme="dark"]) .tag.research-complete {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+  color: #6b7280;
+}
