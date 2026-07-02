@@ -85,6 +85,7 @@
   const t = I18N[lang];
 
   let currentFilter = "";
+  let cachedList = null;
 
   // -------------------------------------------------------------------
   // Fetch helpers
@@ -281,15 +282,21 @@
     if (exceptionalEl) exceptionalEl.textContent = String(Number(totals.exceptional || 0));
 
     const items = list && list.ok && Array.isArray(list.items) ? list.items : [];
-    let active24 = 0;
-    let researchTracking = 0;
-    let researchComplete = 0;
-    for (const item of items) {
-      const status = publicStatus(item).css;
-      if (status === "active-24h") active24++;
-      else if (status === "research-tracking") researchTracking++;
-      else if (status === "research-complete") researchComplete++;
+    const serverStatus = summary.researchStatus || null;
+    let active24 = serverStatus ? Number(serverStatus.active24 || 0) : 0;
+    let researchTracking = serverStatus ? Number(serverStatus.researchTracking || 0) : 0;
+    let researchComplete = serverStatus ? Number(serverStatus.researchComplete || 0) : 0;
+
+    // Backward-compatible fallback during deployment ordering.
+    if (!serverStatus) {
+      for (const item of items) {
+        const status = publicStatus(item).css;
+        if (status === "active-24h") active24++;
+        else if (status === "research-tracking") researchTracking++;
+        else if (status === "research-complete") researchComplete++;
+      }
     }
+
     const activeEl = document.querySelector('[data-summary="active24"]');
     if (activeEl) activeEl.textContent = String(active24);
     const researchEl = document.querySelector('[data-summary="research"]');
@@ -300,37 +307,62 @@
     if (meta) {
       const when = summary.lastUpdateTs ? fmtDate(summary.lastUpdateTs) : t.neverUpdated;
       meta.textContent = summary.lastUpdateTs ? t.lastUpdate(when) : t.neverUpdated;
-      if (items.length) meta.textContent += " " + t.sample(items.length);
+      const fullSample = Object.values(totals).reduce((sum, value) => sum + Number(value || 0), 0);
+      if (fullSample) meta.textContent += " " + t.sample(fullSample);
     }
   }
 
   // -------------------------------------------------------------------
   // Render stats
   // -------------------------------------------------------------------
-  function renderStats(list) {
+  function renderStats(data, listFallback) {
     const root = document.getElementById("perfStats");
     const note = document.getElementById("perfStatsNote");
     if (!root) return;
     if (note) note.textContent = t.primaryHorizonNote;
 
-    const items = list && list.ok && Array.isArray(list.items) ? list.items : [];
-    if (!items.length) {
-      root.textContent = t.empty;
-      return;
-    }
+    const serverStats = data && data.ok && data.stats ? data.stats : null;
+    let sections;
 
-    const sections = [
-      { title: t.overall, groups: [["all", items]] },
-      { title: t.byRegime, groups: ["Bull", "Range", "Bear"].map(key => [key, items.filter(item => item.regime === key)]) },
-      { title: t.byDirection, groups: ["Long", "Short"].map(key => [key, items.filter(item => item.direction === key)]) }
-    ];
+    if (serverStats && serverStats.overall) {
+      sections = [
+        { title: t.overall, groups: [["all", serverStats.overall]] },
+        { title: t.byRegime, groups: ["Bull", "Range", "Bear"].map(key => [key, serverStats.byRegime && serverStats.byRegime[key]]) },
+        { title: t.byDirection, groups: ["Long", "Short"].map(key => [key, serverStats.byDirection && serverStats.byDirection[key]]) }
+      ];
+    } else {
+      // Backward-compatible fallback while the Worker update propagates.
+      const items = listFallback && listFallback.ok && Array.isArray(listFallback.items) ? listFallback.items : [];
+      if (!items.length) {
+        root.textContent = t.empty;
+        return;
+      }
+      const adapt = group => {
+        const agg = summarizeItems(group);
+        return {
+          count: agg.count,
+          sample24h: agg.n24,
+          positivePct24h: agg.positive24,
+          medianPerf24h: agg.median24,
+          sample7d: agg.n7,
+          medianPerf7d: agg.median7
+        };
+      };
+      sections = [
+        { title: t.overall, groups: [["all", adapt(items)]] },
+        { title: t.byRegime, groups: ["Bull", "Range", "Bear"].map(key => [key, adapt(items.filter(item => item.regime === key))]) },
+        { title: t.byDirection, groups: ["Long", "Short"].map(key => [key, adapt(items.filter(item => item.direction === key))]) }
+      ];
+    }
 
     const html = sections.map(section => {
       const buckets = section.groups
-        .filter(([, group]) => group.length > 0)
-        .map(([label, group]) => {
-          const agg = summarizeItems(group);
-          const sampleText = agg.n24 ? t.sample24h(agg.n24, agg.count) : t.no24hData;
+        .filter(([, agg]) => agg && Number(agg.count || 0) > 0)
+        .map(([label, agg]) => {
+          const count = Number(agg.count || 0);
+          const n24 = Number(agg.sample24h || 0);
+          const n7 = Number(agg.sample7d || 0);
+          const sampleText = n24 ? t.sample24h(n24, count) : t.no24hData;
           return `
             <div class="stats-bucket">
               <div class="stats-bucket-head">
@@ -339,13 +371,13 @@
               </div>
               <dl class="stats-metrics">
                 <dt class="metric-primary">${t.positive24h}</dt>
-                <dd class="metric-primary">${fmtCapturePct(agg.positive24, 1)}</dd>
+                <dd class="metric-primary">${fmtCapturePct(agg.positivePct24h, 1)}</dd>
                 <dt>${t.median24h}</dt>
-                <dd class="${metricTone(agg.median24)}">${fmtPct(agg.median24, 2)}</dd>
+                <dd class="${metricTone(agg.medianPerf24h)}">${fmtPct(agg.medianPerf24h, 2)}</dd>
                 <dt>${t.median7dResearch}</dt>
-                <dd class="${metricTone(agg.median7)}">${fmtPct(agg.median7, 2)}</dd>
+                <dd class="${metricTone(agg.medianPerf7d)}">${fmtPct(agg.medianPerf7d, 2)}</dd>
                 <dt>${t.researchSample7d}</dt>
-                <dd>${agg.n7}</dd>
+                <dd>${n7}</dd>
               </dl>
             </div>
           `;
@@ -478,11 +510,11 @@
   function setupFilters() {
     const chips = document.querySelectorAll(".chip[data-filter]");
     chips.forEach(chip => {
-      chip.addEventListener("click", async () => {
+      chip.addEventListener("click", () => {
         chips.forEach(c => c.classList.remove("active"));
         chip.classList.add("active");
         currentFilter = chip.getAttribute("data-filter") || "";
-        await loadList();
+        renderList(cachedList);
       });
     });
   }
@@ -496,14 +528,10 @@
       fetchJSON("/stats"),
       fetchJSON("/list?limit=200")
     ]);
+    cachedList = list;
     renderSummary(summary, list);
-    renderStats(list);
+    renderStats(stats, list);
     renderSimulation(stats);
-    renderList(list);
-  }
-
-  async function loadList() {
-    const list = await fetchJSON("/list?limit=200");
     renderList(list);
   }
 

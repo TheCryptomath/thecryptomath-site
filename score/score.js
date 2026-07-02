@@ -3,7 +3,7 @@
    ======================================== */
 
 const API_PATH = "/api/score";
-const METHOD_VERSION = "2.9.0";
+const METHOD_VERSION = "—";
 
 const $ = (id) => document.getElementById(id);
 
@@ -11,7 +11,7 @@ const SCORE_LANG = (document.documentElement.lang || "en").toLowerCase().startsW
 
 const SCORE_I18N = {
   en: {
-    methodVersion: "Method v{v}",
+    methodVersion: "Method version {v}",
     noTrade: "No trade",
     fillInputs: "Fill inputs and click Calculate.",
     ready: "Ready.",
@@ -68,7 +68,7 @@ const SCORE_I18N = {
     tryItFree: "Try it for free"
   },
   fr: {
-    methodVersion: "Méthode v{v}",
+    methodVersion: "Version de méthode {v}",
     noTrade: "Pas de trade",
     fillInputs: "Renseignez les champs puis cliquez sur Calculer.",
     ready: "Prêt.",
@@ -636,7 +636,8 @@ async function callApi(payload, channel = "calc") {
 function maxByRegime(regime) {
   if (regime === "Bull") return { macro: 2, tech: 5, psy: 3 };
   if (regime === "Range") return { macro: 3, tech: 4, psy: 3 };
-  return { macro: 4, tech: 3, psy: 3 };
+  if (regime === "Bear") return { macro: 4, tech: 3, psy: 3 };
+  return null;
 }
 
 function renderScores(data, payload) {
@@ -659,18 +660,27 @@ function renderScores(data, payload) {
   }
 
   if (mode !== "Simple") {
-    const mx = maxByRegime(usedRegime === "Auto" ? "Bull" : usedRegime);
+    const mx = maxByRegime(usedRegime);
     const macro = Number(s.scoreMacro || 0);
     const tech = Number(s.scoreTech || 0);
     const psy = Number(s.scorePsy || 0);
 
-    $("macroTxt").textContent = macro.toFixed(1) + " / " + mx.macro.toFixed(1);
-    $("techTxt").textContent = tech.toFixed(1) + " / " + mx.tech.toFixed(1);
-    $("psyTxt").textContent = psy.toFixed(1) + " / " + mx.psy.toFixed(1);
+    if (mx) {
+      $("macroTxt").textContent = macro.toFixed(1) + " / " + mx.macro.toFixed(1);
+      $("techTxt").textContent = tech.toFixed(1) + " / " + mx.tech.toFixed(1);
+      $("psyTxt").textContent = psy.toFixed(1) + " / " + mx.psy.toFixed(1);
 
-    setFill("macroFill", mx.macro ? (macro / mx.macro) * 100 : 0);
-    setFill("techFill", mx.tech ? (tech / mx.tech) * 100 : 0);
-    setFill("psyFill", mx.psy ? (psy / mx.psy) * 100 : 0);
+      setFill("macroFill", mx.macro ? (macro / mx.macro) * 100 : 0);
+      setFill("techFill", mx.tech ? (tech / mx.tech) * 100 : 0);
+      setFill("psyFill", mx.psy ? (psy / mx.psy) * 100 : 0);
+    } else {
+      $("macroTxt").textContent = macro.toFixed(1) + " / —";
+      $("techTxt").textContent = tech.toFixed(1) + " / —";
+      $("psyTxt").textContent = psy.toFixed(1) + " / —";
+      setFill("macroFill", 0);
+      setFill("techFill", 0);
+      setFill("psyFill", 0);
+    }
   }
 
   const vb = $("verdictBox");

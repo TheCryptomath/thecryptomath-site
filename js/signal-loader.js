@@ -4,6 +4,13 @@
 
   let started = false;
 
+  const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+  if (reducedMotion || saveData) {
+    wrap.classList.add('is-world-unavailable', 'is-static-world');
+    return;
+  }
+
   function loadScript(src) {
     return new Promise((resolve, reject) => {
       const existing = document.querySelector('script[src^="' + src.split('?')[0] + '"]');

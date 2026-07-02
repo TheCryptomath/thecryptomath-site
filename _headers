@@ -4,7 +4,7 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; script-src 'self' 'sha256-aWphpzk4Yp99ljnM7R/sJdN/7k247DXv8rS1lKb2t2I=' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; style-src 'self' 'unsafe-inline'
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data:; script-src 'self' 'sha256-aWphpzk4Yp99ljnM7R/sJdN/7k247DXv8rS1lKb2t2I=' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; style-src 'self'
   Cache-Control: public, max-age=0, must-revalidate
 
 /sitemap.xml

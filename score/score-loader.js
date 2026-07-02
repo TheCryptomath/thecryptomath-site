@@ -4,7 +4,7 @@
     window.__scoreLoaded = true;
 
     const s = document.createElement("script");
-    s.src = "/score/score.js?v=20260701";
+    s.src = "/score/score.js?v=20260702-audit-v2";
     s.async = true;
     document.head.appendChild(s);
   };

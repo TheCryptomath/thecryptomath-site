@@ -65,8 +65,8 @@
 <meta content="@thecryptomath" name="twitter:site"/>
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
-<link href="/css/styles.css?v=20260509" rel="stylesheet"/>
-<link href="/score/score.css?v=20260701" rel="stylesheet"/>
+<link href="/css/styles.css?v=20260702-audit-v2" rel="stylesheet"/>
+<link href="/score/score.css?v=20260702-audit-v2" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
@@ -115,18 +115,6 @@
             }
         }
     ]
-}
-  </script>
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Offer",
-    "name": "Score Scan Public Access",
-    "url": "https://forms.gle/QYHKo5AjuYkYBS579",
-    "price": "400",
-    "priceCurrency": "USDC",
-    "availability": "https://schema.org/InStock",
-    "description": "Accès au canal de recherche expérimental Score Scan automatisé. Les détections sont suivies publiquement et ne sont pas des signaux de trading validés. Accès annuel à 400 USDC. Accès mensuel à 50 USDC."
 }
   </script>
 <script type="application/ld+json">
@@ -196,7 +184,7 @@
 <section class="panel">
 <div class="panel-hd">
 <div class="panel-title">Paramètres</div>
-<div class="muted small" id="methodVersion">Méthode v2.0.8</div>
+<div class="muted small" id="methodVersion">Version de méthode —</div>
 </div>
 <div class="panel-bd">
 <div class="field">
@@ -232,7 +220,7 @@
 </select>
 <div class="right-note" id="modeHint"></div>
 </div>
-<div id="simpleBlock" style="display:none;">
+<div class="u-hidden" id="simpleBlock">
 <div class="checks">
 <label class="check">
 <input id="simpleMacro" type="checkbox"/>
@@ -261,7 +249,7 @@
 </div>
 </div>
 <div id="proBlock">
-<div class="panel" style="margin-top:12px;">
+<div class="panel u-mt-12">
 <div class="panel-hd"><div class="panel-title">Macro et on-chain</div></div>
 <div class="panel-bd">
 <div class="checks">
@@ -289,7 +277,7 @@
 </div>
 </div>
 </div>
-<div class="panel" style="margin-top:12px;">
+<div class="panel u-mt-12">
 <div class="panel-hd"><div class="panel-title">Technique</div></div>
 <div class="panel-bd">
 <div class="checks">
@@ -324,7 +312,7 @@
 </div>
 </div>
 </div>
-<div class="panel" style="margin-top:12px;">
+<div class="panel u-mt-12">
 <div class="panel-hd"><div class="panel-title">Psychologie</div></div>
 <div class="panel-bd">
 <div class="checks">
@@ -353,7 +341,7 @@
 </div>
 </div>
 </div>
-<div class="panel" style="margin-top:12px;">
+<div class="panel u-mt-12">
 <div class="panel-hd">
 <div class="panel-title">Trade optionnel</div>
 <div class="muted small">Plan d’exécution optionnel utilisé pour des contrôles internes de cohérence</div>
@@ -369,7 +357,7 @@
 <input class="input" id="stop" inputmode="decimal" min="0" placeholder="ex. 95" step="any" type="number"/>
 </div>
 </div>
-<div class="field" style="margin-top:12px;">
+<div class="field u-mt-12">
 <label class="label" for="tp">Take profit</label>
 <input class="input" id="tp" inputmode="decimal" min="0" placeholder="ex. 120" step="any" type="number"/>
 </div>
@@ -418,55 +406,55 @@
 <div class="track"><div class="fill" id="psyFill"></div></div>
 </div>
 </div>
-<div class="verdict n" id="verdictBox" style="margin-top:14px;">
+<div class="verdict n u-mt-14" id="verdictBox">
 <h2 id="verdictTitle">Pas de trade</h2>
 <p id="verdictText">Renseignez les champs puis cliquez sur Calculer.</p>
 </div>
-<div class="panel" id="postScoreCta" style="margin-top:12px; display:none;">
+<div class="panel u-mt-12-hidden" id="postScoreCta">
 <div class="panel-hd">
 <div class="panel-title">Étape suivante</div>
 </div>
 <div class="panel-bd">
-<p class="muted" style="margin:0 0 12px 0; line-height:1.55;">
+<p class="muted u-copy-mb-12">
                   Recevez les lectures de marché et les évolutions de la méthodologie quand le marché bouge.
                 </p>
-<div style="display:flex; gap:12px; flex-wrap:wrap;">
+<div class="u-flex-wrap-gap-12">
 <a class="btn primary" href="/fr/newsletter/" id="ctaNewsletterBtn">S’abonner</a>
 <button class="btn" id="shareXBtn" type="button">Partager sur X</button>
 <button class="btn" id="shareTgBtn" type="button">Partager sur Telegram</button>
 </div>
 </div>
 </div>
-<div class="panel" style="margin-top:12px;">
+<div class="panel u-mt-12">
 <div class="panel-hd">
 <div class="panel-title">Mode d’emploi</div>
 </div>
 <div class="panel-bd">
-<p class="muted" style="margin:0 0 12px 0; line-height:1.55;">
+<p class="muted u-copy-mb-12">
                   Cet outil est la couche tactique du <a href="/fr/narrative-framework/">Framework Narratif</a>. Le framework filtre ce qui mérite d’être suivi. Le Score Tool structure la vérification de confluence.
                 </p>
-<p class="muted" style="margin:0; line-height:1.55;">
+<p class="muted u-copy-compact">
                   Cet outil est un filtre de recherche expérimental. Le score ne représente pas une probabilité historique de réussite.
                 </p>
-<div style="height:10px;"></div>
-<div class="muted" style="font-weight:700; margin-bottom:6px;">Workflow rapide</div>
-<ol class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
+<div class="u-h-10"></div>
+<div class="muted u-fw-700-mb-6">Workflow rapide</div>
+<ol class="muted u-list-compact">
 <li>Tapez un actif. Exemple BTC, ETH, SOL.</li>
 <li>Laissez le régime sur Auto sauf si vous avez une bonne raison de le modifier.</li>
 <li>Cliquez sur Remplissage auto pour récupérer le contexte de marché et pré-cocher les signaux.</li>
 <li>Ajustez ce avec quoi vous n’êtes pas d’accord. Puis cliquez sur Calculer.</li>
 <li>Un plan d’exécution optionnel incohérent peut dégrader le verdict.</li>
 </ol>
-<div style="height:10px;"></div>
-<div class="muted" style="font-weight:700; margin-bottom:6px;">Ce que signifie chaque verdict</div>
-<ul class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
+<div class="u-h-10"></div>
+<div class="muted u-fw-700-mb-6">Ce que signifie chaque verdict</div>
+<ul class="muted u-list-compact">
 <li><strong>A+</strong> confluence forte. Bon pour les entrées intraday, swing et position avec contrôle du risque.</li>
 <li><strong>Spéculatif</strong> un certain edge, mais plus de bruit. Réduisez la taille, soyez plus strict sur l’exécution.</li>
 <li><strong>Pas de trade</strong> on passe. Attendez un meilleur alignement ou un meilleur régime.</li>
 </ul>
-<div style="height:10px;"></div>
-<div class="muted" style="font-weight:700; margin-bottom:6px;">Horizon et cas d’usage</div>
-<ul class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
+<div class="u-h-10"></div>
+<div class="muted u-fw-700-mb-6">Horizon et cas d’usage</div>
+<ul class="muted u-list-compact">
 <li><strong>Scalp</strong> utilisez-le uniquement comme filtre directionnel. Confirmez avec votre graphique d’exécution.</li>
 <li><strong>Intraday</strong> utilisez-le comme filtre de recherche structuré, puis validez l’exécution sur votre propre graphique.</li>
 <li><strong>Swing</strong> très bon. La structure est volontairement stricte pour éviter le bruit.</li>
@@ -535,12 +523,12 @@
 </div>
 </div>
 <div class="footer-bottom">
-<p>© <span data-year=""></span> The Cryptomath. Tous droits réservés. <a href="/fr/privacy/">Politique de confidentialité</a></p>
+<p>© <span data-year="">2026</span> The Cryptomath. Tous droits réservés. <a href="/fr/privacy/">Politique de confidentialité</a></p>
 <p>Contenu éducatif uniquement. Pas un conseil financier.</p>
 </div>
 </div>
 </footer>
-<script defer="" src="/score/score-loader.js?v=20260701"></script>
+<script defer="" src="/score/score-loader.js?v=20260702-audit-v2"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
