@@ -101,7 +101,33 @@
   const scratch = new THREE.Vector3();
   const qd = new THREE.Quaternion();
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  // v20260704-perf-v2. Pixel ratio governor is set up BEFORE renderer creation
+  // so the antialias decision can depend on the effective supersampling ratio.
+  // Low-memory coarse-pointer devices start one step above the floor instead
+  // of at 2.75. The frame governor below can still raise or lower the step.
+  // navigator.deviceMemory is absent on iOS Safari, so iPhones are not capped.
+  const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+  const lowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4;
+  const PIXEL_RATIO_STEPS = [1.15, 1.5, 2.0, 2.75];
+  let pixelRatioStep = (coarsePointer && lowMemory) ? 1 : PIXEL_RATIO_STEPS.length - 1;
+  let adaptivePixelRatioCap = PIXEL_RATIO_STEPS[pixelRatioStep];
+  let renderedPixelRatio = 0;
+  let perfFrameCount = 0;
+  let smoothDt = 1 / 60;
+
+  function worldPixelRatio() {
+    // Supersample the 3D portal so it stays crisp on 1x desktop screens.
+    // When the governor lowers the cap below 1.85 the floor follows it.
+    // That escape hatch is what lets weak machines drop the supersampling
+    // cost. The previous version could never go below an effective 1.85.
+    const dpr = window.devicePixelRatio || 1;
+    return Math.min(Math.max(dpr, 1.85), adaptivePixelRatioCap);
+  }
+  renderedPixelRatio = worldPixelRatio();
+
+  // MSAA is redundant while supersampling at 1.4x or more. It only turns on
+  // for the rare path where the initial effective ratio is already low.
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: renderedPixelRatio < 1.4, alpha: true });
   let contextLost = false;
 
   canvas.addEventListener('webglcontextlost', (event) => {
@@ -119,20 +145,9 @@
     contextLost = false;
     resize();
     applyTheme();
+    wake();
   }, false);
 
-  let adaptivePixelRatioCap = 2.75;
-  let renderedPixelRatio = 0;
-  let perfFrameCount = 0;
-  let smoothDt = 1 / 60;
-
-  function worldPixelRatio() {
-    // Supersample the 3D portal so it stays crisp on 1x desktop screens
-    // and when the canvas is visually constrained inside the 1080px layout.
-    const dpr = window.devicePixelRatio || 1;
-    return Math.min(Math.max(dpr, 1.85), adaptivePixelRatioCap);
-  }
-  renderedPixelRatio = worldPixelRatio();
   renderer.setPixelRatio(renderedPixelRatio);
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.setClearColor(0x000000, 0);
@@ -825,6 +840,7 @@
     if (isTypingTarget(e.target) || !keyboardActive) return;
     if (flatKeys.includes(e.code)) {
       keys[e.code] = true;
+      wake();
       e.preventDefault();
     }
   }, { passive: false });
@@ -841,6 +857,7 @@
 
   function pointerDown(x, y) {
     keyboardActive = true;
+    wake();
     try { canvas.focus({ preventScroll: true }); } catch (_) { canvas.focus(); }
     dragging = true;
     lastX = x;
@@ -899,27 +916,32 @@
   resize();
   window.addEventListener('resize', resize);
 
+  function applyPixelRatioStep(nextStep) {
+    pixelRatioStep = Math.max(0, Math.min(PIXEL_RATIO_STEPS.length - 1, nextStep));
+    adaptivePixelRatioCap = PIXEL_RATIO_STEPS[pixelRatioStep];
+    renderedPixelRatio = worldPixelRatio();
+    renderer.setPixelRatio(renderedPixelRatio);
+    renderer.setSize(width, height, false);
+    perfFrameCount = 0;
+  }
+
+  // v20260704-perf-v2. Stepped governor. The old version could only toggle the
+  // cap between 2.75 and 2.0, which is a no-op on dpr 1 screens where the
+  // 1.85 floor dominates. Steps now reach 1.5 and 1.15 so struggling
+  // hardware actually renders fewer pixels. Hysteresis is unchanged,
+  // drop above 32ms smoothed, climb back below 19ms, 90-frame window.
   function tunePixelRatio(dt) {
-    if (reduceMotion) return;
     smoothDt = smoothDt * 0.94 + dt * 0.06;
     perfFrameCount += 1;
     if (perfFrameCount < 90) return;
 
-    if (smoothDt > 0.032 && adaptivePixelRatioCap > 2.01) {
-      adaptivePixelRatioCap = 2.0;
-      renderedPixelRatio = worldPixelRatio();
-      renderer.setPixelRatio(renderedPixelRatio);
-      renderer.setSize(width, height, false);
-      perfFrameCount = 0;
+    if (smoothDt > 0.032 && pixelRatioStep > 0) {
+      applyPixelRatioStep(pixelRatioStep - 1);
       return;
     }
 
-    if (smoothDt < 0.019 && adaptivePixelRatioCap < 2.75) {
-      adaptivePixelRatioCap = 2.75;
-      renderedPixelRatio = worldPixelRatio();
-      renderer.setPixelRatio(renderedPixelRatio);
-      renderer.setSize(width, height, false);
-      perfFrameCount = 0;
+    if (smoothDt < 0.019 && pixelRatioStep < PIXEL_RATIO_STEPS.length - 1) {
+      applyPixelRatioStep(pixelRatioStep + 1);
     }
   }
 
@@ -988,29 +1010,46 @@
   }, true);
 
   let worldVisible = true;
+  let loopScheduled = false;
+
+  // v20260704-perf-v2. The render loop now fully stops when the canvas is
+  // offscreen, the tab is hidden, or reduced-motion has settled on a frame.
+  // wake() restarts it. Triggers are the visibility observer below,
+  // visibilitychange, WebGL context restore, pointer down and mapped keys.
+  function scheduleTick() {
+    if (loopScheduled) return;
+    loopScheduled = true;
+    window.requestAnimationFrame(tick);
+  }
+
+  function wake() {
+    if (contextLost) return;
+    clock.getDelta();
+    scheduleTick();
+  }
+
   if ('IntersectionObserver' in window) {
     const visibilityObserver = new IntersectionObserver((entries) => {
       worldVisible = entries.some((entry) => entry.isIntersecting);
+      if (worldVisible) wake();
     }, { rootMargin: '90px 0px' });
     visibilityObserver.observe(wrap);
   }
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) wake();
+  });
 
   const clock = new THREE.Clock();
   let leanX = 0;
   let leanZ = 0;
 
   function tick() {
-    if (contextLost) {
-      clock.getDelta();
-      window.requestAnimationFrame(tick);
-      return;
-    }
+    loopScheduled = false;
 
-    if (document.hidden || !worldVisible) {
-      clock.getDelta();
-      window.requestAnimationFrame(tick);
-      return;
-    }
+    // Real stop. No rAF stays alive while the world cannot be seen.
+    if (contextLost) return;
+    if (document.hidden || !worldVisible) return;
 
     const dt = Math.min(clock.getDelta(), 0.05);
     const t = clock.elapsedTime;
@@ -1057,8 +1096,15 @@
     leanZ += ((driveZ * 0.48) - leanZ) * 0.12;
     heroMesh.rotation.x = leanX * 0.45;
     heroMesh.rotation.z = leanZ * 0.45;
-    heroMesh.position.y = moving ? Math.abs(Math.sin(t * 11)) * 0.07 : Math.sin(t * 1.6) * 0.018;
-    hero.rotation.y += dt * 0.34;
+    // v20260704-perf-v2. Review fix. Under reduced motion the character must
+    // not bob or auto-rotate, even while the user drags. The lean above stays,
+    // it is direct proportional feedback of the interaction itself.
+    if (reduceMotion) {
+      heroMesh.position.y = 0;
+    } else {
+      heroMesh.position.y = moving ? Math.abs(Math.sin(t * 11)) * 0.07 : Math.sin(t * 1.6) * 0.018;
+      hero.rotation.y += dt * 0.34;
+    }
 
     const pulse = reduceMotion ? 1 : 1 + Math.sin(t * 2.2) * 0.13;
     if (signal.userData.glow) signal.userData.glow.scale.setScalar(1.75 * pulse);
@@ -1066,12 +1112,32 @@
 
     checkNodes(t);
     renderer.render(scene, camera);
+    markRevealed();
+
+    // v20260704-perf-v2. Real reduced-motion. Once inputs settle, one composed
+    // frame stays on screen and the loop stops. Input handlers wake it.
+    if (reduceMotion && !interactionActive(mx, mz)) return;
+
+    scheduleTick();
+  }
+
+  function interactionActive(mx, mz) {
+    return !!(mx || mz || dragging ||
+      Math.abs(dragX) > 0.001 || Math.abs(dragY) > 0.001);
+  }
+
+  let posterCleared = false;
+  function markRevealed() {
     if (!revealed) {
       revealed = true;
       canvas.style.opacity = '1';
     }
-    window.requestAnimationFrame(tick);
+    if (!posterCleared) {
+      posterCleared = true;
+      const poster = wrap.querySelector('[data-world-poster]');
+      if (poster && poster.parentNode) poster.parentNode.removeChild(poster);
+    }
   }
 
-  window.requestAnimationFrame(tick);
+  wake();
 })();

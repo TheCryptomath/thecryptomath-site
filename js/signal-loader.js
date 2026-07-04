@@ -2,14 +2,22 @@
   const wrap = document.querySelector('[data-signal-world]');
   if (!wrap) return;
 
-  let started = false;
-
-  const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const saveData = Boolean(navigator.connection && navigator.connection.saveData);
-  if (reducedMotion || saveData) {
-    wrap.classList.add('is-world-unavailable', 'is-static-world');
-    return;
+  // v20260704-perf-v2. Lightweight inline poster. Draws a soft globe silhouette
+  // inside the card while three.js lazy-loads, using the same palette as the
+  // existing card background. signal-world.js removes it on its first
+  // rendered frame. If the world fails to load it simply stays, keeping the
+  // card dressed instead of empty. No global CSS touched.
+  if (!wrap.querySelector('[data-world-poster]')) {
+    const poster = document.createElement('div');
+    poster.setAttribute('data-world-poster', '');
+    poster.setAttribute('aria-hidden', 'true');
+    poster.style.cssText = 'position:absolute;inset:0;pointer-events:none;' +
+      'background:radial-gradient(circle at 50% 52%,' +
+      ' rgba(247,147,26,0.16) 0%, rgba(20,22,27,0.55) 26%, transparent 44%);';
+    wrap.appendChild(poster);
   }
+
+  let started = false;
 
   function loadScript(src) {
     return new Promise((resolve, reject) => {
@@ -38,7 +46,7 @@
     wrap.classList.add('is-loading-world');
 
     loadScript('/js/three.min.js?v=0.128.0')
-      .then(() => loadScript('/js/signal-world.js?v=20260616-signal-v3'))
+      .then(() => loadScript('/js/signal-world.js?v=20260704-perf-v2'))
       .then(() => wrap.classList.remove('is-loading-world'))
       .catch(() => {
         wrap.classList.remove('is-loading-world');
