@@ -86,7 +86,7 @@
     wrap.classList.add('is-static-world');
   }
 
-  ['pointerdown', 'mouseenter', 'touchstart', 'focusin'].forEach((eventName) => {
+  ['pointerdown', 'touchstart', 'focusin'].forEach((eventName) => {
     wrap.addEventListener(eventName, startWorld, { once: true, passive: true });
   });
 })();
