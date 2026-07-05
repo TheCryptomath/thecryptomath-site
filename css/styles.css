@@ -2065,6 +2065,16 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
   opacity: 0.28;
 }
 
+
+.signal-world-poster {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(247,147,26,0.16) 0%, rgba(20,22,27,0.55) 26%, transparent 44%);
+}
+
 .signal-world-canvas {
   position: absolute;
   inset: 0;
