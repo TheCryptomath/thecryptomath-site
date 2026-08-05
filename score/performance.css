@@ -981,3 +981,103 @@ html:not([data-theme="dark"]) .perf-hero-caveat {
     letter-spacing: 0.025em;
   }
 }
+
+
+/* =========================================================
+   v2026-08-05 r5 — desktop no-scroll table + truly wide prose
+   ========================================================= */
+
+/* The explanatory section should use the same wide desktop canvas as the
+   detections table. The !important on paragraph width intentionally wins
+   over any inherited editorial measure from global styles. */
+.perf-prose .container {
+  max-width: 1440px;
+}
+
+.perf-prose p {
+  width: 100%;
+  max-width: 100% !important;
+}
+
+/* On desktop the table is a fixed 14-column grid that fits the viewport.
+   Horizontal scrolling remains available below 1100px. */
+@media (min-width: 1100px) {
+  .perf-table-section .container {
+    max-width: 1440px;
+  }
+
+  .table-wrap {
+    overflow-x: hidden;
+  }
+
+  .perf-table {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+    font-size: clamp(0.70rem, 0.72vw, 0.78rem);
+  }
+
+  .perf-table th,
+  .perf-table td {
+    min-width: 0 !important;
+    padding: 0.52rem 0.28rem;
+  }
+
+  .perf-table th {
+    white-space: normal;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+
+  .perf-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .perf-table th:nth-child(1),
+  .perf-table td:nth-child(1)  { width: 5%; }
+  .perf-table th:nth-child(2),
+  .perf-table td:nth-child(2)  { width: 12%; }
+  .perf-table th:nth-child(3),
+  .perf-table td:nth-child(3)  { width: 7%; }
+  .perf-table th:nth-child(4),
+  .perf-table td:nth-child(4)  { width: 6%; }
+  .perf-table th:nth-child(5),
+  .perf-table td:nth-child(5)  { width: 6%; }
+  .perf-table th:nth-child(6),
+  .perf-table td:nth-child(6)  { width: 5%; }
+  .perf-table th:nth-child(7),
+  .perf-table td:nth-child(7)  { width: 7%; }
+  .perf-table th:nth-child(8),
+  .perf-table td:nth-child(8)  { width: 7%; }
+  .perf-table th:nth-child(9),
+  .perf-table td:nth-child(9)  { width: 8%; }
+  .perf-table th:nth-child(10),
+  .perf-table td:nth-child(10) { width: 8%; }
+  .perf-table th:nth-child(11),
+  .perf-table td:nth-child(11) { width: 6%; }
+  .perf-table th:nth-child(12),
+  .perf-table td:nth-child(12) { width: 6%; }
+  .perf-table th:nth-child(13),
+  .perf-table td:nth-child(13) { width: 6%; }
+  .perf-table th:nth-child(14),
+  .perf-table td:nth-child(14) { width: 11%; }
+
+  .perf-table .tag {
+    max-width: 100%;
+    padding: 0.14rem 0.28rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.015em;
+  }
+}
+
+@media (max-width: 1099px) {
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  .perf-table {
+    table-layout: auto;
+  }
+}
