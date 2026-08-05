@@ -821,3 +821,125 @@ html:not([data-theme="dark"]) .tag.research-complete {
   border-color: #e5e7eb;
   color: #6b7280;
 }
+
+/* =========================================================
+   v2026-08-05 r1 — hero caveat, inline CTA, access block,
+   prose section, table hint. Namespaced, additive only.
+   ========================================================= */
+
+.perf-hero-caveat {
+  margin: 0.9rem 0 0.6rem;
+  font-size: 0.85rem;
+  color: var(--muted, rgba(255,255,255,0.6));
+}
+
+.perf-hero-caveat a {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.perf-hero-caveat a:hover { color: var(--text); }
+
+.perf-inline-cta {
+  margin: 1.25rem 0 0;
+  font-size: 0.88rem;
+  color: var(--muted, rgba(255,255,255,0.7));
+}
+
+.perf-inline-cta a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.perf-inline-cta a:hover { color: var(--accent-bright); }
+
+.perf-table-hint {
+  margin: -0.25rem 0 0.9rem;
+  font-size: 0.82rem;
+}
+
+.perf-prose p {
+  max-width: 68ch;
+  color: var(--muted, rgba(255,255,255,0.75));
+  line-height: 1.65;
+}
+
+.perf-access-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  background: var(--card, rgba(255,255,255,0.02));
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.perf-access-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 0 0 0.85rem;
+  color: var(--text);
+}
+
+.perf-access-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 0.75rem;
+}
+
+.perf-access-meta {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin: 0.75rem 0 1.25rem;
+  color: var(--text-secondary);
+}
+
+.perf-access-btn {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: rgba(74,222,128,0.08);
+  color: #4ade80;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.perf-access-btn:hover {
+  background: rgba(74,222,128,0.14);
+  transform: translateY(-1px);
+}
+
+.perf-access-foot {
+  margin: 1rem 0 0;
+  font-size: 0.82rem;
+  opacity: 0.7;
+}
+
+.perf-access-foot a {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.perf-access-foot a:hover { color: var(--text); }
+
+html:not([data-theme="dark"]) .perf-access-btn {
+  background: rgba(22,163,74,0.10);
+  color: #15803d;
+}
+
+html:not([data-theme="dark"]) .perf-access-btn:hover {
+  background: rgba(22,163,74,0.16);
+}
+
+html:not([data-theme="dark"]) .perf-prose p,
+html:not([data-theme="dark"]) .perf-inline-cta,
+html:not([data-theme="dark"]) .perf-hero-caveat {
+  color: #4b5563;
+}
