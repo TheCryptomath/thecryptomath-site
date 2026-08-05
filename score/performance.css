@@ -861,7 +861,7 @@ html:not([data-theme="dark"]) .tag.research-complete {
 }
 
 .perf-prose p {
-  max-width: 68ch;
+  max-width: none;
   color: var(--muted, rgba(255,255,255,0.75));
   line-height: 1.65;
 }
@@ -942,4 +942,42 @@ html:not([data-theme="dark"]) .perf-prose p,
 html:not([data-theme="dark"]) .perf-inline-cta,
 html:not([data-theme="dark"]) .perf-hero-caveat {
   color: #4b5563;
+}
+
+
+/* =========================================================
+   v2026-08-05 r4 — desktop table fit + full-width prose
+   ========================================================= */
+
+/* Let the detections table use more of a desktop viewport than the
+   standard editorial container. Mobile keeps horizontal scrolling. */
+.perf-table-section .container {
+  max-width: 1440px;
+}
+
+@media (min-width: 1100px) {
+  .perf-table {
+    font-size: 0.78rem;
+  }
+
+  .perf-table th,
+  .perf-table td {
+    padding: 0.55rem 0.40rem;
+  }
+
+  .perf-table th.col-asset,
+  .perf-table td.col-asset {
+    min-width: 58px;
+  }
+
+  .perf-table th.col-status,
+  .perf-table td.col-status {
+    min-width: 68px;
+  }
+
+  .perf-table .tag {
+    padding: 0.14rem 0.35rem;
+    font-size: 0.64rem;
+    letter-spacing: 0.025em;
+  }
 }
