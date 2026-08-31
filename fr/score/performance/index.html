@@ -47,7 +47,7 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260705-perf-v3" rel="stylesheet"/>
-<link href="/score/performance.css?v=20260831-r6" rel="stylesheet"/>
+<link href="/score/performance.css?v=20260805-r5" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
@@ -193,7 +193,7 @@
 <p class="muted" id="perfStatsNote">+24h est la fenêtre de recherche publique principale. +7j reste un suivi de recherche secondaire.</p>
 </div>
 <div class="perf-stats" id="perfStats">Chargement…</div>
-<p class="perf-inline-cta">Les membres reçoivent chaque nouvelle détection sur Telegram au moment de la publication. <a href="#access">L'accès en détail</a>.</p>
+<p class="perf-inline-cta">Les détections qualifiées du scanner sont suivies ici. L'envoi Telegram applique des filtres anti-répétition et de niveau : toutes les détections suivies ne génèrent donc pas une alerte distincte. <a href="#access">L'accès en détail</a>.</p>
 </div>
 </section>
 <section class="perf-section perf-table-section">
@@ -266,9 +266,10 @@
 <div class="perf-access-card">
 <h2 class="perf-access-title">Le journal est public. Les alertes sont privées.</h2>
 <p class="perf-access-text">
-          Tout ce qui figure sur cette page est ouvert. Les membres reçoivent chaque nouvelle détection directement
-          sur Telegram au moment de sa publication, avec son score, sa direction, le régime de marché et le prix de
-          détection. Les mêmes détections sont ensuite suivies ici comme toutes les autres. Pas de flux séparé,
+          Tout ce qui figure sur cette page est ouvert. Cette page enregistre chaque détection qualifiée du scanner,
+          horodatée avant le résultat. Les alertes Telegram incluent le score, la direction, le régime de marché et le
+          prix de détection, mais des filtres anti-répétition et de niveau s'appliquent : une détection répétée ou de
+          niveau inférieur sur un actif déjà alerté peut apparaître ici sans nouvelle notification. Pas de flux séparé,
           pas de traitement de faveur.
         </p>
 <p class="perf-access-text">
@@ -346,7 +347,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260831-r6"></script>
+<script defer="" src="/score/performance.js?v=20260805-r5"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
