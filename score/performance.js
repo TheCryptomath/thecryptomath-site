@@ -17,6 +17,7 @@
       exceptionalLegacy: "Exceptional",
       active24h: "ACTIVE · ≤24H",
       researchTracking: "RESEARCH TRACKING",
+      perfInProgress: "in progress",
       researchComplete: "RESEARCH COMPLETE",
       statusUnknown: "—",
       all: "All",
@@ -54,6 +55,7 @@
       exceptionalLegacy: "Exceptional",
       active24h: "ACTIVE · ≤24H",
       researchTracking: "SUIVI RECHERCHE",
+      perfInProgress: "en cours",
       researchComplete: "RECHERCHE TERMINÉE",
       statusUnknown: "—",
       all: "Toutes",
@@ -420,9 +422,15 @@
     const rows = visibleItems.map(item => {
       const dirClass = (item.direction || "").toLowerCase() === "long" ? "dir-long" : "dir-short";
       const perf = item.directionalPerfPct;
-      const perfClass = perf > 0 ? "perf-pos" : (perf < 0 ? "perf-neg" : "");
       const type = publicType(item.type);
       const status = publicStatus(item);
+      // The live directional performance is provisional while a detection is
+      // still active or under research tracking. Reserve green/red for records
+      // whose tracking window is complete.
+      const perfCompleted = status.css === "research-complete";
+      const perfClass = perfCompleted
+        ? (perf > 0 ? "perf-pos" : (perf < 0 ? "perf-neg" : ""))
+        : "perf-pending";
 
       return `
         <tr>
@@ -438,7 +446,7 @@
           <td>${priceAtMilestone(item, "+7d")}</td>
           <td class="perf-pos">${fmtPct(item.mfe, 1)}</td>
           <td class="perf-neg">${fmtPct(item.mae, 1)}</td>
-          <td class="${perfClass}">${fmtPct(perf, 1)}</td>
+          <td class="${perfClass}">${fmtPct(perf, 1)}${perfCompleted ? "" : `<span class="perf-pending-tag">${t.perfInProgress}</span>`}</td>
           <td class="col-status"><span class="tag ${escapeHtml(status.css)}">${escapeHtml(status.label)}</span></td>
         </tr>
       `;

@@ -1081,3 +1081,53 @@ html:not([data-theme="dark"]) .perf-hero-caveat {
     table-layout: auto;
   }
 }
+
+
+/* =========================================================
+   v2026-08-31 r6 — provisional Perf + mobile table
+   ========================================================= */
+
+/* Running directional performance is provisional until the tracking window
+   has completed. Keep it neutral; green/red are reserved for completed rows. */
+.perf-pending {
+  color: var(--text-secondary, #9ca3af);
+  opacity: 0.85;
+}
+
+.perf-pending-tag {
+  display: inline-block;
+  margin-left: 0.4em;
+  font-size: 0.7em;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted, #6b7280);
+  opacity: 0.75;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+html:not([data-theme="dark"]) .perf-pending { color: #6b7280; }
+html:not([data-theme="dark"]) .perf-pending-tag { color: #9ca3af; }
+
+/* On small screens, remove four secondary columns while preserving the
+   complete 14-column desktop table and the existing desktop-fit rules above. */
+@media (max-width: 720px) {
+  .perf-table th:nth-child(7),
+  .perf-table td:nth-child(7),
+  .perf-table th:nth-child(8),
+  .perf-table td:nth-child(8),
+  .perf-table th:nth-child(11),
+  .perf-table td:nth-child(11),
+  .perf-table th:nth-child(12),
+  .perf-table td:nth-child(12) {
+    display: none;
+  }
+
+  .perf-table th,
+  .perf-table td {
+    padding: 0.5rem 0.55rem;
+    font-size: 0.82rem;
+  }
+
+  .perf-pending-tag { display: none; }
+}
