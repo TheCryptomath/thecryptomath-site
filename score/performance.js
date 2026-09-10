@@ -7,7 +7,7 @@
   const I18N = {
     en: {
       loading: "Loading…",
-      empty: "No data yet. Detections will appear as Score Scan publishes them.",
+      empty: "No data yet. Detections will appear as Score Scan records them.",
       lastUpdate: (when) => `Last update: ${when}.`,
       sample: (n) => `Sample: ${n} entries.`,
       neverUpdated: "No update yet.",
@@ -45,7 +45,7 @@
     },
     fr: {
       loading: "Chargement…",
-      empty: "Aucune donnée pour l'instant. Les détections apparaîtront à mesure que Score Scan les publie.",
+      empty: "Aucune donnée pour l'instant. Les détections apparaîtront à mesure que Score Scan les enregistre.",
       lastUpdate: (when) => `Dernière mise à jour : ${when}.`,
       sample: (n) => `Échantillon : ${n} entrées.`,
       neverUpdated: "Pas encore de mise à jour.",
