@@ -151,8 +151,14 @@
 
   function publicType(rawType) {
     const type = String(rawType || "").toLowerCase();
-    if (type === "signal" || type === "watchlist" || type === "watch_emergency") {
-      return { label: t.experimentalDetection, css: "experimental" };
+    // The public label stays a single class. The tracking window is appended so
+    // a reader can see why two rows leave the table after different durations,
+    // without re-exposing the internal tiers as a performance hierarchy.
+    if (type === "signal") {
+      return { label: t.experimentalDetection + " \u00b7 21d", css: "experimental" };
+    }
+    if (type === "watchlist" || type === "watch_emergency") {
+      return { label: t.experimentalDetection + " \u00b7 7d", css: "experimental" };
     }
     if (type === "exceptional") return { label: t.exceptionalLegacy, css: "exceptional" };
     return { label: t.experimentalDetection, css: "experimental" };
