@@ -47,7 +47,7 @@
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="/css/styles.css?v=20260705-perf-v3" rel="stylesheet"/>
-<link href="/score/performance.css?v=20260910-r7a2" rel="stylesheet"/>
+<link href="/score/performance.css?v=20260925-r7b2" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
 <script type="application/ld+json">
@@ -150,6 +150,45 @@
         </p>
 <p class="perf-hero-caveat">Des observations de recherche, pas des recommandations de trading. <a href="#methodology">Comment lire cette page</a>.</p>
 <p class="meta" id="perfMeta">Chargement…</p>
+</div>
+</section>
+<section aria-labelledby="telegramTitle" class="perf-section perf-telegram-section" id="telegram">
+<div class="container">
+<div class="perf-section-head">
+<h2 id="telegramTitle">Sélectionnées pour le canal Telegram</h2>
+<p class="muted">Les détections que le scanner a sélectionnées pour publication dans le canal privé, affichées ici une fois leur délai de publication écoulé.</p>
+</div>
+<p class="muted perf-table-hint" id="perfTelegramMeta">Chargement…</p>
+<div class="perf-grid" id="perfTelegramSummary">
+<div class="perf-card" title="Détections sélectionnées pour publication Telegram et au-delà du délai public."><span class="label">Détections sélectionnées</span><span class="value" data-telegram="count">—</span></div>
+<div class="perf-card" title="Part des détections sélectionnées avec un mouvement directionnel positif au jalon +24h."><span class="label">Positives à +24h</span><span class="value" data-telegram="positive24">—</span><span class="perf-card-sub" data-telegram-sub="positive24"></span></div>
+<div class="perf-card" title="Performance directionnelle médiane au jalon +24h."><span class="label">Perf. médiane à +24h</span><span class="value" data-telegram="median24">—</span><span class="perf-card-sub" data-telegram-sub="median24"></span></div>
+<div class="perf-card" title="Performance directionnelle médiane au jalon +7j. Suivi de recherche secondaire."><span class="label">Perf. médiane à +7j</span><span class="value" data-telegram="median7">—</span><span class="perf-card-sub" data-telegram-sub="median7"></span></div>
+</div>
+<p class="muted perf-table-hint" id="perfTelegramCohortNote"></p>
+<div class="table-wrap">
+<table aria-describedby="perfTelegramTableDesc" class="perf-table perf-table-telegram">
+<caption class="sr-only" id="perfTelegramTableDesc">Détections sélectionnées pour publication Telegram</caption>
+<thead>
+<tr>
+<th title="Date de détection. Survolez une cellule pour l’heure exacte.">Date</th>
+<th class="col-asset">Actif</th>
+<th>Sens</th>
+<th>Régime</th>
+<th title="Score de confluence expérimental. Ce n’est pas une probabilité de réussite.">Score*</th>
+<th title="Prix au moment de la détection">Départ</th>
+<th class="horizon-primary" title="Fenêtre de recherche publique principale">+24h</th>
+<th title="Suivi de recherche secondaire">+7j</th>
+<th title="Performance directionnelle">Perf.</th>
+</tr>
+</thead>
+<tbody id="perfTelegramTableBody">
+<tr><td class="loading" colspan="9">Chargement…</td></tr>
+</tbody>
+</table>
+</div>
+<div class="perf-telegram-more"><button aria-controls="perfTelegramTableBody" aria-expanded="false" class="chip" hidden="" id="perfTelegramToggle" type="button"></button></div>
+<p class="muted perf-table-hint" id="perfTelegramTruncated"></p>
 </div>
 </section>
 <section class="perf-section">
@@ -349,7 +388,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260910-r7a3"></script>
+<script defer="" src="/score/performance.js?v=20260925-r7b2"></script>
 <script defer="" src="/js/main.js?v=20260423"></script>
 </body>
 </html>
