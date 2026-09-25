@@ -1131,3 +1131,123 @@ html:not([data-theme="dark"]) .perf-pending-tag { color: #9ca3af; }
 
   .perf-pending-tag { display: none; }
 }
+
+
+/* =========================================================
+   v2026-09-25 r7b2 — Telegram publication block
+   ========================================================= */
+
+/* The topbar is position: fixed (77-87px). Without this, the #telegram anchor
+   and the "show less" scroll land the heading under it. */
+.perf-telegram-section {
+  scroll-margin-top: 104px;
+}
+
+.perf-telegram-section .perf-card-sub {
+  margin-top: 0.3rem;
+  font-size: 0.75rem;
+  color: var(--muted, rgba(255,255,255,0.55));
+}
+
+.perf-telegram-section .perf-grid {
+  margin: 0.75rem 0 1.25rem;
+}
+
+/* The 820px reserve on .table-wrap is sized for the 200-row main table. */
+.perf-telegram-section .table-wrap {
+  min-height: 0;
+}
+
+/* Loading, empty and error messages span the whole row and must wrap. */
+.perf-table.perf-table-telegram td.empty,
+.perf-table.perf-table-telegram td.loading {
+  white-space: normal;
+}
+
+.perf-telegram-section .perf-table-hint:empty {
+  display: none;
+}
+
+.perf-telegram-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.9rem;
+}
+
+.perf-telegram-more .chip[hidden] {
+  display: none;
+}
+
+.perf-telegram-section #perfTelegramTruncated {
+  margin: 0.75rem 0 0;
+}
+
+/* 9-column variant. The desktop widths and the 720px column hiding above are
+   keyed on nth-child for the 14-column table, so this table re-declares both.
+   Without this, mobile would hide +24h and +7d (columns 7 and 8 here). */
+@media (min-width: 1100px) {
+  .perf-table.perf-table-telegram th:nth-child(1),
+  .perf-table.perf-table-telegram td:nth-child(1) { width: 9%; }
+  .perf-table.perf-table-telegram th:nth-child(2),
+  .perf-table.perf-table-telegram td:nth-child(2) { width: 10%; }
+  .perf-table.perf-table-telegram th:nth-child(3),
+  .perf-table.perf-table-telegram td:nth-child(3) { width: 10%; }
+  .perf-table.perf-table-telegram th:nth-child(4),
+  .perf-table.perf-table-telegram td:nth-child(4) { width: 10%; }
+  .perf-table.perf-table-telegram th:nth-child(5),
+  .perf-table.perf-table-telegram td:nth-child(5) { width: 8%; }
+  .perf-table.perf-table-telegram th:nth-child(6),
+  .perf-table.perf-table-telegram td:nth-child(6) { width: 12%; }
+  .perf-table.perf-table-telegram th:nth-child(7),
+  .perf-table.perf-table-telegram td:nth-child(7) { width: 13%; }
+  .perf-table.perf-table-telegram th:nth-child(8),
+  .perf-table.perf-table-telegram td:nth-child(8) { width: 13%; }
+  .perf-table.perf-table-telegram th:nth-child(9),
+  .perf-table.perf-table-telegram td:nth-child(9) { width: 15%; }
+}
+
+@media (max-width: 720px) {
+  .perf-table.perf-table-telegram th:nth-child(7),
+  .perf-table.perf-table-telegram td:nth-child(7),
+  .perf-table.perf-table-telegram th:nth-child(8),
+  .perf-table.perf-table-telegram td:nth-child(8) {
+    display: table-cell;
+  }
+
+  .perf-table.perf-table-telegram th,
+  .perf-table.perf-table-telegram td {
+    padding: 0.5rem 0.35rem;
+    font-size: 0.78rem;
+  }
+
+  .perf-table.perf-table-telegram td.col-asset {
+    max-width: 5.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Phones keep date, asset, direction, +24h and +7d. The running Perf. is
+     provisional and stays on wider screens. */
+  .perf-table.perf-table-telegram th:nth-child(9),
+  .perf-table.perf-table-telegram td:nth-child(9),
+  .perf-table.perf-table-telegram th:nth-child(4),
+  .perf-table.perf-table-telegram td:nth-child(4),
+  .perf-table.perf-table-telegram th:nth-child(5),
+  .perf-table.perf-table-telegram td:nth-child(5),
+  .perf-table.perf-table-telegram th:nth-child(6),
+  .perf-table.perf-table-telegram td:nth-child(6) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .perf-table.perf-table-telegram th,
+  .perf-table.perf-table-telegram td {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.72rem;
+  }
+
+  .perf-table.perf-table-telegram td.col-asset {
+    max-width: 4.5rem;
+  }
+}

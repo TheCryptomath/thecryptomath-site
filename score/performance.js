@@ -41,7 +41,21 @@
       captureUnavailable: "—",
       captureBelowEntry: "Simulated value currently below entry",
       captureFormula: "current value / best move observed",
-      simAllTitle: "All tracked detections"
+      simAllTitle: "All tracked detections",
+      tgMeta: (n, since, delay) =>
+        `${n} selected detections` +
+        (since ? ` \u00b7 public history since ${since}` : "") +
+        ` \u00b7 each detection becomes public ${delay}h after it was recorded.`,
+      tgSub24: (n) => `${n} ${n === 1 ? "reading" : "readings"} at +24h`,
+      tgSub7: (n) => `${n} ${n === 1 ? "reading" : "readings"} at +7d`,
+      notCaptured: "not captured",
+      notCapturedTitle: "No price reading within 2h of this milestone. Left empty rather than filled late.",
+      tgEmpty: "No selected detection has passed the public delay yet.",
+      tgError: "Could not load the selected detections. Check back in a moment.",
+      tgCohortNote: "This block covers only the detections selected for publication in the Telegram channel. Selection applies anti-repetition and tier filters, so it is not a random sample of the tracked record. Selected for publication, delivery not confirmed. Publication marking started at the date above; earlier detections are not marked and are not added retroactively.",
+      tgShowAll: (n, capped) => capped ? `Show the ${n} most recent` : `Show all ${n}`,
+      tgShowLess: "Show the 10 most recent",
+      tgTruncated: (shown, total) => `Table limited to the ${shown} most recent of ${total} selected detections. The figures above cover all of them.`
     },
     fr: {
       loading: "Chargement…",
@@ -79,7 +93,21 @@
       captureUnavailable: "—",
       captureBelowEntry: "Valeur simulée actuellement sous le point d'entrée",
       captureFormula: "valeur actuelle / meilleur mouvement observé",
-      simAllTitle: "Toutes les détections suivies"
+      simAllTitle: "Toutes les détections suivies",
+      tgMeta: (n, since, delay) =>
+        `${n} d\u00e9tections s\u00e9lectionn\u00e9es` +
+        (since ? ` \u00b7 historique public depuis le ${since}` : "") +
+        ` \u00b7 chaque d\u00e9tection devient publique ${delay}h apr\u00e8s son enregistrement.`,
+      tgSub24: (n) => `${n} ${n > 1 ? "relev\u00e9s" : "relev\u00e9"} \u00e0 +24h`,
+      tgSub7: (n) => `${n} ${n > 1 ? "relev\u00e9s" : "relev\u00e9"} \u00e0 +7j`,
+      notCaptured: "non relevé",
+      notCapturedTitle: "Aucun relevé de prix dans les 2h suivant ce jalon. Laissé vide plutôt que rempli en retard.",
+      tgEmpty: "Aucune détection sélectionnée n'a encore passé le délai public.",
+      tgError: "Impossible de charger les détections sélectionnées. Réessayez dans un instant.",
+      tgCohortNote: "Ce bloc ne couvre que les détections sélectionnées pour publication dans le canal Telegram. La sélection applique des filtres anti-répétition et de niveau, ce n'est donc pas un échantillon aléatoire du registre suivi. Sélectionnées pour publication, livraison non confirmée. Le marquage des publications a démarré à la date indiquée ci-dessus, les détections antérieures ne sont pas marquées et ne le seront pas rétroactivement.",
+      tgShowAll: (n, capped) => capped ? `Afficher les ${n} plus r\u00e9centes` : `Afficher les ${n}`,
+      tgShowLess: "Afficher les 10 plus r\u00e9centes",
+      tgTruncated: (shown, total) => `Tableau limité aux ${shown} détections sélectionnées les plus récentes sur ${total}. Les chiffres ci-dessus portent sur l'ensemble.`
     }
   };
 
@@ -88,6 +116,9 @@
 
   let currentFilter = "";
   let cachedList = null;
+  let cachedTelegram = null;
+  let telegramExpanded = false;
+  const TELEGRAM_PREVIEW_ROWS = 10;
 
   // -------------------------------------------------------------------
   // Fetch helpers
@@ -214,6 +245,35 @@
     });
   }
 
+  const MONTHS_LONG = {
+    en: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+    fr: ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"]
+  };
+
+  const MONTHS_SHORT = {
+    en: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+    fr: ["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."]
+  };
+
+  // Date without the time part, for the "public history since" line.
+  function fmtDateOnly(ts) {
+    if (!ts) return null;
+    const d = new Date(ts);
+    if (!Number.isFinite(d.getTime())) return null;
+    const month = MONTHS_LONG[lang][d.getMonth()];
+    // Same day-month-year order in both languages, matching fmtDate (en-GB).
+    return `${d.getDate()} ${month} ${d.getFullYear()}`;
+  }
+
+  // Compact day + month, so a reader can match a row against what the channel
+  // sent that day. The full timestamp stays available as the cell title.
+  function fmtDateCompact(ts) {
+    if (!ts) return "\u2014";
+    const d = new Date(ts);
+    if (!Number.isFinite(d.getTime())) return "\u2014";
+    return `${String(d.getDate()).padStart(2, "0")} ${MONTHS_SHORT[lang][d.getMonth()]}`;
+  }
+
   function fmtAge(ts) {
     if (!ts) return "—";
     const diff = Date.now() - ts;
@@ -226,9 +286,27 @@
     return days + "d";
   }
 
+  // Mirrors the Scanner rule TRACKING_MILESTONE_MAX_LATE_BACKFILL_MS (2h): a
+  // milestone still empty 2h after its target is never filled afterwards, and
+  // expired entries are no longer updated. Those cells must not say "to come".
+  const MILESTONE_TARGET_MS = { "+24h": 24 * 3600 * 1000, "+7d": 7 * 24 * 3600 * 1000 };
+  const MILESTONE_MAX_LATE_MS = 2 * 3600 * 1000;
+
+  function milestoneClosed(item, key) {
+    const raw = String(item && item.status || "").toLowerCase();
+    if (raw === "expired" || raw === "ended") return true;
+    const target = MILESTONE_TARGET_MS[key];
+    const ts = Number(item && item.ts);
+    if (!target || !Number.isFinite(ts)) return false;
+    return Date.now() - ts > target + MILESTONE_MAX_LATE_MS;
+  }
+
   function priceAtMilestone(item, key) {
     const v = item.priceAt && item.priceAt[key];
     if (v === null || v === undefined) {
+      if (milestoneClosed(item, key)) {
+        return `<span class="muted-cell" title="${escapeHtml(t.notCapturedTitle)}">${t.notCaptured}</span>`;
+      }
       // Pas encore atteint = "à venir" / "to come"
       return `<span class="muted-cell">${t.pending}</span>`;
     }
@@ -463,6 +541,125 @@
 
 
   // -------------------------------------------------------------------
+  // Render the Telegram publication block (R7B step 2)
+  // -------------------------------------------------------------------
+  // Reads /api/performance/telegram. The 24h delay and the emittedToTelegram
+  // filter are enforced server-side; nothing here can widen them. The block
+  // reports what was selected for publication, not a delivery confirmation.
+  function renderTelegram(data) {
+    const tbody = document.getElementById("perfTelegramTableBody");
+    const metaEl = document.getElementById("perfTelegramMeta");
+    const noteEl = document.getElementById("perfTelegramCohortNote");
+    const truncEl = document.getElementById("perfTelegramTruncated");
+    const COLS = 9;
+
+    const setCard = (key, text, tone) => {
+      const el = document.querySelector(`[data-telegram="${key}"]`);
+      if (!el) return;
+      el.textContent = text;
+      el.className = tone ? `value ${tone}` : "value";
+    };
+    // Each outcome card states its own sample: a median over 4 readings must
+    // not read like one over 30.
+    const setSub = (key, text) => {
+      const el = document.querySelector(`[data-telegram-sub="${key}"]`);
+      if (el) el.textContent = text;
+    };
+
+    if (noteEl) noteEl.textContent = t.tgCohortNote;
+    if (truncEl) truncEl.textContent = "";
+
+    if (!data || !data.ok) {
+      ["count", "positive24", "median24", "median7"].forEach(key => setCard(key, "\u2014", ""));
+      ["positive24", "median24", "median7"].forEach(key => setSub(key, ""));
+      if (metaEl) metaEl.textContent = t.tgError;
+      if (tbody) tbody.innerHTML = `<tr><td colspan="${COLS}" class="empty">${t.tgError}</td></tr>`;
+      return;
+    }
+
+    const stats = data.stats && data.stats.overall ? data.stats.overall : null;
+    const total = Number.isFinite(Number(data.count)) ? Number(data.count) : 0;
+
+    setCard("count", String(total), "");
+    setCard("positive24", stats ? fmtCapturePct(stats.positivePct24h, 1) : "\u2014", "");
+    setCard("median24", stats ? fmtPct(stats.medianPerf24h, 2) : "\u2014", stats ? metricTone(stats.medianPerf24h) : "");
+    setCard("median7", stats ? fmtPct(stats.medianPerf7d, 2) : "\u2014", stats ? metricTone(stats.medianPerf7d) : "");
+
+    const n24 = stats && Number.isFinite(Number(stats.sample24h)) ? Number(stats.sample24h) : 0;
+    const n7 = stats && Number.isFinite(Number(stats.sample7d)) ? Number(stats.sample7d) : 0;
+    setSub("positive24", t.tgSub24(n24));
+    setSub("median24", t.tgSub24(n24));
+    setSub("median7", t.tgSub7(n7));
+
+    if (metaEl) {
+      const sinceTs = Date.parse(data.historyStartsAt || "");
+      const since = Number.isFinite(sinceTs) ? fmtDateOnly(sinceTs) : null;
+      const delay = Number(data.publicDelayHours);
+      metaEl.textContent = t.tgMeta(total, since, Number.isFinite(delay) ? delay : 24);
+    }
+
+    if (!tbody) return;
+
+    const items = Array.isArray(data.items) ? data.items : [];
+    if (!items.length) {
+      tbody.innerHTML = `<tr><td colspan="${COLS}" class="empty">${t.tgEmpty}</td></tr>`;
+      return;
+    }
+
+    // Top-of-page block: show the most recent rows by default so the table
+    // does not push the rest of the page down as the history grows.
+    const toggle = document.getElementById("perfTelegramToggle");
+    const collapsible = items.length > TELEGRAM_PREVIEW_ROWS;
+    const shown = collapsible && !telegramExpanded ? items.slice(0, TELEGRAM_PREVIEW_ROWS) : items;
+    if (toggle) {
+      toggle.hidden = !collapsible;
+      toggle.textContent = telegramExpanded ? t.tgShowLess : t.tgShowAll(items.length, data.itemsTruncated === true);
+      toggle.setAttribute("aria-expanded", telegramExpanded ? "true" : "false");
+    }
+
+    tbody.innerHTML = shown.map(item => {
+      const dirClass = String(item.direction || "").toLowerCase() === "long" ? "dir-long" : "dir-short";
+      const status = publicStatus(item);
+      const perf = item.directionalPerfPct;
+      const perfCompleted = status.css === "research-complete";
+      const perfClass = perfCompleted
+        ? (perf > 0 ? "perf-pos" : (perf < 0 ? "perf-neg" : ""))
+        : "perf-pending";
+
+      return `
+        <tr>
+          <td title="${escapeHtml(fmtDate(item.ts))}">${escapeHtml(fmtDateCompact(item.ts))}</td>
+          <td class="col-asset"><strong>${escapeHtml(item.asset || "\u2014")}</strong></td>
+          <td class="${dirClass}">${escapeHtml(item.direction || "\u2014")}</td>
+          <td>${escapeHtml(item.regime || "\u2014")}</td>
+          <td>${item.score !== null && item.score !== undefined ? Number(item.score).toFixed(1) : "\u2014"}</td>
+          <td>${fmtPrice(item.priceAtT0)}</td>
+          <td>${priceAtMilestone(item, "+24h")}</td>
+          <td>${priceAtMilestone(item, "+7d")}</td>
+          <td class="${perfClass}">${fmtPct(perf, 1)}${perfCompleted ? "" : `<span class="perf-pending-tag">${t.perfInProgress}</span>`}</td>
+        </tr>
+      `;
+    }).join("");
+
+    if (truncEl && data.itemsTruncated === true && (telegramExpanded || !collapsible)) {
+      truncEl.textContent = t.tgTruncated(items.length, total);
+    }
+  }
+
+  function setupTelegramToggle() {
+    const toggle = document.getElementById("perfTelegramToggle");
+    if (!toggle) return;
+    toggle.addEventListener("click", () => {
+      telegramExpanded = !telegramExpanded;
+      renderTelegram(cachedTelegram);
+      if (!telegramExpanded) {
+        const section = document.getElementById("telegram");
+        if (section) section.scrollIntoView({ block: "start" });
+      }
+    });
+  }
+
+  // -------------------------------------------------------------------
   // Render 1 USDC directional simulation
   // -------------------------------------------------------------------
   function renderSimulation(data) {
@@ -537,15 +734,18 @@
   // Loaders
   // -------------------------------------------------------------------
   async function loadAll() {
-    const [summary, stats, list] = await Promise.all([
+    const [summary, stats, list, telegram] = await Promise.all([
       fetchJSON("/summary"),
       fetchJSON("/stats"),
-      fetchJSON("/list?limit=200")
+      fetchJSON("/list?limit=200"),
+      fetchJSON("/telegram")
     ]);
     cachedList = list;
+    cachedTelegram = telegram;
     renderSummary(summary, list);
     renderStats(stats, list);
     renderSimulation(stats);
+    renderTelegram(telegram);
     renderList(list);
   }
 
@@ -567,10 +767,12 @@
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
       setupFilters();
+      setupTelegramToggle();
       loadAll();
     });
   } else {
     setupFilters();
+    setupTelegramToggle();
     loadAll();
   }
 })();
