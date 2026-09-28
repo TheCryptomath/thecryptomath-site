@@ -1768,6 +1768,9 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
   box-shadow: 0 18px 46px rgba(0,0,0,0.22);
 }
 
+.framework-intro { max-width: none; }
+.framework-intro p + p { margin-top: 12px; }
+
 .answer-block-kicker {
   display: inline-flex;
   align-items: center;
@@ -1928,6 +1931,12 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
   color: var(--accent-bright);
   margin-bottom: 8px;
 }
+.framework-method-note {
+  margin-top: 18px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
 .framework-quote {
   margin: 0;
   padding: 26px 28px;
