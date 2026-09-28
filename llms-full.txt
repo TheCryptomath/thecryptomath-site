@@ -12,6 +12,7 @@
 
 ## Official public accounts
 - X: https://x.com/thecryptomath
+- Facebook: https://facebook.com/TheCryptomath
 - Telegram: https://t.me/thecryptomath
 - YouTube: https://www.youtube.com/@TheCryptomath
 - Substack: https://thecryptomath.substack.com
@@ -37,7 +38,7 @@
 
 ### Score
 - URL: https://thecryptomath.com/score/
-- Purpose: crypto skills score tool and related product experience
+- Purpose: Experimental crypto confluence Score Tool and public Score Scan track record
 - Use this page when the question is specifically about the score tool or its interface
 
 ### Score Performance

@@ -30,3 +30,11 @@ Aucun déploiement, push ou PR. Les URL, redirections, analyses historiques, cal
 ### Passe finale locale Vague 2A, 28/09/2026
 
 - `Vague 2A: finalize French localization and layout` : sept titres français et six sous-titres anglais visibles, réponses rapides FR/EN, terminologie Asymétrie et formulations du chemin de liquidité, ponctuation des 21 ancrages EN, capitales des quatre bandes EN, carte finale pleine largeur et version CSS renouvelée sur 20 pages. Ancrages, seuils, CSP, noindex Markdown, routes et calculs inchangés. Rapport QA et tableau de conformité complétés.
+
+## Maintenance Vague 2B, 28/09/2026
+
+- `94d13b1` - `Fix Performance fallback disclosure` : avertissement FR/EN lorsque seul le sous-ensemble chargé fournit les statistiques, nombre dynamique et comportement normal conservé. Version JS actualisée sur les deux pages Performance.
+- `ed0f322` - `Update official accounts and public proof` : Facebook officiel dans Contact/Connect, `Person.sameAs` et `llms` ; chiffres abonnés et posts corrigés ; compteur AMA retiré ; grille et CTA ajustés. Version CSS actualisée sur 20 pages.
+- `44f7a73` - `Clarify private Score Scan access` : registre public, alertes privées, 600 USDC par an et activation manuelle précisés sur quatre pages.
+- `fc0aeb3` - `Fix llms Score description` : rôle du Score Tool corrigé dans `llms-full.txt`.
+- Rapport QA complété dans un commit documentaire distinct. Aucun calcul, seuil, colonne Performance, ID, route API, CSP, script de thème, paiement ou formulaire Google modifié. Aucun push, PR, merge ou déploiement.

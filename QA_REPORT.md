@@ -332,3 +332,25 @@ Parité méthodologique FR/EN : PASS
 X-Robots-Tag Markdown inchangé : PASS
 
 `git diff --check` : PASS. Les fichiers modifiés de cette passe sont les deux pages Framework, `css/styles.css`, les 18 autres HTML qui chargent cette feuille, `QA_REPORT.md` et `CHANGELOG.md`.
+
+## Maintenance Vague 2B, 28/09/2026
+
+### Verrou avant modification
+
+- `main` propre après `git fetch origin` ; `HEAD` = `origin/main` = `d4a6a52120daa374dd80e2dadad4650315bf6d94`. Ce commit contient le Narrative Framework v2 du 28 septembre 2026 et la passe finale Vague 2A. La branche `vague-2b-maintenance` a été créée ensuite.
+
+### Lots et preuves
+
+- G06, `94d13b1` : les statistiques serveur gardent leur texte et leur rendu antérieurs. Lorsque le fallback utilise une liste de deux détections, la note affiche `The figures below are calculated from the 2 detections currently loaded.` ou `Les chiffres ci-dessous sont calculés à partir des 2 détections actuellement chargées.` Le nombre vient de `items.length`. Une liste vide affiche l'indisponibilité des statistiques globales et l'absence de détections chargées. La version de `score/performance.js` est `20260928-g06` sur les deux pages Performance.
+- G08 et C03, `ed0f322` : Facebook figure dans les cartes Contact/Connect, les dix `Person.sameAs` et les deux fichiers `llms`. Les listes `sameAs` ont été comparées à `origin/main` : seul Facebook est ajouté. Les dix JSON-LD ont été analysés. Les pages FR/EN indiquent plus de 1 500 abonnés à Lecture du Marché Crypto ; les accueils attribuent les 30 000+ posts à X et Telegram. Le compteur `100+ AMA` est supprimé. La grille à trois preuves est équilibrée et les quatre CTA longs se replient à 320 px. La version CSS `20260928-vague2b-maintenance` est présente sur les 20 pages concernées.
+- C02, `44f7a73` : les quatre pages Score/Performance affichent `Private alerts. 600 USDC / year.` ou `Alertes privées. 600 USDC / an.` Elles distinguent le registre public des alertes privées et placent l'explication de l'activation manuelle avant le Google Form. Son URL reste identique à `origin/main`. La description des alertes sur Performance correspond aux champs confirmés. Les blocs d'abonnement ne promettent aucun « edge » ; les FAQ qui nient un edge validé restent en place.
+- G09, `fc0aeb3` : `llms-full.txt` décrit le Score Tool comme outil expérimental de confluence crypto avec le suivi public Score Scan. Narrative Framework et l'identité actuelle sont conservés.
+
+### Contrôles
+
+- G06 testé en FR et EN avec une API locale simulée : statistiques serveur disponibles, statistiques absentes avec deux détections chargées, puis liste vide. Dans le cas normal, le texte et le rendu des statistiques sont identiques à l'état antérieur.
+- Rendu local : 32 combinaisons FR/EN des pages Accueil, Build, Newsletter et Contact à 320 et 1280 px en thèmes clair et sombre ; 16 combinaisons des pages Score et Performance. Aucun débordement horizontal ni CTA hors viewport après correction du repli. Les quatre CTA d'abonnement ont aussi été contrôlés à 390 px.
+- JSON-LD : les dix pages contenant `Person.sameAs` sont analysables et leurs autres comptes sont inchangés. CSP et scripts de thème inchangés. Aucun style ou script inline ajouté.
+- Performance : les 14 colonnes et tous les IDs des deux pages sont identiques à `origin/main`. Le diff de `score/performance.js` ne retire aucune ligne et ne change aucun calcul, seuil, régime, route API ou simulation. Aucun backend modifié.
+- Recherches négatives : `crypto skills score tool`, anciens chiffres newsletter et posts, compteur AMA, `Public Access. 600 USDC`, `Accès public. 600 USDC` et promesse d'edge dans les abonnements sont absents. Aucun tiret cadratin ou demi-cadratin n'a été ajouté au contenu éditorial.
+- `git diff --check` : PASS. Aucun push, PR, merge ou déploiement pour cette maintenance.
