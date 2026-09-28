@@ -1146,7 +1146,11 @@ html:not([data-theme="dark"]) .perf-pending-tag { color: #9ca3af; }
 .perf-telegram-section .perf-card-sub {
   margin-top: 0.3rem;
   font-size: 0.75rem;
-  color: var(--muted, rgba(255,255,255,0.55));
+  color: #4a5160;
+}
+
+html[data-theme="dark"] .perf-telegram-section .perf-card-sub {
+  color: #a9acb6;
 }
 
 .perf-telegram-section .perf-grid {
