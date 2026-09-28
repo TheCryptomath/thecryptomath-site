@@ -65,7 +65,7 @@
 <meta content="@thecryptomath" name="twitter:site"/>
 <link href="//static.cloudflareinsights.com" rel="dns-prefetch"/>
 <link crossorigin="anonymous" href="https://static.cloudflareinsights.com" rel="preconnect"/>
-<link href="/css/styles.css?v=20260705-perf-v3" rel="stylesheet"/>
+<link href="/css/styles.css?v=20260928-vague1-c01" rel="stylesheet"/>
 <link href="/score/score.css?v=20260702-audit-v2" rel="stylesheet"/>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "199dc53c7f2f4873937f56cdf35084ce"}' defer="" src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 <!-- Added structured data audit fixes -->
@@ -100,10 +100,10 @@
         },
         {
             "@type": "Question",
-            "name": "Que signifie No trade ?",
+            "name": "Que signifie un signal défavorable ?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No trade signifie qu’il vaut mieux ignorer le setup et attendre un meilleur alignement ou un meilleur régime."
+                "text": "Un signal défavorable indique que les critères observés ne convergent pas assez dans le régime actuel."
             }
         },
         {
@@ -152,9 +152,10 @@
 <div class="navlinks" data-navlinks="">
 <a href="/fr/">Accueil</a>
 <a href="/fr/build/">Projets</a>
-<a aria-current="page" href="/fr/score/">Score</a><a href="/fr/narrative-framework/">Cadre</a>
+<a aria-current="page" href="/fr/score/">Score</a><a href="/fr/narrative-framework/">Narrative Framework</a>
 <a href="/fr/resources/">Ressources</a>
 <a href="/fr/contact/">Contact</a>
+<a class="mobile-newsletter" href="/fr/newsletter/">Newsletter</a>
 </div>
 <div class="nav-cta">
 <a class="btn primary" href="/fr/newsletter/">Newsletter</a>
@@ -407,7 +408,7 @@
 </div>
 </div>
 <div class="verdict n u-mt-14" id="verdictBox">
-<h2 id="verdictTitle">Pas de trade</h2>
+<h2 id="verdictTitle">Signal défavorable</h2>
 <p id="verdictText">Renseignez les champs puis cliquez sur Calculer.</p>
 </div>
 <div class="panel u-mt-12-hidden" id="postScoreCta">
@@ -431,7 +432,7 @@
 </div>
 <div class="panel-bd">
 <p class="muted u-copy-mb-12">
-                  Cet outil est la couche tactique du <a href="/fr/narrative-framework/">Framework Narratif</a>. Le framework filtre ce qui mérite d’être suivi. Le Score Tool structure la vérification de confluence.
+                  Cet outil est la couche tactique du <a href="/fr/narrative-framework/">Narrative Framework</a>. Cette méthode filtre ce qui mérite d’être suivi. Le Score Tool structure la vérification de confluence.
                 </p>
 <p class="muted u-copy-compact">
                   Cet outil est un filtre de recherche expérimental. Le score ne représente pas une probabilité historique de réussite.
@@ -448,22 +449,22 @@
 <div class="u-h-10"></div>
 <div class="muted u-fw-700-mb-6">Ce que signifie chaque verdict</div>
 <ul class="muted u-list-compact">
-<li><strong>A+</strong> confluence forte. Bon pour les entrées intraday, swing et position avec contrôle du risque.</li>
-<li><strong>Spéculatif</strong> un certain edge, mais plus de bruit. Réduisez la taille, soyez plus strict sur l’exécution.</li>
-<li><strong>Pas de trade</strong> on passe. Attendez un meilleur alignement ou un meilleur régime.</li>
+<li><strong>A+</strong> forte convergence des critères observés. Le signal de recherche est plus fort ; le résultat reste incertain.</li>
+<li><strong>Spéculatif</strong> convergence partielle, avec des critères divergents et davantage d’incertitude.</li>
+<li><strong>Signal défavorable</strong> alignement insuffisant. Les observations actuelles ne forment pas un signal de recherche clair.</li>
 </ul>
 <div class="u-h-10"></div>
 <div class="muted u-fw-700-mb-6">Horizon et cas d’usage</div>
 <ul class="muted u-list-compact">
-<li><strong>Scalp</strong> utilisez-le uniquement comme filtre directionnel. Confirmez avec votre graphique d’exécution.</li>
-<li><strong>Intraday</strong> utilisez-le comme filtre de recherche structuré, puis validez l’exécution sur votre propre graphique.</li>
-<li><strong>Swing</strong> très bon. La structure est volontairement stricte pour éviter le bruit.</li>
-<li><strong>Moyen ou long terme</strong> utilisez-le pour les entrées et renforcements. Relancez-le lors des changements de régime, pas chaque jour.</li>
+<li><strong>Scalp</strong> contexte directionnel de court terme uniquement ; ce score n’évalue pas l’exécution.</li>
+<li><strong>Intraday</strong> lecture de confluence intraday ; la qualité d’exécution reste hors du score.</li>
+<li><strong>Swing</strong> critères structurels plus stricts qui peuvent filtrer une partie du bruit de marché.</li>
+<li><strong>Moyen ou long terme</strong> lecture de contexte plus large, susceptible de changer avec le régime de marché.</li>
 </ul>
 </div>
 </div>
 <p class="right-note">
-              Notes. Cet outil est éducatif. Il ne garantit aucun résultat. Gérez toujours votre risque.
+              Notes. Cet outil est éducatif. Il ne garantit aucun résultat. Le risque de marché reste présent.
             </p>
 </div>
 </aside>
@@ -509,7 +510,7 @@
 <a href="/fr/build/">Projets</a>
 <a aria-current="page" href="/fr/score/">Score</a>
 <a href="/fr/score/performance/">Performance</a>
-<a href="/fr/narrative-framework/">Cadre</a>
+<a href="/fr/narrative-framework/">Narrative Framework</a>
 <a href="/fr/resources/">Ressources</a>
 <a href="/fr/contact/">Contact</a>
 </div>
@@ -528,7 +529,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/score-loader.js?v=20260702-audit-v2"></script>
-<script defer="" src="/js/main.js?v=20260423"></script>
+<script defer="" src="/score/score-loader.js?v=20260928-c04"></script>
+<script defer="" src="/js/main.js?v=20260928-vague1-g01"></script>
 </body>
 </html>
