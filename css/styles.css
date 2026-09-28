@@ -1770,6 +1770,7 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
 
 .framework-intro { max-width: none; }
 .framework-intro p + p { margin-top: 12px; }
+.framework-next-step { width: 100%; max-width: none; }
 
 .answer-block-kicker {
   display: inline-flex;
@@ -1858,6 +1859,14 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
   grid-template-columns: 44px 1fr;
   gap: 16px;
   align-items: start;
+}
+.framework-term-en {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
 }
 .framework-number {
   width: 36px;

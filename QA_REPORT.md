@@ -202,7 +202,7 @@ Le déploiement était exclu de cette mission. Un contrôle manuel sur le site p
 
 - Lot 1 : 28 rendus des pages FR/EN à 320, 390, 768, 1024, 1280, 1366 et 1440 px, en thèmes clair et sombre. Aucun débordement horizontal. Le menu desktop qui se repliait à 1280 px a été corrigé au lot 2.
 - Lot 2 : les mêmes 28 rendus. Aucun débordement horizontal, chevauchement du menu avec le logo ou les boutons, ni retour à la ligne des liens desktop. Menu mobile ouvert à 320, 390, 768 et 1024 px dans les deux langues : sept liens présents et panneau dans le viewport.
-- Les 21 ancrages français sont identiques mot pour mot au brief. Parité FR/EN : sept noms de dimensions anglais, trois ancrages 0/3/5 sous chacune, saturation, zone de détection et quatre bandes communes.
+- Les 21 ancrages français sont identiques mot pour mot au brief. Parité FR/EN : sept dimensions correspondantes, titres FR localisés et titres EN inchangés, trois ancrages 0/3/5 sous chacune, saturation, zone de détection et quatre bandes communes.
 - Les contenus de méthode sont présents dans le HTML statique ; ils ne dépendent pas de JavaScript. Un essai manuel dans un navigateur avec JavaScript désactivé reste à faire.
 - Les deux blocs JSON-LD modifiés ont été analysés sans erreur. `Article.dateModified` vaut `2026-09-28`, et la description mentionne v2. `DefinedTermSet` contient les sept dimensions, Saturation et la zone de détection. Les FAQ invisibles ont été retirées du balisage.
 - Les scripts de thème inline gardent le hash SHA-256 `aWphpzk4Yp99ljnM7R/sJdN/7k247DXv8rS1lKb2t2I=`, présent dans `_headers`.
@@ -254,10 +254,10 @@ Le déploiement était exclu de cette mission. Un contrôle manuel sur le site p
 
 ### Bandes anglaises complètes pour relecture
 
-- 0–10, **Noise**: signal is too weak, too vague, or mainly promotional.
-- 11–20, **Watchlist**: interesting elements are emerging, but the evidence, timing, or structure remain insufficient.
-- 21–28, **Active**: the narrative is sufficiently supported to warrant in-depth research and regular monitoring.
-- 29–35, **Strong**: strong convergence across observed dimensions; a research priority.
+- 0–10, **Noise**: Signal is too weak, too vague, or mainly promotional.
+- 11–20, **Watchlist**: Interesting elements are emerging, but the evidence, timing, or structure remain insufficient.
+- 21–28, **Active**: The narrative is sufficiently supported to warrant in-depth research and regular monitoring.
+- 29–35, **Strong**: Strong convergence across observed dimensions; a research priority.
 - Strong implies neither high upside potential nor an opportunity to buy.
 
 ### Formulations éditoriales réécrites
@@ -273,10 +273,10 @@ Le déploiement était exclu de cette mission. Un contrôle manuel sur le site p
 | EN : “a more structured setup view.” | “a more structured view of market context.” |
 | FR : “une lecture plus structurée des setups.” | “une lecture plus structurée du contexte de marché.” |
 
-### Formulations ambiguës laissées pour décision
+### Formulations tranchées dans la passe finale
 
-- EN, définition actuelle d’Asymmetry et question/tableau d’application : “upside” ; FR, définition actuelle : “potentiel” et “pricing”, avec le libellé de pilule “Edge”. Ces termes décrivent la valorisation dans la méthode existante. Les changer risquerait de modifier la définition demandée comme inchangée.
-- EN, piège « No liquidity path » : “financially irrelevant” ; FR : “financièrement inutile”. Le rôle éditorial de cette appréciation est ambigu. Elle a été conservée pour décision.
+- Asymétrie : pilule FR « Valorisation », pilule EN « Valuation » ; question et description structurée EN reformulées sans « upside ». Les ancrages restent identiques.
+- « Aucun chemin de liquidité » / « No liquidity path » : formulation plus précise sur la difficulté d’exposer la thèse via des marchés liquides.
 
 ### Vérifications manuelles restantes
 
@@ -300,4 +300,35 @@ Contrôle de complétude : PASS
 5. Saturation Low : mention des moteurs IA interrogés sur les narratifs du moment.
 6. Réponses des moteurs IA : indicateur parmi d’autres, protocole comparable et daté.
 7. Chaque analyse publie les observations qui justifient son niveau de saturation.
-8. Distinction complète : Attention velocity mesure la vitesse de montée ; Saturation, la diffusion déjà atteinte ; Asymmetry, ce qui est intégré dans les valorisations.
+8. Distinction complète : Vitesse de l'attention mesure la vitesse de montée ; Saturation, la diffusion déjà atteinte ; Asymétrie, ce qui est intégré dans les valorisations.
+
+### Passe finale locale Vague 2A, 28/09/2026
+
+Branche vérifiée avant la passe : `vague-2a`, état propre. Les 28 rendus FR/EN à 320, 390, 768, 1024, 1280, 1366 et 1440 px en thèmes clair et sombre sont terminés : aucun débordement horizontal ni chevauchement du menu ; écart de largeur entre la réponse rapide, la citation et la carte finale : 0 px. Menus mobiles ouverts aux quatre premières largeurs : sept liens présents et panneau dans le viewport. Les contenus sont dans le HTML initial et ne dépendent pas de JavaScript pour être présents ; un essai visuel avec JavaScript explicitement désactivé reste à faire.
+
+Les 21 ancrages FR sont identiques à `HEAD`. Les 21 ancrages EN ne diffèrent que par la suppression de l'espace avant le deux-points. Les descriptions des sept dimensions dans le JSON-LD FR restent inchangées, ainsi que les termes Saturation et zone de détection FR/EN. Les bandes, plages, seuil de 21 avec Low, qualification 18-20 avec Low et notes sur les analyses antérieures sont inchangés. Les JSON-LD FR/EN sont analysables. Les scripts de thème gardent leur hash SHA-256 `aWphpzk4Yp99ljnM7R/sJdN/7k247DXv8rS1lKb2t2I=` ; `_headers`, sa CSP et sa règle Markdown sont identiques à `HEAD`. `sitemap.xml`, `_redirects`, les calculs Score et les autres fichiers protégés restent inchangés. La version CSS `20260928-vague2a-final` est présente sur les 20 pages concernées ; aucune ancienne référence `vague2a-polish` ne subsiste.
+
+| # | Instruction | Statut | Fichier(s) | Preuve |
+|---|---|---|---|---|
+| 1 | Titres des sept dimensions FR | FAIT | `fr/narrative-framework/index.html` | `<h3>Pression du problème</h3>`, `<h3>Timing</h3>`, `<h3>Chemin de liquidité</h3>`, `<h3>Vitesse de l'attention</h3>`, `<h3>Preuve produit</h3>`, `<h3>Surface de distribution</h3>`, `<h3>Asymétrie</h3>` |
+| 2 | Carte finale pleine largeur FR/EN | FAIT | `css/styles.css`, deux pages Framework | `.framework-next-step { width: 100%; max-width: none; }` ; `class="answer-block framework-next-step"` |
+| 3 | Réponse rapide FR | FAIT | `fr/narrative-framework/index.html` | `Le Narrative Framework évalue un narratif crypto selon sept dimensions.` ; `Pression du problème (Problem pressure), Timing, Chemin de liquidité (Liquidity path), Vitesse de l'attention (Attention velocity), Preuve produit (Product proof), Surface de distribution (Distribution surface) et Asymétrie (Asymmetry).` ; `Ce n'est pas une machine à prédire. Il sert à structurer une thèse, comparer les signaux et éviter de confondre conviction et consensus tardif.` |
+| 4 | Quick answer EN | FAIT | `narrative-framework.html` | `The Narrative Framework evaluates a crypto narrative across seven dimensions.` ; `Problem pressure, Timing, Liquidity path, Attention velocity, Product proof, Distribution surface, and Asymmetry.` ; `It is not a prediction machine. It structures a thesis, compares signals, and helps distinguish conviction from late consensus.` |
+| 5 | Asymétrie et Asymmetry | FAIT | deux pages Framework | `<span class="framework-pill">Valorisation</span>` ; `<span class="framework-pill">Valuation</span>` ; `Is meaningful potential still left relative to how obvious, crowded, and priced-in the narrative already is?` ; `The remaining potential relative to how obvious, crowded, and priced-in the narrative already is.` |
+| 6 | Piège du chemin de liquidité FR/EN | FAIT | deux pages Framework | `Une idée forte sans chemin pratique pour le capital peut rester intellectuellement convaincante, mais difficile à traduire en exposition sur des marchés liquides.` ; `A strong idea with no practical path for capital to enter can remain intellectually compelling but difficult to express through liquid markets.` |
+| 7 | Ponctuation des 21 ancrages EN | FAIT | `narrative-framework.html` | `<strong>0</strong>:`, `<strong>3</strong>:`, `<strong>5</strong>:` ; 21 libellés comparés à `HEAD` |
+| 8 | Capitales des quatre bandes EN | FAIT | `narrative-framework.html` | `Signal is too weak, too vague, or mainly promotional.` ; `Interesting elements are emerging, but the evidence, timing, or structure remain insufficient.` ; `The narrative is sufficiently supported to warrant in-depth research and regular monitoring.` ; `Strong convergence across observed dimensions; a research priority.` |
+| 9 | Invariants et périmètre | FAIT | deux pages Framework, `_headers` | `Early Detection Zone: a total score of at least 21 and Low saturation.` ; `X-Robots-Tag: noindex` ; `Analyses published before September 28, 2026 retain their original methodology and are not retrospectively rescored.` |
+| 10 | Termes anglais secondaires et JSON-LD FR | FAIT | `fr/narrative-framework/index.html`, `css/styles.css` | `<h3>Pression du problème</h3><span class="framework-term-en" lang="en">Problem pressure</span>` ; `"name": "Pression du problème"` ; `"alternateName": "Problem pressure"` ; `<h3>Timing</h3><p class="card-desc">` ; `Vitesse de l'attention mesure à quelle vitesse l'attention monte. Saturation mesure jusqu'où elle s'est déjà propagée. Asymétrie porte sur ce qui est déjà intégré dans les valorisations.` |
+| 11 | Tableau et contrôles finaux | FAIT | `QA_REPORT.md` | `0 tiret cadratin : PASS` ; `JSON-LD FR : PASS` ; `X-Robots-Tag Markdown inchangé : PASS` |
+
+0 tiret cadratin : PASS
+0 tiret demi-cadratin : PASS
+JSON-LD FR : PASS
+JSON-LD EN : PASS
+CSP/hash : PASS
+Responsive 320/390/768/1024/1280/1366/1440 : PASS
+Parité méthodologique FR/EN : PASS
+X-Robots-Tag Markdown inchangé : PASS
+
+`git diff --check` : PASS. Les fichiers modifiés de cette passe sont les deux pages Framework, `css/styles.css`, les 18 autres HTML qui chargent cette feuille, `QA_REPORT.md` et `CHANGELOG.md`.

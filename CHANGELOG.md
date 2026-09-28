@@ -26,3 +26,7 @@ Aucun déploiement, push ou PR. Les URL, redirections, analyses historiques, cal
 
 - `9e8490c` - `Vague 2A: polish Framework copy and layout` : version courte dans la hero, note historique près du score, cartes supérieures de même largeur et tirets ASCII sur les deux pages Framework. CSS versionné sur les 20 pages qui le chargent.
 - `Noindex internal markdown files` : ajout de `/*.md` avec `X-Robots-Tag: noindex` dans `_headers` ; retrait des chemins locaux de `QA_REPORT.md`. CSP inchangée.
+
+### Passe finale locale Vague 2A, 28/09/2026
+
+- `Vague 2A: finalize French localization and layout` : sept titres français et six sous-titres anglais visibles, réponses rapides FR/EN, terminologie Asymétrie et formulations du chemin de liquidité, ponctuation des 21 ancrages EN, capitales des quatre bandes EN, carte finale pleine largeur et version CSS renouvelée sur 20 pages. Ancrages, seuils, CSP, noindex Markdown, routes et calculs inchangés. Rapport QA et tableau de conformité complétés.
