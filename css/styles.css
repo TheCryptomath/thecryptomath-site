@@ -1172,6 +1172,13 @@ p { margin: 0; }
   .footer-bottom { flex-direction: column; text-align: center; }
 }
 
+@media (min-width: 769px) and (max-width: 1180px) {
+  .navlinks { display: none; }
+  .topbar .nav-cta .btn.primary { display: none; }
+  .mobile-toggle { display: inline-flex; }
+  .nav { position: relative; }
+}
+
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
   .hero-actions { flex-direction: column; }
@@ -1196,7 +1203,7 @@ p { margin: 0; }
    Mobile menu. Premium compact dropdown
    ============================================ */
 
-@media (max-width: 768px) {
+@media (max-width: 1180px) {
   .topbar { z-index: 10000; }
   .topbar, .topbar .container, .topbar .nav { overflow: visible; }
 
@@ -1343,7 +1350,7 @@ p { margin: 0; }
 }
 
 /* Light theme dropdown */
-@media (max-width: 768px) {
+@media (max-width: 1180px) {
   html:not([data-theme="dark"]) .topbar .navlinks.open {
     background: rgba(255,255,255,0.94);
     border: 1px solid rgba(14,15,18,0.10);

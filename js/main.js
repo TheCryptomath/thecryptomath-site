@@ -168,7 +168,7 @@ function uiText(key) {
 
   // Close menu if viewport grows past mobile breakpoint
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 768 && isOpen()) close();
+    if (window.innerWidth > 1180 && isOpen()) close();
   }, { passive: true });
 })();
 
