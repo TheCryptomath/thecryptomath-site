@@ -12,3 +12,12 @@ Pages HTML communes aux lots 1 et 2, ainsi qu'au changement de version CSS du lo
 | Lot 3 — C01 | `newsletter.html` ; `fr/newsletter/index.html` ; `css/styles.css` ; les 18 autres pages HTML ci-dessus pour la version CSS | Nom public Lecture du Marché Crypto et bloc éditorial de l'édition #68. Ajustements de rendu à 320 px pour le menu, le CTA français et la date. | `06052db49821e1fcc0676d436cef815a2d0cc359` |
 
 Les URL, `_redirects`, `robots.txt`, `sitemap.xml`, `llms.txt` et `llms-full.txt` n'ont pas été modifiés. Aucun déploiement, push ou PR.
+
+## Vague 2A, 28/09/2026
+
+| Lot | Changement |
+| --- | --- |
+| 1 — Narrative Framework v2 | Pages FR/EN : définition, version, ancrages 0/3/5, saturation séparée, bandes Noise/Watchlist/Active/Strong, zone de détection précoce et données structurées. `sitemap.xml` : seules les deux dates `lastmod` concernées passent au 28/09/2026. Commit `df1b52c`. |
+| 2 — Menu | Liens du menu principal sans retour à la ligne ; espacement desktop ajusté. Nouvelle version de `css/styles.css` sur les 20 pages qui le chargent. Rapport QA complété. |
+
+Aucun déploiement, push ou PR. Les URL, redirections, analyses historiques, calculs du Score et de Performance, ainsi que `llms.txt` restent inchangés.

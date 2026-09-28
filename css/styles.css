@@ -265,11 +265,19 @@ p { margin: 0; }
 
 .navlinks a {
   padding: 10px 16px;
+  white-space: nowrap;
   border-radius: var(--radius-md);
   font-weight: 500;
   font-size: 0.9375rem;
   color: var(--text-secondary);
   transition: all 0.2s ease;
+}
+
+@media (min-width: 1181px) {
+  .nav { gap: 12px; }
+  .navlinks { gap: 6px; }
+  .navlinks a { padding: 10px 9px; }
+  .nav-cta { gap: 8px; }
 }
 
 .navlinks a:hover {

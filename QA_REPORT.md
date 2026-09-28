@@ -188,3 +188,97 @@ Le déploiement était exclu de cette mission. Un contrôle manuel sur le site p
 
 - `Gérez toujours votre risque.`
   → `Le risque de marché reste présent.`
+
+## Vague 2A, 28/09/2026
+
+### Étape 0 et périmètre
+
+- Dépôt : `C:\Users\J\Documents\thecryptomath-site-repo`. Départ sur `main`, état propre. `HEAD`, `origin/main` local et `git ls-remote origin refs/heads/main` : `453a9ccc6749f67572cf0be6414fce97707ebd81`.
+- Les quatre fichiers ont été comparés à la production après normalisation CRLF/LF. Résultat : identiques. SHA-256 normalisés : `narrative-framework.html` `EDB27DC12CF3207A2BD7E2C13F577C8318E602C867F95F0CC80A1E8BFFC96E12` ; `fr/narrative-framework/index.html` `7E906F8D4B4E6D4853784752560AC9823ADB089F1B7D5D1FA5763DDD7D27DCDA` ; `css/styles.css` `DA5F1CBFB06B8404DB2EFC28AE4466013E548A4DD509D731ABB6D3745D30784F` ; `sitemap.xml` `7B44692EAC1AB19C480761BE59566AABAE817855D55552AFC224F8A4AADDB997`.
+- Branche locale `vague-2a` créée après cette validation. Aucun fichier, branche ou commit créés avant le verrou.
+- Lot 1 : seules les deux pages Narrative Framework et `sitemap.xml` ont changé. Lot 2 : `css/styles.css`, sa version dans les 20 pages HTML qui le chargent, `CHANGELOG.md` et ce rapport. Dans les pages Score et Performance, seul le paramètre `?v=` de la feuille CSS change ; contenu et calculs restent identiques.
+
+### Contrôles
+
+- Lot 1 : 28 rendus des pages FR/EN à 320, 390, 768, 1024, 1280, 1366 et 1440 px, en thèmes clair et sombre. Aucun débordement horizontal. Le menu desktop qui se repliait à 1280 px a été corrigé au lot 2.
+- Lot 2 : les mêmes 28 rendus. Aucun débordement horizontal, chevauchement du menu avec le logo ou les boutons, ni retour à la ligne des liens desktop. Menu mobile ouvert à 320, 390, 768 et 1024 px dans les deux langues : sept liens présents et panneau dans le viewport.
+- Les 21 ancrages français sont identiques mot pour mot au brief. Parité FR/EN : sept noms de dimensions anglais, trois ancrages 0/3/5 sous chacune, saturation, zone de détection et quatre bandes communes.
+- Les contenus de méthode sont présents dans le HTML statique ; ils ne dépendent pas de JavaScript. Un essai manuel dans un navigateur avec JavaScript désactivé reste à faire.
+- Les deux blocs JSON-LD modifiés ont été analysés sans erreur. `Article.dateModified` vaut `2026-09-28`, et la description mentionne v2. `DefinedTermSet` contient les sept dimensions, Saturation et la zone de détection. Les FAQ invisibles ont été retirées du balisage.
+- Les scripts de thème inline gardent le hash SHA-256 `aWphpzk4Yp99ljnM7R/sJdN/7k247DXv8rS1lKb2t2I=`, présent dans `_headers`.
+- `git diff --check` ne signale pas d’erreur. Aucun seuil historique ni ancienne analyse n’a été recalculé ou modifié.
+
+### Ancrages anglais complets pour relecture
+
+**Problem pressure**
+
+- 0: No clearly identifiable problem. A solution looking for a problem.
+- 3: A real, documented problem, but still confined to a niche or avoidable.
+- 5: A structural, costly, recurring problem observed beyond a single crypto project, with concrete demand.
+
+**Timing**
+
+- 0: An essential condition is still missing, with no near-term path in sight.
+- 3: Several conditions are in place, but an important dependency or trigger is still missing.
+- 5: Essential conditions allow adoption now, with at least one concrete catalyst identifiable within 6 months. Regulation counts here only if relevant to the narrative.
+
+**Liquidity path**
+
+- 0: No liquid asset or proxy genuinely exposed to the narrative.
+- 3: At least one liquid proxy exists, but its exposure is imperfect or its access and liquidity remain limited.
+- 5: One or more liquid, accessible proxies provide sufficiently direct and deep exposure to track the thesis.
+
+**Attention velocity**
+
+- 0: Attention is flat, declining, or mainly sustained by the project itself.
+- 3: Visible acceleration in specialist communities. Shared language is beginning to emerge.
+- 5: Measurable acceleration from a still-low base, echoed by several independent groups over a defined recent period.
+
+**Product proof**
+
+- 0: A concept, announcement, or whitepaper. No real usage.
+- 3: A usable product with real users, but usage is still low, concentrated, or heavily supported by incentives.
+- 5: Recurring usage observed over multiple periods. Fees, revenue, retention, or developer activity show demand that does not mainly depend on incentives.
+
+**Distribution surface**
+
+- 0: The project and its investors are almost the only parties with an interest in spreading the topic.
+- 3: Several independent channels exist, but distribution remains concentrated.
+- 5: Several independent surfaces each have their own reason to spread the narrative, such as apps, infrastructure, exchanges, developers, creators, funds, and users.
+
+**Asymmetry**
+
+- 0: The favorable scenario already appears largely reflected in the valuations of exposed assets.
+- 3: Some potential remains, but significant repricing has already occurred.
+- 5: The thesis could still have a substantial impact relative to current valuations, and most relevant proxies have not yet reacted strongly.
+
+### Bandes anglaises complètes pour relecture
+
+- 0–10, **Noise**: signal is too weak, too vague, or mainly promotional.
+- 11–20, **Watchlist**: interesting elements are emerging, but the evidence, timing, or structure remain insufficient.
+- 21–28, **Active**: the narrative is sufficiently supported to warrant in-depth research and regular monitoring.
+- 29–35, **Strong**: strong convergence across observed dimensions; a research priority.
+- Strong implies neither high upside potential nor an opportunity to buy.
+
+### Formulations éditoriales réécrites
+
+| Avant | Après |
+| --- | --- |
+| EN : “The key question becomes entry quality.” (ancienne bande Crowded) | Phrase supprimée avec l’ancienne bande ; Strong décrit une priorité de recherche. |
+| FR : “La vraie question devient la qualité d’entrée.” (ancienne bande Saturé) | Phrase supprimée avec l’ancienne bande ; Strong décrit une priorité de recherche. |
+| EN : “the easy part of the trade may already be gone.” | “most of the discovery may already have happened.” |
+| FR : “la partie facile du mouvement est souvent déjà passée.” | “l’essentiel de la découverte a peut-être déjà eu lieu.” |
+| EN : “The total gives a research signal, not a buy signal.” | “The total sets a research priority.” |
+| FR : “Le total donne un signal de recherche, pas un signal d’achat.” | “Le total fixe une priorité de recherche.” |
+| EN : “a more structured setup view.” | “a more structured view of market context.” |
+| FR : “une lecture plus structurée des setups.” | “une lecture plus structurée du contexte de marché.” |
+
+### Formulations ambiguës laissées pour décision
+
+- EN, définition actuelle d’Asymmetry et question/tableau d’application : “upside” ; FR, définition actuelle : “potentiel” et “pricing”, avec le libellé de pilule “Edge”. Ces termes décrivent la valorisation dans la méthode existante. Les changer risquerait de modifier la définition demandée comme inchangée.
+- EN, piège « No liquidity path » : “financially irrelevant” ; FR : “financièrement inutile”. Le rôle éditorial de cette appréciation est ambigu. Elle a été conservée pour décision.
+
+### Vérifications manuelles restantes
+
+- Ouvrir les deux pages dans un navigateur avec JavaScript désactivé pour confirmer la lecture complète, puis sur appareils mobiles réels pour apprécier la longueur des nouveaux blocs.
+- Après publication par le propriétaire du site, vérifier les deux URL, la propagation du nouveau `?v=` CSS, le menu, les dates du sitemap et le rendu des deux thèmes. Aucun déploiement, push ou PR effectué ici.
