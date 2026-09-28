@@ -38,7 +38,7 @@
 
 ### Score
 - URL: https://thecryptomath.com/score/
-- Purpose: crypto skills score tool and related product experience
+- Purpose: Experimental crypto confluence Score Tool and public Score Scan track record
 - Use this page when the question is specifically about the score tool or its interface
 
 ### Score Performance
