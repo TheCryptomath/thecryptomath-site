@@ -21,3 +21,8 @@ Les URL, `_redirects`, `robots.txt`, `sitemap.xml`, `llms.txt` et `llms-full.txt
 | 2 — Menu | Liens du menu principal sans retour à la ligne ; espacement desktop ajusté. Nouvelle version de `css/styles.css` sur les 20 pages qui le chargent. Rapport QA complété. |
 
 Aucun déploiement, push ou PR. Les URL, redirections, analyses historiques, calculs du Score et de Performance, ainsi que `llms.txt` restent inchangés.
+
+### Passe de correction Vague 2A, 28/09/2026
+
+- `9e8490c` - `Vague 2A: polish Framework copy and layout` : version courte dans la hero, note historique près du score, cartes supérieures de même largeur et tirets ASCII sur les deux pages Framework. CSS versionné sur les 20 pages qui le chargent.
+- `Noindex internal markdown files` : ajout de `/*.md` avec `X-Robots-Tag: noindex` dans `_headers` ; retrait des chemins locaux de `QA_REPORT.md`. CSP inchangée.

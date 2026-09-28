@@ -2,11 +2,11 @@
 
 ## Dépôt et verrou obligatoire
 
-- Dépôt : `C:\Users\J\Documents\thecryptomath-site-repo`.
+- Dépôt : `repo local thecryptomath-site`.
 - Branche initiale : `main` ; HEAD de départ : `0349ddf4cd3bafbca518fdaa09fd0d5b56fa1175` ; `git status --short --branch` : propre (`## main...origin/main`).
 - Branche de travail : `vague-1`, créée **après** validation de l'étape 0.
 - Les 12 fichiers requis étaient présents : `index.html`, `fr/index.html`, les deux pages Performance, `_headers`, `_redirects`, `robots.txt`, `sitemap.xml`, `css/styles.css`, `score/performance.css`, `score/performance.js`, `score/score.js`.
-- **Étape 0 validée.** L'archive auditée `C:\Users\J\Downloads\thecryptomath-site-main (88).zip` a le SHA-256 attendu `03051151C3F913B89ACC695EDCC511340D052389C58D54A6586716E916F670C1`. Les 37 fichiers texte de l'archive comparés au checkout sont identiques après normalisation CRLF/LF.
+- **Étape 0 validée.** L'archive auditée `thecryptomath-site-main (88).zip` a le SHA-256 attendu `03051151C3F913B89ACC695EDCC511340D052389C58D54A6586716E916F670C1`. Les 37 fichiers texte de l'archive comparés au checkout sont identiques après normalisation CRLF/LF.
 - Les 18 URL du `sitemap.xml` ont répondu HTTP 200. Les 16 HTML hors Contact correspondent au checkout après normalisation CRLF/LF. `connect.html` et `fr/contact/index.html` ne diffèrent qu'aux lignes d'obfuscation email Cloudflare : deux liens `mailto:`, le texte de l'adresse et l'insertion du script de décodage. Les valeurs obfusquées décodent en `admin@thecryptomath.com`. Aucune autre différence HTML n'a été neutralisée.
 - Production et checkout identiques après normalisation CRLF/LF pour `robots.txt`, `sitemap.xml`, `css/styles.css`, `score/performance.css`, `score/performance.js` et `score/score.js` avant modification.
 
@@ -193,7 +193,7 @@ Le déploiement était exclu de cette mission. Un contrôle manuel sur le site p
 
 ### Étape 0 et périmètre
 
-- Dépôt : `C:\Users\J\Documents\thecryptomath-site-repo`. Départ sur `main`, état propre. `HEAD`, `origin/main` local et `git ls-remote origin refs/heads/main` : `453a9ccc6749f67572cf0be6414fce97707ebd81`.
+- Dépôt : `repo local thecryptomath-site`. Départ sur `main`, état propre. `HEAD`, `origin/main` local et `git ls-remote origin refs/heads/main` : `453a9ccc6749f67572cf0be6414fce97707ebd81`.
 - Les quatre fichiers ont été comparés à la production après normalisation CRLF/LF. Résultat : identiques. SHA-256 normalisés : `narrative-framework.html` `EDB27DC12CF3207A2BD7E2C13F577C8318E602C867F95F0CC80A1E8BFFC96E12` ; `fr/narrative-framework/index.html` `7E906F8D4B4E6D4853784752560AC9823ADB089F1B7D5D1FA5763DDD7D27DCDA` ; `css/styles.css` `DA5F1CBFB06B8404DB2EFC28AE4466013E548A4DD509D731ABB6D3745D30784F` ; `sitemap.xml` `7B44692EAC1AB19C480761BE59566AABAE817855D55552AFC224F8A4AADDB997`.
 - Branche locale `vague-2a` créée après cette validation. Aucun fichier, branche ou commit créés avant le verrou.
 - Lot 1 : seules les deux pages Narrative Framework et `sitemap.xml` ont changé. Lot 2 : `css/styles.css`, sa version dans les 20 pages HTML qui le chargent, `CHANGELOG.md` et ce rapport. Dans les pages Score et Performance, seul le paramètre `?v=` de la feuille CSS change ; contenu et calculs restent identiques.
@@ -282,3 +282,22 @@ Le déploiement était exclu de cette mission. Un contrôle manuel sur le site p
 
 - Ouvrir les deux pages dans un navigateur avec JavaScript désactivé pour confirmer la lecture complète, puis sur appareils mobiles réels pour apprécier la longueur des nouveaux blocs.
 - Après publication par le propriétaire du site, vérifier les deux URL, la propagation du nouveau `?v=` CSS, le menu, les dates du sitemap et le rendu des deux thèmes. Aucun déploiement, push ou PR effectué ici.
+
+### Passe de correction Vague 2A, 28/09/2026
+
+- Commit éditorial et visuel : `9e8490c` (`Vague 2A: polish Framework copy and layout`). Hero réduite à la date v2, note méthodologique près du score, cartes grises de largeur identique, tirets ASCII dans les deux pages, version CSS renouvelée sur 20 pages.
+- Commit des fichiers internes : `Noindex internal markdown files`. Règle Markdown ajoutée à `_headers` et chemins locaux retirés de ce rapport. Les anciennes règles et la CSP sont inchangées.
+- Contrôle navigateur : 28 rendus FR/EN aux largeurs 320, 390, 768, 1024, 1280, 1366 et 1440 px, dans les thèmes clair et sombre. Écart de largeur des deux cartes supérieures : 0 px à chaque rendu. Aucun débordement horizontal ni chevauchement du menu.
+- JSON-LD FR/EN analysé sans erreur. `—` : 0 ; `–` : 0 dans chacune des deux pages, données structurées comprises. Hash des deux scripts de thème inchangé : `aWphpzk4Yp99ljnM7R/sJdN/7k247DXv8rS1lKb2t2I=`.
+- Le motif `/*.md` couvre les URL Markdown de la racine et des sous-dossiers ; les URL `.html` ne reçoivent pas `X-Robots-Tag` par cette règle. Vérification locale de la correspondance selon la syntaxe Cloudflare Pages. La réponse HTTP réelle reste à vérifier après publication.
+
+Contrôle de complétude : PASS
+
+1. Définition en deux phrases : thèse partagée et acteurs indépendants qui emploient le même vocabulaire, construisent des produits et orientent du capital.
+2. Score total : solidité comme sujet de recherche ; ni potentiel de prix ni précocité.
+3. Timing 5 : la régulation ne compte que si elle est pertinente pour le narratif.
+4. Attention velocity 5 : une période récente définie figure dans les deux langues.
+5. Saturation Low : mention des moteurs IA interrogés sur les narratifs du moment.
+6. Réponses des moteurs IA : indicateur parmi d’autres, protocole comparable et daté.
+7. Chaque analyse publie les observations qui justifient son niveau de saturation.
+8. Distinction complète : Attention velocity mesure la vitesse de montée ; Saturation, la diffusion déjà atteinte ; Asymmetry, ce qui est intégré dans les valorisations.
