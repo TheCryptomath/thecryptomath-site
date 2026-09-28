@@ -32,6 +32,8 @@
       no24hData: "Waiting for +24h data",
       primaryHorizonNote: "+24h is the primary public research window. +7d is retained as a secondary research follow-up. These are observations, not validated trading results.",
       statsAwaitingDiversity: "Aggregate breakdowns will appear once enough detections reach +24h.",
+      statsFallback: (n) => `Global statistics are temporarily unavailable. The figures below are calculated from the ${n} detections currently loaded.`,
+      statsUnavailableEmpty: "Global statistics are temporarily unavailable. No detections are currently loaded.",
       simNoData: "Waiting for detection data.",
       simLine: (total, count, ended) => `${total} across ${count} detections · ${ended} completed`,
       simFoot: (active) => `Simulation. 1 USDC allocated per detection, no leverage. ${active} still tracked. Current unrealized value only. Experimental research, not a trading strategy.`,
@@ -84,6 +86,8 @@
       no24hData: "En attente des données +24h",
       primaryHorizonNote: "+24h est la fenêtre de recherche publique principale. +7j reste un suivi de recherche secondaire. Ces chiffres sont des observations, pas des résultats de trading validés.",
       statsAwaitingDiversity: "Les détails apparaîtront dès qu'assez de détections auront atteint +24h.",
+      statsFallback: (n) => `Les statistiques globales sont temporairement indisponibles. Les chiffres ci-dessous sont calculés à partir des ${n} détections actuellement chargées.`,
+      statsUnavailableEmpty: "Les statistiques globales sont temporairement indisponibles. Aucune détection n'est actuellement chargée.",
       simNoData: "En attente des données de détection.",
       simLine: (total, count, ended) => `${total} sur ${count} détections · ${ended} ${ended > 1 ? "terminées" : "terminée"}`,
       simFoot: (active) => `Simulation. 1 USDC alloué par détection, sans levier. ${active} encore suivies. Résultat actuel non clôturé. Recherche expérimentale, pas une stratégie de trading.`,
@@ -420,9 +424,11 @@
       // Backward-compatible fallback while the Worker update propagates.
       const items = listFallback && listFallback.ok && Array.isArray(listFallback.items) ? listFallback.items : [];
       if (!items.length) {
+        if (note) note.textContent += " " + t.statsUnavailableEmpty;
         root.textContent = t.empty;
         return;
       }
+      if (note) note.textContent += " " + t.statsFallback(items.length);
       const adapt = group => {
         const agg = summarizeItems(group);
         return {
