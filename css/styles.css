@@ -265,11 +265,19 @@ p { margin: 0; }
 
 .navlinks a {
   padding: 10px 16px;
+  white-space: nowrap;
   border-radius: var(--radius-md);
   font-weight: 500;
   font-size: 0.9375rem;
   color: var(--text-secondary);
   transition: all 0.2s ease;
+}
+
+@media (min-width: 1181px) {
+  .nav { gap: 12px; }
+  .navlinks { gap: 6px; }
+  .navlinks a { padding: 10px 9px; }
+  .nav-cta { gap: 8px; }
 }
 
 .navlinks a:hover {
@@ -1760,6 +1768,10 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
   box-shadow: 0 18px 46px rgba(0,0,0,0.22);
 }
 
+.framework-intro { max-width: none; }
+.framework-intro p + p { margin-top: 12px; }
+.framework-next-step { width: 100%; max-width: none; }
+
 .answer-block-kicker {
   display: inline-flex;
   align-items: center;
@@ -1848,6 +1860,14 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
   gap: 16px;
   align-items: start;
 }
+.framework-term-en {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
 .framework-number {
   width: 36px;
   height: 36px;
@@ -1920,6 +1940,12 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
   color: var(--accent-bright);
   margin-bottom: 8px;
 }
+.framework-method-note {
+  margin-top: 18px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
 .framework-quote {
   margin: 0;
   padding: 26px 28px;

@@ -12,3 +12,21 @@ Pages HTML communes aux lots 1 et 2, ainsi qu'au changement de version CSS du lo
 | Lot 3 — C01 | `newsletter.html` ; `fr/newsletter/index.html` ; `css/styles.css` ; les 18 autres pages HTML ci-dessus pour la version CSS | Nom public Lecture du Marché Crypto et bloc éditorial de l'édition #68. Ajustements de rendu à 320 px pour le menu, le CTA français et la date. | `06052db49821e1fcc0676d436cef815a2d0cc359` |
 
 Les URL, `_redirects`, `robots.txt`, `sitemap.xml`, `llms.txt` et `llms-full.txt` n'ont pas été modifiés. Aucun déploiement, push ou PR.
+
+## Vague 2A, 28/09/2026
+
+| Lot | Changement |
+| --- | --- |
+| 1 — Narrative Framework v2 | Pages FR/EN : définition, version, ancrages 0/3/5, saturation séparée, bandes Noise/Watchlist/Active/Strong, zone de détection précoce et données structurées. `sitemap.xml` : seules les deux dates `lastmod` concernées passent au 28/09/2026. Commit `df1b52c`. |
+| 2 — Menu | Liens du menu principal sans retour à la ligne ; espacement desktop ajusté. Nouvelle version de `css/styles.css` sur les 20 pages qui le chargent. Rapport QA complété. |
+
+Aucun déploiement, push ou PR. Les URL, redirections, analyses historiques, calculs du Score et de Performance, ainsi que `llms.txt` restent inchangés.
+
+### Passe de correction Vague 2A, 28/09/2026
+
+- `9e8490c` - `Vague 2A: polish Framework copy and layout` : version courte dans la hero, note historique près du score, cartes supérieures de même largeur et tirets ASCII sur les deux pages Framework. CSS versionné sur les 20 pages qui le chargent.
+- `Noindex internal markdown files` : ajout de `/*.md` avec `X-Robots-Tag: noindex` dans `_headers` ; retrait des chemins locaux de `QA_REPORT.md`. CSP inchangée.
+
+### Passe finale locale Vague 2A, 28/09/2026
+
+- `Vague 2A: finalize French localization and layout` : sept titres français et six sous-titres anglais visibles, réponses rapides FR/EN, terminologie Asymétrie et formulations du chemin de liquidité, ponctuation des 21 ancrages EN, capitales des quatre bandes EN, carte finale pleine largeur et version CSS renouvelée sur 20 pages. Ancrages, seuils, CSP, noindex Markdown, routes et calculs inchangés. Rapport QA et tableau de conformité complétés.
