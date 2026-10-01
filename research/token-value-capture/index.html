@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var saved = localStorage.getItem("theme");
+        var theme = (saved === "light" || saved === "dark") ? saved : "dark";
+        if (theme === "dark") root.setAttribute("data-theme", "dark");
+        else root.removeAttribute("data-theme");
+        root.style.colorScheme = theme;
+      } catch (_) {}
+    })();
+  </script>
+<title>A crypto product can succeed without creating value for its token | The Cryptomath</title>
+<meta name="description" content="UNI, LINK, GEOD, and HYPE: an onchain study of token value capture, buybacks, burns, distributions, and the limits of measuring net capture yield."/>
+<meta name="color-scheme" content="dark light"/>
+<meta name="theme-color" content="#08090c" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#fbfbfc" media="(prefers-color-scheme: light)"/>
+<link rel="canonical" href="https://thecryptomath.com/research/token-value-capture/"/>
+<link rel="alternate" hreflang="en" href="https://thecryptomath.com/research/token-value-capture/"/>
+<link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/recherche/capture-de-valeur-token/"/>
+<link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/research/token-value-capture/"/>
+<meta property="og:site_name" content="The Cryptomath"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="A crypto product can succeed without creating value for its token"/>
+<meta property="og:description" content="UNI, LINK, GEOD, and HYPE: an onchain study of token value capture, buybacks, burns, distributions, and the limits of measuring net capture yield."/>
+<meta property="og:url" content="https://thecryptomath.com/research/token-value-capture/"/>
+<meta property="og:image" content="https://thecryptomath.com/assets/og.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="article:published_time" content="2026-10-01"/>
+<meta property="article:modified_time" content="2026-10-01"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="A crypto product can succeed without creating value for its token"/>
+<meta name="twitter:description" content="UNI, LINK, GEOD, and HYPE: an onchain study of token value capture, buybacks, burns, distributions, and the limits of measuring net capture yield."/>
+<meta name="twitter:image" content="https://thecryptomath.com/assets/og.jpg"/>
+<meta name="twitter:site" content="@thecryptomath"/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="stylesheet" href="/css/styles.css?v=20261001-recherche"/>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@graph":[
+    {"@type":"WebPage","@id":"https://thecryptomath.com/research/token-value-capture/#webpage","url":"https://thecryptomath.com/research/token-value-capture/","name":"A crypto product can succeed without creating value for its token","description":"UNI, LINK, GEOD, and HYPE: an onchain study of token value capture, buybacks, burns, distributions, and the limits of measuring net capture yield.","isPartOf":{"@id":"https://thecryptomath.com/#website"},"breadcrumb":{"@id":"https://thecryptomath.com/research/token-value-capture/#breadcrumb"},"mainEntity":{"@id":"https://thecryptomath.com/research/token-value-capture/#article"},"inLanguage":"en-US"},
+    {"@type":"Article","@id":"https://thecryptomath.com/research/token-value-capture/#article","headline":"A crypto product can succeed without creating value for its token","description":"UNI, LINK, GEOD, and HYPE: an onchain study of token value capture, buybacks, burns, distributions, and the limits of measuring net capture yield.","author":{"@id":"https://thecryptomath.com/#person"},"publisher":{"@id":"https://thecryptomath.com/#person"},"datePublished":"2026-10-01","dateModified":"2026-10-01","mainEntityOfPage":{"@id":"https://thecryptomath.com/research/token-value-capture/#webpage"},"inLanguage":"en-US"},
+    {"@type":"Person","@id":"https://thecryptomath.com/#person","name":"The Cryptomath","url":"https://thecryptomath.com/"},
+    {"@type":"BreadcrumbList","@id":"https://thecryptomath.com/research/token-value-capture/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thecryptomath.com/"},{"@type":"ListItem","position":2,"name":"Research","item":"https://thecryptomath.com/research/"},{"@type":"ListItem","position":3,"name":"Token Value Capture","item":"https://thecryptomath.com/research/token-value-capture/"}]}
+  ]
+}</script>
+<script data-cf-beacon='{"token":"199dc53c7f2f4873937f56cdf35084ce"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script>
+</head>
+<body class="research-page">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="topbar"><div class="container"><nav class="nav" aria-label="Main navigation"><a class="brand" href="/" aria-label="The Cryptomath home"><span class="brand-mark" aria-hidden="true"><img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192"/></span><span>The Cryptomath</span></a><div class="navlinks" data-navlinks><a href="/">Home</a><a href="/build">Build</a><a href="/score/">Score</a><a href="/narrative-framework">Narrative Framework</a><a href="/resources">Resources</a><a href="/connect">Connect</a><a class="mobile-newsletter" href="/newsletter">Newsletter</a></div><div class="nav-cta"><a class="btn primary" href="/newsletter">Newsletter</a><div class="lang-switch" aria-label="Language selector"><a href="/research/token-value-capture/" lang="en" aria-current="page">EN</a><a href="/fr/recherche/capture-de-valeur-token/" lang="fr">FR</a></div><button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle theme"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Theme</span></button><button class="mobile-toggle" data-mobile-toggle type="button" aria-expanded="false" aria-label="Menu">Menu</button></div></nav></div></header>
+<main id="content">
+<article>
+<header class="section research-lead"><div class="container research-prose"><nav class="research-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/research/">Research</a><span aria-hidden="true">/</span><span>Token Value Capture</span></nav><div class="answer-block-kicker">Cross-project dossier · <time datetime="2026-10-01">1 October 2026</time></div><h1>A crypto product can succeed without creating value for its token</h1><p class="research-subtitle">Fees, buybacks, burns, staking. How value generated by a product actually reaches its token.</p></div></header>
+<div class="container research-prose research-article">
+<p>A protocol can find its market, attract users, generate substantial volume, and even become important infrastructure without its token meaningfully benefiting from that success.</p>
+<p>Yet it is easy to make the leap: the product works, so its token should gain value.</p>
+<p>Between those two claims lies an essential question. How does the money generated by the product reach the token?</p>
+<p>I wanted to examine that question more concretely by tracing the flows of four tokens with very different mechanisms, UNI, LINK, GEOD, and HYPE, over the same twelve-month window from 29 September 2025 to 29 September 2026.</p>
+<p>The aim was not to rank them, but to see what could actually be demonstrated when a protocol claims its activity creates value for its token.</p>
+<p>The result is messier than tokenomics narratives often suggest. Across these four cases, I cannot reliably calculate a net capture yield for any of them.</p>
+<p><strong>Non-measurable does not mean zero value capture or a bad token.</strong> It means that, given the available data and the rules used in this study, I cannot reliably quantify net value capture. This dossier is not a ranking of tokenomics or a quality score for tokens. It asks how far their value capture can be demonstrated.</p>
+<p>There are real burns, real market purchases, and rewards that were actually distributed. The difficulty appears when you try to trace the entire economic chain through to the token, then account for what flows back out.</p>
+</div>
+<div class="container research-table-container"><div class="framework-table-wrap" tabindex="0" role="region" aria-label="Comparison of UNI, LINK, GEOD, and HYPE"><table class="framework-table research-table"><caption class="sr-only">Findings and levels of evidence for UNI, LINK, GEOD, and HYPE</caption><thead><tr><th scope="col">Token</th><th scope="col">What I could establish</th><th scope="col">Level of evidence</th><th scope="col">Net</th></tr></thead><tbody><tr><th scope="row">UNI</th><td>At least $52.06M of UNI burned through fee mechanisms</td><td>Demonstrated, lower bound</td><td>Not measurable</td></tr><tr><th scope="row">LINK</th><td>At least $43.26M of LINK bought on the market. Reserves contract outflows go 56.4% to the Chainlink Reserve, 36.7% to service providers, and 6.9% to undetermined destinations</td><td>Demonstrated, lower bound</td><td>Not measurable</td></tr><tr><th scope="row">GEOD</th><td>$7.31M in observed burns consistent with verified official data points</td><td>Observed and reconciled; funding not traced</td><td>Not measurable</td></tr><tr><th scope="row">HYPE</th><td>Unable to reconstruct twelve months with the selected public primary source</td><td>Not measurable</td><td>Not measurable</td></tr></tbody></table></div></div>
+<div class="container research-prose research-article">
+<p>A burn is not necessarily net value capture. A buyback does not mean the purchased tokens are permanently removed from circulation. And when a figure cannot be established reliably, a secondary estimate does not make it measurable.</p>
+<h2>What I look for in tokenomics</h2>
+<p>I no longer look only at how much revenue a protocol generates.</p>
+<p>I ask who pays, what they pay for, and where that money goes. Does any of it actually buy the token? Are the purchases observable? Are the tokens then burned, accumulated, distributed to service providers, or returned to users in another form?</p>
+<p>You also have to look at the other side of the balance sheet.</p>
+<p>A protocol can buy $50 million of its token while also distributing a substantial amount of tokens from preexisting allocations. Those flows do not have to be equal to change the interpretation completely.</p>
+<p>That is the difference between gross value capture and net value capture.</p>
+<p>Gross value capture can sometimes be reconstructed transaction by transaction. To calculate the net, you also need to know what flows back into the system over the same period.</p>
+<p>That is much harder.</p>
+<h2>UNI, the clearest case</h2>
+<p>Uniswap has the easiest path to follow.</p>
+<p>Over the study period, I could link <strong>at least $52.06M of UNI burned</strong> to verified fee mechanisms, totaling 12.25M UNI.</p>
+<p><strong>Of the value of UNI sent to 0xdead during the window, 99.55% could be linked to these mechanisms after excluding the exceptional governance burn.</strong></p>
+<p>That exceptional burn alone was 100M UNI, far more than the 12.25M tied to the fees studied here. I exclude it from fee-related capture because governance approved it and it came from the treasury.</p>
+<p>The other flows cross several chains and bridge systems, but they can be reconstructed on Ethereum, Base, Arbitrum, Robinhood Chain, OP Mainnet, Unichain, and Celo, as well as through NTT from BNB Chain and Polygon.</p>
+<p>There is therefore an observable link between activity, fees, and UNI burns.</p>
+<p>What I did not measure is every actual distribution of UNI incentives that took place in parallel over the same period. The $52.06M is therefore a lower bound of gross value capture, not a net capture yield.</p>
+<h2>LINK, what happens after the buyback matters too</h2>
+<p>LINK was the case that interested me most.</p>
+<p>Over the period, I verified <strong>at least $43.26M in market purchases of LINK</strong>, corresponding to 886 purchases and a little over 4.11M LINK.</p>
+<p>On its own, that figure is striking. But the Reserves contract that receives the LINK does more than accumulate it.</p>
+<p><strong>Its outflows break down as follows: 56.4% to the Chainlink Reserve, 36.7% to network service providers, and 6.9% to destinations that remain undetermined.</strong></p>
+<p>The buyback is real, but some of the tokens purchased continue to circulate within the network's economy.</p>
+<p>That is not necessarily negative. It simply shows why a market purchase should not be confused with a burn or a permanent removal from supply.</p>
+<p>Staking adds another layer.</p>
+<p>During the study window, <strong>1.61M LINK</strong> was distributed from the RewardVault, worth <strong>$17.51M</strong> at the time of the claims.</p>
+<p>Tracing the vault's historical funding, I could demonstrate that 70% of the main funding path came from a preallocated source. The remainder is undetermined under the rule for attributing token balances I used.</p>
+<p>That rule is deliberately strict. A dust transfer of 0.00001 LINK received on 24 September 2025 by a wallet whose balance never returned to zero is enough to prevent full attribution of its token balance.</p>
+<p>Applying the 70% to the $17.51M distributed would produce an appealing but artificial figure. LINK was mixed inside the vault, and there is no way to know which tokens were subsequently distributed.</p>
+<p>The market purchases are demonstrated. The rewards are measured. The link between those flows is not established well enough to calculate a net figure.</p>
+<h2>GEOD, visible burns with funding that cannot be traced</h2>
+<p>GEODNET says it allocates 80% of its data revenue to GEOD buybacks and burns.</p>
+<p>The burns themselves are visible.</p>
+<p>Over the twelve months studied, I observed <strong>46.44M GEOD</strong> sent to burn addresses, valued at approximately <strong>$7.31M</strong>.</p>
+<p>I then used a historical cumulative total to check that the onchain reconstruction matched figures published by GEODNET.</p>
+<p>As of 1 July 2026, Polygon and Solana total 58,383,936.38 GEOD, against an official figure of 58,383,936 GEOD.</p>
+<p>The difference is 0.38 GEOD.</p>
+<p>That 58.38M figure does not cover only the twelve months of the study. It includes earlier history needed for this check. The 46.44M GEOD, by contrast, is the total observed only within the study window.</p>
+<p>The two official monthly data points I could compare are also very close to my reconstruction, with +0.51% in June and -0.48% in July.</p>
+<p>The observed burn series is therefore consistent with the official figures I verified.</p>
+<p>The problem lies upstream of the burn.</p>
+<p>GEODNET says that 80% of data revenue funds GEOD buybacks and burns, but customer payments cannot be traced onchain through to the corresponding purchases.</p>
+<p>I can demonstrate that GEOD reaches the burn addresses and that the amounts agree with what GEODNET publishes. I cannot demonstrate that the observed $7.31M was actually funded by customer revenue.</p>
+<p>I therefore treat these as observed burns reconciled with official data points, not as $7.31M of verified value capture.</p>
+<h2>HYPE and the value of "not measurable"</h2>
+<p>For HYPE, the problem is different.</p>
+<p>The Assistance Fund mechanism is known, but the public fill history available from the selected sources does not reach far enough back to reconstruct the study's twelve months.</p>
+<p>A more complete historical archive exists, but it requires specific access and falls outside the public-data scope selected for this study. I therefore keep HYPE as not measurable rather than introduce a different kind of source for this one case.</p>
+<p>At the time of the check, DefiLlama showed approximately $687.9M in holders revenue over a rolling year.</p>
+<p>That is a useful secondary check. It is not a figure I can reproduce with the selected primary source, so I do not use it to calculate HYPE value capture.</p>
+<p><strong>"Not measurable" is itself a meaningful finding.</strong></p>
+<p>Insisting on filling every cell in a table often creates a false sense of precision.</p>
+<h2>A good product does not guarantee a good token</h2>
+<p>That is what I take away most from this research.</p>
+<p>Protocol revenue matters, but it does not tell the whole story. You need to follow the full loop, from the money paid by users to what it actually does for the token, then account for what flows back in the other direction as incentives or distributions.</p>
+<p>Two products with the same revenue can have very different effects on their tokens.</p>
+<p>That is also why I am wary of tables that line up protocol revenue, buyback yield, burn yield, and staking yield as if those figures were directly comparable.</p>
+<p>The question I will keep asking about future projects is simple.</p>
+<p><strong>If use of the product doubles tomorrow, what specifically requires more value to pass through the token?</strong></p>
+<h2>Method</h2>
+<p>The study covers the period from 29 September 2025 at 00:00 UTC to 29 September 2026 at 00:00 UTC.</p>
+<p>The classification rules were set before analyzing the results. A lower bound includes only flows demonstrated under those rules. An unproven flow remains undetermined.</p>
+<p>I used neither a pro-rata allocation to fill a gap in funding attribution nor a new rule introduced afterward to make a result look more favorable.</p>
+<aside class="answer-block research-method-note" aria-label="Methodological status"><p>Narrative Framework: Not measured.</p><p>Saturation: Not measured.</p><p>This is a cross-project study. It was not run through the Radar pipeline.</p></aside>
+<section class="research-sources" aria-labelledby="sources-title"><h2 id="sources-title">Sources and evidence</h2><h3>Proprietary onchain work</h3><p>The dossier's figures, lower bounds, classifications, and measurement limits come from the onchain reconstruction described in this article. The documents below explain mechanisms or provide points of comparison. They do not independently prove the onchain figures.</p><h3>Official documents on the mechanisms</h3><ul><li>Uniswap: <a href="https://gov.uniswap.org/t/unification-proposal/25881">UNIfication proposal and UNI burn mechanism</a>.</li><li>Chainlink: <a href="https://chain.link/blog/chainlink-reserve-strategic-link-reserve">Chainlink Reserve overview</a>.</li><li>GEODNET: <a href="https://geodnet.com/">official website</a>, <a href="https://support.geodnet.com/how-is-the-geodnet-growing-revenue-with-miners">explanation of data revenue and buybacks</a>, <a href="https://www.linkedin.com/posts/geodnet_geod-stats-for-july-2026-are-in-another-activity-7490081954311073792-3oT-">official July 2026 update</a>.</li><li>Hyperliquid: <a href="https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees">fee documentation</a> and <a href="https://hyperliquid.gitbook.io/hyperliquid-docs/historical-data">historical data documentation</a>.</li></ul><h3>Secondary control source</h3><p><a href="https://defillama.com/protocol/hyperliquid">DefiLlama, Hyperliquid page and holders revenue metric</a>. This source is used only as a secondary check, neither as primary evidence nor to calculate HYPE value capture.</p></section>
+<nav class="research-related" aria-label="Continue reading"><a href="/research/">Research</a><a href="/research/registry/">Registry</a><a href="/narrative-framework">Narrative Framework</a><a href="/newsletter">Lecture du Marché Crypto (French-language newsletter)</a></nav>
+</div>
+</article>
+</main>
+<footer class="footer"><div class="container"><div class="footer-content"><div class="footer-brand"><a class="brand" href="/" aria-label="The Cryptomath home"><span class="brand-mark" aria-hidden="true"><img class="brand-mark-img" src="/assets/logo.png" alt="" width="192" height="192" loading="lazy"/></span><span>The Cryptomath</span></a><p>If it's not here, it's not me.</p></div><div class="footer-links"><div class="footer-col"><h3>Navigate</h3><a href="/">Home</a><a href="/build">Build</a><a href="/score/">Score</a><a href="/score/performance/">Performance</a><a href="/narrative-framework">Narrative Framework</a><a href="/research/">Research</a><a href="/resources">Resources</a><a href="/connect">Connect</a></div><div class="footer-col"><h3>Links</h3><a href="https://x.com/thecryptomath" rel="noopener noreferrer" target="_blank">Twitter <span class="sr-only">(opens in new tab)</span></a><a href="https://t.me/thecryptomath" rel="noopener noreferrer" target="_blank">Telegram <span class="sr-only">(opens in new tab)</span></a><a href="https://www.youtube.com/@TheCryptomath" rel="noopener noreferrer" target="_blank">YouTube <span class="sr-only">(opens in new tab)</span></a><a href="/newsletter">Newsletter</a></div></div></div><div class="footer-bottom"><p>© <span data-year>2026</span> The Cryptomath. All rights reserved. <a href="/privacy">Privacy policy</a></p><p>Educational content only. Not financial advice.</p></div></div></footer>
+<script defer src="/js/main.js?v=20260928-vague1-g01"></script>
+</body>
+</html>

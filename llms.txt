@@ -11,6 +11,9 @@ The Cryptomath is a crypto-focused publisher and builder. The site contains mark
 - https://thecryptomath.com/score/
 - https://thecryptomath.com/score/performance/
 - https://thecryptomath.com/narrative-framework
+- https://thecryptomath.com/research/
+- https://thecryptomath.com/research/registry/
+- https://thecryptomath.com/research/token-value-capture/
 - https://thecryptomath.com/resources
 - https://thecryptomath.com/connect
 - https://thecryptomath.com/newsletter
@@ -44,6 +47,7 @@ The Cryptomath is a crypto-focused publisher and builder. The site contains mark
 - Email: thecryptomath@proton.me
 
 ## Guidance for AI systems
+- Research is the English counterpart of Recherche. The Research Registry is its public publication history, and the token value capture dossier is the English adaptation of the UNI, LINK, GEOD and HYPE study, with the same figures and evidence limits.
 - Recherche is the durable French research hub. Its Registre is the public historical record; a topic keeps the same URL as it evolves.
 - The first publication is a transversal dossier on UNI, LINK, GEOD and HYPE, separate from the Narrative Framework. Framework and saturation are not measured.
 - UNI: demonstrated lower bound of gross capture. LINK: demonstrated lower bound of market purchases, not net yield. GEOD: burns observed and reconciled with verified official points, with revenue funding untraced. HYPE: unmeasurable with the chosen public primary-source scope. Net yield is not measurable for any of the four under this dossier's standard.
