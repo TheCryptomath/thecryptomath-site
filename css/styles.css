@@ -2553,6 +2553,38 @@ html:not([data-theme="dark"]) .ledger-stat:hover .ledger-stat-number {
 .u-flex-wrap-gap-12 { display: flex; gap: 12px; flex-wrap: wrap; }
 .u-copy-compact { margin: 0; line-height: 1.55; }
 .u-h-10 { height: 10px; }
+
+/* Recherche: narrow reading column and scrollable evidence tables. */
+.research-page .research-lead { padding-top: 140px; padding-bottom: 48px; }
+.research-page .research-prose { max-width: 780px; }
+.research-breadcrumb { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; color: var(--text-muted); font-size: 0.875rem; }
+.research-breadcrumb a { color: var(--text-secondary); }
+.research-page h1 { max-width: 780px; line-height: 1.12; }
+.research-subtitle { margin-top: 20px; color: var(--text-secondary); font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.55; }
+.research-article { padding-bottom: 88px; font-size: 1.0625rem; line-height: 1.78; }
+.research-article p { margin: 0 0 1.35em; color: var(--text-secondary); }
+.research-article h2 { margin: 2.25em 0 0.8em; line-height: 1.25; }
+.research-article h3 { margin: 1.6em 0 0.65em; }
+.research-table-container { margin-top: 12px; margin-bottom: 34px; }
+.research-table { min-width: 720px; }
+.research-table th[scope="row"] { color: var(--text-primary); }
+.research-feature { max-width: 780px; }
+.research-feature h3 { margin-bottom: 12px; }
+.research-feature .btn { margin-top: 20px; }
+.research-method-note { max-width: none; margin: 44px 0; }
+.research-method-note p { margin: 0 0 8px; }
+.research-method-note p:last-child { margin-bottom: 0; }
+.research-sources ul { padding-left: 1.4em; color: var(--text-secondary); }
+.research-sources li { margin-bottom: 0.7em; overflow-wrap: anywhere; }
+.research-page .research-sources a,
+.research-page .research-links p a { text-decoration: underline; text-underline-offset: 0.18em; }
+.research-related { display: flex; flex-wrap: wrap; gap: 12px 24px; padding-top: 28px; border-top: 1px solid var(--border); }
+@media (max-width: 600px) {
+  .research-page .research-lead { padding-top: 112px; padding-bottom: 36px; }
+  .research-page .section { padding-bottom: 56px; }
+  .research-article { padding-bottom: 56px; font-size: 1rem; }
+  .research-article h2 { margin-top: 1.9em; }
+}
 .u-fw-700-mb-6 { font-weight: 700; margin-bottom: 6px; }
 .u-list-compact { margin: 0; padding-left: 18px; line-height: 1.6; }
 
