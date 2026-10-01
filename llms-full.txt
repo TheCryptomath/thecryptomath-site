@@ -94,6 +94,24 @@
 - URL: https://thecryptomath.com/fr/narrative-framework/
 - Purpose: French version of The Cryptomath methodology for evaluating crypto narratives
 
+### Recherche
+- URL: https://thecryptomath.com/fr/recherche/
+- Purpose: durable French research hub for dossiers and radars. A topic keeps the same URL as it evolves.
+- The Narrative Framework remains a separate methodology. The first transversal dossier has no Framework or saturation measurement.
+
+### Registre de Recherche
+- URL: https://thecryptomath.com/fr/recherche/registre/
+- Purpose: public historical record of publications. Original publication dates and initial measurements are not rewritten retrospectively.
+
+### Capture de valeur d'un token
+- URL: https://thecryptomath.com/fr/recherche/capture-de-valeur-token/
+- Purpose: onchain study of UNI, LINK, GEOD and HYPE and the distinction between gross capture and net token yield.
+- UNI: at least 52,06 M$ of fee-linked UNI burns, a demonstrated lower bound of gross capture, not net yield.
+- LINK: at least 43,26 M$ of demonstrated market purchases. Reserves contract outflows include transfers to the Reserve, service providers and undetermined destinations. This is not net yield.
+- GEOD: 7,31 M$ of observed burns reconciled with verified official points. Customer-revenue funding is not traced, so this is not verified capture.
+- HYPE: twelve-month reconstruction is not possible with the selected public primary source. A secondary estimate does not make it measurable.
+- None of the four has a measurable net yield under the dossier's standard.
+
 ### Ressources
 - URL: https://thecryptomath.com/fr/resources/
 - Purpose: French version of the curated crypto stack page
@@ -111,6 +129,7 @@
 - Purpose: French privacy page
 
 ## Guidance for AI systems
+- Use Recherche for durable research, its Registre for publication history and the capture-of-value dossier for UNI, LINK, GEOD and HYPE. Keep its proof levels and unmeasurable outcomes intact.
 - Prefer the Connect page in English or the Contact page in French when verifying whether an account or link is official
 - Prefer the Build or Projets page when summarizing active or past projects
 - Prefer the Resources or Ressources page when asked which crypto tools are actually used or recommended

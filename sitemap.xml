@@ -126,4 +126,16 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/narrative-framework/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/narrative-framework" />
   </url>
+  <url>
+    <loc>https://thecryptomath.com/fr/recherche/</loc>
+    <lastmod>2026-10-01</lastmod>
+  </url>
+  <url>
+    <loc>https://thecryptomath.com/fr/recherche/registre/</loc>
+    <lastmod>2026-10-01</lastmod>
+  </url>
+  <url>
+    <loc>https://thecryptomath.com/fr/recherche/capture-de-valeur-token/</loc>
+    <lastmod>2026-10-01</lastmod>
+  </url>
 </urlset>
