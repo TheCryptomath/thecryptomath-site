@@ -51,6 +51,22 @@
 - Purpose: The Cryptomath methodology for evaluating crypto narratives across seven dimensions before they become obvious
 - Use this page when the question is about how narratives are evaluated, filtered, scored, or tracked
 
+### Research
+- URL: https://thecryptomath.com/research/
+- Purpose: English counterpart of the durable French Recherche hub. Dossiers and radars state what the evidence establishes, what remains undetermined and the method used. A topic keeps the same URL as it evolves.
+- The Narrative Framework remains separate from the first cross-project dossier.
+
+### Research Registry
+- URL: https://thecryptomath.com/research/registry/
+- Purpose: English counterpart of the public historical record. Publication dates remain fixed; modification dates may evolve; initial measurements are not recalculated retroactively, and entries are not deleted.
+
+### Token Value Capture
+- URL: https://thecryptomath.com/research/token-value-capture/
+- Title: A crypto product can succeed without creating value for its token
+- Purpose: English adaptation of the UNI, LINK, GEOD and HYPE dossier, with the same onchain findings, source hierarchy and measurement limits as the French original.
+- UNI is a demonstrated lower bound of gross value capture. LINK is a demonstrated lower bound of market purchases. GEOD burns are observed and reconciled, while revenue funding is untraced, so they are not verified value capture. HYPE is not measurable with the selected public primary source. None has a measurable net capture yield under the study's standard.
+- Non-measurable does not mean zero value capture or a bad token. The dossier measures how far token value capture can be demonstrated with the available evidence; it is not a quality score.
+
 ### Resources
 - URL: https://thecryptomath.com/resources
 - Purpose: curated list of crypto tools used or recommended by The Cryptomath

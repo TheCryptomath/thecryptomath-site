@@ -127,15 +127,45 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/narrative-framework" />
   </url>
   <url>
+    <loc>https://thecryptomath.com/research/</loc>
+    <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/research/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/recherche/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/research/" />
+  </url>
+  <url>
     <loc>https://thecryptomath.com/fr/recherche/</loc>
     <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/research/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/recherche/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/research/" />
+  </url>
+  <url>
+    <loc>https://thecryptomath.com/research/registry/</loc>
+    <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/research/registry/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/recherche/registre/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/research/registry/" />
   </url>
   <url>
     <loc>https://thecryptomath.com/fr/recherche/registre/</loc>
     <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/research/registry/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/recherche/registre/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/research/registry/" />
+  </url>
+  <url>
+    <loc>https://thecryptomath.com/research/token-value-capture/</loc>
+    <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/research/token-value-capture/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/recherche/capture-de-valeur-token/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/research/token-value-capture/" />
   </url>
   <url>
     <loc>https://thecryptomath.com/fr/recherche/capture-de-valeur-token/</loc>
     <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thecryptomath.com/research/token-value-capture/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://thecryptomath.com/fr/recherche/capture-de-valeur-token/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thecryptomath.com/research/token-value-capture/" />
   </url>
 </urlset>
