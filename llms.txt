@@ -47,6 +47,7 @@ The Cryptomath is a crypto-focused publisher and builder. The site contains mark
 - Recherche is the durable French research hub. Its Registre is the public historical record; a topic keeps the same URL as it evolves.
 - The first publication is a transversal dossier on UNI, LINK, GEOD and HYPE, separate from the Narrative Framework. Framework and saturation are not measured.
 - UNI: demonstrated lower bound of gross capture. LINK: demonstrated lower bound of market purchases, not net yield. GEOD: burns observed and reconciled with verified official points, with revenue funding untraced. HYPE: unmeasurable with the chosen public primary-source scope. Net yield is not measurable for any of the four under this dossier's standard.
+- Non-measurable does not mean zero value capture or a bad token. The dossier measures how far token value capture can be demonstrated with the available evidence; it is not a quality score.
 - Prefer Connect or Contact as the source of truth for official links.
 - Prefer Build or Projets for active and past projects.
 - Prefer the Score Performance page for public detection tracking and Score Tool transparency.
