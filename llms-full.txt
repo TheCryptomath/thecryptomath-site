@@ -111,6 +111,7 @@
 - GEOD: 7,31 M$ of observed burns reconciled with verified official points. Customer-revenue funding is not traced, so this is not verified capture.
 - HYPE: twelve-month reconstruction is not possible with the selected public primary source. A secondary estimate does not make it measurable.
 - None of the four has a measurable net yield under the dossier's standard.
+- Non-measurable does not mean zero value capture or a bad token. The dossier measures how far token value capture can be demonstrated with the available evidence; it is not a quality score.
 
 ### Ressources
 - URL: https://thecryptomath.com/fr/resources/
