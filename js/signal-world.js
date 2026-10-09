@@ -81,6 +81,7 @@
       desc: copy.fallbackDesc,
       url: lang === 'fr' ? '/fr/newsletter/' : '/newsletter'
     }, true);
+    wrap.dispatchEvent(new CustomEvent('signal-world:unavailable'));
     return;
   }
 
@@ -127,7 +128,13 @@
 
   // MSAA is redundant while supersampling at 1.4x or more. It only turns on
   // for the rare path where the initial effective ratio is already low.
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: renderedPixelRatio < 1.4, alpha: true });
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: renderedPixelRatio < 1.4, alpha: true });
+  } catch (_) {
+    wrap.dispatchEvent(new CustomEvent('signal-world:unavailable'));
+    return;
+  }
   let contextLost = false;
 
   canvas.addEventListener('webglcontextlost', (event) => {

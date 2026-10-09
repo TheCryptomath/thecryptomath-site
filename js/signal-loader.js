@@ -16,8 +16,62 @@
   }
 
   let started = false;
+  let unavailable = false;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const saveData = !!(navigator.connection && navigator.connection.saveData);
+  const fr = (document.documentElement.lang || 'en').toLowerCase().startsWith('fr');
+  const fallbackLinks = fr
+    ? [
+        ['Newsletter', '/fr/newsletter/'],
+        ['Score', '/fr/score/'],
+        ['Projets', '/fr/build/'],
+        ['Narrative Framework', '/fr/narrative-framework/'],
+        ['Ressources', '/fr/resources/'],
+        ['Contact', '/fr/contact/']
+      ]
+    : [
+        ['Newsletter', '/newsletter'],
+        ['Score', '/score/'],
+        ['Build', '/build'],
+        ['Narrative Framework', '/narrative-framework'],
+        ['Resources', '/resources'],
+        ['Connect', '/connect']
+      ];
+
+  // Both script failures and initial renderer failures enter the same static state.
+  function showUnavailable() {
+    if (unavailable) return;
+    unavailable = true;
+    wrap.classList.remove('is-loading-world');
+    wrap.classList.add('is-world-unavailable');
+
+    const controls = wrap.querySelector('.world-controls');
+    if (controls) controls.hidden = true;
+    const panel = wrap.querySelector('[data-world-panel]');
+    if (!panel) return;
+    const title = panel.querySelector('[data-world-title]');
+    const desc = panel.querySelector('[data-world-desc]');
+    const worldLink = panel.querySelector('[data-world-link]');
+    if (title) title.textContent = fr ? 'Explorer The Cryptomath' : 'Explore The Cryptomath';
+    if (desc) desc.textContent = fr
+      ? 'La carte interactive n’est pas disponible sur cet appareil. Utilisez les liens ci-dessous pour explorer le site.'
+      : 'Interactive map unavailable on this device. Use the links below to explore the site.';
+    if (worldLink) worldLink.style.display = 'none';
+
+    const nav = document.createElement('nav');
+    nav.setAttribute('data-world-fallback-links', '');
+    nav.setAttribute('aria-label', fr ? 'Explorer le site' : 'Explore the site');
+    fallbackLinks.forEach(([label, href], index) => {
+      if (index) nav.appendChild(document.createTextNode(' · '));
+      const link = document.createElement('a');
+      link.href = href;
+      link.textContent = label;
+      nav.appendChild(link);
+    });
+    panel.appendChild(nav);
+  }
+
+  wrap.addEventListener('signal-world:unavailable', showUnavailable);
 
   function loadScript(src) {
     return new Promise((resolve, reject) => {
@@ -46,12 +100,9 @@
     wrap.classList.add('is-loading-world');
 
     loadScript('/js/three.min.js?v=0.128.0')
-      .then(() => loadScript('/js/signal-world.js?v=20260705-perf-v3'))
+      .then(() => loadScript('/js/signal-world.js?v=20261009-audit-ux002'))
       .then(() => wrap.classList.remove('is-loading-world'))
-      .catch(() => {
-        wrap.classList.remove('is-loading-world');
-        wrap.classList.add('is-world-unavailable');
-      });
+      .catch(showUnavailable);
   }
 
   function idleStart() {
