@@ -21,6 +21,7 @@
       researchComplete: "RESEARCH COMPLETE",
       statusUnknown: "—",
       all: "All",
+      filterStatus: (shown, loaded) => `Showing ${shown} of ${loaded} currently loaded detections.`,
       byRegime: "By regime",
       byDirection: "By direction",
       overall: "Overall",
@@ -75,6 +76,7 @@
       researchComplete: "RECHERCHE TERMINÉE",
       statusUnknown: "—",
       all: "Toutes",
+      filterStatus: (shown, loaded) => `${shown} détections affichées sur ${loaded} actuellement chargées.`,
       byRegime: "Par régime",
       byDirection: "Par direction",
       overall: "Ensemble",
@@ -486,13 +488,22 @@
   function renderList(data) {
     const tbody = document.getElementById("perfTableBody");
     if (!tbody) return;
+    const filterStatus = document.getElementById("perfFilterStatus");
 
     if (!data || !data.ok) {
+      if (filterStatus) filterStatus.textContent = "";
       tbody.innerHTML = `<tr><td colspan="14" class="empty">${t.error || "Error"}</td></tr>`;
       return;
     }
 
-    if (!data.items || data.items.length === 0) {
+    if (!Array.isArray(data.items)) {
+      if (filterStatus) filterStatus.textContent = "";
+      tbody.innerHTML = `<tr><td colspan="14" class="empty">${t.empty}</td></tr>`;
+      return;
+    }
+
+    if (data.items.length === 0) {
+      if (filterStatus) filterStatus.textContent = t.filterStatus(0, 0);
       tbody.innerHTML = `<tr><td colspan="14" class="empty">${t.empty}</td></tr>`;
       return;
     }
@@ -503,6 +514,7 @@
     } else if (currentFilter === "exceptional") {
       visibleItems = visibleItems.filter(item => String(item.type || "").toLowerCase() === "exceptional");
     }
+    if (filterStatus) filterStatus.textContent = t.filterStatus(visibleItems.length, data.items.length);
 
     if (!visibleItems.length) {
       tbody.innerHTML = `<tr><td colspan="14" class="empty">${t.empty}</td></tr>`;
@@ -726,11 +738,18 @@
   // -------------------------------------------------------------------
   function setupFilters() {
     const chips = document.querySelectorAll(".chip[data-filter]");
+    const syncFilterState = () => {
+      chips.forEach(chip => {
+        const active = (chip.getAttribute("data-filter") || "") === currentFilter;
+        chip.classList.toggle("active", active);
+        chip.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    };
+    syncFilterState();
     chips.forEach(chip => {
       chip.addEventListener("click", () => {
-        chips.forEach(c => c.classList.remove("active"));
-        chip.classList.add("active");
         currentFilter = chip.getAttribute("data-filter") || "";
+        syncFilterState();
         renderList(cachedList);
       });
     });

@@ -241,11 +241,12 @@
 <div class="container">
 <div class="perf-section-head">
 <h2>Latest detections</h2>
-<div class="filters">
-<button class="chip active" data-filter="" type="button">All</button>
-<button class="chip" data-filter="experimental" type="button">Experimental</button>
-<button class="chip" data-filter="exceptional" type="button">Exceptional</button>
+<div aria-label="Filter latest detections" class="filters" role="group">
+<button aria-pressed="true" class="chip active" data-filter="" type="button">All</button>
+<button aria-pressed="false" class="chip" data-filter="experimental" type="button">Experimental</button>
+<button aria-pressed="false" class="chip" data-filter="exceptional" type="button">Exceptional</button>
 </div>
+<span aria-atomic="true" aria-live="polite" class="sr-only" id="perfFilterStatus"></span>
 </div>
 <p class="muted perf-table-hint">Perf. is directional: for a Short, price going down counts as positive. Hover the column headers for definitions.</p>
 <p class="muted perf-table-hint">The tracking window depends on the internal tier assigned at detection time: Watchlist 7 days, Signal 21 days, Exceptional 45 days. After that, tracking stops and the final observation is retained.</p>
@@ -387,7 +388,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260928-g06"></script>
+<script defer="" src="/score/performance.js?v=20261009-audit-ux001"></script>
 <script defer="" src="/js/main.js?v=20260928-vague1-g01"></script>
 </body>
 </html>

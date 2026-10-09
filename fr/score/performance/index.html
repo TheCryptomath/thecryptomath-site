@@ -241,11 +241,12 @@
 <div class="container">
 <div class="perf-section-head">
 <h2>Dernières détections</h2>
-<div class="filters">
-<button class="chip active" data-filter="" type="button">Toutes</button>
-<button class="chip" data-filter="experimental" type="button">Expérimentales</button>
-<button class="chip" data-filter="exceptional" type="button">Exceptional</button>
+<div aria-label="Filtrer les dernières détections" class="filters" role="group">
+<button aria-pressed="true" class="chip active" data-filter="" type="button">Toutes</button>
+<button aria-pressed="false" class="chip" data-filter="experimental" type="button">Expérimentales</button>
+<button aria-pressed="false" class="chip" data-filter="exceptional" type="button">Exceptional</button>
 </div>
+<span aria-atomic="true" aria-live="polite" class="sr-only" id="perfFilterStatus"></span>
 </div>
 <p class="muted perf-table-hint">La perf. est directionnelle : pour un Short, une baisse du prix compte en positif. Survolez les en-têtes de colonnes pour les définitions.</p>
 <p class="muted perf-table-hint">La durée du suivi dépend du palier interne attribué au moment de la détection : Watchlist 7 jours, Signal 21 jours, Exceptional 45 jours. À l'issue de cette période, le suivi s'arrête et la dernière observation est conservée.</p>
@@ -392,7 +393,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/performance.js?v=20260928-g06"></script>
+<script defer="" src="/score/performance.js?v=20261009-audit-ux001"></script>
 <script defer="" src="/js/main.js?v=20260928-vague1-g01"></script>
 </body>
 </html>
