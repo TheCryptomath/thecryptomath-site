@@ -180,6 +180,7 @@
 <div class="score-kicker">The Cryptomath Score</div>
 <h1 class="score-title">Crypto Confluence Scanner</h1>
 <p class="score-sub">3 pillars. 10 criteria. One experimental confluence score.</p>
+<noscript><p class="score-sub">Calculating the Score requires JavaScript. You can still read the <a href="/narrative-framework">method</a> and the <a href="/score/performance/">performance journal</a>.</p></noscript>
 </section>
 <div class="score-grid">
 <section class="panel">
@@ -363,12 +364,12 @@
 <input class="input" id="tp" inputmode="decimal" min="0" placeholder="e.g. 120" step="any" type="number"/>
 </div>
 <div class="btnrow">
-<button class="btn" id="autoFillBtn" type="button">Auto fill</button>
-<button class="btn primary" id="calcBtn" type="button">Calculate</button>
-<button class="btn" id="resetBtn" type="button">Reset</button>
-<button class="btn" id="exportBtn" type="button">Export JSON</button>
+<button class="btn" disabled id="autoFillBtn" type="button">Auto fill</button>
+<button class="btn primary" disabled id="calcBtn" type="button">Calculate</button>
+<button class="btn" disabled id="resetBtn" type="button">Reset</button>
+<button class="btn" disabled id="exportBtn" type="button">Export JSON</button>
 </div>
-<div aria-live="polite" class="status" id="status" role="status">Ready.</div>
+<div aria-live="polite" class="status" id="status" role="status">Loading Score tool...</div>
 <div class="auto-summary" id="autoSummary"></div>
 </div>
 </div>
@@ -407,8 +408,8 @@
 <div class="track"><div class="fill" id="psyFill"></div></div>
 </div>
 </div>
-<div class="verdict n u-mt-14" id="verdictBox">
-<h2 id="verdictTitle">Unfavorable signal</h2>
+<div class="verdict u-mt-14" id="verdictBox">
+<h2 id="verdictTitle">No calculation yet</h2>
 <p id="verdictText">Fill inputs and click Calculate.</p>
 </div>
 <div class="panel u-mt-12-hidden" id="postScoreCta">
@@ -421,8 +422,8 @@
                 </p>
 <div class="u-flex-wrap-gap-12">
 <a class="btn primary" href="/newsletter" id="ctaNewsletterBtn">Subscribe</a>
-<button class="btn" id="shareXBtn" type="button">Share on X</button>
-<button class="btn" id="shareTgBtn" type="button">Share on Telegram</button>
+<button class="btn" disabled id="shareXBtn" type="button">Share on X</button>
+<button class="btn" disabled id="shareTgBtn" type="button">Share on Telegram</button>
 </div>
 </div>
 </div>
@@ -532,7 +533,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/score-loader.js?v=20260928-c04"></script>
+<script defer="" src="/score/score-loader.js?v=20261009-audit-scorefix1"></script>
 <script defer="" src="/js/main.js?v=20260928-vague1-g01"></script>
 </body>
 </html>

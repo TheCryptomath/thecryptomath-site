@@ -180,6 +180,7 @@
 <div class="score-kicker">The Cryptomath Score</div>
 <h1 class="score-title">Scanner de confluence crypto</h1>
 <p class="score-sub">3 piliers. 10 critères. Un score de confluence expérimental.</p>
+<noscript><p class="score-sub">Le calcul du Score nécessite JavaScript. Vous pouvez consulter la <a href="/fr/narrative-framework/">méthode</a> et le <a href="/fr/score/performance/">journal de performance</a>.</p></noscript>
 </section>
 <div class="score-grid">
 <section class="panel">
@@ -363,12 +364,12 @@
 <input class="input" id="tp" inputmode="decimal" min="0" placeholder="ex. 120" step="any" type="number"/>
 </div>
 <div class="btnrow">
-<button class="btn" id="autoFillBtn" type="button">Remplissage auto</button>
-<button class="btn primary" id="calcBtn" type="button">Calculer</button>
-<button class="btn" id="resetBtn" type="button">Réinitialiser</button>
-<button class="btn" id="exportBtn" type="button">Exporter en JSON</button>
+<button class="btn" disabled id="autoFillBtn" type="button">Remplissage auto</button>
+<button class="btn primary" disabled id="calcBtn" type="button">Calculer</button>
+<button class="btn" disabled id="resetBtn" type="button">Réinitialiser</button>
+<button class="btn" disabled id="exportBtn" type="button">Exporter en JSON</button>
 </div>
-<div aria-live="polite" class="status" id="status" role="status">Prêt.</div>
+<div aria-live="polite" class="status" id="status" role="status">Chargement de l’outil Score...</div>
 <div class="auto-summary" id="autoSummary"></div>
 </div>
 </div>
@@ -407,8 +408,8 @@
 <div class="track"><div class="fill" id="psyFill"></div></div>
 </div>
 </div>
-<div class="verdict n u-mt-14" id="verdictBox">
-<h2 id="verdictTitle">Signal défavorable</h2>
+<div class="verdict u-mt-14" id="verdictBox">
+<h2 id="verdictTitle">Aucun calcul effectué</h2>
 <p id="verdictText">Renseignez les champs puis cliquez sur Calculer.</p>
 </div>
 <div class="panel u-mt-12-hidden" id="postScoreCta">
@@ -421,8 +422,8 @@
                 </p>
 <div class="u-flex-wrap-gap-12">
 <a class="btn primary" href="/fr/newsletter/" id="ctaNewsletterBtn">S’abonner</a>
-<button class="btn" id="shareXBtn" type="button">Partager sur X</button>
-<button class="btn" id="shareTgBtn" type="button">Partager sur Telegram</button>
+<button class="btn" disabled id="shareXBtn" type="button">Partager sur X</button>
+<button class="btn" disabled id="shareTgBtn" type="button">Partager sur Telegram</button>
 </div>
 </div>
 </div>
@@ -532,7 +533,7 @@
 </div>
 </div>
 </footer>
-<script defer="" src="/score/score-loader.js?v=20260928-c04"></script>
+<script defer="" src="/score/score-loader.js?v=20261009-audit-scorefix1"></script>
 <script defer="" src="/js/main.js?v=20260928-vague1-g01"></script>
 </body>
 </html>

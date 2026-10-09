@@ -13,8 +13,20 @@ const SCORE_I18N = {
   en: {
     methodVersion: "Method version {v}",
     noTrade: "Unfavorable signal",
+    noCalculationYet: "No calculation yet",
     fillInputs: "Fill inputs and click Calculate.",
     ready: "Ready.",
+    loadFailed: "The Score tool could not be loaded. Please try again later.",
+    previousResultRemains: "Calculation failed. The previous valid result remains displayed.",
+    dataUnavailable: "Data unavailable",
+    partialData: "Partial data",
+    criterionDetected: "Criterion detected",
+    criterionNotDetected: "Criterion not detected",
+    detectionUnavailable: "Detection status unavailable",
+    dailyEma: "Daily EMA",
+    emaDistance: "Distance to {ema}: {value}%",
+    openInterestChange: "Open interest change",
+    volumeRatioData: "Volume ratio",
     quickScan: "Quick Scan",
     autoFill: "Auto fill",
     simpleModeHtml: "Simple mode. Quick 3-pillar manual check.<br><span class=\"mode-teaser\" data-action=\"switch-pro\" role=\"button\" tabindex=\"0\">Quick scan runs the full scan and maps it to the 3 pillars. Switch to Pro for the full breakdown.</span>",
@@ -49,6 +61,7 @@ const SCORE_I18N = {
     upstreamUnavailable: "Upstream temporarily unavailable. Try again.",
     upstreamError: "Upstream API error. Try again.",
     badUpstreamJson: "Upstream returned invalid JSON. Try again.",
+    invalidScoreResponse: "The Score response was incomplete. Try again.",
     insufficientMarketData: "Not enough market data for this asset.",
     unknownRegime: "Regime auto requires the latest API update.",
     apiErrorCode: "API error. Code {code}",
@@ -70,8 +83,20 @@ const SCORE_I18N = {
   fr: {
     methodVersion: "Version de méthode {v}",
     noTrade: "Signal défavorable",
+    noCalculationYet: "Aucun calcul effectué",
     fillInputs: "Renseignez les champs puis cliquez sur Calculer.",
     ready: "Prêt.",
+    loadFailed: "L’outil Score n’a pas pu être chargé. Réessayez plus tard.",
+    previousResultRemains: "Le calcul a échoué. Le résultat valide précédent reste affiché.",
+    dataUnavailable: "Donnée indisponible",
+    partialData: "Données partielles",
+    criterionDetected: "Critère détecté",
+    criterionNotDetected: "Critère non détecté",
+    detectionUnavailable: "Statut de détection indisponible",
+    dailyEma: "EMA journalière",
+    emaDistance: "Distance à {ema} : {value}%",
+    openInterestChange: "Variation de l’open interest",
+    volumeRatioData: "Ratio de volume",
     quickScan: "Scan rapide",
     autoFill: "Remplissage auto",
     simpleModeHtml: "Mode Simple. Vérification manuelle rapide en 3 piliers.<br><span class=\"mode-teaser\" data-action=\"switch-pro\" role=\"button\" tabindex=\"0\">Le scan rapide lance le scan complet puis le condense en 3 piliers. Passez en mode Pro pour le détail complet.</span>",
@@ -106,6 +131,7 @@ const SCORE_I18N = {
     upstreamUnavailable: "Source amont temporairement indisponible. Réessayez.",
     upstreamError: "Erreur de l’API amont. Réessayez.",
     badUpstreamJson: "La source amont a renvoyé un JSON invalide. Réessayez.",
+    invalidScoreResponse: "La réponse du Score est incomplète. Réessayez.",
     insufficientMarketData: "Pas assez de données marché pour cet actif.",
     unknownRegime: "Le régime Auto nécessite la dernière mise à jour de l’API.",
     apiErrorCode: "Erreur API. Code {code}",
@@ -149,6 +175,7 @@ function localizeRegime(regime) {
 const PRO_IDS = ["mLiq", "mFlux", "mVal", "tMom", "tStr", "tVol", "tVolu", "pSent", "pDer", "pCat"];
 
 const state = {
+  initialized: false,
   lastResponse: null,
   lastScore: null,
   lastVerdict: null,
@@ -340,15 +367,22 @@ function resetResultsUI() {
   setFill("psyFill", 0);
 
   const vb = $("verdictBox");
-  vb.classList.remove("a", "s");
-  vb.classList.add("n");
-  $("verdictTitle").textContent = t("noTrade");
+  vb.classList.remove("a", "s", "n");
+  $("verdictTitle").textContent = t("noCalculationYet");
   $("verdictText").textContent = t("fillInputs");
 
   const cta = $("postScoreCta");
   if (cta) cta.style.display = "none";
 
   state.lastResponse = null;
+  state.lastScore = null;
+  state.lastVerdict = null;
+}
+
+function showCalculationFailure(message) {
+  const hasPreviousResult = !!state.lastResponse;
+  if (!hasPreviousResult) resetResultsUI();
+  setStatus(message + (hasPreviousResult ? " " + t("previousResultRemains") : ""), "err");
 }
 
 function resetAll() {
@@ -381,21 +415,27 @@ function applyAutoHighlights() {
   }
 }
 
-function applyAutoTooltips(debug) {
-  if (!debug) return;
-
-  const macro = debug.macro || {};
-  const tech = debug.tech || debug.technical || {};
-  const psy = debug.psy || debug.psycho || debug.psychology || {};
-  const market = debug.market || {};
-
+function applyAutoTooltips(debug, autoDetected) {
   const setTitle = (id, title) => {
     const el = $(id);
     if (el) el.title = title || "";
   };
 
   const noData = SCORE_LANG === "fr" ? "Pas de donnée" : "No data";
-  const manualCheck = SCORE_LANG === "fr" ? "Vérification manuelle requise" : "Manual check required";
+  if (!debug) {
+    setTitle("mVal", t("dataUnavailable"));
+    setTitle("pCat", t("dataUnavailable"));
+    return;
+  }
+
+  const macro = debug.macro || {};
+  const tech = debug.tech || debug.technical || {};
+  const psy = debug.psy || debug.psycho || debug.psychology || {};
+  const market = debug.market || {};
+  const missing = new Set(Array.isArray(debug.dataQuality && debug.dataQuality.missing)
+    ? debug.dataQuality.missing : []);
+  const detectedStatus = (value) => value === true ? t("criterionDetected")
+    : value === false ? t("criterionNotDetected") : t("detectionUnavailable");
   const priceLabel = SCORE_LANG === "fr" ? "Prix " : "Price ";
   const volumeRatioLabel = SCORE_LANG === "fr" ? "Ratio vol. " : "Vol ratio ";
   const fundingLabel = SCORE_LANG === "fr" ? "Funding " : "Funding ";
@@ -409,7 +449,20 @@ function applyAutoTooltips(debug) {
   if (macro.stablecoinMcapUsd != null) flowParts.push("$" + (Number(macro.stablecoinMcapUsd) / 1e9).toFixed(1) + "B");
   setTitle("mFlux", flowParts.length ? flowParts.join(" | ") : noData);
 
-  setTitle("mVal", manualCheck);
+  const emaUsed = asNum(market.emaDailyUsed);
+  const emaDistance = asNum(market.emaDailyDistance);
+  if (missing.has("dailyKlines") || emaUsed === null || emaUsed <= 0 || emaDistance === null) {
+    setTitle("mVal", t("dataUnavailable"));
+  } else {
+    const period = asNum(market.emaDailyPeriodUsed);
+    const emaLabel = period !== null && period > 0 ? "EMA" + period : t("dailyEma");
+    const valuation = autoDetected && autoDetected.macro && autoDetected.macro.valorisation;
+    setTitle("mVal", [
+      emaLabel + " " + fmtNum(emaUsed, 2),
+      t("emaDistance", { ema: emaLabel, value: fmtNum(emaDistance * 100, 2) }),
+      detectedStatus(valuation)
+    ].join(" | "));
+  }
 
   const momParts = [];
   if (tech.rsi != null) momParts.push("RSI " + fmtNum(tech.rsi, 1));
@@ -427,7 +480,21 @@ function applyAutoTooltips(debug) {
   setTitle("pSent", psy.fearGreed != null ? ("F&G " + fmtNum(psy.fearGreed, 0)) : noData);
   setTitle("pDer", psy.fundingRate != null ? (fundingLabel + fmtNum(psy.fundingRate, 6)) : noData);
 
-  setTitle("pCat", manualCheck);
+  const openInterest = asNum(psy.openInterestChangePct);
+  const volumeRatio = asNum(tech.volumeRatio);
+  const hasOpenInterest = openInterest !== null && !missing.has("openInterest");
+  const hasVolumeRatio = volumeRatio !== null;
+  const catalystParts = [
+    t("openInterestChange") + ": " + (hasOpenInterest ? fmtNum(openInterest, 2) + "%" : t("dataUnavailable")),
+    t("volumeRatioData") + ": " + (hasVolumeRatio ? fmtNum(volumeRatio, 2) + "x" : t("dataUnavailable"))
+  ];
+  if (!hasOpenInterest && !hasVolumeRatio) catalystParts.unshift(t("dataUnavailable"));
+  else if (!hasOpenInterest || !hasVolumeRatio) catalystParts.unshift(t("partialData"));
+  else {
+    const catalyst = autoDetected && autoDetected.psycho && autoDetected.psycho.catalyst;
+    catalystParts.push(detectedStatus(catalyst));
+  }
+  setTitle("pCat", catalystParts.join(" | "));
 }
 
 function applyAutoDetectedToUI(autoDetected, debug) {
@@ -467,7 +534,7 @@ function applyAutoDetectedToUI(autoDetected, debug) {
   }
 
   applyAutoHighlights();
-  applyAutoTooltips(debug);
+  applyAutoTooltips(debug, autoDetected);
 
   const count = state.autoSet.size;
   setAutoSummary(t("autoDetectedSignals", { count }));
@@ -640,6 +707,13 @@ function maxByRegime(regime) {
   return null;
 }
 
+function hasValidScoreResult(data) {
+  const scores = data && data.scores;
+  const verdict = scores && (scores.finalVerdict || scores.baseVerdict);
+  return !!(scores && Number.isFinite(scores.total) &&
+    typeof verdict === "string" && verdict.trim());
+}
+
 function renderScores(data, payload) {
   $("methodVersion").textContent = t("methodVersion", { v: (data.methodVersion || METHOD_VERSION) });
 
@@ -742,6 +816,7 @@ function applyModeUI() {
 }
 
 function scheduleAutoCalc() {
+  if (!state.initialized) return;
   clearTimeout(state.debounceTimer);
 
   const asset = normalizeAssetInput($("asset").value);
@@ -761,6 +836,7 @@ function scheduleAutoCalc() {
 }
 
 function scheduleShadowScan() {
+  if (!state.initialized) return;
   clearTimeout(state.shadowTimer);
 
   const mode = $("mode").value;
@@ -788,6 +864,7 @@ function scheduleShadowScan() {
 }
 
 async function runShadowScan(key) {
+  if (!state.initialized) return;
   const asset = normalizeAssetInput($("asset").value);
   if (!asset) return;
 
@@ -813,6 +890,7 @@ async function runShadowScan(key) {
 }
 
 async function runCalculation(isAuto) {
+  if (!state.initialized) return;
   const payload = buildPayloadFromState();
 
   if (isAuto) {
@@ -841,7 +919,7 @@ async function runCalculation(isAuto) {
       short_invalid_stop: t("shortInvalidStop"),
       short_invalid_tp: t("shortInvalidTp")
     };
-    setStatus(map[tradeErr] || "Invalid trade inputs.", "err");
+    showCalculationFailure(map[tradeErr] || "Invalid trade inputs.");
     return;
   }
 
@@ -852,6 +930,7 @@ async function runCalculation(isAuto) {
 
   try {
     const data = await callApi(payload, isAuto ? "autocalc" : "calc");
+    if (!hasValidScoreResult(data)) throw new Error("invalid_score_response");
     renderScores(data, payload);
 
 
@@ -871,6 +950,7 @@ async function runCalculation(isAuto) {
       upstream_unavailable: t("upstreamUnavailable"),
       upstream_error: t("upstreamError"),
       bad_upstream_json: t("badUpstreamJson"),
+      invalid_score_response: t("invalidScoreResponse"),
       insufficient_market_data: t("insufficientMarketData"),
       unknown_regime: t("unknownRegime"),
       trade_entry_equals_stop: t("entryStopEqual"),
@@ -879,7 +959,7 @@ async function runCalculation(isAuto) {
       short_invalid_stop: t("shortInvalidStop"),
       short_invalid_tp: t("shortInvalidTp")
     };
-    setStatus(map[code] || t("apiErrorCode", { code }), "err");
+    showCalculationFailure(map[code] || t("apiErrorCode", { code }));
   } finally {
     if (!isAuto) {
       $("calcBtn").textContent = t("calculate");
@@ -889,9 +969,10 @@ async function runCalculation(isAuto) {
 }
 
 async function runAutoFill() {
+  if (!state.initialized) return;
   const asset = normalizeAssetInput($("asset").value);
   if (!asset) {
-    setStatus(t("typeAssetFirst"), "err");
+    showCalculationFailure(t("typeAssetFirst"));
     return;
   }
 
@@ -937,6 +1018,7 @@ async function runAutoFill() {
     payload.asset = asset;
 
     const data = await callApi(payload, "autofill");
+    if (!hasValidScoreResult(data)) throw new Error("invalid_score_response");
 
     if (data.autoDetected) {
       applyAutoDetectedToUI(data.autoDetected, data.debug || null);
@@ -956,11 +1038,12 @@ async function runAutoFill() {
       upstream_unavailable: t("upstreamUnavailable"),
       upstream_error: t("upstreamError"),
       bad_upstream_json: t("badUpstreamJson"),
+      invalid_score_response: t("invalidScoreResponse"),
       insufficient_market_data: t("insufficientMarketData"),
       forbidden_origin: t("accessDenied"),
       rate_limited: t("rateLimited")
     };
-    setStatus(map[code] || t("scanFailedCode", { code }), "err");
+    showCalculationFailure(map[code] || t("scanFailedCode", { code }));
   } finally {
     const isSimpleNow = ($("mode").value === "Simple");
     $("autoFillBtn").textContent = isSimpleNow ? t("quickScan") : t("autoFill");
@@ -1075,17 +1158,47 @@ function bind() {
   });
 }
 
+const SCORE_COMMAND_IDS = ["autoFillBtn", "calcBtn", "resetBtn", "exportBtn", "shareXBtn", "shareTgBtn"];
+const SCORE_REQUIRED_IDS = [
+  "methodVersion", "regime", "direction", "mode", "asset", "entry", "stop", "tp",
+  "simpleBlock", "proBlock", "bars", "modeHint", "regimeHint", "status", "autoSummary",
+  "simpleHintMacro", "simpleHintTech", "simpleHintPsy",
+  "simpleMacro", "simpleTech", "simplePsy", "scoreTotal", "rrVal", "rrMin",
+  "macroTxt", "techTxt", "psyTxt", "macroFill", "techFill", "psyFill",
+  "verdictBox", "verdictTitle", "verdictText", "postScoreCta",
+  ...PRO_IDS, ...SCORE_COMMAND_IDS
+];
+
+function setScoreCommandsDisabled(disabled) {
+  for (const id of SCORE_COMMAND_IDS) {
+    const button = $(id);
+    if (button) button.disabled = disabled;
+  }
+}
+
 function initScoreTool() {
-  const methodVersionEl = $("methodVersion");
-  const regimeEl = $("regime");
+  state.initialized = false;
+  setScoreCommandsDisabled(true);
 
-  if (!methodVersionEl || !regimeEl) return;
+  if (!SCORE_REQUIRED_IDS.every(id => $(id))) {
+    setStatus(t("loadFailed"), "err");
+    return;
+  }
 
-  methodVersionEl.textContent = t("methodVersion", { v: METHOD_VERSION });
-  if ($("exportBtn")) $("exportBtn").textContent = t("exportJson");
-  regimeEl.value = "Auto";
-  applyModeUI();
-  bind();
+  try {
+    $("methodVersion").textContent = t("methodVersion", { v: METHOD_VERSION });
+    $("exportBtn").textContent = t("exportJson");
+    $("regime").value = "Auto";
+    applyModeUI();
+    bind();
+    state.initialized = true;
+    setScoreCommandsDisabled(false);
+    setStatus(t("ready"), "");
+  } catch (_) {
+    state.initialized = false;
+    setScoreCommandsDisabled(true);
+    setStatus(t("loadFailed"), "err");
+  }
 }
 
 if (document.readyState === "loading") {
