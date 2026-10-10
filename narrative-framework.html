@@ -244,7 +244,38 @@
 <p>Low: the topic remains mostly specialized, its category is not yet established, repricing remains limited, and AI models rarely or never cite it when asked about current narratives.</p>
 <p>Medium: the narrative is clearly recognized by the crypto ecosystem, receives regular coverage, and several assets or projects are already associated with the theme.</p>
 <p>High: the narrative has become an obvious category, is ubiquitous in crypto or institutional coverage, is associated with assets that have already reacted, and is cited spontaneously by several AI models.</p>
-<p>AI model responses are one indicator among others of a narrative’s spread, never the sole criterion for saturation. They are measured using a protocol that remains comparable over time, and the measurement is dated.</p>
+<p>AI model responses are one indicator among others of a narrative’s spread, never the sole criterion for saturation. Each measurement is dated; comparisons over time require the recorded engine, version and search conditions described below.</p>
+<div class="answer-block">
+<h3>Saturation protocol v1</h3>
+<p>Locked September 29, 2026. Saturation is assessed for the broad narrative category A. Sub-thesis B is recorded separately in Media and AI, but does not enter the Low / Medium / High classification. The saturated reference is the median of two fixed narratives, prediction markets and AI crypto, measured on the same day by the same method.</p>
+<ol>
+<li><strong>Category (axis 1).</strong> Check CoinGecko, CoinMarketCap, DefiLlama, Artemis, Messari and Kaito. At least 4 of the 6 taxonomies must be measurable; a generic category such as Payments does not count, and an inaccessible source is not measured. Low: ≤25% of measurable taxonomies; Medium: &gt;25% and &lt;2/3; High: ≥2/3.</li>
+<li><strong>Media (axis 2, last 30 days).</strong> Search CoinDesk, The Block, Cointelegraph, Decrypt, Blockworks, Cryptoast, Journal du Coin and Cointribune. Count an article only when narrative A is its main subject; count republications or syndication of the same article once. Compare the count with the saturated reference: Low &lt;20%; Medium 20–60%; High &gt;60%. Record sub-thesis B separately.</li>
+<li><strong>Google Trends (axis 3).</strong> Use the 12-month weekly view, English terms, worldwide. Compare the candidate term with the reference terms in the same query. The 90-day average uses the last 13 weeks. A sustained rise requires both a last-28-day average at least 50% above the preceding 28-day average and at least 3 of the last 4 weeks above the mean of the preceding 4 weeks. A single spike remains an observation, not sufficient evidence.</li>
+<li><strong>Social attention (axis 4).</strong> Not measured until a stable, reproducible metric is available. No social metric is inferred.</li>
+<li><strong>Repricing (axis 5, 90 days).</strong> Fix the token basket in the candidate sheet before collection. Use ETH and the candidate-specific CoinGecko category as benchmarks; use CoinGecko prices at day J and J−90. For each token, A = token 90-day performance − ETH 90-day performance; B = token 90-day performance − category 90-day performance. Token relative score = median(A, B); axis score = median of the basket’s token relative scores. Low &lt;20 points; Medium 20–60 points; High &gt;60 points. This is a secondary signal.</li>
+<li><strong>Spontaneous AI mentions (axis 6).</strong> Run the three fixed prompts/queries across the five T0 surfaces: ChatGPT, Perplexity, Claude, Gemini and Google AI Overviews. For conversational engines, use a fresh temporary session without prior context. For Google AI Overviews, use classic Google Search. Do not substitute AI Mode. The prompts, unchanged in every run, are:
+<ol>
+<li>Quels sont les narratifs crypto émergents en ce moment ?</li>
+<li>Quelles tendances crypto commencent à apparaître mais ne sont pas encore mainstream ?</li>
+<li>What crypto narratives are gaining traction right now?</li>
+</ol>
+<p><strong>Recorded T0 reference settings (September 28, 2026; modes, not model version numbers):</strong></p>
+<ul>
+<li>ChatGPT: signed out / anonymized session; Medium mode; web search enabled.</li>
+<li>Perplexity: mode unknown; web search enabled; account and interface country not recorded.</li>
+<li>Claude: Medium mode; web search enabled; account and interface country not recorded.</li>
+<li>Gemini: Flash mode; web search enabled; account and interface country not recorded.</li>
+<li>Google AI Overviews: classic Google Search with AI Overview; google.fr / France; Chrome; web search enabled; logged-in Google account distinct from The Cryptomath; not AI Mode.</li>
+</ul>
+<p>Measure the share of valid responses that spontaneously mention narrative A. A generic answer is insufficient; a project cited for another reason does not count. Candidate-specific coding rules are locked before collection; record sub-thesis B separately. If an engine is unavailable, use the valid responses as the denominator. Low &lt;20%; Medium 20–50%; High &gt;50% and a mention by at least 3 engines.</p></li>
+</ol>
+<p><strong>Collection and interpretation.</strong> Measure all axes of a run on the same day. Retain exact queries, captures and observations. Before collecting, lock the candidate sheet: definition of narrative A, sub-thesis B, Media inclusion rules, Google Trends terms, repricing basket, candidate-specific CoinGecko reference category and AI coding rules. Choose none of these after seeing results; do not reweight an axis after reading results. Date and document any later protocol change; do not silently revise past classifications. Classification is Indeterminate when fewer than 5 axes are measurable; Low when at least 4 axes are Low and none is High; High when at least 3 axes are High; Medium in every other case.</p>
+<h4>AI measurement log</h4>
+<p>For every AI run, retain the collection date; engine/product; displayed model or version when identifiable, otherwise explicitly “version not exposed”; web search/browsing state (enabled, disabled or not applicable); language; exact prompt; session or search condition (fresh temporary session without prior context for conversational engines; classic Google Search for Google AI Overviews); complete response; screenshot; and coding (mention yes/no, with a justification if ambiguous).</p>
+<p>An AI component comparison over time is called comparable only when the necessary parameters were recorded. Flag any engine-version change or difference in search conditions in the record. Earlier observations missing engine, version or search metadata are not retroactively treated as fully reproducible; do not invent historical version numbers. The first measurement using this complete log is the first fully reproducible baseline under this documentation.</p>
+<p class="framework-method-note">Documentation clarification — October 10, 2026. No scoring threshold or past classification was changed. Earlier AI observations lacking complete engine/version/search metadata are not retroactively treated as fully reproducible.</p>
+</div>
 <p>Each analysis publishes the observations that justify its saturation level.</p>
 <p>Attention velocity measures how quickly attention is rising. Saturation measures how far it has already spread. Asymmetry concerns what is already reflected in valuations.</p>
 </div></section>
