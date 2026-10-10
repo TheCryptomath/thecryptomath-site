@@ -43,7 +43,7 @@
 
 ### Score Performance
 - URL: https://thecryptomath.com/score/performance/
-- Purpose: public detection tracking page for the Score Tool, including raw detections, aggregate stats, early track record context, and mark-to-market simulation
+- Purpose: public detection tracking page for the Score Tool, including qualifying detections, aggregate statistics, +24h and +7d research horizons, MFE and MAE, tracking windows, and methodology and limits for interpreting the record
 - Use this page when the question is about Score Tool transparency, detection history, or public performance tracking
 
 ### Narrative Framework
