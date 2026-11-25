@@ -931,6 +931,10 @@ p { margin: 0; }
 .newsletter-hero h1 .title-break { display: block; }
 .newsletter-hero .hero-sub { margin: 0 auto 32px; }
 
+html:not([data-theme="dark"]) .newsletter-hero ~ .section .card-link {
+  color: var(--gold);
+}
+
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
